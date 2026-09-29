@@ -61,7 +61,7 @@ export const PRODUCTS_REGISTRY: ProductDefinition[] = [
         id: 'ds-agritwin-katabatic',
         name: 'Simulación Térmica Katabática',
         type: 'weather-api',
-        provider: 'Motor Físico Urrutia AgroTech',
+        provider: 'Motor Físico AgroTech Chile',
         frequency: 'Actualización cada 1 hora',
         format: 'JSON',
         description: 'Vectores de flujo de aire frío en hondonadas para rescate preventivo de brotes con heladas de radiación.',
@@ -517,7 +517,7 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
     logoUrl: '/logo-peumo-quantum.jpg',
     architectureRole: 'División Edulab',
     techStack: ['Diseño Keyline', 'Zonificación 0-5', 'Biomimética', 'Lúdica Educativa', 'Gobernanza Cooperativa'],
-    description: 'El corazón conceptual y ético de Urrutia AgroTech. Asesorado por Julio Pérez, traduce los principios de la permacultura y la agroecología en arquitectura de software, infraestructura de agua y el juego de cartas "Raíces y Chips".',
+    description: 'El corazón conceptual y ético de AgroTech Chile. Asesorado por Julio Pérez, traduce los principios de la permacultura y la agroecología en arquitectura de software, infraestructura de agua y el juego de cartas "Raíces y Chips".',
     highlights: [
       'Zonificación permacultural de los predios (Zonas 0 a 5) aplicada al despliegue de sensores',
       'Diseño hidrológico en contorno (Keyline) y cosecha de aguas lluvias en tranques de infiltración',
@@ -566,7 +566,7 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
     graphicAssets: [
       {
         id: 'ga-peumo-quantum-logo',
-        name: 'Logo Urrutia AgroTech Peumo Quantum',
+        name: 'Logo AgroTech Chile Peumo Quantum',
         type: 'vector-logo',
         url: './logo-peumo-quantum.jpg',
         previewUrl: './logo-peumo-quantum.jpg',

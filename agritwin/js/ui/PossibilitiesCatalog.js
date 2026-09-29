@@ -107,7 +107,7 @@ export class PossibilitiesCatalog {
               <span class="modal-icon">ℹ️</span>
               <div>
                 <h2 class="modal-title">AgriTwin 3D - Guía del Gemelo Digital & Catálogo de Ítems</h2>
-                <div class="modal-subtitle">Desarrollado por Urrutia AgroTech & Rewild (Powered by Nanobanana Engine)</div>
+                <div class="modal-subtitle">Desarrollado por AgroTech Chile & Rewild (Powered by Nanobanana Engine)</div>
               </div>
             </div>
             <button id="closeInfoModalBtn" class="close-btn">&times;</button>

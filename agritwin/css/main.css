@@ -1,8 +1,8 @@
-/* AgriTwin Core - Main CSS Stylesheet (Urrutia AgroTech Enterprise SaaS Theme) */
+/* AgriTwin Core - Main CSS Stylesheet (AgroTech Chile Enterprise SaaS Theme) */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Color Palette - Urrutia AgroTech Dark Precision Theme */
+  /* Color Palette - AgroTech Chile Dark Precision Theme */
   --bg-dark: #080c14;
   --bg-panel: rgba(13, 19, 34, 0.95);
   --bg-card: rgba(18, 26, 42, 0.85);

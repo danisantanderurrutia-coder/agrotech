@@ -15,7 +15,7 @@ export class ProjectManager {
     this.app = app;
     this.currentProject = {
       name: 'Fundo Colliguay (Parral, Maule)',
-      author: 'Urrutia AgroTech & Rewild',
+      author: 'AgroTech Chile & Rewild',
       created: new Date().toISOString(),
       parcels: [],
       customPolygons: []
@@ -47,7 +47,7 @@ export class ProjectManager {
               <img src="assets/agritwin_isotype_clean.png" width="36" height="36" alt="AgriTwin Logo" style="border-radius: 6px; object-fit: contain;">
               <div>
                 <h2 class="modal-title">Bienvenido a AgriTwin 3D</h2>
-                <div class="modal-subtitle">Gemelo Digital Agrícola by Urrutia AgroTech & Rewild</div>
+                <div class="modal-subtitle">Gemelo Digital Agrícola by AgroTech Chile & Rewild</div>
               </div>
             </div>
           </div>

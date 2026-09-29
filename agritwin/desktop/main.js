@@ -5,7 +5,7 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 1440,
     height: 900,
-    title: 'AgriTwin 3D Digital Twin - Urrutia AgroTech',
+    title: 'AgriTwin 3D Digital Twin - AgroTech Chile',
     icon: path.join(__dirname, '../assets/agritwin_isotype_clean.png'),
     webPreferences: {
       nodeIntegration: false,

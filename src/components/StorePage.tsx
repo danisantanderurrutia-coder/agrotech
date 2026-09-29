@@ -44,7 +44,7 @@ export const StorePage: React.FC<StorePageProps> = ({ onNavigate }) => {
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-900/80 border border-amber-500/40 text-amber-300 text-xs font-sans font-bold">
               <ShoppingBag className="w-3.5 h-3.5 text-amber-400" />
-              <span>Tienda Oficial Urrutia AgroTech</span>
+              <span>Tienda Oficial AgroTech Chile</span>
             </div>
             
             <h1 className="text-3xl sm:text-5xl font-extrabold text-white">

@@ -78,7 +78,7 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
       <div className="flex flex-wrap items-center justify-between gap-3 bg-white/95 border-b border-emerald-200 rounded-2xl shadow-sm py-2.5 px-4">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-300 p-1 flex items-center justify-center shrink-0 shadow-sm">
-            <img src="./logo-peumo-quantum.jpg" alt="Urrutia AgroTech Emblem" className="w-full h-full object-contain rounded-lg" />
+            <img src="./logo-peumo-quantum.jpg" alt="AgroTech Chile Emblem" className="w-full h-full object-contain rounded-lg" />
           </div>
           <div>
             <div className="flex items-center gap-2">
@@ -300,7 +300,7 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
           <div className="pt-3 border-t border-emerald-100 flex items-center justify-between text-[11px] font-mono text-emerald-900 relative z-10 mt-2 font-bold">
             <span className="flex items-center gap-2">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Urrutia AgroTech • Región del Maule, Chile</span>
+              <span>AgroTech Chile • Región del Maule, Chile</span>
             </span>
             <span className="text-amber-800 font-extrabold">contacto@urrutia.ag</span>
           </div>

@@ -115,14 +115,14 @@ export const FounderAcademySection: React.FC = () => {
       segment: 'Fondos ESG & Cooperación Internacional (GIZ, BID, UE)',
       badgeColor: 'bg-amber-100 text-amber-900 border-amber-300',
       clientQuestion: 'Muchos proyectos dicen que cuidan la naturaleza pero es puro greenwashing. ¿Cómo audito yo que de verdad hay impacto?',
-      founderAnswer: 'En UrrutiaTech todo activo ecológico está respaldado por series temporales georreferenciadas. Auditamos la biomasa con reflectancias de 10 años, demostramos cero deforestación según la directiva EUDR europea y entregamos un Pasaporte Verde con firma criptográfica y coordenadas de polígono inmutables para sus reportes de taxonomía verde.',
+      founderAnswer: 'En AgroTech Chile todo activo ecológico está respaldado por series temporales georreferenciadas. Auditamos la biomasa con reflectancias de 10 años, demostramos cero deforestación según la directiva EUDR europea y entregamos un Pasaporte Verde con firma criptográfica y coordenadas de polígono inmutables para sus reportes de taxonomía verde.',
       actionInDashboard: 'Mostrar el Pasaporte de Biodiversidad de RewildMapper con hash verificable y curvas de carbono Tier-2.'
     },
     {
       segment: 'Micro-agricultores & Permacultura',
       badgeColor: 'bg-lime-100 text-lime-900 border-lime-300',
       clientQuestion: '¿Esto es solo para grandes empresas con plata o nosotros los chicos podemos usarlo?',
-      founderAnswer: 'UrrutiaTech nació con raíces maulinas para democratizar el saber de la tierra. Para la agricultura familiar ofrecemos el Diagnóstico Comunitario Abierto: calculamos las curvas de nivel para cosechar agua de lluvia con zanjas de infiltración y el calendario bioclimático de siembra para que su huerto resista la sequía.',
+      founderAnswer: 'AgroTech Chile nació con raíces maulinas para democratizar el saber de la tierra. Para la agricultura familiar ofrecemos el Diagnóstico Comunitario Abierto: calculamos las curvas de nivel para cosechar agua de lluvia con zanjas de infiltración y el calendario bioclimático de siembra para que su huerto resista la sequía.',
       actionInDashboard: 'Mostrar la vista Comunitaria con curvas de infiltración y recomendaciones en lenguaje simple y descargable en PDF.'
     }
   ];
@@ -164,7 +164,7 @@ export const FounderAcademySection: React.FC = () => {
           </h2>
 
           <p className="text-emerald-100/90 text-sm sm:text-base font-serif leading-relaxed">
-            Tu guía de cabecera para dominar la arquitectura simulatoria de UrrutiaTech. Aquí encontrarás explicaciones en lenguaje claro, analogías cotidianas, qué responder en reuniones comerciales y cómo liderar con autoridad sin enredarte en ecuaciones.
+            Tu guía de cabecera para dominar la arquitectura simulatoria de AgroTech Chile. Aquí encontrarás explicaciones en lenguaje claro, analogías cotidianas, qué responder en reuniones comerciales y cómo liderar con autoridad sin enredarte en ecuaciones.
           </p>
 
           <div className="flex flex-wrap items-center gap-2 pt-2">

@@ -1189,7 +1189,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                 <div className="flex items-center gap-3">
                   <img src="./logo-peumo-quantum.jpg" alt="AgroTech Core" className="w-10 h-10 object-contain rounded-lg" />
                   <div>
-                    <h4 className="font-extrabold text-base text-slate-900">Urrutia AgroTech Core</h4>
+                    <h4 className="font-extrabold text-base text-slate-900">AgroTech Chile Core</h4>
                     <p className="text-xs text-slate-500 font-serif">Plataforma Madre & HoldCo</p>
                   </div>
                 </div>

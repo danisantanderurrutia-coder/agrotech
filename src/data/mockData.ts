@@ -165,12 +165,12 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
       'Automatización autónoma de válvulas de riego según evaporación satelital',
       'Alertas preventivas por IA en WhatsApp/Telegram sobre heladas imminentes',
       'Visualizador 3D de capas de humedad y gradiente de biomasa predial',
-      'Asistente de IA Agronómica Urrutia entrenado en microbiología de suelos del Maule'
+      'Asistente de IA Agronómica AgroTech Chile entrenado en microbiología de suelos del Maule'
     ],
     specs: {
       'Latencia de Alerta': '< 15 segundos vía Push/SMS',
       'Protocolos': 'Modbus, MQTT, HTTP REST, LoRaWAN',
-      'IA Engine': 'Modelos de clima predial Urrutia AgroTech',
+      'IA Engine': 'Modelos de clima predial AgroTech Chile',
       'Integración': 'Sistemas de riego Netafim/Hunter/RainBird'
     },
     impactMetric: 'Ahorro del 35% en consumo hídrico y 40% en electricidad de bombas',
@@ -248,7 +248,7 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
     specs: {
       'Modalidades': 'Presencial en campo (Maule) + Streaming HD',
       'Edulab Product': 'Juego de Cartas "Raíces y Chips" ($15.000 CLP)',
-      'Certificación': 'Diploma de Capacitación Técnica Urrutia AgroTech',
+      'Certificación': 'Diploma de Capacitación Técnica AgroTech Chile',
       'Frecuencia': '2 talleres presenciales al mes + webinars'
     },
     impactMetric: '+320 agricultores y 15 colegios maulinos capacitados',
@@ -286,7 +286,7 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
 export const PROJECT_PITCH_SLIDES: PitchSlide[] = [
   {
     id: 1,
-    title: 'Urrutia AgroTech',
+    title: 'AgroTech Chile',
     subtitle: 'Donde la Raíz Chilena Encuentra la Alta Tecnología',
     category: 'Portada & Visión',
     image: './img-agri-hub-farm.jpg',
@@ -294,7 +294,7 @@ export const PROJECT_PITCH_SLIDES: PitchSlide[] = [
     content: {
       headline: 'Revolucionando el Ecosistema Agrícola y de Restauración en la Región del Maule',
       points: [
-        'Ecosistema Urrutia AgroTech: Hardware IoT de fabricación local + Satélite Abierto + Inteligencia Ecológica.',
+        'Ecosistema AgroTech Chile: Hardware IoT de fabricación local + Satélite Abierto + Inteligencia Ecológica.',
         'Fundados en Talca (Maule, Chile) con sinergia científica directa desde Alemania.',
         'Meta 2030: Convertir al Maule en el polo líder de agricultura de precisión y biodiversidad en Sudamérica.'
       ],
@@ -304,7 +304,7 @@ export const PROJECT_PITCH_SLIDES: PitchSlide[] = [
         { label: 'Líneas de Ingreso', value: '7 Productos', detail: 'Ingresos desde el Mes 1' }
       ]
     },
-    speakerNotes: 'Bienvenidos a la presentación de Urrutia AgroTech. Unimos las raíces rurales maulinas con la máxima tecnología de frontera.'
+    speakerNotes: 'Bienvenidos a la presentación de AgroTech Chile. Unimos las raíces rurales maulinas con la máxima tecnología de frontera.'
   },
   {
     id: 2,
@@ -518,7 +518,7 @@ export const PROJECT_PITCH_SLIDES: PitchSlide[] = [
 export const MARKET_PITCH_SLIDES: PitchSlide[] = [
   {
     id: 1,
-    title: 'Urrutia AgroTech & AgroTwin',
+    title: 'AgroTech Chile & AgroTwin',
     subtitle: 'Donde la Raíz del Maule se Convierte en Inteligencia Agrícola Global',
     category: 'Portada & Tesis',
     image: './img-agri-hub-farm.jpg',
@@ -536,7 +536,7 @@ export const MARKET_PITCH_SLIDES: PitchSlide[] = [
         { label: 'Tracción de Flujo', value: 'Día 1 / Mes 1', detail: 'Ventas inmediatas sin dilución' }
       ]
     },
-    speakerNotes: 'Bienvenidos al Pitch Deck de Mercado de Urrutia AgroTech. Presentamos una solución triádica validada en el Maule con ingeniería de costos real y nexo directo al mercado de exportación europeo.'
+    speakerNotes: 'Bienvenidos al Pitch Deck de Mercado de AgroTech Chile. Presentamos una solución triádica validada en el Maule con ingeniería de costos real y nexo directo al mercado de exportación europeo.'
   },
   {
     id: 2,
@@ -871,7 +871,7 @@ export const ORGANIZATION_PITCH_SLIDES: PitchSlide[] = [
     content: {
       headline: 'Dos entidades jurídicas complementarias con propósitos claramente delimitados:',
       points: [
-        '1. La SpA Tecnológica (Urrutia AgroTech / AgroTwin SpA): Dueña de la Propiedad Intelectual, código de software (AgriTwin 3D, RewildMapper), diseños de hardware KiCad, contratos SaaS internacionales y postulaciones CORFO/FIA.',
+        '1. La SpA Tecnológica (AgroTech Chile / AgroTwin SpA): Dueña de la Propiedad Intelectual, código de software (AgriTwin 3D, RewildMapper), diseños de hardware KiCad, contratos SaaS internacionales y postulaciones CORFO/FIA.',
         '2. La Cooperativa de Trabajo & Servicios de Campo: Entidad chilena (Ley DFL 5) formada por técnicos locales, talleristas y colaboradores. Factura por ensamblaje de hardware, instalación física en predios, eventos Edulab y difusión comunitaria.',
         'Relación Contractual: La SpA entrega componentes y licencia el uso de marca y software a la Cooperativa. La Cooperativa ejecuta el trabajo físico y retiene la totalidad de los excedentes generados por sus servicios.'
       ],
@@ -1339,7 +1339,7 @@ export const SOCIAL_TEMPLATES: SocialTemplate[] = [
     title: 'Carrusel IG: Anatomía Satelital de tu Fundo',
     format: 'Carrusel Cuadrado 1:1 (1080x1080)',
     headlinePrompt: 'Lo que el corredor de propiedades NO te dice sobre el agua de tu parcela 🛰️💧',
-    visualConcept: 'Deslizable de 5 láminas: 1) Mapa falso color Sentinel-2, 2) Histórico térmico a 10 años, 3) Mapa de acuíferos subterráneos, 4) Esquema KioT, 5) Logo Urrutia AgroTech.',
+    visualConcept: 'Deslizable de 5 láminas: 1) Mapa falso color Sentinel-2, 2) Histórico térmico a 10 años, 3) Mapa de acuíferos subterráneos, 4) Esquema KioT, 5) Logo AgroTech Chile.',
     callToAction: 'Pide tu Informe de Riesgo Climático Predial en el link del perfil.',
     captionTemplate: 'Antes de comprar esa parcela en el Maule, analiza el suelo. Nuestro Informe Climático analiza 10 años de agua subterránea y heladas históricas con datos abiertos de la ESA. 🚜📊 #AgroTech #ParcelasMaule #Biotecnologia #ChileRiego'
   },
@@ -1361,14 +1361,14 @@ export const SOCIAL_TEMPLATES: SocialTemplate[] = [
     headlinePrompt: 'Cómo las exportadoras del Maule aseguran precios premium en supermercados de Alemania y Holanda 🍷🍏',
     visualConcept: 'Infografía técnica limpia: Imagen satelital de viñedo maulino enlazada a un código QR dinámico y sello Pasaporte Verde.',
     callToAction: 'Agende una sesión técnica con nuestro equipo de ciencia ambiental.',
-    captionTemplate: 'Las regulaciones de la UE (CSRD) exigen trazabilidad real de biomasa y captura de carbono. Con el Pasaporte Verde de Urrutia AgroTech, transformamos los parches de bosque nativo de sus fundos en una ventaja comercial auditable. #Agribusiness #ChileExporta #ESG #CarbonFarming #Maule'
+    captionTemplate: 'Las regulaciones de la UE (CSRD) exigen trazabilidad real de biomasa y captura de carbono. Con el Pasaporte Verde de AgroTech Chile, transformamos los parches de bosque nativo de sus fundos en una ventaja comercial auditable. #Agribusiness #ChileExporta #ESG #CarbonFarming #Maule'
   }
 ];
 
 export const MERCH_ITEMS: MerchItem[] = [
   {
     id: 'merch-tshirt',
-    name: 'Polera Urrutia AgroTech Organic Cotton',
+    name: 'Polera AgroTech Chile Organic Cotton',
     tagline: 'Code Meets Roots — Algodón orgánico chileno',
     category: 'Apparel',
     price: '$22.000 CLP',
@@ -1383,7 +1383,7 @@ export const MERCH_ITEMS: MerchItem[] = [
     tagline: 'Gorra táctica de baja perfil con bordado frontal Peumo-Chip',
     category: 'Headwear',
     price: '$18.000 CLP',
-    description: 'Gorra ultra resistente con malla trasera respirable y visera curva. Bordado 3D de alta densidad con el logotipo de Urrutia AgroTech y pestaña de ajuste traseras.',
+    description: 'Gorra ultra resistente con malla trasera respirable y visera curva. Bordado 3D de alta densidad con el logotipo de AgroTech Chile y pestaña de ajuste traseras.',
     specs: ['Lona de algodón & Malla respirable', 'Bordado 3D Verde & Gold', 'Resistente a radiación UV', 'Talla única ajustable'],
     badge: 'Nuevo',
     imageUrl: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&q=80'
@@ -1481,8 +1481,8 @@ export const BOOKS_DATA: BookItem[] = [
   {
     id: 'book-manual-mecatronica',
     title: 'Manual de Mecatrónica Rural & Sensores IP65',
-    author: 'Paulina Urrutia Maureira & Equipo Urrutia AgroTech',
-    publisher: 'Editorial Urrutia AgroTech • Talca',
+    author: 'Paulina Urrutia Maureira & Equipo AgroTech Chile',
+    publisher: 'Editorial AgroTech Chile • Talca',
     category: 'Mecatrónica & IoT',
     isOwnWork: true,
     price: '$18.900 CLP / €20',
@@ -1608,7 +1608,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tags: ['Satélite', 'Exportación', 'ESG', 'Europa'],
     content: [
       'Los compradores de frutas y vinos en Alemania, Países Bajos y Francia están exigiendo trazabilidad ambiental verificable por terceros independientes.',
-      'Mediante la ingesta automatizada de imágenes ópticas de Sentinel-2 L2A y radar Sentinel-1, Urrutia AgroTech genera el Pasaporte Verde Predial: un reporte digital auditable en código QR impreso directamente en los pallets de exportación.',
+      'Mediante la ingesta automatizada de imágenes ópticas de Sentinel-2 L2A y radar Sentinel-1, AgroTech Chile genera el Pasaporte Verde Predial: un reporte digital auditable en código QR impreso directamente en los pallets de exportación.',
       'Esto permite a viñedos y fundos del Maule validar la conservación de parches de bosque esclerófilo nativo y acceder a diferenciales de precio de hasta un 18% en cadenas de supermercados boutique europeas.'
     ],
     comments: []
@@ -1679,7 +1679,7 @@ export const COMMUNITY_POSTS: CommunityPost[] = [
   {
     id: 'post-1',
     title: 'Jornada de Campo en Colbún con la Red de Custodios de Semillas',
-    author: 'Comunidad Urrutia AgroTech',
+    author: 'Comunidad AgroTech Chile',
     date: '25 de Agosto, 2026',
     category: 'Organización Aliada',
     text: 'Compartimos una jornada increíble de intercambio de semillas nativas y medición de salud de suelo junto a la A.G. de Agricultores Ecológicos del Maule. Instalamos un nodo demostrativo de temperatura de suelo.',

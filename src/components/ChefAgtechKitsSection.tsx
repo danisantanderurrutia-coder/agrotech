@@ -162,10 +162,10 @@ export const ChefAgtechKitsSection: React.FC = () => {
                 {/* Header chat bar */}
                 <div className="flex items-center gap-2.5 pb-2.5 border-b border-white/10">
                   <div className="w-8 h-8 rounded-full bg-emerald-700 flex items-center justify-center text-white font-bold text-xs">
-                    UA
+                    AT
                   </div>
                   <div>
-                    <span className="text-white font-bold block text-xs">Urrutia AgroTech Bot</span>
+                    <span className="text-white font-bold block text-xs">AgroTech Chile Bot</span>
                     <span className="text-[10px] text-emerald-400 font-mono">Maule Field AI Agent</span>
                   </div>
                 </div>

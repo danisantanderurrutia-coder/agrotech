@@ -251,7 +251,7 @@ export const CommunityPage: React.FC<CommunityPageProps> = ({ onNavigate, initia
                 <Heart className="w-4 h-4 text-rose-500 fill-rose-500" />
                 <span>Membresía & Financiamiento Colectivo</span>
               </div>
-              <h2 className="text-3xl font-extrabold text-[#0B2519]">Súmate como Socio de Urrutia AgroTech</h2>
+              <h2 className="text-3xl font-extrabold text-[#0B2519]">Súmate como Socio de AgroTech Chile</h2>
               <p className="text-slate-600 text-base font-serif">
                 Impulsa la investigación abierta en heladas y ciencias del suelo en el Maule. Elige la forma de apoyo que mejor se adapte a ti y accede a beneficios exclusivos.
               </p>

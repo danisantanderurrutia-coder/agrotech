@@ -1151,7 +1151,7 @@ Norma / Estándar: SAG / GlobalGAP / EUDR Verificado
 - Ubicación: Parral, Región del Maule, Chile
 - Superficie: 24.8 Hectáreas
 - Conducción Hidrológica: Tranque Keyline 18.500 m³ + Micro-embalses
-- Operador MRV: Urrutia AgroTech SpA & Cooperativa de Trabajo
+- Operador MRV: AgroTech Chile SpA & Cooperativa de Trabajo
 
 2. TELEMETRÍA IN SITU (NODOS KioT ESP32 / LORAWAN)
 ------------------------------------------------------------------------

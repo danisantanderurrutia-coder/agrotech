@@ -1781,14 +1781,14 @@ export class UIController {
         </div>
       </div>
 
-      <!-- 4. Ecosystem Family Card (Urrutia AgroTech • Rewild • AgriTwin 3D) -->
+      <!-- 4. Ecosystem Family Card (AgroTech Chile • Rewild • AgriTwin 3D) -->
       <div class="glass-card" style="margin-top: 10px;">
         <div class="future-title" style="color: var(--accent-cyan); display: flex; align-items: center; gap: 8px;">
-          <span>🌐</span> Ecosistema Urrutia AgroTech
+          <span>🌐</span> Ecosistema AgroTech Chile
         </div>
         <div style="font-size: 11px; margin-top: 8px; color: var(--text-secondary); display: flex; flex-direction: column; gap: 8px;">
           <div style="background: rgba(255,255,255,0.03); padding: 8px; border-radius: 6px; border-left: 3px solid var(--accent-cyan);">
-            <strong style="color: #fff;">1. Urrutia AgroTech</strong><br>
+            <strong style="color: #fff;">1. AgroTech Chile</strong><br>
             Plataforma madre de tecnología agrícola de precisión & sensorización IoT.
           </div>
           <div style="background: rgba(255,255,255,0.03); padding: 8px; border-radius: 6px; border-left: 3px solid var(--accent-emerald);">

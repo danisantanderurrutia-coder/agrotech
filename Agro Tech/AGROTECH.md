@@ -1,5 +1,5 @@
 ---
-aliases: [AgroTech, Urrutia AgroTech, AgroTech Core, StartUp AgroTech]
+aliases: [AgroTech, AgroTech Chile, AgroTech Core, StartUp AgroTech]
 tags: [Startup, AgTech, Permacultura, Agroecologia, IoE, DigitalTwin, ESG, EconomiaDeLosHombros, Maule, Bioeconomia]
 created: 2026-09-25
 status: activo
@@ -72,7 +72,7 @@ Para evitar la sobrecarga de navegadores en zonas rurales con conectividad inter
 
 | Nivel | Entidad | Puerto Local | Stack Tecnológico | Rol Primario |
 | :--- | :--- | :--- | :--- | :--- |
-| **La Madre** | [[Urrutia AgroTech Core]] | `:7771` | React 18, Vite, Tailwind, Node.js | Orquestador maestro, finanzas, gobernanza, ingesta satelital ESA y portal público. |
+| **La Madre** | [[AgroTech Chile Core]] | `:7771` | React 18, Vite, Tailwind, Node.js | Orquestador maestro, finanzas, gobernanza, ingesta satelital ESA y portal público. |
 | **Hijo 1** | [[Agritwin]] (3D Engine) | `:7773` | Three.js, WebGL 2.0, WebSockets, Shaders PBR | Gemelo digital biofísico, visualización de cuarteles, topografía LIDAR y alerta de heladas brote a brote. |
 | **Hijo 2** | [[Rewild Suite]] & [[RewildMapper]] | `:7772` | Python HTTP, PWA Offline, IndexedDB, Turf.js | Auditoría de bosque nativo esclerófilo, inventario florístico de quebradas y emisión de créditos ecológicos sin señal celular. |
 

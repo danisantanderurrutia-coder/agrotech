@@ -229,12 +229,12 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   <div className="w-16 h-16 rounded-2xl bg-[#0B2519] border-2 border-emerald-500/40 p-2 shadow-md shrink-0 flex items-center justify-center">
                     <img 
                       src="./logo-peumo-quantum.jpg" 
-                      alt="Urrutia AgroTech Peumo Quantum Logo" 
+                      alt="AgroTech Chile Peumo Quantum Logo" 
                       className="w-full h-full object-contain rounded-lg"
                     />
                   </div>
                   <div>
-                    <h3 className="text-xl font-extrabold text-[#0B2519]">Urrutia AgroTech</h3>
+                    <h3 className="text-xl font-extrabold text-[#0B2519]">AgroTech Chile</h3>
                     <p className="text-xs text-emerald-800 font-mono font-bold">Núcleo Central & Comercio</p>
                   </div>
                 </div>

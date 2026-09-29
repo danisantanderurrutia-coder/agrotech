@@ -28,10 +28,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPitchDeck }) => {
           <div className="lg:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-lg bg-emerald-950 border border-emerald-500/40 flex items-center justify-center p-1 shadow-md">
-                <img src="./logo-peumo-quantum.jpg" alt="Urrutia AgroTech Emblem" className="w-full h-full object-contain rounded" />
+                <img src="./logo-peumo-quantum.jpg" alt="AgroTech Chile Emblem" className="w-full h-full object-contain rounded" />
               </div>
               <div>
-                <span className="font-extrabold text-xl text-white">URRUTIA AGROTECH</span>
+                <span className="font-extrabold text-xl text-white">AGROTECH CHILE</span>
                 <p className="text-xs text-amber-400 font-sans font-bold">Agro-Precisión & Satélites ESG</p>
               </div>
             </div>
@@ -113,7 +113,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPitchDeck }) => {
 
         {/* Footer Bottom */}
         <div className="pt-8 border-t border-emerald-900/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-sans text-emerald-200/60">
-          <p>© 2026 Urrutia AgroTech. Todos los derechos reservados. Maule, Chile.</p>
+          <p>© 2026 AgroTech Chile. Todos los derechos reservados. Maule, Chile.</p>
           <div className="flex items-center gap-4 font-mono text-[11px]">
             <span>Datos: ESA Sentinel-2 / Landsat / DGA Chile</span>
             <span className="text-amber-400 font-sans font-bold">Agro-Precisión Maule</span>

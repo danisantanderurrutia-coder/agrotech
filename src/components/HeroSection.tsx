@@ -64,7 +64,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenPitchDeck, onNav
               
               {/* Profile-sized Logo */}
               <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-emerald-600 shadow-md shrink-0 bg-[#071810] p-1 mt-1">
-                <img src="./logo-peumo-quantum.jpg" alt="Logo Urrutia AgroTech" className="w-full h-full object-contain rounded-xl" />
+                <img src="./logo-peumo-quantum.jpg" alt="Logo AgroTech Chile" className="w-full h-full object-contain rounded-xl" />
               </div>
 
               <div className="space-y-3 flex-1">
@@ -81,7 +81,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenPitchDeck, onNav
                 </h1>
 
                 <p className="text-base sm:text-lg text-slate-800 font-medium font-serif leading-relaxed pt-1">
-                  UrrutiaTech fusiona constelaciones satelitales Sentinel y Landsat con modelos biofísicos de microclima y suelos para predecir estrés hídrico, heladas y riesgo de incendio predial. Simulación geoespacial de alta resolución operativa desde el día uno, 100% lista para calibrarse con sensores IoT en terreno.
+                  AgroTech Chile fusiona constelaciones satelitales Sentinel y Landsat con modelos biofísicos de microclima y suelos para predecir estrés hídrico, heladas y riesgo de incendio predial. Simulación geoespacial de alta resolución operativa desde el día uno, 100% lista para calibrarse con sensores IoT en terreno.
                 </p>
               </div>
 
@@ -145,7 +145,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenPitchDeck, onNav
               <div className="relative rounded-xl overflow-hidden border border-emerald-900/60 group shadow-md">
                 <img 
                   src="./logo-peumo-quantum.jpg" 
-                  alt="Gemelo Digital UrrutiaTech" 
+                  alt="Gemelo Digital AgroTech Chile" 
                   className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 bg-[#071810]"
                 />
                 

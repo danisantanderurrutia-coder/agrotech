@@ -197,7 +197,7 @@ class AgriTwinApp {
       });
     }
 
-    // 2. Marcas Rewild & Urrutia AgroTech Redirect Popups
+    // 2. Marcas Rewild & AgroTech Chile Redirect Popups
     const btnRewild = document.getElementById('brandRewildBtn');
     const btnUrrutia = document.getElementById('brandUrrutiaBtn');
     const brandModal = document.getElementById('brandRedirectModal');
@@ -215,8 +215,8 @@ class AgriTwinApp {
 
     if (btnUrrutia && brandModal) {
       btnUrrutia.addEventListener('click', () => {
-        brandTitle.textContent = '⚡ Urrutia AgroTech';
-        brandMsg.innerHTML = 'Estás accediendo al centro de innovación agrotecnológica de <strong>Urrutia AgroTech</strong>. Próximamente disponible en línea.';
+        brandTitle.textContent = '⚡ AgroTech Chile';
+        brandMsg.innerHTML = 'Estás accediendo al centro de innovación agrotecnológica de <strong>AgroTech Chile</strong>. Próximamente disponible en línea.';
         brandModal.style.display = 'flex';
       });
     }

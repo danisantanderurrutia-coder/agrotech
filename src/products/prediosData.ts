@@ -289,7 +289,7 @@ export const PREDIO_MENIELS: PredioProfile = {
   rawEntitiesJson: {
     farmId: "MENIELS-PARRAL-CL",
     establishedYear: 2021,
-    permacultureDesigner: "Julio Pérez & Urrutia AgroTech Core Team",
+    permacultureDesigner: "Julio Pérez & AgroTech Chile Core Team",
     zonesActive: [1, 2, 3, 4, 5],
     waterHarvestSystem: "Keyline design + 4 Swales + Tranque 1.2 Ha",
     energyAutonomy: "100% fotovoltaica con excedente inyectado",

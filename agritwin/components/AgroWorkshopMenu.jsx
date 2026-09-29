@@ -727,7 +727,7 @@ export const AgroWorkshopMenu = ({
 
           <div className="p-3 bg-[#1e1008] border-t border-[#78350f] text-center">
             <span className="text-[10px] text-[#a89984] font-serif">
-              AgriTwin Engine Architecture • Urrutia AgroTech & Rewild
+              AgriTwin Engine Architecture • AgroTech Chile & Rewild
             </span>
           </div>
         </aside>

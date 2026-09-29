@@ -600,7 +600,7 @@ export const AgroTwinDynamicViewer: React.FC<AgroTwinDynamicViewerProps> = ({
                   🌱
                 </div>
                 <div>
-                  <div className="font-bold text-sm">AgroTwin Bot • UrrutiaTech</div>
+                  <div className="font-bold text-sm">AgroTwin Bot • AgroTech Chile</div>
                   <div className="text-[10px] text-emerald-200">Verificado • Servidor Maule</div>
                 </div>
               </div>

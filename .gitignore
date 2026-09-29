@@ -32,3 +32,6 @@ __pycache__/
 # macOS app bundles & binaries
 *.app
 agritwin/set_icon
+
+# MS Office / Keynote temp files
+~$*

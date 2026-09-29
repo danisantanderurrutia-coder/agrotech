@@ -167,7 +167,7 @@ export const CHANGELOG_DATA: ChangelogMilestone[] = [
       'Diseño de hardware KioT: caja estanca IP65, ESP32 dual core, sensor de suelo FDR capacitivo y sonda DS18B20.',
       'Matriz de costos de fabricación (BOM) y esquema de enlace LoRaWAN 915 MHz.',
       'Simulador biofísico de estrés hídrico de canopia (CWSI).',
-      'Identidad visual inicial Urrutia AgroTech inspirada en el peumo nativo y la permacultura del Maule.'
+      'Identidad visual inicial AgroTech Chile inspirada en el peumo nativo y la permacultura del Maule.'
     ],
     systemImpact: 'Validación del hardware de bajo costo frente a estaciones comerciales importadas que cuadruplican su valor.'
   }

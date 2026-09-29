@@ -69,9 +69,9 @@ export const SocialMediaKitSection: React.FC = () => {
               <div className="absolute -top-10 -right-10 w-40 h-40 bg-cyber-cyan/10 rounded-full blur-2xl" />
 
               <div className="flex items-center justify-between text-xs font-mono">
-                <span className="text-cyber-cyan font-bold">@urrutia.agrotech</span>
+                <span className="text-cyber-cyan font-bold">@agrotech.chile</span>
                 <span className="px-2 py-0.5 rounded bg-cyber-panel text-cyber-paperMuted text-[10px]">
-                  Urrutia AgroTech Style
+                  AgroTech Chile Style
                 </span>
               </div>
 
