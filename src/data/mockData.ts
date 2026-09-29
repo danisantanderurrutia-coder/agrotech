@@ -1237,7 +1237,7 @@ export const COMMERCIAL_PITCH_SLIDES: PitchSlide[] = [
         text: 'El modelo no requiere endeudamiento bancario agresivo; el hardware se ensambla contra orden de compra y el setup fee financia la calibración.'
       }
     },
-    speakerNotes: 'Wladimir y Pablo pueden auditar estos números: la estructura de costos es sumamente ágil. Nuestro punto de equilibrio operativo se alcanza con solo 14 predios activos en Plan Pro.'
+    speakerNotes: 'Wladimir Gutiérrez y Pablo Pérez pueden auditar estos números: la estructura de costos es sumamente ágil. Nuestro punto de equilibrio operativo se alcanza con solo 14 predios activos en Plan Pro.'
   },
   {
     id: 8,
@@ -1250,7 +1250,7 @@ export const COMMERCIAL_PITCH_SLIDES: PitchSlide[] = [
       points: [
         '1. Showrooms de Terreno: Utilizar el Predio Meniels (Parral) y Fundo El Boldo (Curicó) para "Días de Campo". El agricultor ve el gemelo 3D, toca el sensor y escucha sonar la sirena antiheladas en vivo.',
         '2. El "Gancho Gratuito" (Lead Magnet): Entregar a presidentes de canales de regadío y APRs un Informe de Riesgo Agroclimático gratuito de su zona para abrir puertas de reunión.',
-        '3. Visita de Diagnóstico Técnico (30 min): Paulina o un técnico cooperado visita el campo con medidor de terreno, identifica los 2 puntos críticos y cotiza en el acto.',
+        '3. Visita de Diagnóstico Técnico (30 min): Paulina Urrutia o un técnico cooperado visita el campo con medidor de terreno, identifica los 2 puntos críticos y cotiza en el acto.',
         '4. Garantía de 30 Días: Si durante el primer mes de uso el sistema no detecta anomalías o alertas útiles, se reembolsa el 100% de la suscripción.'
       ],
       metrics: [
@@ -1289,7 +1289,7 @@ export const COMMERCIAL_PITCH_SLIDES: PitchSlide[] = [
         text: 'Le decimos al agricultor: "Te postulamos a la Ley de Riego; el Estado paga el 80% del hardware y tú solo cubres la suscripción mensual de monitoreo".'
       }
     },
-    speakerNotes: 'Wladimir tiene amplia experiencia en la articulación con comités y organismos públicos. Postular a los agricultores a la Ley de Riego prácticamente elimina la objeción del costo inicial.'
+    speakerNotes: 'Wladimir Gutiérrez tiene amplia experiencia en la articulación con comités y organismos públicos. Postular a los agricultores a la Ley de Riego prácticamente elimina la objeción del costo inicial.'
   },
   {
     id: 10,
@@ -1301,9 +1301,9 @@ export const COMMERCIAL_PITCH_SLIDES: PitchSlide[] = [
       headline: 'Distribución transparente de tareas y metas cuantitativas para el próximo trimestre.',
       points: [
         'Daniel Santander: Cierre de alianzas con 2 exportadoras clave para Pasaporte Verde y dirección de la plataforma digital.',
-        'Wladimir: Presentación de convenios con 3 comités de APR y asociaciones de canalistas en Parral y Linares; control de caja y cobranzas.',
+        'Wladimir Gutiérrez: Presentación de convenios con 3 comités de APR y asociaciones de canalistas en Parral y Linares; control de caja y cobranzas.',
         'Paulina Urrutia: Ensamblaje y pruebas de 10 Kits KioT en taller de Talca; coordinación de visitas técnicas y stock.',
-        'Pablo: Puesta en producción del simulador de precios y calculadora de ROI; seguimiento semanal de prospectos y métricas.',
+        'Pablo Pérez: Puesta en producción del simulador de precios y calculadora de ROI; seguimiento semanal de prospectos y métricas.',
         'Meta Trimestral: Alcanzar los primeros 8 contratos firmados de AgriTwin y $8.500.000 CLP de facturación acumulada antes del 31 de diciembre.'
       ],
       metrics: [
