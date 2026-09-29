@@ -148,6 +148,27 @@ const SPA_PARTNERS: PartnerProfile[] = [
     ],
     badgeColor: 'border-teal-500 bg-teal-50 text-teal-900',
     avatarGradient: 'from-teal-600 via-cyan-700 to-slate-900'
+  },
+  {
+    id: 'cristian',
+    name: 'Cristian Cantuarias',
+    relation: 'Socio SpA • Informática & Diseño Digital',
+    role: 'Socio SpA • Ingeniería Informática & Diseño Digital / UI-UX',
+    location: 'Maule / Santiago, Chile 🇨🇱',
+    flag: '🇨🇱',
+    animalTotem: '🐆 Güiña del Maule',
+    animalDescription: 'Agilidad digital, camuflaje elegante y precisión en interfaces visuales e interacción humano-máquina.',
+    pillars: ['digital', 'comunicaciones'],
+    modality: 'Mixto (Sweat Equity de Software & Diseño + Aporte Inicial)',
+    description: 'Ingeniero Informático y diseñador de interfaces digitales (UI/UX). Lidera el desarrollo de plataformas web interactivas, la experiencia de usuario en software agroclimático y la dirección de arte y diseño de producto digital en AgroTech.',
+    responsibilities: [
+      'Arquitectura e ingeniería de software frontend para la web principal y paneles',
+      'Diseño de interfaces UI/UX y sistemas de visualización de datos de campo',
+      'Desarrollo de módulos interactivos, simuladores y herramientas de conversión',
+      'Dirección de arte digital, identidad visual y diseño responsive multidispositivo'
+    ],
+    badgeColor: 'border-cyan-500 bg-cyan-50 text-cyan-900',
+    avatarGradient: 'from-cyan-600 via-blue-700 to-slate-900'
   }
 ];
 
@@ -476,7 +497,7 @@ export const SomosPage: React.FC = () => {
                     💻
                   </span>
                   <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-teal-900 text-teal-200 border border-teal-500/30">
-                    Líder: Daniel Santander
+                    Líderes: Daniel Santander & Cristian Cantuarias
                   </span>
                 </div>
                 <div>
@@ -547,7 +568,7 @@ export const SomosPage: React.FC = () => {
             <span className="text-amber-700 font-sans text-xs font-bold uppercase tracking-wider">
               ESTRUCTURA DE CAPITAL Y SWEAT EQUITY
             </span>
-            <h2 className="text-3xl font-extrabold text-[#0B2519]">Los 4 Socios de AgroTech SpA</h2>
+            <h2 className="text-3xl font-extrabold text-[#0B2519]">Los 5 Socios de AgroTech SpA</h2>
             <p className="text-sm text-slate-600 font-serif">
               Ingresan bajo un sistema mixto que combina inversión inicial de capital con tiempo y trabajo comprometido (sin sueldo inicial), adquiriendo derechos de usufructo y participación sobre los productos.
             </p>
@@ -935,7 +956,7 @@ export const SomosPage: React.FC = () => {
                 </h3>
               </div>
               <p className="text-xs sm:text-sm text-slate-600 font-serif leading-relaxed">
-                El inicio basado en confianza y trabajo no remunerado (<strong>Sweat Equity</strong>) debe formalizarse mediante un <strong>Pacto de Accionistas (*Shareholders Agreement*)</strong> con calendario de <em>Vesting</em> a 24 o 36 meses con un <em>Cliff</em> de 6 meses para Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez y Pablo Pérez.
+                El inicio basado en confianza y trabajo no remunerado (<strong>Sweat Equity</strong>) debe formalizarse mediante un <strong>Pacto de Accionistas (*Shareholders Agreement*)</strong> con calendario de <em>Vesting</em> a 24 o 36 meses con un <em>Cliff</em> de 6 meses para Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Pablo Pérez y Cristian Cantuarias.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-sans">
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
@@ -978,7 +999,7 @@ export const SomosPage: React.FC = () => {
                   <div>
                     <strong className="text-emerald-950 font-sans">Licencia Exclusiva de Explotación & Usufructo para AgroTech SpA:</strong>
                     <span className="text-emerald-900 font-serif block">
-                      Daniel otorga una licencia de usufructo comercial exclusivo a la SpA. Los ingresos por suscripciones SaaS y servicios se integran al balance social de la empresa y se distribuyen en dividendos entre todos los socios (Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Pablo Pérez) según su porcentaje accionario.
+                      Daniel otorga una licencia de usufructo comercial exclusivo a la SpA. Los ingresos por suscripciones SaaS y servicios se integran al balance social de la empresa y se distribuyen en dividendos entre todos los socios (Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Pablo Pérez, Cristian Cantuarias) según su porcentaje accionario.
                     </span>
                   </div>
                 </div>
