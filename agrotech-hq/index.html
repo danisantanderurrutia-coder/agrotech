@@ -1,0 +1,2154 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <title>AgroTech HQ • Mission Control & Founder Cockpit</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="assets/favicon.png">
+
+  <!-- Tailwind CSS & Google Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: {
+              950: '#03070d',
+              900: '#070d18',
+              850: '#0b1424',
+              800: '#101c33',
+              700: '#1a2b4c',
+              600: '#273f6e'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Marked.js for rendering Obsidian Markdown notes in HQ -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Mermaid.js for Holding Architecture & Ecosystem Diagrams -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+  </script>
+
+  <style>
+    body {
+      background-color: #03070d;
+      background-image: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.04) 0%, transparent 60%);
+      color: #e2e8f0;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #03070d; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.22); }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.4)); }
+      50% { opacity: 1; filter: drop-shadow(0 0 24px rgba(16, 185, 129, 0.8)); }
+    }
+    .pulse-glow { animation: pulseGlow 3s infinite ease-in-out; }
+
+    /* Estilos WYSIWYG para Informe Renderizado */
+    #reportContentArea h1 { font-size: 1.5rem; font-weight: 800; color: #ffffff; border-bottom: 2px solid #059669; padding-bottom: 0.6rem; margin-top: 1.5rem; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
+    #reportContentArea h2 { font-size: 1.2rem; font-weight: 700; color: #f8fafc; border-bottom: 1px solid #1a2b4c; padding-bottom: 0.4rem; margin-top: 1.8rem; margin-bottom: 0.6rem; }
+    #reportContentArea h3 { font-size: 1rem; font-weight: 600; color: #cbd5e1; margin-top: 1.25rem; margin-bottom: 0.4rem; }
+    #reportContentArea table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.82rem; }
+    #reportContentArea th { background: #070d18; color: #94a3b8; font-weight: 700; text-align: left; padding: 0.6rem 0.8rem; border: 1px solid #1a2b4c; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    #reportContentArea td { padding: 0.5rem 0.8rem; border: 1px solid #1a2b4c; color: #e2e8f0; }
+    #reportContentArea tr:nth-child(even) td { background: #070d18; }
+    #reportContentArea tr:hover td { background: #0b1424; }
+    #reportContentArea strong { color: #ffffff; }
+    #reportContentArea code { background: #0b1424; color: #10b981; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; border: 1px solid #1a2b4c; }
+    #reportContentArea pre { background: #03070d; border: 1px solid #1a2b4c; border-radius: 12px; padding: 1rem; overflow-x: auto; margin: 1rem 0; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1.6; }
+    #reportContentArea pre code { background: transparent; padding: 0; border: none; }
+    #reportContentArea blockquote { border-left: 3px solid #10b981; padding: 0.75rem 1rem; background: #071810; border-radius: 0 8px 8px 0; margin: 1rem 0; color: #cbd5e1; font-size: 0.85rem; }
+    #reportContentArea ul, #reportContentArea ol { padding-left: 1.5rem; margin: 0.5rem 0; }
+    #reportContentArea li { margin: 0.3rem 0; color: #cbd5e1; }
+    #reportContentArea hr { border: none; border-top: 1px solid #1a2b4c; margin: 1.8rem 0; }
+    #reportContentArea p { margin: 0.6rem 0; }
+
+    /* Estilos Oficiales para Impresión / Exportación PDF */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #111827 !important;
+      }
+      header, nav, #leftSidebarReports, .no-print, button, a {
+        display: none !important;
+      }
+      #tab_informes {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      #reportWorkspace {
+        display: block !important;
+        width: 100% !important;
+      }
+      #rightPreviewReports {
+        width: 100% !important;
+      }
+      #reportPreviewPanel {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        color: #111827 !important;
+      }
+      #reportContentArea {
+        color: #111827 !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+      #reportContentArea h1, #reportContentArea h2, #reportContentArea h3 {
+        color: #064e3b !important;
+        border-color: #d1fae5 !important;
+      }
+      #reportContentArea table {
+        border-color: #d1d5db !important;
+        color: #111827 !important;
+      }
+      #reportContentArea th {
+        background-color: #f3f4f6 !important;
+        color: #374151 !important;
+        border-color: #d1d5db !important;
+      }
+      #reportContentArea td {
+        border-color: #e5e7eb !important;
+        color: #1f2937 !important;
+      }
+      #reportContentArea tr:nth-child(even) td {
+        background-color: #f9fafb !important;
+      }
+      #reportContentArea blockquote {
+        background: #f0fdf4 !important;
+        border-left-color: #10b981 !important;
+        color: #374151 !important;
+      }
+      #reportContentArea code {
+        background: #f3f4f6 !important;
+        color: #064e3b !important;
+        border-color: #e5e7eb !important;
+      }
+      #reportContentArea pre {
+        background: #f8fafc !important;
+        border-color: #e2e8f0 !important;
+        color: #1e293b !important;
+      }
+      @page {
+        size: A4;
+        margin: 1.5cm 2cm;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased">
+
+  <!-- ==================== HEADER SUPERIOR HQ ==================== -->
+  <header class="h-16 bg-obsidian-950/80 border-b border-white/[0.08] backdrop-blur-xl flex items-center justify-between px-6 z-40 sticky top-0 shadow-sm">
+    <div class="flex items-center gap-3 shrink-0">
+      <div class="w-9 h-9 rounded-xl overflow-hidden border border-emerald-500/30 shadow-md shrink-0 bg-obsidian-900">
+        <img src="assets/agrotech_hq_logo.jpg" alt="AgroTech HQ" class="w-full h-full object-cover">
+      </div>
+      <div class="flex items-center gap-2.5">
+        <h1 class="text-sm font-bold text-white tracking-tight font-sans">AgroTech HQ</h1>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          :7770 AIR-GAPPED
+        </span>
+        <span class="hidden xl:inline text-xs text-slate-500 font-mono border-l border-white/10 pl-3">
+          Gobernanza Central SpA & Cooperativa
+        </span>
+      </div>
+    </div>
+
+    <!-- Navegación de Módulos HQ (Segmented Control Minimalista) -->
+    <nav class="flex items-center gap-1 p-1 rounded-xl bg-slate-950/70 border border-white/[0.08] backdrop-blur-md font-mono text-xs overflow-x-auto">
+      <button onclick="setTab('infra')" id="tabBtn_infra" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap">
+        <span>🩺</span>
+        <span>Infraestructura</span>
+      </button>
+      <button onclick="setTab('holding')" id="tabBtn_holding" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/[0.04] border border-transparent transition-all flex items-center gap-1.5 font-medium whitespace-nowrap">
+        <span>🏛️</span>
+        <span>Holding</span>
+      </button>
+      <button onclick="setTab('spa')" id="tabBtn_spa" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/[0.04] border border-transparent transition-all flex items-center gap-1.5 font-medium whitespace-nowrap">
+        <span>⚖️</span>
+        <span>SpA & Socios</span>
+      </button>
+      <button onclick="setTab('coop')" id="tabBtn_coop" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/[0.04] border border-transparent transition-all flex items-center gap-1.5 font-medium whitespace-nowrap">
+        <span>🤝</span>
+        <span>Cooperativa</span>
+      </button>
+      <button onclick="setTab('obsidian')" id="tabBtn_obsidian" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/[0.04] border border-transparent transition-all flex items-center gap-1.5 font-medium whitespace-nowrap">
+        <span>💎</span>
+        <span>Obsidian Vault</span>
+      </button>
+      <button onclick="setTab('informes')" id="tabBtn_informes" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/[0.04] border border-transparent transition-all flex items-center gap-1.5 font-medium whitespace-nowrap">
+        <span>📑</span>
+        <span>Informes Maestros</span>
+      </button>
+      <button onclick="setTab('agents')" id="tabBtn_agents" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/[0.04] border border-transparent transition-all flex items-center gap-1.5 font-medium whitespace-nowrap">
+        <span>🤖</span>
+        <span>Agentes</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ==================== CONTENEDOR PRINCIPAL ==================== -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-6 space-y-6">
+
+    <!-- SUBTLE MISSION CONTROL CONTEXT BAR -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/[0.06] text-xs font-mono">
+      <div class="flex flex-wrap items-center gap-2 text-slate-300">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[11px] font-bold">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          FUNDO MENIEL (RETIRO)
+        </span>
+        <span class="text-slate-600">•</span>
+        <span class="text-slate-400">24.8 ha • Tranque 18.500 m³ • Rol SII 142-88</span>
+      </div>
+      <div class="flex items-center gap-3 text-slate-400 text-[11px]">
+        <span>Gobernanza: <strong class="text-slate-200 font-semibold">SpA + Cooperativa</strong></span>
+        <span class="text-slate-600">•</span>
+        <span>Ecosistema: <strong class="text-emerald-400 font-semibold">v2.6.0</strong></span>
+      </div>
+    </div>
+
+    <!-- KPI STRIP GLOBAL (ESTILO MINIMALISTA EJECUTIVO) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="p-4 rounded-xl bg-obsidian-900/50 border border-white/[0.06] hover:border-white/[0.12] transition-colors shadow-sm">
+        <div class="flex items-center justify-between text-slate-400 font-mono text-[11px] mb-1.5">
+          <span>SERVIDORES ACTIVOS</span>
+          <span id="kpiServicesCount" class="text-emerald-400 font-semibold">4 / 4 Online</span>
+        </div>
+        <div class="text-xl font-bold text-white font-mono flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>100% Operativo</span>
+        </div>
+        <span class="text-[10px] text-slate-500 font-mono block mt-1">Puertos: 7771, 7772, 7773, 7774</span>
+      </div>
+
+      <div class="p-4 rounded-xl bg-obsidian-900/50 border border-white/[0.06] hover:border-white/[0.12] transition-colors shadow-sm">
+        <div class="flex items-center justify-between text-slate-400 font-mono text-[11px] mb-1.5">
+          <span>ESTRUCTURA SOCIETARIA</span>
+          <span class="text-slate-300 font-semibold">SpA + Coop</span>
+        </div>
+        <div class="text-xl font-bold text-white font-mono">
+          2 Fundadores
+        </div>
+        <span class="text-[10px] text-slate-500 font-mono block mt-1">Daniel Santander & Paulina Urrutia</span>
+      </div>
+
+      <div class="p-4 rounded-xl bg-obsidian-900/50 border border-white/[0.06] hover:border-white/[0.12] transition-colors shadow-sm">
+        <div class="flex items-center justify-between text-slate-400 font-mono text-[11px] mb-1.5">
+          <span>PREDIO DEMOSTRADOR</span>
+          <span class="text-slate-300 font-semibold">Las Camelias</span>
+        </div>
+        <div class="text-xl font-bold text-white font-mono">
+          24.8 ha <span class="text-xs text-slate-400 font-normal">Retiro</span>
+        </div>
+        <span class="text-[10px] text-slate-500 font-mono block mt-1">Rol SII 142-88 • Tranque 18.500 m³</span>
+      </div>
+
+      <div class="p-4 rounded-xl bg-obsidian-900/50 border border-white/[0.06] hover:border-white/[0.12] transition-colors shadow-sm">
+        <div class="flex items-center justify-between text-slate-400 font-mono text-[11px] mb-1.5">
+          <span>VERSIÓN OFICIAL</span>
+          <span class="text-emerald-400 font-semibold">Semilla Brotando</span>
+        </div>
+        <div class="text-xl font-bold text-white font-mono">
+          v2.6.0
+        </div>
+        <span class="text-[10px] text-slate-500 font-mono block mt-1">MRV Hash: 0x9f1a8c3d2b7e</span>
+      </div>
+    </div>
+
+    <!-- ==================== PESTAÑA 1: INFRAESTRUCTURA & SALUD ==================== -->
+    <section id="tab_infra" class="space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+            <span>🩺</span> Radar de Infraestructura & Salud en Tiempo Real
+          </h2>
+          <p class="text-xs text-slate-400 font-mono mt-0.5">
+            Ping automático a cada microservicio del holding (:7771..:7774). Detección de caída o reinicio en 1.5s.
+          </p>
+        </div>
+        <button onclick="checkHealth()" class="px-3.5 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] text-slate-300 font-mono text-xs font-medium flex items-center gap-1.5 transition-colors">
+          <span>🔄 Refrescar</span>
+        </button>
+      </div>
+
+      <!-- Tarjetas de Microservicios -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="servicesGrid">
+        <!-- Renderizado dinámico vía JS -->
+      </div>
+
+      <!-- Consola de Accesos Directos Seguros -->
+      <div class="p-5 rounded-xl bg-obsidian-900/50 border border-white/[0.06] space-y-3">
+        <h3 class="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+          <span>🚀</span> Puertas de Enlace de la Suite (One-Click Launch)
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 font-mono text-xs">
+          <a href="http://localhost:7771" target="_blank" class="p-3.5 rounded-xl bg-obsidian-950/60 hover:bg-obsidian-900/80 border border-white/[0.06] hover:border-emerald-500/30 block transition-all group">
+            <div class="flex items-center justify-between mb-1.5">
+              <strong class="text-white group-hover:text-emerald-400 transition-colors">AgroTech Web</strong>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">:7771</span>
+            </div>
+            <p class="text-[11px] text-slate-400 font-sans">Frontend público de ventas, tienda y membresías.</p>
+          </a>
+
+          <a href="http://localhost:7772" target="_blank" class="p-3.5 rounded-xl bg-obsidian-950/60 hover:bg-obsidian-900/80 border border-white/[0.06] hover:border-cyan-500/30 block transition-all group">
+            <div class="flex items-center justify-between mb-1.5">
+              <strong class="text-white group-hover:text-cyan-400 transition-colors">Rewild Suite</strong>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-bold">:7772</span>
+            </div>
+            <p class="text-[11px] text-slate-400 font-sans">Backend Python, telemetría IoT y Sentinel-2.</p>
+          </a>
+
+          <a href="http://localhost:7773" target="_blank" class="p-3.5 rounded-xl bg-obsidian-950/60 hover:bg-obsidian-900/80 border border-white/[0.06] hover:border-amber-500/30 block transition-all group">
+            <div class="flex items-center justify-between mb-1.5">
+              <strong class="text-white group-hover:text-amber-400 transition-colors">AgriTwin 1 Predial</strong>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">:7773</span>
+            </div>
+            <p class="text-[11px] text-slate-400 font-sans">Gemelo 3D predial, Taller AoE II y Vista Vecinal Catan.</p>
+          </a>
+
+          <a href="http://localhost:7774" target="_blank" class="p-3.5 rounded-xl bg-obsidian-950/60 hover:bg-obsidian-900/80 border border-white/[0.06] hover:border-blue-500/30 block transition-all group">
+            <div class="flex items-center justify-between mb-1.5">
+              <strong class="text-white group-hover:text-blue-400 transition-colors">AgroTwin 2 Territorial</strong>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">:7774</span>
+            </div>
+            <p class="text-[11px] text-slate-400 font-sans">GIS Corporativo ESRI, FWI incendios y Dossier Directorio.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PESTAÑA 2: SpA & SOCIOS ==================== -->
+    <section id="tab_spa" class="space-y-6 hidden">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+            <span>⚖️</span> Gobernanza AgroTech SpA & Matriz de Socios
+          </h2>
+          <p class="text-xs text-slate-400 font-mono mt-0.5">
+            Estructura de participación societaria mixta: inversión de capital, horas de desarrollo y derechos de autoría.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Tarjeta Socio 1: Daniel Santander -->
+        <div class="p-5 rounded-xl bg-obsidian-900/60 border border-white/[0.08] space-y-4 shadow-sm">
+          <div class="flex items-center gap-4 border-b border-white/[0.06] pb-3">
+            <div class="w-14 h-14 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-2xl shrink-0">
+              💻
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="font-bold text-white text-base font-sans">Daniel Santander</h3>
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-mono font-bold">
+                  Co-Fundador
+                </span>
+              </div>
+              <span class="text-xs text-slate-300 font-mono">Arquitecto de Software & Diseñador de Sistemas</span>
+              <p class="text-[10px] text-slate-400 font-mono">Liderazgo Tecnológico & Modelos Biofísicos</p>
+            </div>
+          </div>
+          <div class="space-y-2 text-xs font-mono text-slate-300">
+            <div class="flex justify-between">
+              <span class="text-slate-400">Modalidad Inicial:</span>
+              <strong class="text-slate-200">Tiempo & Trabajo Invertido</strong>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Propiedad Intelectual:</span>
+              <strong class="text-white">Derechos de Autoría AgriTwin</strong>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Régimen Contractual:</span>
+              <strong class="text-emerald-400">Pacto de Accionistas en Borrador</strong>
+            </div>
+            <div class="p-3 rounded-lg bg-obsidian-950/60 border border-white/[0.06] font-sans text-[11px] text-slate-300 leading-relaxed">
+              El software AgriTwin y sus modelos matemáticos están sujetos al reconocimiento de autoría personal, con usufructo y explotación comercial compartida para la SpA.
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta Socio 2: Paulina Urrutia -->
+        <div class="p-5 rounded-xl bg-obsidian-900/60 border border-white/[0.08] space-y-4 shadow-sm">
+          <div class="flex items-center gap-4 border-b border-white/[0.06] pb-3">
+            <div class="w-14 h-14 rounded-xl overflow-hidden border border-white/10 shrink-0 bg-slate-900">
+              <img src="assets/avatar_paulina.jpg" alt="Paulina Urrutia" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="font-bold text-white text-base font-sans">Paulina Urrutia</h3>
+                <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[10px] font-mono font-bold">
+                  Co-Fundadora
+                </span>
+              </div>
+              <span class="text-xs text-slate-300 font-mono">Gestión Territorial & Alianzas Agronómicas</span>
+              <p class="text-[10px] text-slate-400 font-mono">Liderazgo Agroecológico Maule Sur</p>
+            </div>
+          </div>
+          <div class="space-y-2 text-xs font-mono text-slate-300">
+            <div class="flex justify-between">
+              <span class="text-slate-400">Modalidad Inicial:</span>
+              <strong class="text-slate-200">Red Territorial & Coordinación</strong>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Enlace Predial:</span>
+              <strong class="text-white">Fundo Meniel (Las Camelias)</strong>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Gobernanza:</span>
+              <strong class="text-emerald-400">Voz y Voto en Directorio</strong>
+            </div>
+            <div class="p-3 rounded-lg bg-obsidian-950/60 border border-white/[0.06] font-sans text-[11px] text-slate-300 leading-relaxed">
+              Articulación del predio ancla demostrador y vinculación con productores locales para la constitución formal de la Cooperativa de Trabajo de Las Camelias.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Protocolo de Inversión sin Sueldo Inicial -->
+      <div class="p-5 rounded-xl bg-obsidian-900/50 border border-white/[0.06] space-y-3">
+        <h3 class="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+          <span>📜</span> Reglas del Sistema Mixto (Trabajo por Equity / Usufructo)
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 font-mono text-xs">
+          <div class="p-3.5 rounded-xl bg-obsidian-950/60 border border-white/[0.06]">
+            <strong class="text-white block mb-1">1. Registro de Aportes</strong>
+            <p class="text-[11px] text-slate-400 font-sans">Cada sprint, desarrollo algorítmico o gestión territorial se registra formalmente como aporte de valor no salarial.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-obsidian-950/60 border border-white/[0.06]">
+            <strong class="text-white block mb-1">2. Contrato de Usufructo</strong>
+            <p class="text-[11px] text-slate-400 font-sans">La SpA tiene la exclusividad comercial para comercializar los productos B2B mientras el autor retiene la autoría técnica.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-obsidian-950/60 border border-white/[0.06]">
+            <strong class="text-white block mb-1">3. Gatillo de Liquidez</strong>
+            <p class="text-[11px] text-slate-400 font-sans">Al cerrar contratos comerciales o subsidios CORFO/CNR, se asignan dividendos o se inicia régimen salarial fijo pactado.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PESTAÑA 3: COOPERATIVA ==================== -->
+    <section id="tab_coop" class="space-y-6 hidden">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+            <span>🤝</span> Cooperativa de Trabajo AgroTech Las Camelias
+          </h2>
+          <p class="text-xs text-slate-400 font-mono mt-0.5">
+            Estructura asociativa comunitaria: agricultores, regantes y operadores unidos para compartir maquinaria y beneficios de escala.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+        <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] space-y-1.5 shadow-sm">
+          <span class="text-slate-400 text-[11px] block">Membresías Federadas</span>
+          <strong class="text-xl text-white font-bold block">14 Socios</strong>
+          <span class="text-[10px] text-slate-500 block">Sector Las Camelias / Retiro</span>
+        </div>
+        <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] space-y-1.5 shadow-sm">
+          <span class="text-slate-400 text-[11px] block">Parque de Maquinaria Keyline</span>
+          <strong class="text-xl text-white font-bold block">1 Subsolador</strong>
+          <span class="text-[10px] text-slate-500 block">Yeomans Plow compartido</span>
+        </div>
+        <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] space-y-1.5 shadow-sm">
+          <span class="text-slate-400 text-[11px] block">Fondos Postulables</span>
+          <strong class="text-xl text-emerald-400 font-bold block">CNR Ley 18.450</strong>
+          <span class="text-[10px] text-slate-500 block">Subsidio a obras asociativas de riego</span>
+        </div>
+      </div>
+
+      <div class="p-5 rounded-xl bg-obsidian-900/50 border border-white/[0.06] space-y-2">
+        <h3 class="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+          <span>🌾</span> ¿Cómo se acopla la SpA con la Cooperativa?
+        </h3>
+        <p class="text-xs text-slate-300 font-sans leading-relaxed">
+          La <strong>SpA</strong> es el núcleo tecnológico privado que desarrolla, licencia y opera los gemelos digitales (AgriTwin 1 y AgroTwin 2) y diseña los algoritmos. La <strong>Cooperativa de Trabajo</strong> es el vehículo territorial: congrega a los parceleros vecinos para postular juntos a subsidios estatales, compartir compras por volumen y ejecutar faenas de subsolado Keyline y zanjas de infiltración sin endeudarse individualmente.
+        </p>
+      </div>
+
+      <!-- Comité Comunitario y Ejes Operativos Cooperativa -->
+      <div class="p-5 rounded-xl bg-obsidian-900/50 border border-white/[0.06] space-y-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div>
+            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+              GOBERNANZA ASOCIATIVA
+            </span>
+            <h3 class="text-sm font-bold text-white mt-1">
+              Ejes de Acción & Operación Regenerativa Territorial
+            </h3>
+            <p class="text-xs text-slate-400 font-sans mt-0.5">
+              La Cooperativa Las Camelias integra la gestión asociativa campesina con tecnología de precisión.
+            </p>
+          </div>
+          <div class="flex items-center gap-3 shrink-0">
+            <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">
+              🌱 14 Socias y Socios
+            </span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 font-mono text-xs">
+          
+          <div class="p-4 rounded-xl bg-obsidian-950/60 border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-2">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-sm text-emerald-400 mb-1">
+              🌱
+            </div>
+            <strong class="text-white text-sm block font-sans">Huertos & Semillas Libres</strong>
+            <span class="text-emerald-400 text-[11px] block">Biodiversidad Maule</span>
+            <p class="text-slate-400 text-[11px] font-sans">
+              Articulación de huertos asociativos, conservación de material genético adaptado a la sequía y ferias de intercambio.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-obsidian-950/60 border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-2">
+            <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-sm text-cyan-400 mb-1">
+              🧪
+            </div>
+            <strong class="text-white text-sm block font-sans">Biofábrica Comunal</strong>
+            <span class="text-cyan-400 text-[11px] block">Biofertilización Las Camelias</span>
+            <p class="text-slate-400 text-[11px] font-sans">
+              Capacitación en bioinsumos para vecinos, reduciendo hasta un 70% los costos de fertilizantes químicos en el valle.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-obsidian-950/60 border border-white/[0.06] hover:border-white/[0.12] transition-colors space-y-2">
+            <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-sm text-amber-400 mb-1">
+              🚜
+            </div>
+            <strong class="text-white text-sm block font-sans">Maquinaria Keyline Compartida</strong>
+            <span class="text-amber-400 text-[11px] block">Subsolador Yeomans</span>
+            <p class="text-slate-400 text-[11px] font-sans">
+              Uso colaborativo del arado Yeomans para descompactación de praderas y zanjas de infiltración sin endeudamiento individual.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PESTAÑA 4: CONSOLA DE AGENTES ==================== -->
+    <section id="tab_agents" class="space-y-6 hidden">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+            <span>🤖</span> Consola de Agentes Autónomos (Workforce Orchestrator)
+          </h2>
+          <p class="text-xs text-slate-400 font-mono mt-0.5">
+            Estado de los chats/agentes especializados para delegar tareas sin sobrecargar el contexto.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs">
+        <!-- Agente 1 -->
+        <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] hover:border-white/[0.15] transition-all space-y-2.5 shadow-sm">
+          <div class="flex items-center justify-between">
+            <strong class="text-white text-sm font-sans flex items-center gap-2">
+              <span>🏛️</span> Agente Web & Business (:7771)
+            </strong>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold">Activo</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-sans">Foco: Landing de ventas, sección Somos, tienda de hardware y funnel comercial.</p>
+          <div class="p-2 rounded-lg bg-obsidian-950/60 border border-white/[0.06] text-[10px] text-slate-400">
+            Archivos asignados: <code>src/</code>, <code>src/components/</code>
+          </div>
+        </div>
+
+        <!-- Agente 2 -->
+        <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] hover:border-white/[0.15] transition-all space-y-2.5 shadow-sm">
+          <div class="flex items-center justify-between">
+            <strong class="text-white text-sm font-sans flex items-center gap-2">
+              <span>🍇</span> Agente AgriTwin 1 Predial (:7773)
+            </strong>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold">Activo</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-sans">Foco: Three.js 3D predial, Taller AoE II, FAO-56 y Vista Vecinal Catan/Civ VI.</p>
+          <div class="p-2 rounded-lg bg-obsidian-950/60 border border-white/[0.06] text-[10px] text-slate-400">
+            Archivos asignados: <code>agritwin/</code>, <code>agritwin/vecinos_catan.html</code>
+          </div>
+        </div>
+
+        <!-- Agente 3 -->
+        <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] hover:border-white/[0.15] transition-all space-y-2.5 shadow-sm">
+          <div class="flex items-center justify-between">
+            <strong class="text-white text-sm font-sans flex items-center gap-2">
+              <span>🗺️</span> Agente AgroTwin 2 Regional (:7774)
+            </strong>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold">Activo</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-sans">Foco: Cartografía ESRI World Imagery, Las Camelias (Retiro), FWI, TWI y Dossier Directorio.</p>
+          <div class="p-2 rounded-lg bg-obsidian-950/60 border border-white/[0.06] text-[10px] text-slate-400">
+            Archivos asignados: <code>agritwin-regional/</code>
+          </div>
+        </div>
+
+        <!-- Agente 4 -->
+        <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] hover:border-white/[0.15] transition-all space-y-2.5 shadow-sm">
+          <div class="flex items-center justify-between">
+            <strong class="text-white text-sm font-sans flex items-center gap-2">
+              <span>📡</span> Agente Rewild Suite (:7772)
+            </strong>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold">Activo</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-sans">Foco: Backend Python, ingesta LoRaWAN, procesamiento de bandas Sentinel-2 y webhooks.</p>
+          <div class="p-2 rounded-lg bg-obsidian-950/60 border border-white/[0.06] text-[10px] text-slate-400">
+            Archivos asignados: <code>rewild/</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PESTAÑA: RADIOGRAFÍA HOLDING AGROTECH ==================== -->
+    <section id="tab_holding" class="space-y-6 hidden">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+            <span>🏛️</span> Radiografía Completa del Ecosistema AgroTech
+          </h2>
+          <p class="text-xs text-slate-400 font-mono mt-0.5">
+            Holding tecnológico-agroecológico estructurado en 5 capas complementarias e interoperables.
+          </p>
+        </div>
+        <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono font-bold">
+          Ecosistema v2.6.0
+        </span>
+      </div>
+
+      <!-- Diagrama Mermaid Interactivo de las 5 Capas -->
+      <div class="p-5 rounded-xl bg-obsidian-900/50 border border-white/[0.06] space-y-3">
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-2.5">
+          <h3 class="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+            <span>🧬</span> Topología de Datos & Capas del Holding
+          </h3>
+          <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+            Interoperabilidad Multi-Puerto
+          </span>
+        </div>
+
+        <div id="mermaidDiagramContainer" class="p-4 bg-obsidian-950/80 rounded-xl border border-white/[0.06] overflow-x-auto flex justify-center">
+          <pre class="mermaid text-xs">
+flowchart TD
+    classDef hq fill:#0f172a,stroke:#10b981,stroke-width:1.5px,color:#fff;
+    classDef web fill:#0f172a,stroke:#3b82f6,stroke-width:1.5px,color:#fff;
+    classDef twin1 fill:#0f172a,stroke:#f59e0b,stroke-width:1.5px,color:#fff;
+    classDef twin2 fill:#0f172a,stroke:#06b6d4,stroke-width:1.5px,color:#fff;
+    classDef rewild fill:#0f172a,stroke:#8b5cf6,stroke-width:1.5px,color:#fff;
+
+    HQ["🏛️ AgroTech HQ (:7770)<br/>• Gobernanza SpA & Cooperativa<br/>• Obsidian Vault Integrado<br/>• Orquestador de Agentes"]:::hq
+
+    WEB["🌐 AgroTech Web (:7771)<br/>• Marketplace B2B & Tienda LoRaWAN<br/>• Captación de Clientes & Membresías"]:::web
+
+    TWIN2["🗺️ AgroTwin 2 Territorial (:7774)<br/>• Mapeador Local B2B Institucional<br/>• 10 Predios Roles SII & Derechos DGA<br/>• 5 Pozos APR & Inundación Longaví<br/>• API Boundary Conditions (:7774)"]:::twin2
+
+    TWIN1["🚜 AgriTwin 1 Predial (:7773)<br/>• Fundo Meniel (24.8 ha) Three.js PBR<br/>• Operativo: Riego, Keyline & PRV<br/>• Ingesta en vivo vía /api/basin-sync"]:::twin1
+
+    REWILD["🌿 RewildMapper & Backend (:7772)<br/>• Bio-corredores & Restauración<br/>• Pipeline Sentinel-2 L2A & NDVI<br/>• Ingesta LoRaWAN & Webhooks"]:::rewild
+
+    HQ --> WEB
+    HQ --> TWIN1
+    HQ --> TWIN2
+    HQ --> REWILD
+
+    TWIN2 == "Condiciones de Borde (/api/basin-sync)" ==> TWIN1
+    TWIN1 -- "Telemetría Nodos KioT Mesh" --> TWIN2
+    REWILD -- "Capas NDVI & Bio-corredores" --> TWIN2
+          </pre>
+        </div>
+      </div>
+
+      <!-- Detalle de las 5 Capas -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 font-mono text-xs">
+        
+        <!-- Capa 1 -->
+        <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] hover:border-white/[0.15] transition-all space-y-2 shadow-sm">
+          <div class="flex items-center justify-between">
+            <strong class="text-white text-sm font-sans">Capa 1: Web & SaaS B2B</strong>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">:7771</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-sans">
+            Fachada comercial, onboarding de agricultores, venta de kits KioT LoRaWAN y postulaciones colectivas a fondos CNR / CORFO.
+          </p>
+          <div class="p-2 rounded-lg bg-obsidian-950/60 border border-white/[0.06] text-[10px] text-slate-400">
+            Tecnología: Vite + React 18 + Tailwind + Lucide
+          </div>
+        </div>
+
+        <!-- Capa 2 -->
+        <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] hover:border-white/[0.15] transition-all space-y-2 shadow-sm">
+          <div class="flex items-center justify-between">
+            <strong class="text-white text-sm font-sans">Capa 2: AgriTwin 1 Predial</strong>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">:7773</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-sans">
+            Gemelo digital operativo de Fundo Meniel (24.8 ha). Simulación 3D en Three.js con relieve PBR, Taller Agrícola estilo AoE II, Ganadería PRV y acople a telemetría regional por <code>/api/basin-sync</code>.
+          </p>
+          <div class="p-2 rounded-lg bg-obsidian-950/60 border border-white/[0.06] text-[10px] text-slate-400">
+            Tecnología: Three.js r128 + Chart.js + FAO-56 Penman
+          </div>
+        </div>
+
+        <!-- Capa 3 -->
+        <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] hover:border-white/[0.15] transition-all space-y-2 shadow-sm">
+          <div class="flex items-center justify-between">
+            <strong class="text-white text-sm font-sans">Capa 3: AgroTwin 2 Territorial</strong>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">:7774</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-sans">
+            Terminal GIS Institucional & B2B (122.000 ha). Mapeador Local & APRs con 10 Roles SII, pozos profundos, cotas de inundación DGA/SENAPRED, FWI y generador de condiciones de borde.
+          </p>
+          <div class="p-2 rounded-lg bg-obsidian-950/60 border border-white/[0.06] text-[10px] text-slate-400">
+            Tecnología: Leaflet + GeoJSON + WMS Oficiales + API Rest
+          </div>
+        </div>
+
+        <!-- Capa 4 -->
+        <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] hover:border-white/[0.15] transition-all space-y-2 shadow-sm">
+          <div class="flex items-center justify-between">
+            <strong class="text-white text-sm font-sans">Capa 4: Rewild & Backend</strong>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-bold">:7772</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-sans">
+            Motor analítico y de bio-corredores: ingesta de telemetría LoRaWAN, procesamiento de imágenes Sentinel-2 L2A y cálculo de integridad ecológica.
+          </p>
+          <div class="p-2 rounded-lg bg-obsidian-950/60 border border-white/[0.06] text-[10px] text-slate-400">
+            Tecnología: Python 3 + FastAPI/Flask + GeoPandas
+          </div>
+        </div>
+
+        <!-- Capa 5 -->
+        <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] hover:border-white/[0.15] transition-all space-y-2 shadow-sm">
+          <div class="flex items-center justify-between">
+            <strong class="text-white text-sm font-sans">Capa 5: AgroTech HQ</strong>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">:7770</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-sans">
+            Cabina de control privada del fundador. Lector nativo del Vault de Obsidian, gobernanza SpA, cooperativa comunitaria y telemetría de microservicios.
+          </p>
+          <div class="p-2 rounded-lg bg-obsidian-950/60 border border-white/[0.06] text-[10px] text-slate-400">
+            Tecnología: Node.js HTTP Server + Marked.js + Air-Gapped
+          </div>
+        </div>
+
+        <!-- Capa Transversal Hardware & Edulab -->
+        <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] hover:border-white/[0.15] transition-all space-y-2 shadow-sm">
+          <div class="flex items-center justify-between">
+            <strong class="text-white text-sm font-sans">KioT Edge & Edulab</strong>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-bold">Terreno</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-sans">
+            Hardware KioT en terreno (sondas capacitivas, piezómetros, LoRaWAN) junto con Urrutia Edulab (diseño permacultural y juego Raíces y Chips).
+          </p>
+          <div class="p-2 rounded-lg bg-obsidian-950/60 border border-white/[0.06] text-[10px] text-slate-400">
+            Liderazgo: Paulina Urrutia & Daniel Santander
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SECCIÓN DEDICADA: ARQUITECTURA DEL EMBUDO TÁCTICO & SCRIPTS DE ACOPLE -->
+      <div class="p-5 rounded-xl bg-obsidian-900/60 border border-blue-500/20 space-y-4 font-mono text-xs">
+        <div class="flex items-center justify-between border-b border-white/[0.06] pb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-base">🧬</span>
+            <div>
+              <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                Arquitectura del Embudo Táctico: Acople AgroTwin 2 (:7774) ↔ AgriTwin 1 (:7773)
+              </h3>
+              <span class="text-[10px] text-slate-400 font-sans">
+                Estrategia híbrida: Mapeador Local B2B Institucional y Alimentador de Condiciones de Borde para Fundo Meniel
+              </span>
+            </div>
+          </div>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
+            Tubería HTTP Activa
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px]">
+          <div class="p-3 bg-black/40 border border-white/[0.06] rounded-lg space-y-1">
+            <strong class="text-purple-300 block font-sans">1. Macro Institucional</strong>
+            <span class="text-slate-400 text-[10px] block">DGA, DMC, INIA, ESA Sentinel-2</span>
+            <p class="text-[10px] text-slate-400 font-sans">Se consumen vía API pública abierta sin costos de supercómputo.</p>
+          </div>
+          <div class="p-3 bg-black/40 border border-cyan-500/30 rounded-lg space-y-1">
+            <strong class="text-cyan-300 block font-sans">2. Meso AgroTwin 2 (:7774)</strong>
+            <span class="text-slate-400 text-[10px] block">Mapeador Local & APRs</span>
+            <p class="text-[10px] text-slate-400 font-sans">10 Roles SII, 5 APRs, cuenca Longaví y API de condiciones de borde.</p>
+          </div>
+          <div class="p-3 bg-black/40 border border-amber-500/30 rounded-lg space-y-1">
+            <strong class="text-amber-300 block font-sans">3. Micro AgriTwin 1 (:7773)</strong>
+            <span class="text-slate-400 text-[10px] block">Gemelo Meniel 3D</span>
+            <p class="text-[10px] text-slate-400 font-sans">Three.js interactivo; toma decisiones de riego, aspersión y pastoreo PRV.</p>
+          </div>
+        </div>
+
+        <!-- Scripts de Interoperabilidad -->
+        <div class="space-y-2 pt-2">
+          <span class="text-[10px] text-slate-400 uppercase tracking-wider block">Códigos & Scripts de Acople Oficiales:</span>
+          
+          <div class="p-3 bg-black/60 border border-white/[0.08] rounded-lg">
+            <div class="flex items-center justify-between text-[10px] text-amber-300 mb-1">
+              <span>Bridge en agritwin/server.cjs (Puerto :7773):</span>
+              <span class="text-slate-500">GET /api/basin-sync</span>
+            </div>
+            <pre class="text-[10px] text-slate-300 overflow-x-auto"><code>const regionalReq = http.get('http://127.0.0.1:7774/api/telemetry/summary', { timeout: 1200 }, (regRes) => {
+  let data = '';
+  regRes.on('data', chunk => data += chunk);
+  regRes.on('end', () => {
+    const regJson = JSON.parse(data);
+    res.end(JSON.stringify({ source: 'regional-live-7774', fundoMeniel, regionalCuenca: regJson }));
+  });
+});</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Módulos Especializados: KioT Edge & Urrutia Edulab -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        
+        <!-- KioT Hardware & Automatización Edge -->
+        <div class="p-5 rounded-xl bg-obsidian-900/60 border border-white/[0.08] space-y-3 shadow-sm">
+          <div class="flex items-center gap-3 border-b border-white/[0.06] pb-3">
+            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-xl shrink-0">
+              ⚡
+            </div>
+            <div>
+              <h3 class="font-bold text-white text-sm font-sans">KioT Hardware & Automatización Edge</h3>
+              <p class="text-[11px] text-slate-400 font-mono">Infraestructura Sensórica de Bajo Consumo & Alta Resiliencia</p>
+            </div>
+          </div>
+          <ul class="text-xs font-sans text-slate-300 space-y-2 leading-relaxed">
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 font-bold">•</span>
+              <span><strong>Sondas FDR Tri-Estrato:</strong> Medición capacitiva continua en 3 horizontes (0-20 cm activa, 20-60 cm bulbo, 60-100 cm estrato profundo).</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 font-bold">•</span>
+              <span><strong>Actuadores Solares LoRaWAN:</strong> Control autónomo de válvulas motorizadas para riego por pulsos según déficit hídrico FAO-56.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 font-bold">•</span>
+              <span><strong>Piezometría de Tranque:</strong> Medición ultrasónica de cota de agua (18.500 m³ en Fundo Meniel) con alerta ante vaciado crítico.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Permacultura & Urrutia Edulab -->
+        <div class="p-5 rounded-xl bg-obsidian-900/60 border border-white/[0.08] space-y-3 shadow-sm">
+          <div class="flex items-center gap-3 border-b border-white/[0.06] pb-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-xl shrink-0">
+              🌱
+            </div>
+            <div>
+              <h3 class="font-bold text-white text-sm font-sans">Permacultura & Urrutia Edulab</h3>
+              <p class="text-[11px] text-slate-400 font-mono">Pedagogía Campesina, Saberes Vivos & Diseño Regenerativo</p>
+            </div>
+          </div>
+          <ul class="text-xs font-sans text-slate-300 space-y-2 leading-relaxed">
+            <li class="flex items-start gap-2">
+              <span class="text-amber-400 font-bold">•</span>
+              <span><strong>Diseño Regenerativo con Julio Pérez:</strong> Zonificación permacultural por Keyline, siembra de agua de lluvia y cortavientos protectores.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-amber-400 font-bold">•</span>
+              <span><strong>Economía de los Hombros:</strong> Recuperación de la minga y el apoyo mutuo comunal. Maquinaria pesada compartida en la cuenca.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-amber-400 font-bold">•</span>
+              <span><strong>Juego de Cartas "Raíces y Chips":</strong> Metodología lúdica de alfabetización agroecológica para agricultores y escuelas rurales.</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Matriz de Integración Cruzada de Datos -->
+      <div class="p-5 rounded-xl bg-obsidian-900/50 border border-white/[0.06] space-y-3">
+        <h3 class="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+          <span>🔄</span> Protocolo de Integración Cruzada de Datos (AgriTwin 1 ⇄ AgroTwin 2 ⇄ RewildMapper)
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 font-mono text-xs">
+          <div class="p-3.5 rounded-xl bg-obsidian-950/60 border border-white/[0.06]">
+            <strong class="text-white block mb-1">1. Predio a Territorio (Uplink)</strong>
+            <p class="text-[11px] text-slate-400 font-sans">
+              Los datos in situ de Fundo Meniel (VWC %, nivel de tranque) suben a AgroTwin 2 para calibrar el mapa satelital como <em>Ground-Truth Anchor</em>.
+            </p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-obsidian-950/60 border border-white/[0.06]">
+            <strong class="text-white block mb-1">2. Territorio a Predio (Downlink)</strong>
+            <p class="text-[11px] text-slate-400 font-sans">
+              AgroTwin 2 alerta a AgriTwin 1 con 6 horas de anticipación ante la llegada de viento Puelche desecante o riesgo de helada por drenaje catabático.
+            </p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-obsidian-950/60 border border-white/[0.06]">
+            <strong class="text-white block mb-1">3. Rewild a Visualizadores</strong>
+            <p class="text-[11px] text-slate-400 font-sans">
+              RewildMapper procesa los mosaicos Sentinel-2 L2A y entrega las capas de NDVI y corredores biológicos precalculadas a ambos gemelos digitales.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== PESTAÑA: OBSIDIAN VAULT (AGRO TECH) ==================== -->
+    <section id="tab_obsidian" class="space-y-6 hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+            <span>💎</span> Obsidian Knowledge Vault • "Agro Tech"
+          </h2>
+          <p class="text-xs text-slate-400 font-mono mt-0.5">
+            Sincronizado con: <code class="text-slate-300">/Documents/Agrotech/Agro Tech/</code>
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="obsidian://open?vault=Agro%20Tech" class="px-3.5 py-1.5 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/20 text-xs font-mono font-medium flex items-center gap-1.5 transition-colors shadow-sm">
+            <span>🚀 Abrir en App Obsidian</span>
+          </a>
+          <button onclick="loadObsidianNotes()" class="px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] text-slate-300 text-xs font-mono font-medium transition-colors">
+            <span>🔄 Recargar</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Layout Split: Lista de Notas a la Izquierda, Lector a la Derecha -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 h-[680px]">
+        
+        <!-- Sidebar de Archivos .md -->
+        <div class="lg:col-span-4 bg-obsidian-900/60 border border-white/[0.08] rounded-xl p-4 flex flex-col space-y-3 overflow-hidden shadow-sm">
+          <div class="flex items-center justify-between border-b border-white/[0.06] pb-2">
+            <span class="text-xs font-mono font-bold text-slate-300 flex items-center gap-1.5">
+              <span>📁</span> Notas del Vault (<span id="notesCount" class="text-emerald-400">0</span>)
+            </span>
+            <input type="text" id="notesSearchInput" oninput="filterNotes()" placeholder="Buscar nota..." class="px-2.5 py-1 rounded-lg bg-obsidian-950/80 border border-white/[0.08] text-[11px] font-mono text-slate-200 focus:outline-none focus:border-emerald-500/50 w-36 transition-colors">
+          </div>
+
+          <div id="notesListContainer" class="flex-1 overflow-y-auto space-y-1 pr-1 font-mono text-xs">
+            <div class="text-slate-500 text-center py-8">Cargando notas de Obsidian...</div>
+          </div>
+        </div>
+
+        <!-- Visor / Lector de Nota Renderizada -->
+        <div class="lg:col-span-8 bg-obsidian-900/60 border border-white/[0.08] rounded-xl flex flex-col overflow-hidden shadow-sm">
+          <!-- Header de la Nota -->
+          <div class="p-4 border-b border-white/[0.06] bg-obsidian-950/60 flex items-center justify-between shrink-0">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-emerald-400 font-bold text-sm">📝</span>
+                <h3 id="currentNoteTitle" class="text-base font-bold text-white font-sans">Selecciona una nota</h3>
+              </div>
+              <span id="currentNoteMeta" class="text-[10px] text-slate-400 font-mono block mt-0.5">Ningún archivo cargado</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <a id="openInObsidianBtn" href="obsidian://open?vault=Agro%20Tech" class="px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-slate-200 border border-white/[0.08] text-[11px] font-mono font-medium hidden transition-all">
+                Editar en Obsidian ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Contenido Renderizado de Markdown -->
+          <div id="noteContentArea" class="flex-1 p-6 overflow-y-auto font-sans text-sm text-slate-200 leading-relaxed space-y-4">
+            <div class="text-center py-20 text-slate-500 font-mono text-xs">
+              👈 Haz clic en cualquier nota de tu Vault para leerla renderizada aquí en tiempo real.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== PESTAÑA: CENTRO DE INFORMES MAESTROS ==================== -->
+    <section id="tab_informes" class="space-y-6 hidden">
+      
+      <!-- Encabezado de Sección y Estado de Red Federada -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-5 rounded-xl bg-obsidian-900/50 border border-white/[0.06] shadow-sm">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <span class="text-emerald-400 text-lg">📑</span>
+            <h2 class="text-lg font-bold text-white tracking-tight">Centro de Documentación & Informes Maestros</h2>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              Dossier Compiler
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 font-mono mt-1">
+            Federación de telemetría multi-puerto (:7772, :7773, :7774) inyectada en plantillas canónicas de Obsidian.
+          </p>
+        </div>
+
+        <!-- Badges de Estado de Fuentes Federadas -->
+        <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-obsidian-950/60 border border-white/[0.08] text-slate-300">
+            <span>🚜</span>
+            <span>:7773 Predial</span>
+            <span id="badgeSrcAgritwin" class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-amber-500/10 border border-amber-500/20 text-amber-400">CARGANDO</span>
+          </div>
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-obsidian-950/60 border border-white/[0.08] text-slate-300">
+            <span>🗺️</span>
+            <span>:7774 Cuenca</span>
+            <span id="badgeSrcAgrotwin" class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-blue-500/10 border border-blue-500/20 text-blue-400">CARGANDO</span>
+          </div>
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-obsidian-950/60 border border-white/[0.08] text-slate-300">
+            <span>🌿</span>
+            <span>:7772 MRV</span>
+            <span id="badgeSrcRewild" class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">CARGANDO</span>
+          </div>
+          <button onclick="refreshLiveTelemetry()" class="px-3 py-1 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 border border-white/[0.08] transition-colors text-xs flex items-center gap-1.5 font-medium">
+            <span>🔄</span> Refrescar
+          </button>
+        </div>
+      </div>
+
+      <!-- CATÁLOGO DE LOS 4 INFORMES TIPO CANÓNICOS -->
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+            <span>🏛️</span> Catálogo de Informes Canónicos
+          </h3>
+          <span class="text-[11px] text-slate-500 font-mono">Selecciona una plantilla para previsualizar y compilar</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 font-mono text-xs">
+          
+          <!-- Tipo 1: Dossier Inversión & Gobernanza SpA -->
+          <div onclick="selectCanonicalReport(1)" id="cardReport1" class="report-card p-4 rounded-xl bg-obsidian-900/80 border border-emerald-500/40 shadow-sm cursor-pointer transition-all hover:border-emerald-400 relative group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                TIPO 1 • INVERSIÓN
+              </span>
+              <span class="text-base">📊</span>
+            </div>
+            <h4 class="font-bold text-white text-sm font-sans mb-1 group-hover:text-emerald-300 transition-colors">
+              Dossier Inversión & Gobernanza SpA
+            </h4>
+            <p class="text-[11px] text-slate-400 font-sans leading-relaxed mb-3">
+              Balance financiero, CAPEX $48.5M, TIR 18.6%, Payback 3.8a, pacto de socios y Cooperativa Las Camelias.
+            </p>
+            <div class="text-[10px] text-slate-500 pt-2 border-t border-white/[0.06] flex items-center justify-between">
+              <span>Bancos / Fondos CORFO</span>
+              <span class="text-emerald-400 font-semibold">Activo ✓</span>
+            </div>
+          </div>
+
+          <!-- Tipo 2: Carpeta Técnica CNR Ley 18.450 -->
+          <div onclick="selectCanonicalReport(2)" id="cardReport2" class="report-card p-4 rounded-xl bg-obsidian-900/40 border border-white/[0.08] shadow-sm cursor-pointer transition-all hover:border-white/[0.2] relative group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                TIPO 2 • RIEGO CNR
+              </span>
+              <span class="text-base">💧</span>
+            </div>
+            <h4 class="font-bold text-white text-sm font-sans mb-1 group-hover:text-blue-300 transition-colors">
+              Carpeta Técnica Riego CNR Ley 18.450
+            </h4>
+            <p class="text-[11px] text-slate-400 font-sans leading-relaxed mb-3">
+              Memoria de tranque gravitacional 18.500 m³, subsolado Keyline Yeomans y ahorro de bombeo fósil (-$8.2M/año).
+            </p>
+            <div class="text-[10px] text-slate-500 pt-2 border-t border-white/[0.06] flex items-center justify-between">
+              <span>Comisión Nac. de Riego</span>
+              <span class="text-slate-400">Seleccionar</span>
+            </div>
+          </div>
+
+          <!-- Tipo 3: Pasaporte Verde EUDR -->
+          <div onclick="selectCanonicalReport(3)" id="cardReport3" class="report-card p-4 rounded-xl bg-obsidian-900/40 border border-white/[0.08] shadow-sm cursor-pointer transition-all hover:border-white/[0.2] relative group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                TIPO 3 • EXPORTACIÓN UE
+              </span>
+              <span class="text-base">🌿</span>
+            </div>
+            <h4 class="font-bold text-white text-sm font-sans mb-1 group-hover:text-cyan-300 transition-colors">
+              Pasaporte Verde & Certificado EUDR
+            </h4>
+            <p class="text-[11px] text-slate-400 font-sans leading-relaxed mb-3">
+              Línea base satelital a dic-2020 para exportación de fruta sin deforestación a la Unión Europea.
+            </p>
+            <div class="text-[10px] text-slate-500 pt-2 border-t border-white/[0.06] flex items-center justify-between">
+              <span>EU 2023/1115 Cero Def.</span>
+              <span class="text-slate-400">Seleccionar</span>
+            </div>
+          </div>
+
+          <!-- Tipo 4: Auditoría Agronómica Predial In Situ -->
+          <div onclick="selectCanonicalReport(4)" id="cardReport4" class="report-card p-4 rounded-xl bg-obsidian-900/40 border border-white/[0.08] shadow-sm cursor-pointer transition-all hover:border-white/[0.2] relative group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                TIPO 4 • AUDITORÍA IN SITU
+              </span>
+              <span class="text-base">🔬</span>
+            </div>
+            <h4 class="font-bold text-white text-sm font-sans mb-1 group-hover:text-amber-300 transition-colors">
+              Auditoría Agronómica Predial In Situ
+            </h4>
+            <p class="text-[11px] text-slate-400 font-sans leading-relaxed mb-3">
+              Diagnóstico de sondas FDR tri-estrato, alerta Puelche 30-30-30, zonificación de heladas a 05:30 AM y rotación PRV.
+            </p>
+            <div class="text-[10px] text-slate-500 pt-2 border-t border-white/[0.06] flex items-center justify-between">
+              <span>Asesoría Técnica SpA</span>
+              <span class="text-slate-400">Seleccionar</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ESPACIO DE TRABAJO (SPLIT-VIEW PROFESIONAL) -->
+      <div id="reportWorkspace" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+        <!-- ================= COLUMNA IZQUIERDA: CONTROL, FUENTES Y TELEMETRÍA ================= -->
+        <div id="leftSidebarReports" class="lg:col-span-5 space-y-4">
+          
+          <!-- Selector de Plantilla y Accionador Primario -->
+          <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] shadow-sm space-y-3.5 font-mono text-xs">
+            <div class="flex items-center justify-between border-b border-white/[0.06] pb-2.5">
+              <strong class="text-white flex items-center gap-2 text-xs uppercase tracking-wider font-mono">
+                <span>⚙️</span> Configuración
+              </strong>
+              <span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                Vault Conectado
+              </span>
+            </div>
+
+            <!-- Selector de Plantilla del Vault -->
+            <div class="space-y-1.5">
+              <label class="text-[11px] text-slate-400 font-bold block">Plantilla Markdown en Vault:</label>
+              <select id="selectTemplateDropdown" onchange="onTemplateDropdownChange(this.value)" class="w-full p-2.5 rounded-lg bg-obsidian-950/80 border border-white/[0.08] text-slate-200 text-xs focus:outline-none focus:border-emerald-500/50 transition-colors font-sans">
+                <option value="Dossier Inversión y Gobernanza SpA.md">1. Dossier Inversión & Gobernanza SpA.md</option>
+                <option value="Carpeta Técnica CNR Ley 18.450.md">2. Carpeta Técnica CNR Ley 18.450.md</option>
+                <option value="Pasaporte Verde EUDR.md">3. Pasaporte Verde EUDR.md</option>
+                <option value="Auditoría Agronómica Predial.md">4. Auditoría Agronómica Predial.md</option>
+              </select>
+            </div>
+
+            <!-- Botón Maestro de Compilación -->
+            <div class="pt-1">
+              <button onclick="compileCurrentReport(true)" id="btnCompileMaster" class="w-full py-2.5 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs font-mono flex items-center justify-center gap-2 transition-colors shadow-sm">
+                <span>⚡</span>
+                <span>Compilar Dossier Maestro</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Checklist de Fuentes Federadas y Telemetría Viva -->
+          <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] shadow-sm space-y-3 font-mono text-xs">
+            <div class="flex items-center justify-between border-b border-white/[0.06] pb-2">
+              <strong class="text-white flex items-center gap-2 text-xs uppercase tracking-wider">
+                <span>📡</span> Telemetría Viva Federada
+              </strong>
+              <span id="telemetryStatusSummary" class="text-[10px] text-slate-400">Actualizado</span>
+            </div>
+
+            <div class="space-y-2">
+              
+              <!-- Fuente 1: AgriTwin :7773 -->
+              <div class="p-2.5 rounded-lg bg-obsidian-950/60 border border-white/[0.06] space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-200 font-bold text-[11px]">🚜 AgriTwin Predial (:7773)</span>
+                  <span id="tagAgritwin" class="text-[9px] px-1.5 py-0.2 rounded font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                    [EN VIVO]
+                  </span>
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-[10px] text-slate-400 font-sans pt-0.5">
+                  <div>Humedad 0-20cm: <strong id="valFDR20" class="text-slate-200 font-mono">32.5%</strong></div>
+                  <div>Tranque 18.5k: <strong id="valTranque" class="text-slate-200 font-mono">16.420 m³</strong></div>
+                  <div>Helada 05:30AM: <strong id="valHelada" class="text-emerald-400 font-mono">PREVENTIVA</strong></div>
+                  <div>Rotación PRV: <strong id="valPRV" class="text-slate-200 font-mono">1.8 UGM/ha</strong></div>
+                </div>
+              </div>
+
+              <!-- Fuente 2: AgroTwin :7774 -->
+              <div class="p-2.5 rounded-lg bg-obsidian-950/60 border border-white/[0.06] space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-200 font-bold text-[11px]">🗺️ AgroTwin Territorial (:7774)</span>
+                  <span id="tagAgrotwin" class="text-[9px] px-1.5 py-0.2 rounded font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                    [EN VIVO]
+                  </span>
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-[10px] text-slate-400 font-sans pt-0.5">
+                  <div>Caudal Longaví: <strong id="valLongavi" class="text-slate-200 font-mono">185 m³/s</strong></div>
+                  <div>Embalse Bullileo: <strong id="valBullileo" class="text-slate-200 font-mono">84.2 Hm³</strong></div>
+                  <div>Índice FWI: <strong id="valFWI" class="text-amber-400 font-mono">28.4 (Alto)</strong></div>
+                  <div>Viento Puelche: <strong id="valPuelche" class="text-red-400 font-mono">32.5 km/h</strong></div>
+                </div>
+              </div>
+
+              <!-- Fuente 3: Rewild :7772 -->
+              <div class="p-2.5 rounded-lg bg-obsidian-950/60 border border-white/[0.06] space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-200 font-bold text-[11px]">🌿 Rewild Suite MRV (:7772)</span>
+                  <span id="tagRewild" class="text-[9px] px-1.5 py-0.2 rounded font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                    [EN VIVO]
+                  </span>
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-[10px] text-slate-400 font-sans pt-0.5">
+                  <div>Captura Carbono: <strong id="valCarbono" class="text-slate-200 font-mono">4.8 tCO₂e/ha</strong></div>
+                  <div>Línea Base EUDR: <strong class="text-emerald-400 font-mono">100% Cero Def.</strong></div>
+                  <div>NDVI Predial: <strong id="valNDVI" class="text-slate-200 font-mono">0.78</strong></div>
+                  <div>Hash MRV: <strong id="valHashMRV" class="text-slate-300 font-mono">0x8f2d4a19c6e</strong></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Historial de Informes Guardados en Vault -->
+          <div class="p-4 rounded-xl bg-obsidian-900/60 border border-white/[0.08] shadow-sm space-y-2.5 font-mono text-xs">
+            <div class="flex items-center justify-between border-b border-white/[0.06] pb-2">
+              <strong class="text-slate-300 flex items-center gap-2">
+                <span>📁</span> Informes en Vault (`/Informes Generados/`)
+              </strong>
+              <button onclick="loadGeneratedReports()" class="text-[10px] text-slate-400 hover:text-white transition-colors">
+                🔄 Refrescar
+              </button>
+            </div>
+            <div id="generatedReportsList" class="space-y-1 max-h-44 overflow-y-auto pr-1">
+              <div class="text-slate-500 text-center py-4">Cargando informes guardados...</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ================= COLUMNA DERECHA: PREVISUALIZADOR WYSIWYG ================= -->
+        <div id="rightPreviewReports" class="lg:col-span-7 space-y-4">
+          
+          <div id="reportPreviewPanel" class="rounded-xl bg-obsidian-900/60 border border-white/[0.08] shadow-sm overflow-hidden flex flex-col">
+            
+            <!-- Membrete y Encabezado Oficial AgroTech SpA -->
+            <div class="p-5 border-b border-white/[0.06] bg-obsidian-950/70 space-y-3">
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-11 h-11 rounded-lg overflow-hidden border border-white/10 shadow-sm bg-obsidian-900 shrink-0">
+                    <img src="assets/agrotech_hq_logo.jpg" alt="AgroTech HQ Logo" class="w-full h-full object-cover">
+                  </div>
+                  <div>
+                    <span class="text-[10px] font-mono tracking-wider text-emerald-400 uppercase font-bold block">
+                      AGROTECH SpA • INFORME TÉCNICO OFICIAL
+                    </span>
+                    <h3 id="previewDocTitle" class="text-base font-bold text-white font-sans tracking-tight">
+                      Dossier de Inversión & Gobernanza SpA
+                    </h3>
+                    <div class="flex flex-wrap items-center gap-2 mt-0.5 text-[11px] text-slate-400 font-mono">
+                      <span>Predio Meniel</span> • 
+                      <span>Rol SII 142-88 Retiro</span> • 
+                      <span>24.8 ha</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-right font-mono text-[10px] shrink-0">
+                  <span id="previewClassificationBadge" class="inline-block px-2.5 py-0.5 rounded-full font-bold uppercase bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                    🔒 PRIVADO
+                  </span>
+                  <div id="previewTimestamp" class="text-slate-400 mt-1">26 de septiembre de 2026</div>
+                  <div class="text-slate-500">Hash: <span id="previewHeaderHash" class="text-slate-300">0x8f2d4a19c6e</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contenido Renderizado de Alta Gama WYSIWYG -->
+            <div id="reportContentArea" class="p-6 sm:p-8 overflow-y-auto font-sans text-sm text-slate-200 leading-relaxed space-y-4" style="min-height: 500px; max-height: 700px;">
+              <div class="text-center py-24 space-y-2 text-slate-500 font-mono text-xs">
+                <div class="text-4xl">📑</div>
+                <p class="text-white text-sm font-bold font-sans">Compilador Listo</p>
+                <p>Haz clic en "⚡ Compilar Dossier Maestro" para inyectar la telemetría viva de todos los satélites.</p>
+              </div>
+            </div>
+
+            <!-- Sección de Firmas Institucionales y Hash MRV -->
+            <div class="p-5 border-t border-white/[0.06] bg-obsidian-950/60 space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 font-mono text-xs">
+                
+                <!-- Firma Daniel Santander -->
+                <div class="p-3.5 rounded-lg bg-obsidian-900/60 border border-white/[0.06] space-y-1.5 text-center">
+                  <div class="h-8 flex items-center justify-center font-serif italic text-base text-emerald-400 select-none">
+                    Daniel Santander
+                  </div>
+                  <div class="border-t border-white/[0.06] pt-1">
+                    <strong class="text-white block text-xs font-sans">Daniel Santander</strong>
+                    <span class="text-[10px] text-slate-400 block">Arquitecto de Software & Director Técnico</span>
+                    <span class="text-[9px] text-slate-500 block">AgroTech SpA • Co-Fundador</span>
+                  </div>
+                </div>
+
+                <!-- Firma Paulina Urrutia -->
+                <div class="p-3.5 rounded-lg bg-obsidian-900/60 border border-white/[0.06] space-y-1.5 text-center">
+                  <div class="h-8 flex items-center justify-center font-serif italic text-base text-amber-300 select-none">
+                    Paulina Urrutia
+                  </div>
+                  <div class="border-t border-white/[0.06] pt-1">
+                    <strong class="text-white block text-xs font-sans">Paulina Urrutia</strong>
+                    <span class="text-[10px] text-slate-400 block">Gestión Territorial & Relaciones Institucionales</span>
+                    <span class="text-[9px] text-slate-500 block">AgroTech SpA • Co-Fundadora</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Footer Criptográfico MRV -->
+              <div class="flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] font-mono text-slate-500 border-t border-white/[0.06] pt-2.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  <span>MRV: <code id="previewFooterHash" class="text-slate-300">0x8f2d4a19c6e</code></span>
+                </div>
+                <span>AgroTech SpA — Air-Gapped Mission Control :7770</span>
+              </div>
+            </div>
+
+            <!-- BARRA DE ACCIONES INFERIOR -->
+            <div class="p-3.5 bg-obsidian-950/80 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-2.5 font-mono text-xs">
+              <div class="flex items-center gap-1.5">
+                <button onclick="downloadReportMD()" class="px-2.5 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 border border-white/[0.08] transition-colors flex items-center gap-1">
+                  <span>📄</span> .md
+                </button>
+                <button onclick="downloadReportTXT()" class="px-2.5 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 border border-white/[0.08] transition-colors flex items-center gap-1">
+                  <span>📝</span> .txt
+                </button>
+                <button onclick="downloadReportPDF()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium flex items-center gap-1.5 transition-colors shadow-sm">
+                  <span>🖨️</span> Imprimir / PDF
+                </button>
+              </div>
+
+              <div class="flex items-center gap-1.5">
+                <button onclick="saveCurrentToVault()" class="px-3 py-1.5 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/20 font-medium flex items-center gap-1.5 transition-colors shadow-sm">
+                  <span>💾</span> Guardar en Vault
+                </button>
+                <a id="btnOpenTemplateInObsidian" href="obsidian://open?vault=Agro%20Tech" target="_blank" class="px-2.5 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 border border-white/[0.08] flex items-center gap-1 transition-colors">
+                  <span>💎</span> Plantilla ↗
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==================== SCRIPT DE TELEMETRÍA Y CONTROL ==================== -->
+  <script>
+    let currentTab = 'infra';
+    let mermaidInitialized = false;
+    let lastReportMarkdown = null;
+
+    function setTab(tab) {
+      currentTab = tab;
+      const allTabs = ['infra', 'holding', 'spa', 'coop', 'obsidian', 'informes', 'agents'];
+      
+      allTabs.forEach(t => {
+        const btn = document.getElementById(`tabBtn_${t}`);
+        const sec = document.getElementById(`tab_${t}`);
+        if (btn && sec) {
+          if (t === tab) {
+            btn.className = 'px-3 py-1.5 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap';
+            sec.classList.remove('hidden');
+          } else {
+            btn.className = 'px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/[0.04] border border-transparent transition-all flex items-center gap-1.5 font-medium whitespace-nowrap';
+            sec.classList.add('hidden');
+          }
+        }
+      });
+
+      if (tab === 'holding' && !mermaidInitialized) {
+        setTimeout(() => {
+          try {
+            mermaid.run();
+            mermaidInitialized = true;
+          } catch (e) {
+            console.warn('Mermaid rendering:', e);
+          }
+        }, 100);
+      }
+
+      if (tab === 'obsidian' && allNotes.length === 0) {
+        loadObsidianNotes();
+      }
+
+      if (tab === 'informes') {
+        refreshLiveTelemetry();
+        loadTemplatesCatalog();
+        loadGeneratedReports();
+        if (!lastCompiledResult) {
+          compileCurrentReport(false);
+        }
+      }
+    }
+
+    async function checkHealth() {
+      const grid = document.getElementById('servicesGrid');
+      const countEl = document.getElementById('kpiServicesCount');
+
+      try {
+        const res = await fetch('/api/health-check');
+        const data = await res.json();
+
+        let onlineCount = 0;
+        grid.innerHTML = data.services.map(s => {
+          const isOnline = s.status === 'online';
+          if (isOnline) onlineCount++;
+
+          const badgeColor = isOnline 
+            ? 'bg-emerald-950 text-emerald-300 border-emerald-500/40' 
+            : 'bg-red-950 text-red-300 border-red-500/40';
+
+          const dotColor = isOnline ? 'bg-emerald-400 animate-pulse' : 'bg-red-400';
+
+          return `
+            <div class="p-4 rounded-2xl bg-obsidian-900 border ${isOnline ? 'border-obsidian-700' : 'border-red-900/60'} shadow-lg space-y-3 font-mono text-xs">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="font-bold text-white text-sm">${s.name}</h4>
+                  <span class="text-[11px] text-slate-400">Puerto :${s.port}</span>
+                </div>
+                <span class="px-2.5 py-1 rounded-full border ${badgeColor} text-[10px] font-bold flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full ${dotColor}"></span>
+                  ${isOnline ? 'ONLINE' : 'OFFLINE'}
+                </span>
+              </div>
+              <div class="flex items-center justify-between text-[11px] pt-1 border-t border-obsidian-800">
+                <span class="text-slate-400">${s.url}</span>
+                <a href="${s.url}" target="_blank" class="px-2.5 py-1 rounded-lg bg-obsidian-800 hover:bg-obsidian-700 text-slate-200 border border-obsidian-600 transition-all">
+                  Abrir ↗
+                </a>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        if (countEl) {
+          countEl.innerText = `${onlineCount} / ${data.services.length} Online`;
+          countEl.className = onlineCount === data.services.length ? 'text-emerald-400 font-bold' : 'text-amber-400 font-bold';
+        }
+      } catch (err) {
+        console.error('Error fetching health-check:', err);
+      }
+    }
+
+    // ==================== OBSIDIAN VAULT CLIENT ====================
+    let allNotes = [];
+    let currentNote = null;
+
+    async function loadObsidianNotes() {
+      const container = document.getElementById('notesListContainer');
+      const countEl = document.getElementById('notesCount');
+      if (container) {
+        container.innerHTML = '<div class="text-slate-500 text-center py-8">Cargando notas del Vault...</div>';
+      }
+
+      try {
+        const res = await fetch('/api/obsidian/notes');
+        const data = await res.json();
+        const list = data.files || data.notes || [];
+        if (list.length > 0) {
+          allNotes = list.map(item => ({
+            filename: item.filename || item.name,
+            size: item.size || 0,
+            modified: item.modified || item.mtime
+          }));
+          if (countEl) countEl.textContent = allNotes.length;
+          renderNotesList(allNotes);
+          if (allNotes.length > 0 && !currentNote) {
+            selectNote(allNotes[0].filename);
+          }
+        } else {
+          if (container) container.innerHTML = '<div class="text-slate-500 text-center py-8">No se encontraron notas en el Vault.</div>';
+        }
+      } catch (err) {
+        if (container) {
+          container.innerHTML = '<div class="text-red-400 text-center py-8">Error conectando con el servicio de Obsidian.</div>';
+        }
+      }
+    }
+
+    function renderNotesList(notes) {
+      const container = document.getElementById('notesListContainer');
+      if (!container) return;
+
+      if (notes.length === 0) {
+        container.innerHTML = '<div class="text-slate-500 text-center py-8">No se encontraron notas.</div>';
+        return;
+      }
+
+      container.innerHTML = notes.map(n => {
+        const fname = n.filename || n.name || '';
+        const isSelected = currentNote === fname;
+        const safeName = fname.replace(/'/g, "\\'");
+        return `
+          <button onclick="selectNote('${safeName}')" class="w-full text-left p-2.5 rounded-xl transition-all flex items-start gap-2.5 ${isSelected ? 'bg-purple-950/70 text-purple-200 border border-purple-500/50 shadow-md' : 'hover:bg-obsidian-850 text-slate-300 border border-transparent'}">
+            <span class="text-purple-400 mt-0.5 text-xs">📄</span>
+            <div class="flex-1 overflow-hidden">
+              <div class="font-semibold truncate text-[11px]">${fname.replace(/\.md$/, '')}</div>
+              <div class="text-[10px] text-slate-500 font-sans">${(n.size / 1024).toFixed(1)} KB • ${n.modified ? new Date(n.modified).toLocaleDateString() : ''}</div>
+            </div>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function filterNotes() {
+      const input = document.getElementById('notesSearchInput');
+      const query = (input ? input.value : '').toLowerCase();
+      const filtered = allNotes.filter(n => n.filename.toLowerCase().includes(query));
+      renderNotesList(filtered);
+    }
+
+    async function selectNote(filename) {
+      currentNote = filename;
+      renderNotesList(allNotes);
+      
+      const titleEl = document.getElementById('currentNoteTitle');
+      const metaEl = document.getElementById('currentNoteMeta');
+      const contentEl = document.getElementById('noteContentArea');
+      const openBtn = document.getElementById('openInObsidianBtn');
+
+      if (titleEl) titleEl.textContent = filename.replace(/\.md$/, '');
+      if (metaEl) metaEl.textContent = `Cargando desde /Documents/Agrotech/Agro Tech/${filename}...`;
+      if (openBtn) {
+        openBtn.href = `obsidian://open?vault=Agro%20Tech&file=${encodeURIComponent(filename.replace(/\.md$/, ''))}`;
+        openBtn.classList.remove('hidden');
+      }
+
+      try {
+        const res = await fetch(`/api/obsidian/note?file=${encodeURIComponent(filename)}`);
+        const data = await res.json();
+        if (data.content && contentEl) {
+          metaEl.textContent = `${data.filename} • ${data.size} bytes • Modificado: ${new Date(data.modified).toLocaleString()}`;
+          contentEl.innerHTML = marked.parse(data.content);
+        } else if (contentEl) {
+          contentEl.innerHTML = `<div class="text-amber-400 font-mono text-xs">Nota vacía o sin contenido legible.</div>`;
+        }
+      } catch (err) {
+        if (contentEl) {
+          contentEl.innerHTML = `<div class="text-red-400 font-mono text-xs">Error cargando archivo: ${err.message}</div>`;
+        }
+      }
+    }
+
+    // ==================== CENTRO DE DOCUMENTACIÓN & INFORMES MAESTROS ====================
+    let selectedCanonicalType = 1;
+    let selectedTemplateName = 'Dossier Inversión y Gobernanza SpA.md';
+    let currentTelemetry = null;
+    let lastCompiledResult = null;
+    let isCompilingReport = false;
+
+    const CANONICAL_TEMPLATES = {
+      1: {
+        file: 'Dossier Inversión y Gobernanza SpA.md',
+        title: 'Dossier de Inversión & Gobernanza SpA',
+        badge: '🔒 PRIVADO — DISTRIBUCIÓN RESTRINGIDA',
+        badgeClass: 'bg-amber-500/10 text-amber-300 border-amber-500/40'
+      },
+      2: {
+        file: 'Carpeta Técnica CNR Ley 18.450.md',
+        title: 'Carpeta Técnica de Riego — Ley 18.450 CNR',
+        badge: '💧 CNR — OBRAS MENORES DE RIEGO MAULE',
+        badgeClass: 'bg-blue-500/10 text-blue-300 border-blue-500/40'
+      },
+      3: {
+        file: 'Pasaporte Verde EUDR.md',
+        title: 'Pasaporte Verde & Certificación EUDR',
+        badge: '🌿 REGULACIÓN UE 2023/1115 — EXPORTACIÓN',
+        badgeClass: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/40'
+      },
+      4: {
+        file: 'Auditoría Agronómica Predial.md',
+        title: 'Auditoría Agronómica Predial In Situ',
+        badge: '🔬 AUDITORÍA OPERATIVA — USO INTERNO',
+        badgeClass: 'bg-rose-500/10 text-rose-300 border-rose-500/40'
+      }
+    };
+
+    function selectCanonicalReport(typeId) {
+      selectedCanonicalType = typeId;
+      const canonical = CANONICAL_TEMPLATES[typeId];
+      if (!canonical) return;
+
+      selectedTemplateName = canonical.file;
+
+      // Actualizar selector desplegable
+      const dropdown = document.getElementById('selectTemplateDropdown');
+      if (dropdown) {
+        dropdown.value = canonical.file;
+      }
+
+      // Actualizar clases activas en las 4 tarjetas
+      for (let i = 1; i <= 4; i++) {
+        const card = document.getElementById(`cardReport${i}`);
+        if (card) {
+          if (i === typeId) {
+            card.className = 'report-card p-4 rounded-xl bg-obsidian-900/80 border border-emerald-500/40 shadow-sm cursor-pointer transition-all relative group';
+          } else {
+            card.className = 'report-card p-4 rounded-xl bg-obsidian-900/40 border border-white/[0.08] shadow-sm cursor-pointer transition-all hover:border-white/[0.2] relative group';
+          }
+        }
+      }
+
+      compileCurrentReport(false);
+    }
+
+    function onTemplateDropdownChange(filename) {
+      selectedTemplateName = filename;
+      
+      // Buscar si coincide con alguno canónico
+      let matchedType = null;
+      for (const [k, v] of Object.entries(CANONICAL_TEMPLATES)) {
+        if (v.file.toLowerCase() === filename.toLowerCase()) {
+          matchedType = parseInt(k);
+          break;
+        }
+      }
+      if (matchedType) {
+        selectedCanonicalType = matchedType;
+        for (let i = 1; i <= 4; i++) {
+          const card = document.getElementById(`cardReport${i}`);
+          if (card) {
+            card.className = i === matchedType 
+              ? 'report-card p-4 rounded-xl bg-obsidian-900/80 border border-emerald-500/40 shadow-sm cursor-pointer transition-all relative group'
+              : 'report-card p-4 rounded-xl bg-obsidian-900/40 border border-white/[0.08] shadow-sm cursor-pointer transition-all hover:border-white/[0.2] relative group';
+          }
+        }
+      }
+
+      compileCurrentReport(false);
+    }
+
+    async function refreshLiveTelemetry() {
+      const summaryEl = document.getElementById('telemetryStatusSummary');
+      if (summaryEl) summaryEl.textContent = 'Actualizando...';
+
+      try {
+        const res = await fetch('/api/reports/live-telemetry');
+        const data = await res.json();
+        currentTelemetry = data;
+
+        // Actualizar badges de fuentes satélite
+        const updateBadge = (id, srcInfo) => {
+          const el = document.getElementById(id);
+          if (!el || !srcInfo) return;
+          if (srcInfo.online) {
+            el.textContent = 'EN VIVO';
+            el.className = 'px-1.5 py-0.2 rounded text-[9px] font-bold bg-emerald-950/80 border border-emerald-500/40 text-emerald-300';
+          } else {
+            el.textContent = 'OFFLINE (CACHE)';
+            el.className = 'px-1.5 py-0.2 rounded text-[9px] font-bold bg-amber-950/80 border border-amber-500/40 text-amber-300';
+          }
+        };
+
+        const updateTag = (id, srcInfo) => {
+          const el = document.getElementById(id);
+          if (!el || !srcInfo) return;
+          el.textContent = srcInfo.tag;
+          el.className = srcInfo.online
+            ? 'text-[9px] px-2 py-0.5 rounded font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/30'
+            : 'text-[9px] px-2 py-0.5 rounded font-bold bg-amber-950 text-amber-300 border border-amber-500/30';
+        };
+
+        if (data.sources_status) {
+          updateBadge('badgeSrcAgritwin', data.sources_status.agritwin);
+          updateBadge('badgeSrcAgrotwin', data.sources_status.agrotwin);
+          updateBadge('badgeSrcRewild', data.sources_status.rewild);
+
+          updateTag('tagAgritwin', data.sources_status.agritwin);
+          updateTag('tagAgrotwin', data.sources_status.agrotwin);
+          updateTag('tagRewild', data.sources_status.rewild);
+        }
+
+        // Actualizar métricas en vivo en la barra checklist
+        const setVal = (id, val) => { const el = document.getElementById(id); if (el && val !== undefined) el.textContent = val; };
+        setVal('valFDR20', `${data.fdr_0_20_vwc}%`);
+        setVal('valTranque', `${Number(data.tranque_volumen_m3 || 18500).toLocaleString()} m³`);
+        setVal('valHelada', data.alerta_helada_catabatica || 'PREVENTIVA');
+        setVal('valPRV', `${data.ugm_ha_ganado} UGM/ha`);
+        setVal('valLongavi', `${data.caudal_longavi} m³/s`);
+        setVal('valBullileo', `${data.embalse_bullileo} Hm³`);
+        setVal('valFWI', `${data.fwi_indice} (Alto)`);
+        setVal('valPuelche', `${data.viento_puelche_kmh} km/h`);
+        setVal('valCarbono', `${data.carbono_tco2e_ha} tCO₂e/ha`);
+        setVal('valNDVI', data.ndvi_promedio || '0.78');
+        setVal('valHashMRV', data.mrv_hash || '0x8f2d4a19c6e');
+
+        if (summaryEl) summaryEl.textContent = `Sincronizado ${new Date().toLocaleTimeString('es-CL')}`;
+      } catch (err) {
+        if (summaryEl) summaryEl.textContent = 'Error al actualizar';
+        console.error('Error refreshing telemetry:', err);
+      }
+    }
+
+    async function loadTemplatesCatalog() {
+      try {
+        const res = await fetch('/api/reports/templates');
+        const data = await res.json();
+        const dropdown = document.getElementById('selectTemplateDropdown');
+        if (dropdown && data.templates && data.templates.length > 0) {
+          dropdown.innerHTML = data.templates.map(t => {
+            const isSelected = t.filename === selectedTemplateName ? 'selected' : '';
+            return `<option value="${t.filename}" ${isSelected}>${t.filename}</option>`;
+          }).join('');
+        }
+      } catch (e) {
+        console.warn('Error loading templates:', e);
+      }
+    }
+
+    async function loadGeneratedReports() {
+      const container = document.getElementById('generatedReportsList');
+      if (!container) return;
+
+      try {
+        const res = await fetch('/api/reports/generated');
+        const data = await res.json();
+        const files = data.files || [];
+
+        if (files.length === 0) {
+          container.innerHTML = '<div class="text-slate-500 text-center py-4">Aún no hay informes guardados en /Informes Generados/.</div>';
+          return;
+        }
+
+        container.innerHTML = files.slice(0, 8).map(f => {
+          const safeName = f.filename.replace(/'/g, "\\'");
+          return `
+            <div class="p-2 rounded-lg bg-obsidian-950 border border-obsidian-800 hover:border-purple-500/40 flex items-center justify-between text-[11px] group transition-all">
+              <div class="overflow-hidden pr-2">
+                <div class="text-white font-semibold truncate group-hover:text-purple-300 transition-colors">${f.filename.replace(/\.md$/, '')}</div>
+                <div class="text-[9px] text-slate-500">${(f.size / 1024).toFixed(1)} KB • ${new Date(f.mtime).toLocaleDateString('es-CL')}</div>
+              </div>
+              <a href="${f.obsidianUri}" class="px-2 py-0.5 rounded bg-purple-950 text-purple-300 hover:text-white border border-purple-500/30 text-[10px] shrink-0 font-bold">
+                Obsidian ↗
+              </a>
+            </div>
+          `;
+        }).join('');
+      } catch (e) {
+        container.innerHTML = '<div class="text-red-400 text-center py-4">Error cargando historial de informes.</div>';
+      }
+    }
+
+    async function compileCurrentReport(isMaster = false) {
+      if (isCompilingReport) return;
+      isCompilingReport = true;
+
+      const btnMaster = document.getElementById('btnCompileMaster');
+      const contentArea = document.getElementById('reportContentArea');
+      const titleEl = document.getElementById('previewDocTitle');
+      const badgeEl = document.getElementById('previewClassificationBadge');
+      const timestampEl = document.getElementById('previewTimestamp');
+      const hashHeaderEl = document.getElementById('previewHeaderHash');
+      const hashFooterEl = document.getElementById('previewFooterHash');
+      const btnOpenObs = document.getElementById('btnOpenTemplateInObsidian');
+
+      if (btnMaster) {
+        btnMaster.innerHTML = '<span>⏳</span><span>Compilando Dossier...</span>';
+        btnMaster.disabled = true;
+      }
+      if (contentArea) {
+        contentArea.innerHTML = `
+          <div class="text-center py-24 space-y-4">
+            <div class="text-5xl animate-pulse">⚡</div>
+            <div class="text-slate-400 font-mono text-xs space-y-1.5 max-w-sm mx-auto">
+              <p class="text-white text-sm font-bold font-sans">Compilando Dossier con Telemetría Viva...</p>
+              <p>Inyectando lecturas de :7773 (Predial), :7774 (Cuenca) y :7772 (MRV) en plantilla de Obsidian.</p>
+            </div>
+          </div>
+        `;
+      }
+
+      try {
+        const payload = {
+          template: selectedTemplateName,
+          save: isMaster
+        };
+
+        const res = await fetch('/api/reports/compile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (!data.success) {
+          throw new Error(data.error || 'Error en compilación');
+        }
+
+        lastCompiledResult = data;
+        lastReportMarkdown = data.markdown;
+
+        // Actualizar encabezados
+        if (titleEl) titleEl.textContent = data.title;
+        if (timestampEl) timestampEl.textContent = `${data.telemetry.fecha_emision} • ${data.telemetry.hora_utc}`;
+        if (hashHeaderEl) hashHeaderEl.textContent = data.mrv_hash;
+        if (hashFooterEl) hashFooterEl.textContent = data.mrv_hash;
+
+        // Configuración de badge de clasificación
+        const canonical = CANONICAL_TEMPLATES[selectedCanonicalType];
+        if (badgeEl) {
+          if (canonical) {
+            badgeEl.textContent = canonical.badge;
+            badgeEl.className = `inline-block px-2.5 py-1 rounded-full font-bold uppercase ${canonical.badgeClass}`;
+          } else {
+            badgeEl.textContent = '🔒 INFORME TÉCNICO REGISTRADO';
+            badgeEl.className = 'inline-block px-2.5 py-1 rounded-full font-bold uppercase bg-purple-500/10 text-purple-300 border border-purple-500/40';
+          }
+        }
+
+        // Enlace de apertura en Obsidian
+        if (btnOpenObs) {
+          btnOpenObs.href = `obsidian://open?vault=${encodeURIComponent('Agro Tech')}&file=${encodeURIComponent('Plantillas Informes/' + selectedTemplateName.replace(/\.md$/, ''))}`;
+        }
+
+        // Renderizar el Markdown
+        if (contentArea && data.markdown) {
+          contentArea.innerHTML = marked.parse(data.markdown);
+        }
+
+        // Actualizar telemetría visual
+        if (data.telemetry) {
+          currentTelemetry = data.telemetry;
+        }
+
+        // Si se guardó, recargar historial
+        if (data.saved) {
+          loadGeneratedReports();
+          showNotificationToast(`✅ Dossier guardado con éxito en Obsidian: ${data.saved.filename}`);
+        }
+
+      } catch (err) {
+        if (contentArea) {
+          contentArea.innerHTML = `
+            <div class="text-center py-20 space-y-3">
+              <div class="text-4xl">❌</div>
+              <div class="text-red-400 font-mono text-xs">Error compilando informe: ${err.message}</div>
+              <button onclick="compileCurrentReport(false)" class="px-4 py-2 rounded-xl bg-rose-600 text-white font-mono text-xs font-bold mt-4">🔄 Reintentar</button>
+            </div>
+          `;
+        }
+      } finally {
+        isCompilingReport = false;
+        if (btnMaster) {
+          btnMaster.innerHTML = '<span>⚡</span><span>Compilar Dossier Maestro</span>';
+          btnMaster.disabled = false;
+        }
+      }
+    }
+
+    async function saveCurrentToVault() {
+      if (!lastReportMarkdown) {
+        alert('Debes compilar un informe antes de guardarlo.');
+        return;
+      }
+
+      try {
+        const title = document.getElementById('previewDocTitle')?.textContent || 'Informe';
+        const res = await fetch('/api/reports/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title,
+            markdown: lastReportMarkdown
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          loadGeneratedReports();
+          showNotificationToast(`💾 Guardado en Vault: ${data.filename}`);
+        } else {
+          alert(`Error guardando: ${data.error}`);
+        }
+      } catch (e) {
+        alert(`Error al guardar en Vault: ${e.message}`);
+      }
+    }
+
+    function showNotificationToast(msg) {
+      let toast = document.getElementById('appNotificationToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'appNotificationToast';
+        toast.className = 'fixed bottom-6 right-6 z-50 px-4 py-3 rounded-2xl bg-emerald-950 border border-emerald-500/60 text-emerald-200 font-mono text-xs shadow-2xl transition-all duration-300 transform translate-y-2 opacity-0 flex items-center gap-2';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = `<span>💎</span><span>${msg}</span>`;
+      toast.classList.remove('translate-y-2', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-2', 'opacity-0');
+      }, 4000);
+    }
+
+    function downloadReportMD() {
+      if (!lastReportMarkdown) {
+        alert('Primero debes compilar el informe.');
+        return;
+      }
+      const safeTitle = (document.getElementById('previewDocTitle')?.textContent || 'Informe').replace(/[^a-zA-Z0-9_-]/g, '_');
+      const blob = new Blob([lastReportMarkdown], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const date = new Date().toISOString().split('T')[0];
+      a.href = url;
+      a.download = `AgroTech_${safeTitle}_${date}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadReportTXT() {
+      if (!lastReportMarkdown) {
+        alert('Primero debes compilar el informe.');
+        return;
+      }
+      // Limpiar markdown a texto plano legible
+      const plainText = lastReportMarkdown
+        .replace(/#+\s+/g, '')
+        .replace(/\[!.*?\]/g, '')
+        .replace(/\[\[(.*?)\]\]/g, '$1')
+        .replace(/`{1,3}/g, '');
+
+      const safeTitle = (document.getElementById('previewDocTitle')?.textContent || 'Informe').replace(/[^a-zA-Z0-9_-]/g, '_');
+      const blob = new Blob([plainText], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const date = new Date().toISOString().split('T')[0];
+      a.href = url;
+      a.download = `AgroTech_${safeTitle}_${date}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadReportPDF() {
+      if (!lastReportMarkdown) {
+        alert('Primero debes compilar el informe.');
+        return;
+      }
+
+      const printWindow = window.open('', '_blank');
+      const renderedHTML = marked.parse(lastReportMarkdown);
+      const title = document.getElementById('previewDocTitle')?.textContent || 'Informe Técnico Maestro';
+      const classification = document.getElementById('previewClassificationBadge')?.textContent || 'CONFIDENCIAL';
+      const date = new Date().toLocaleDateString('es-CL', { year: 'numeric', month: 'long', day: 'numeric' });
+      const hash = document.getElementById('previewFooterHash')?.textContent || '0x8f2d4a19c6e';
+
+      printWindow.document.write(`<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>${title} — AgroTech SpA</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    
+    @page {
+      size: A4;
+      margin: 1.8cm 2.2cm;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 10pt;
+      color: #111827;
+      line-height: 1.6;
+      background: #ffffff;
+    }
+
+    .header-bar {
+      border-bottom: 3px solid #059669;
+      padding-bottom: 14px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .header-bar .logo-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-bar h1 {
+      font-size: 13pt;
+      color: #064e3b;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .header-bar .tagline {
+      font-size: 8pt;
+      color: #059669;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .header-bar .meta {
+      font-size: 8pt;
+      color: #4b5563;
+      text-align: right;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .classification-tag {
+      display: inline-block;
+      padding: 3px 8px;
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      color: #92400e;
+      border-radius: 4px;
+      font-size: 7.5pt;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    h1 { font-size: 16pt; color: #064e3b; margin-top: 20pt; margin-bottom: 8pt; border-bottom: 2px solid #a7f3d0; padding-bottom: 6pt; page-break-after: avoid; }
+    h2 { font-size: 12.5pt; color: #111827; margin-top: 16pt; margin-bottom: 6pt; border-bottom: 1px solid #e5e7eb; padding-bottom: 4pt; page-break-after: avoid; }
+    h3 { font-size: 10.5pt; color: #374151; margin-top: 12pt; margin-bottom: 4pt; page-break-after: avoid; }
+
+    table { width: 100%; border-collapse: collapse; margin: 10pt 0; font-size: 8.5pt; page-break-inside: avoid; }
+    th { background: #f3f4f6; color: #374151; font-weight: 700; text-align: left; padding: 5pt 8pt; border: 1px solid #d1d5db; font-size: 8pt; text-transform: uppercase; }
+    td { padding: 4.5pt 8pt; border: 1px solid #e5e7eb; color: #1f2937; }
+    tr:nth-child(even) td { background: #f9fafb; }
+
+    strong { color: #111827; }
+    code { font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; background: #f3f4f6; padding: 1pt 4pt; border-radius: 3pt; color: #065f46; }
+    pre { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6pt; padding: 10pt; font-family: 'JetBrains Mono', monospace; font-size: 8pt; overflow-wrap: break-word; white-space: pre-wrap; margin: 8pt 0; page-break-inside: avoid; }
+    pre code { background: transparent; padding: 0; }
+    blockquote { border-left: 3px solid #059669; padding: 8pt 12pt; background: #f0fdf4; margin: 10pt 0; color: #1f2937; font-size: 9.5pt; }
+    hr { border: none; border-top: 1px solid #e5e7eb; margin: 16pt 0; }
+    ul, ol { padding-left: 20pt; margin: 6pt 0; }
+    li { margin: 3pt 0; }
+    p { margin: 5pt 0; }
+
+    .signatures-block {
+      margin-top: 30pt;
+      padding-top: 16pt;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-around;
+      page-break-inside: avoid;
+    }
+    .sig-box {
+      text-align: center;
+      width: 42%;
+    }
+    .sig-handwriting {
+      font-family: cursive, serif;
+      font-size: 16pt;
+      color: #064e3b;
+      margin-bottom: 8pt;
+    }
+    .sig-line {
+      border-top: 1px solid #6b7280;
+      padding-top: 4pt;
+      font-size: 8.5pt;
+      color: #374151;
+    }
+    .sig-line strong { display: block; color: #111827; font-size: 9.5pt; }
+
+    .footer {
+      margin-top: 24pt;
+      padding-top: 8pt;
+      border-top: 2px solid #059669;
+      font-size: 7.5pt;
+      color: #6b7280;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .no-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <div class="logo-title">
+      <div>
+        <div class="tagline">AgroTech SpA • Holding Agroecológico & Tecnológico</div>
+        <h1>${title}</h1>
+        <div class="classification-tag">${classification}</div>
+      </div>
+    </div>
+    <div class="meta">
+      <div>${date}</div>
+      <div>Predio Meniel • Rol SII 142-88</div>
+      <div>Hash: ${hash}</div>
+    </div>
+  </div>
+
+  ${renderedHTML}
+
+  <div class="signatures-block">
+    <div class="sig-box">
+      <div class="sig-handwriting">Daniel Santander</div>
+      <div class="sig-line">
+        <strong>Daniel Santander</strong>
+        Arquitecto de Software & Director Técnico<br>
+        AgroTech SpA • Co-Fundador
+      </div>
+    </div>
+    <div class="sig-box">
+      <div class="sig-handwriting">Paulina Urrutia</div>
+      <div class="sig-line">
+        <strong>Paulina Urrutia</strong>
+        Gestión Territorial & Relaciones Institucionales<br>
+        AgroTech SpA • Co-Fundadora
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>Verificación Criptográfica MRV: ${hash}</div>
+    <div>AgroTech SpA — Air-Gapped Mission Control :7770</div>
+  </div>
+
+  <div class="no-print" style="text-align: center; margin: 30pt 0;">
+    <button onclick="window.print()" style="padding: 12px 36px; background: #059669; color: #fff; border: none; border-radius: 8px; font-size: 13pt; cursor: pointer; font-weight: 700; box-shadow: 0 4px 12px rgba(5,150,105,0.3);">
+      🖨️ Imprimir / Guardar como PDF Oficial
+    </button>
+  </div>
+</body>
+</html>`);
+      printWindow.document.close();
+    }
+
+    // Auto-inicialización al cargar
+    loadTemplatesCatalog();
+    refreshLiveTelemetry();
+    loadGeneratedReports();
+    // Compilar el informe 1 automáticamente para que no esté vacío al inicio
+    compileCurrentReport(false);
+
+
+    // Auto-chequeo al cargar y cada 10 segundos
+    checkHealth();
+    loadObsidianNotes();
+    setInterval(checkHealth, 10000);
+  </script>
+</body>
+</html>

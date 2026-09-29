@@ -1,0 +1,3257 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroTwin Regional - Cuenca Maule Sur</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: {
+                            800: '#1e293b',
+                            900: '#080c14',
+                        },
+                        panel: 'rgba(13, 19, 34, 0.95)',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    boxShadow: {
+                        glass: '0 25px 50px -12px rgba(0, 0, 0, 0.6)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #080c14;
+            color: #f1f5f9;
+            overflow: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        #map {
+            position: absolute;
+            top: 3.5rem; /* Header height */
+            bottom: 2rem; /* Status bar height */
+            left: 0;
+            right: 0;
+            z-index: 10;
+        }
+
+        /* UI Overlays */
+        .glass-panel {
+            background-color: rgba(13, 19, 34, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Sidebar Tabs */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Leaflet Customizations */
+        .leaflet-control-container .leaflet-routing-container-hide {
+            display: none;
+        }
+        
+        .pulse-marker {
+            background: #10b981;
+            border-radius: 50%;
+            height: 12px;
+            width: 12px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+            animation: pulse 2.5s infinite;
+            border: 2px solid white;
+        }
+        .pulse-marker.water { background: #0ea5e9; box-shadow: 0 0 0 rgba(14, 165, 233, 0.4); }
+        .pulse-marker.dmc { background: #f59e0b; box-shadow: 0 0 0 rgba(245, 158, 11, 0.4); }
+        .pulse-marker.inia { background: #a855f7; box-shadow: 0 0 0 rgba(168, 85, 247, 0.4); }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+        
+        .data-mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Range Sliders */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px; width: 16px;
+            border-radius: 50%;
+            background: #10b981;
+            cursor: pointer;
+            margin-top: -6px;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           DIEGETIC AOE II INTERACTIVE STAGES (EL CERRO REGIONAL)
+           ═══════════════════════════════════════════════════════════════════ */
+        .diegetic-stage-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            user-select: none;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
+        }
+        .diegetic-viewport {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            min-height: 480px;
+            max-height: 640px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .diegetic-bg-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .diegetic-stage-container:hover .diegetic-bg-img {
+            transform: scale(1.02);
+        }
+        .diegetic-vignette {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(4, 7, 13, 0.65) 100%),
+                        linear-gradient(to top, rgba(4, 7, 13, 0.95) 0%, rgba(4, 7, 13, 0.4) 18%, transparent 40%),
+                        linear-gradient(to bottom, rgba(4, 7, 13, 0.85) 0%, transparent 22%);
+        }
+
+        .diegetic-hotspot {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            z-index: 25;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .diegetic-hotspot:hover {
+            z-index: 40;
+            transform: translate(-50%, -50%) scale(1.18);
+        }
+
+        .hotspot-beacon {
+            position: relative;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.85);
+        }
+        .diegetic-hotspot:hover .hotspot-beacon {
+            box-shadow: 0 0 25px currentColor;
+        }
+
+        .hotspot-pulse-ring {
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+            opacity: 0.8;
+            animation: hotspotPulse 2.4s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+            pointer-events: none;
+        }
+        @keyframes hotspotPulse {
+            0% { transform: scale(0.8); opacity: 0.9; }
+            70% { transform: scale(1.7); opacity: 0; }
+            100% { transform: scale(1.9); opacity: 0; }
+        }
+
+        .diegetic-tooltip {
+            position: absolute;
+            bottom: calc(100% + 14px);
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            width: 290px;
+            background: rgba(10, 15, 28, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 14px;
+            padding: 12px 14px;
+            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 50;
+        }
+        .diegetic-hotspot:hover .diegetic-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .hotspot-pill-label {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            background: rgba(5, 8, 15, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 9999px;
+            padding: 3px 10px;
+            font-size: 10px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: #f1f5f9;
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+            transition: all 0.2s ease;
+        }
+        .diegetic-hotspot:hover .hotspot-pill-label {
+            border-color: currentColor;
+            color: white;
+        }
+
+        /* ─── Cutout Sprites (AoE II Physics & Glow) ─── */
+        .diegetic-sprite-anchor {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            z-index: 25;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.85));
+        }
+        .diegetic-sprite-anchor:hover {
+            z-index: 45;
+            transform: translate(-50%, -50%) scale(1.12);
+            filter: drop-shadow(0 0 24px currentColor) brightness(1.18);
+        }
+        .diegetic-sprite-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            pointer-events: none;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .diegetic-sprite-anchor:hover .diegetic-sprite-img {
+            transform: scale(1.05) translateY(-3px);
+        }
+        .diegetic-sprite-ping {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: currentColor;
+            box-shadow: 0 0 10px currentColor;
+            animation: spritePing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+            pointer-events: none;
+        }
+        @keyframes spritePing {
+            0% { transform: scale(0.8); opacity: 1; }
+            75%, 100% { transform: scale(2.4); opacity: 0; }
+        }
+        .diegetic-sprite-anchor .diegetic-tooltip {
+            position: absolute;
+            bottom: calc(100% + 14px);
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            width: 290px;
+            background: rgba(10, 15, 28, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 14px;
+            padding: 12px 14px;
+            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 50;
+        }
+        .diegetic-sprite-anchor:hover .diegetic-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .diegetic-sprite-anchor:hover .hotspot-pill-label {
+            border-color: currentColor;
+            color: white;
+        }
+
+        /* Diegetic Modal Windows */
+        .diegetic-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(4, 7, 13, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        .diegetic-modal-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .diegetic-modal-card {
+            background: rgba(13, 19, 34, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1.5rem;
+            width: 100%;
+            max-width: 680px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.95);
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .diegetic-modal-backdrop.active .diegetic-modal-card {
+            transform: scale(1) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER BAR (Harmonized with Master Suite) -->
+    <header class="fixed top-0 left-0 right-0 h-14 glass-panel z-50 flex items-center justify-between px-4 border-b border-white/10">
+        <div class="flex items-center gap-3">
+            <a href="http://localhost:7777" class="flex items-center gap-3 text-inherit no-underline">
+                <div class="w-8 h-8 rounded-lg border border-sky-500/40 bg-sky-950/60 flex items-center justify-center text-sm shadow-inner">
+                    🏔️
+                </div>
+                <div>
+                    <div class="flex items-center gap-1.5 leading-tight">
+                        <span class="font-extrabold text-[13px] text-sky-400 tracking-wider">AGROTWIN</span>
+                        <span class="font-bold text-[13px] text-white">CUENCA MAULE</span>
+                    </div>
+                    <div class="text-[9px] text-slate-400 font-mono tracking-tight">MOMENTO 2 • LA CUMBRE DEL CERRO (122K HA)</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- SELECTOR DE VISTAS MAESTRAS UNIFICADO -->
+        <nav class="flex items-center gap-1 bg-black/40 p-1 rounded-xl border border-white/10 font-sans text-xs">
+            <a href="http://localhost:7777" class="px-2.5 py-1.5 rounded-lg font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1.5">
+                <span>🏛️</span> Centro
+            </a>
+            <a href="http://localhost:7777/#galpon" class="px-2.5 py-1.5 rounded-lg font-semibold text-slate-300 hover:text-amber-400 hover:bg-amber-500/10 transition-all flex items-center gap-1.5">
+                <span>🏡</span> El Galpón (3D)
+            </a>
+            <button id="navBtnLandingCerro" onclick="toggleCerroLandingOverlay()" class="px-2.5 py-1.5 rounded-lg font-bold text-sky-300 bg-sky-500/20 border border-sky-500/40 flex items-center gap-1.5 hover:bg-sky-500/30 transition-all shadow-sm" title="Alternar Vista AOE / Mapa GIS">
+                <span>🏔️</span> El Cerro (Landing AOE)
+            </button>
+            <button id="navBtnMapGis" onclick="hideCerroLandingOverlay()" class="px-2.5 py-1.5 rounded-lg font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1.5" title="Ver Mapa GIS Directo">
+                <span>🗺️</span> Mapa GIS
+            </button>
+            <a href="http://localhost:7777/#mesa" class="px-2.5 py-1.5 rounded-lg font-semibold text-slate-300 hover:text-emerald-400 hover:bg-emerald-500/10 transition-all flex items-center gap-1.5">
+                <span>🤝</span> La Mesa (Vecinos)
+            </a>
+            <a href="http://localhost:7777/#telemetry" class="px-2.5 py-1.5 rounded-lg font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1.5">
+                <span>📊</span> Telemetría
+            </a>
+            <a href="http://localhost:7777/#docs" class="px-2.5 py-1.5 rounded-lg font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1.5">
+                <span>📚</span> Vault Docs
+            </a>
+        </nav>
+
+        <div class="flex items-center gap-4 text-xs font-mono">
+            <div class="hidden 2xl:flex items-center gap-5 text-slate-300">
+                <div class="flex flex-col"><span class="text-[9px] text-slate-500">Caudal Longaví</span><span class="text-sky-400 font-bold" id="hdr-caudal">124.5 m³/s</span></div>
+                <div class="flex flex-col"><span class="text-[9px] text-slate-500">Humedad FDR</span><span class="text-emerald-400 font-bold" id="hdr-vwc">36.2%</span></div>
+                <div class="flex flex-col"><span class="text-[9px] text-slate-500">Reserva Keyline</span><span class="text-sky-400 font-bold" id="hdr-vol">18,500 m³</span></div>
+                <div class="flex flex-col"><span class="text-[9px] text-slate-500">Índice FWI</span><span class="text-amber-400 font-bold" id="hdr-fwi">24 (Bajo)</span></div>
+                <div class="flex flex-col"><span class="text-[9px] text-slate-500">Hora UTC</span><span class="text-slate-100 font-bold" id="real-time-clock">--:--:--</span></div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button onclick="openModal()" class="bg-sky-600/30 hover:bg-sky-600/50 text-sky-200 border border-sky-500/40 text-xs px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 shadow-sm">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Dossier
+                </button>
+                <button onclick="downloadFormalReport()" class="bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white text-xs px-2.5 py-1.5 rounded-lg transition-all border border-slate-700">
+                    PDF
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         OVERLAY DIEGÉTICO AOE II: LA CUMBRE DEL CERRO (MOMENTO 2)
+         ═══════════════════════════════════════════════════════════════════════ -->
+        <div id="cerroLandingOverlay" class="fixed inset-0 top-14 bottom-0 z-[45] bg-[#080c14] overflow-y-auto !p-0 transition-opacity duration-300">
+        <!-- 1. ETAPA DIEGÉTICA AOE II FULL-SCREEN • LA CUMBRE DEL CERRO (PAISAJE & CUENCA) -->
+        <div class="relative w-full h-[calc(100vh-3.5rem)] min-h-[520px] overflow-hidden flex items-center justify-center select-none bg-black">
+            <!-- Fullscreen Panorama Background -->
+            <img src="assets/ui/agritwin_regional_landing.jpg" alt="La Cumbre del Cerro Maule Sur" class="w-full h-full object-cover filter contrast-105 brightness-95 pointer-events-none" draggable="false">
+            <div class="diegetic-vignette"></div>
+
+            <!-- Tactical Top Header Bar: Indicador de Cota y Macro-Cuenca -->
+            <div class="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none z-30">
+                <div class="flex items-center gap-2 pointer-events-auto bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-sky-500/40 shadow-xl">
+                    <span class="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse"></span>
+                    <span class="text-xs font-black font-mono text-sky-300 uppercase tracking-wider">MOMENTO 2 • LA CUMBRE DEL CERRO</span>
+                    <span class="text-[10px] text-slate-400 font-mono hidden md:inline">| 122.070 ha • Cota 680 msnm</span>
+                </div>
+                <div class="hidden sm:flex items-center gap-3 pointer-events-auto bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 text-[11px] font-mono shadow-xl">
+                    <span class="text-slate-400">Longaví: <b class="text-sky-300">124.5 m³/s</b></span>
+                    <span class="text-slate-600">•</span>
+                    <span class="text-slate-400">FWI Puelche: <b class="text-amber-400">24</b></span>
+                    <span class="text-slate-600">•</span>
+                    <span class="text-slate-400">Pozos APR: <b class="text-emerald-400">5 Monitoreados</b></span>
+                </div>
+            </div>
+
+            <!-- ─── 6 SPRITES DIEGÉTICOS (AOE II STYLE CUTOUTS) SOBRE LA ESCENA ─── -->
+
+            <!-- 1. Drone Autónomo VTOL de Monitoreo LULC & Sentinel-2 -->
+            <div class="diegetic-sprite-anchor" style="top: 20%; left: 48%; width: 135px; color: #38bdf8;" onclick="openCerroHotspotModal('drone')" onmouseenter="playDiegeticAudio('wood')">
+                <img src="assets/ui/sprite_cerro_drone.png" alt="Drone VTOL Sentinel-2" class="diegetic-sprite-img">
+                <span class="diegetic-sprite-ping bg-sky-400"></span>
+                <div class="hotspot-pill-label border-sky-500/40 text-sky-200">
+                    Drone LULC Sentinel-2
+                </div>
+                <div class="diegetic-tooltip">
+                    <div class="flex items-center justify-between text-[10px] font-mono text-sky-400 border-b border-sky-500/20 pb-1 mb-1.5">
+                        <span>OBJ-CUENCA-01</span>
+                        <span class="bg-sky-500/20 px-1.5 py-0.5 rounded">Sentinel-2 / 10m</span>
+                    </div>
+                    <h4 class="font-extrabold text-sm text-white">Monitoreo Aéreo & Coberturas LULC</h4>
+                    <p class="text-xs text-slate-300 mt-1 leading-snug">
+                        Ortomosaico multiespectral, clasificación de suelos de la cuenca (agrícola, forestal, nativo) y vigor NDVI.
+                    </p>
+                    <div class="mt-2 pt-1 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-sky-300">
+                        <span>▶ Clic para abrir inspector</span>
+                        <span class="text-slate-400">3 submódulos</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Mirador Panorámico / Telescopio de Exploración -->
+            <div class="diegetic-sprite-anchor" style="top: 40%; left: 28%; width: 110px; color: #22d3ee;" onclick="openCerroHotspotModal('mirador')" onmouseenter="playDiegeticAudio('wood')">
+                <img src="assets/ui/sprite_cerro_telescope.png" alt="Telescopio de Paisaje" class="diegetic-sprite-img">
+                <span class="diegetic-sprite-ping bg-cyan-400"></span>
+                <div class="hotspot-pill-label border-cyan-500/40 text-cyan-200">
+                    Mirador Panorámico (122k ha)
+                </div>
+                <div class="diegetic-tooltip">
+                    <div class="flex items-center justify-between text-[10px] font-mono text-cyan-400 border-b border-cyan-500/20 pb-1 mb-1.5">
+                        <span>OBJ-CUENCA-02</span>
+                        <span class="bg-cyan-500/20 px-1.5 py-0.5 rounded">Vistas Clave</span>
+                    </div>
+                    <h4 class="font-extrabold text-sm text-white">Mirador & Locaciones Estratégicas</h4>
+                    <p class="text-xs text-slate-300 mt-1 leading-snug">
+                        Vuela de inmediato a Fundo Meniel, Embalse Bullileo, Retiro Pueblo, Parral Centro o el Cruce del Río Longaví.
+                    </p>
+                    <div class="mt-2 pt-1 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-cyan-300">
+                        <span>▶ Clic para seleccionar locación</span>
+                        <span class="text-slate-400">6 puntos clave</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Terminal / Tablet Rugged Táctica de Crecidas & Tranque -->
+            <div class="diegetic-sprite-anchor" style="top: 72%; left: 22%; width: 120px; color: #60a5fa;" onclick="openCerroHotspotModal('hidro')" onmouseenter="playDiegeticAudio('wood')">
+                <img src="assets/ui/sprite_cerro_tablet.png" alt="Tablet Rugged" class="diegetic-sprite-img">
+                <span class="diegetic-sprite-ping bg-blue-400"></span>
+                <div class="hotspot-pill-label border-blue-500/40 text-blue-200">
+                    Tablet Crecidas Fluviales
+                </div>
+                <div class="diegetic-tooltip">
+                    <div class="flex items-center justify-between text-[10px] font-mono text-blue-400 border-b border-blue-500/20 pb-1 mb-1.5">
+                        <span>OBJ-CUENCA-03</span>
+                        <span class="bg-blue-500/20 px-1.5 py-0.5 rounded">Hidrología T=50</span>
+                    </div>
+                    <h4 class="font-extrabold text-sm text-white">Dinámica Hídrica & Batimetría</h4>
+                    <p class="text-xs text-slate-300 mt-1 leading-snug">
+                        Caudal Longaví (124.5 m³/s), amortiguación con Keyline, batimetría Bullileo y simulador de anegamiento T=10/50/100.
+                    </p>
+                    <div class="mt-2 pt-1 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-blue-300">
+                        <span>▶ Clic para simular crecidas</span>
+                        <span class="text-slate-400">Simulador activo</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Estación Meteorológica de Cumbre, Veleta & Sensor Piro-Riesgo FWI -->
+            <div class="diegetic-sprite-anchor" style="top: 42%; left: 74%; width: 72px; color: #f59e0b;" onclick="openCerroHotspotModal('clima')" onmouseenter="playDiegeticAudio('wood')">
+                <img src="assets/ui/sprite_cerro_weather.png" alt="Estación Meteorológica" class="diegetic-sprite-img">
+                <span class="diegetic-sprite-ping bg-amber-400"></span>
+                <div class="hotspot-pill-label border-amber-500/40 text-amber-200">
+                    Veleta Puelche & FWI
+                </div>
+                <div class="diegetic-tooltip">
+                    <div class="flex items-center justify-between text-[10px] font-mono text-amber-400 border-b border-amber-500/20 pb-1 mb-1.5">
+                        <span>OBJ-CUENCA-04</span>
+                        <span class="bg-amber-500/20 px-1.5 py-0.5 rounded">Riesgo FWI 24</span>
+                    </div>
+                    <h4 class="font-extrabold text-sm text-white">Piro-Riesgo FWI & Viento Puelche</h4>
+                    <p class="text-xs text-slate-300 mt-1 leading-snug">
+                        Monitoreo de ráfagas secas del este, combustible fino FFMC y frente de llama Rothermel sobre plantaciones contiguas.
+                    </p>
+                    <div class="mt-2 pt-1 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-amber-300">
+                        <span>▶ Clic para evaluar piro-riesgo</span>
+                        <span class="text-slate-400">CONAF / DMC</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Torre Repetidora LoRaWAN / VHF & Red Pozos APR -->
+            <div class="diegetic-sprite-anchor" style="top: 28%; left: 88%; width: 72px; color: #34d399;" onclick="openCerroHotspotModal('lora')" onmouseenter="playDiegeticAudio('wood')">
+                <img src="assets/ui/sprite_cerro_antenna.png" alt="Antena Repetidora LoRaWAN" class="diegetic-sprite-img">
+                <span class="diegetic-sprite-ping bg-emerald-400"></span>
+                <div class="hotspot-pill-label border-emerald-500/40 text-emerald-200">
+                    Antena LoRa / Pozos APR
+                </div>
+                <div class="diegetic-tooltip">
+                    <div class="flex items-center justify-between text-[10px] font-mono text-emerald-400 border-b border-emerald-500/20 pb-1 mb-1.5">
+                        <span>OBJ-CUENCA-05</span>
+                        <span class="bg-emerald-500/20 px-1.5 py-0.5 rounded">Red Centinela</span>
+                    </div>
+                    <h4 class="font-extrabold text-sm text-white">Telemetría de Cuenca & Pozos APR</h4>
+                    <p class="text-xs text-slate-300 mt-1 leading-snug">
+                        Cobertura LoRaWAN y niveles freáticos de los 5 Comités de Agua Potable Rural (Retiro, Copihue, Romeral, Villaseca).
+                    </p>
+                    <div class="mt-2 pt-1 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-emerald-300">
+                        <span>▶ Clic para ver 5 pozos</span>
+                        <span class="text-slate-400">9 nodos online</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Faja Cortafuego & Planos de Obras Paisaje -->
+            <div class="diegetic-sprite-anchor" style="top: 78%; left: 62%; width: 130px; color: #facc15;" onclick="openCerroHotspotModal('obras')" onmouseenter="playDiegeticAudio('wood')">
+                <img src="assets/ui/sprite_cerro_blueprints.png" alt="Planos de Obras" class="diegetic-sprite-img">
+                <span class="diegetic-sprite-ping bg-yellow-400"></span>
+                <div class="hotspot-pill-label border-yellow-500/40 text-yellow-200">
+                    Plan Obras & Fajas (420M)
+                </div>
+                <div class="diegetic-tooltip">
+                    <div class="flex items-center justify-between text-[10px] font-mono text-yellow-400 border-b border-yellow-500/20 pb-1 mb-1.5">
+                        <span>OBJ-CUENCA-06</span>
+                        <span class="bg-yellow-500/20 px-1.5 py-0.5 rounded">Inversión 420M CLP</span>
+                    </div>
+                    <h4 class="font-extrabold text-sm text-white">Obras Paisajísticas & Mitigación</h4>
+                    <p class="text-xs text-slate-300 mt-1 leading-snug">
+                        Portafolio de 4 obras territoriales: Tranque Bullileo 2, Faja Cortafuegos Borde Cordillera y Reforestación Ribereña.
+                    </p>
+                    <div class="mt-2 pt-1 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-yellow-300">
+                        <span>▶ Clic para auditar obras</span>
+                        <span class="text-slate-400">4 proyectos</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tactical Bottom Action Dock -->
+            <div class="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pointer-events-none z-30">
+                <div class="pointer-events-auto bg-black/85 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-white/15 flex items-center gap-2 shadow-2xl overflow-x-auto">
+                    <span class="text-[11px] font-mono text-slate-400 font-bold hidden md:inline">Vistas Rápidas:</span>
+                    <button onclick="hideCerroLandingOverlay(); flyToCerroLocation(-36.21156, -71.60530, 15, 'Fundo Meniel (Keyline)', 'tab-territory')" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/40 text-emerald-300 text-[11px] font-mono border border-emerald-500/40 transition-colors whitespace-nowrap">
+                        🏡 Meniel
+                    </button>
+                    <button onclick="hideCerroLandingOverlay(); flyToCerroLocation(-36.2800, -71.4200, 13, 'Embalse Bullileo', 'tab-water')" class="px-2.5 py-1 rounded-lg bg-sky-500/20 hover:bg-sky-500/40 text-sky-300 text-[11px] font-mono border border-sky-500/40 transition-colors whitespace-nowrap">
+                        🌊 Bullileo
+                    </button>
+                    <button onclick="hideCerroLandingOverlay(); flyToCerroLocation(-36.0500, -71.7667, 14, 'Retiro Pueblo', 'tab-centinela')" class="px-2.5 py-1 rounded-lg bg-yellow-500/20 hover:bg-yellow-500/40 text-yellow-300 text-[11px] font-mono border border-yellow-500/40 transition-colors whitespace-nowrap">
+                        🌾 Retiro
+                    </button>
+                    <button onclick="hideCerroLandingOverlay(); flyToCerroLocation(-36.1800, -71.6400, 14, 'Río Longaví Crossing', 'tab-water')" class="px-2.5 py-1 rounded-lg bg-blue-500/20 hover:bg-blue-500/40 text-blue-300 text-[11px] font-mono border border-blue-500/40 transition-colors whitespace-nowrap">
+                        🌊 Longaví
+                    </button>
+                </div>
+
+                <div class="pointer-events-auto flex items-center gap-2">
+                    <button onclick="hideCerroLandingOverlay()" class="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-slate-950 font-black text-xs font-mono flex items-center justify-center gap-1.5 shadow-xl transition-all active:scale-95">
+                        <span>🗺️</span> Entrar al Mapa GIS (122k ha)
+                    </button>
+                    <button onclick="openCerroHotspotModal('mirador')" class="px-3 py-2 rounded-xl bg-sky-600/30 hover:bg-sky-600/50 text-sky-200 border border-sky-500/40 text-xs font-mono transition-colors flex items-center gap-1 shadow-lg">
+                        <span>🔭</span> Mirador
+                    </button>
+                    <button onclick="document.getElementById('cerroRegionalDetailSection').scrollIntoView({behavior:'smooth'})" class="px-3 py-2 rounded-xl bg-sky-950/60 hover:bg-sky-900/60 text-sky-300 text-xs font-mono border border-sky-500/30 transition-colors flex items-center gap-1 shadow-lg" title="Ver Vistas y Análisis Completo">
+                        <span>📋</span> Detalles ▼
+                    </button>
+                    <a href="http://localhost:7777" class="px-3 py-2 rounded-xl bg-black/85 hover:bg-white/10 text-slate-300 hover:text-white text-xs font-mono border border-white/15 transition-colors flex items-center gap-1 shadow-lg">
+                        <span>🏛️</span> Centro
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE DETALLE / VISTAS PREDEFINIDAS DE LA CUENCA (SCROLLABLE DEBAJO DEL LANDING) -->
+        <div id="cerroRegionalDetailSection" class="max-w-7xl mx-auto p-4 sm:p-8 space-y-6">
+            <!-- MODAL DIEGÉTICO OBSIDIAN: LA CUMBRE DEL CERRO -->
+            <div id="cerroHotspotModal" class="diegetic-modal-backdrop" onclick="if(event.target === this) closeCerroHotspotModal()">
+                <div class="diegetic-modal-card p-6 space-y-5 border-sky-500/40 relative">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                        <div class="space-y-0.5">
+                            <span id="cerroModalBadge" class="text-[10px] font-mono font-bold uppercase tracking-wider text-sky-400 bg-sky-950/80 px-2.5 py-0.5 rounded border border-sky-500/30">
+                                CUENCA MAULE SUR
+                            </span>
+                            <h3 id="cerroModalTitle" class="text-base sm:text-lg font-black text-white flex items-center gap-2 mt-1">
+                                Instrumento Diegético
+                            </h3>
+                        </div>
+                        <button onclick="closeCerroHotspotModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center text-lg transition-colors">
+                            &times;
+                        </button>
+                    </div>
+                    <div id="cerroModalBody">
+                        <!-- Contenido Dinámico inyectado por JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. VISTAS PREDEFINIDAS / LOCACIONES ESTRATÉGICAS DE LA CUENCA (Botones Interactivos) -->
+            <div class="rounded-3xl p-5 bg-slate-900/80 border border-sky-500/30 space-y-4 shadow-xl">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-white/10 pb-3">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-base">🔭</span>
+                            <h3 class="font-extrabold text-sm sm:text-base text-white tracking-wide">
+                                Locaciones Estratégicas de la Cuenca (Vistas Predefinidas)
+                            </h3>
+                        </div>
+                        <p class="text-xs text-slate-400">
+                            Puntos neurálgicos de monitoreo en la cuenca. Haz clic en cualquiera para volar inmediatamente en el visor cartográfico:
+                        </p>
+                    </div>
+                    <span class="text-[11px] font-mono text-sky-400 bg-sky-950/60 px-3 py-1 rounded-lg border border-sky-500/30 font-bold">
+                        6 Puntos Clave
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <button onclick="flyToCerroLocation(-36.21156, -71.60530, 15, 'Fundo Meniel', 'tab-territory')" class="p-3.5 rounded-2xl bg-black/40 hover:bg-emerald-950/30 border border-emerald-500/30 hover:border-emerald-400 text-left transition-all group">
+                        <div class="flex items-center justify-between font-mono text-xs">
+                            <span class="font-bold text-white group-hover:text-emerald-300 flex items-center gap-1.5">
+                                <span>🏡</span> Fundo Meniel
+                            </span>
+                            <span class="text-emerald-400 text-[10px]">Keyline 18.5k m³</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Núcleo biofísico: retención, PRV y cortafuegos de 45m.</p>
+                    </button>
+
+                    <button onclick="flyToCerroLocation(-36.2800, -71.4200, 13, 'Embalse Bullileo', 'tab-water')" class="p-3.5 rounded-2xl bg-black/40 hover:bg-sky-950/30 border border-sky-500/30 hover:border-sky-400 text-left transition-all group">
+                        <div class="flex items-center justify-between font-mono text-xs">
+                            <span class="font-bold text-white group-hover:text-sky-300 flex items-center gap-1.5">
+                                <span>🌊</span> Embalse Bullileo
+                            </span>
+                            <span class="text-sky-400 text-[10px]">89.5M m³</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Cabecera de riego del Río Longaví y cota cordillerana.</p>
+                    </button>
+
+                    <button onclick="flyToCerroLocation(-36.0500, -71.7667, 14, 'Retiro Pueblo', 'tab-centinela')" class="p-3.5 rounded-2xl bg-black/40 hover:bg-yellow-950/30 border border-yellow-500/30 hover:border-yellow-400 text-left transition-all group">
+                        <div class="flex items-center justify-between font-mono text-xs">
+                            <span class="font-bold text-white group-hover:text-yellow-300 flex items-center gap-1.5">
+                                <span>🌾</span> Retiro Pueblo
+                            </span>
+                            <span class="text-yellow-400 text-[10px]">Valle / APR</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Valle agrícola, cultivos de arroz y pozos comunitarios.</p>
+                    </button>
+
+                    <button onclick="flyToCerroLocation(-36.1432, -71.8267, 14, 'Parral Centro', 'tab-territory')" class="p-3.5 rounded-2xl bg-black/40 hover:bg-slate-800 border border-white/10 hover:border-white/30 text-left transition-all group">
+                        <div class="flex items-center justify-between font-mono text-xs">
+                            <span class="font-bold text-white group-hover:text-slate-200 flex items-center gap-1.5">
+                                <span>🚜</span> Parral Centro
+                            </span>
+                            <span class="text-slate-400 text-[10px]">Urbano</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Eje agroindustrial, molinos y conectividad Ruta 5 Sur.</p>
+                    </button>
+
+                    <button onclick="flyToCerroLocation(-36.1300, -71.6500, 11, 'Vista General Cuenca', 'tab-territory')" class="p-3.5 rounded-2xl bg-black/40 hover:bg-cyan-950/30 border border-cyan-500/30 hover:border-cyan-400 text-left transition-all group">
+                        <div class="flex items-center justify-between font-mono text-xs">
+                            <span class="font-bold text-white group-hover:text-cyan-300 flex items-center gap-1.5">
+                                <span>🗺️</span> Vista General Cuenca
+                            </span>
+                            <span class="text-cyan-400 text-[10px]">122k ha</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Cuenca hidrográfica completa de cordillera a secano interior.</p>
+                    </button>
+
+                    <button onclick="flyToCerroLocation(-36.1800, -71.6400, 14, 'Río Longaví Crossing', 'tab-water')" class="p-3.5 rounded-2xl bg-black/40 hover:bg-blue-950/30 border border-blue-500/30 hover:border-blue-400 text-left transition-all group">
+                        <div class="flex items-center justify-between font-mono text-xs">
+                            <span class="font-bold text-white group-hover:text-blue-300 flex items-center gap-1.5">
+                                <span>🌊</span> Río Longaví Crossing
+                            </span>
+                            <span class="text-blue-400 text-[10px]">DGA Quilaimo</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Estación fluviométrica DGA, caudal histórico y riesgo fluvial.</p>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MAP CONTAINER -->
+    <div id="map"></div>
+
+    <!-- SIDEBAR PANEL -->
+    <div class="absolute right-0 top-14 bottom-8 w-full lg:w-[480px] glass-panel z-40 flex flex-col border-l border-white/10 transition-transform duration-300 shadow-2xl">
+        
+        <!-- Tab Navigation -->
+        <div class="flex border-b border-white/10 bg-black/20 overflow-x-auto">
+            <button class="tab-btn flex-1 py-3 px-2 text-[11px] font-semibold text-emerald-400 border-b-2 border-emerald-500 hover:bg-white/5 transition-colors whitespace-nowrap" data-target="tab-territory">📍 Territorio</button>
+            <button class="tab-btn flex-1 py-3 px-2 text-[11px] font-semibold text-slate-400 border-b-2 border-transparent hover:bg-white/5 transition-colors whitespace-nowrap" data-target="tab-centinela">📡 Red Centinela</button>
+            <button class="tab-btn flex-1 py-3 px-2 text-[11px] font-semibold text-slate-400 border-b-2 border-transparent hover:bg-white/5 transition-colors whitespace-nowrap" data-target="tab-investment">💼 Inversión</button>
+            <button class="tab-btn flex-1 py-3 px-2 text-[11px] font-semibold text-slate-400 border-b-2 border-transparent hover:bg-white/5 transition-colors whitespace-nowrap" data-target="tab-fire">🔥 Piro-Riesgo</button>
+            <button class="tab-btn flex-1 py-3 px-2 text-[11px] font-semibold text-slate-400 border-b-2 border-transparent hover:bg-white/5 transition-colors whitespace-nowrap" data-target="tab-water">💧 Hídrico</button>
+            <button class="tab-btn flex-1 py-3 px-2 text-[11px] font-semibold text-slate-400 border-b-2 border-transparent hover:bg-white/5 transition-colors whitespace-nowrap" data-target="tab-architecture">🏛️ Arquitectura & API</button>
+        </div>
+
+        <!-- Scrollable Content Area -->
+        <div class="flex-1 overflow-y-auto p-5">
+            
+            <!-- TAB: TERRITORIO -->
+            <div id="tab-territory" class="tab-content active">
+                <h2 class="text-sm text-slate-400 mb-4 font-semibold uppercase tracking-wider">Cobertura de Suelo (LULC)</h2>
+                
+                <div class="h-48 mb-6">
+                    <canvas id="lulcChart"></canvas>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-black/30 p-3 rounded border border-white/5">
+                        <div class="text-[10px] text-slate-500 uppercase">Área Total Clasificada</div>
+                        <div class="text-lg font-bold text-slate-200 data-mono">122,070 ha</div>
+                    </div>
+                    <div class="bg-black/30 p-3 rounded border border-white/5">
+                        <div class="text-[10px] text-slate-500 uppercase">Última Pasada S2</div>
+                        <div class="text-lg font-bold text-emerald-400 data-mono">2026-09-21</div>
+                    </div>
+                </div>
+
+                <div class="space-y-2" id="layer-toggles">
+                    <!-- Populated by JS -->
+                </div>
+
+                <h2 class="text-sm text-slate-400 mt-8 mb-4 font-semibold uppercase tracking-wider flex items-center justify-between">
+                    <span>Vistas Predefinidas (Cuenca)</span>
+                    <a href="http://localhost:7777/#cerro" class="text-[10px] text-sky-400 hover:text-sky-300 font-mono flex items-center gap-1">
+                        <span>🏔️</span> Ver Landing Cuenca ↗
+                    </a>
+                </h2>
+                <div class="grid grid-cols-2 gap-2 font-mono text-xs">
+                    <button class="bg-slate-900/80 hover:bg-sky-950/50 border border-white/10 hover:border-sky-500/50 p-2.5 rounded-xl text-left transition-all group flex flex-col justify-between" onclick="flyTo(-36.21156, -71.60530, 15)">
+                        <span class="text-white group-hover:text-sky-300 font-bold flex items-center gap-1.5 font-sans">
+                            <span>🏡</span> Fundo Meniel
+                        </span>
+                        <span class="text-[9px] text-slate-400">Keyline • z15</span>
+                    </button>
+                    <button class="bg-slate-900/80 hover:bg-sky-950/50 border border-white/10 hover:border-sky-500/50 p-2.5 rounded-xl text-left transition-all group flex flex-col justify-between" onclick="flyTo(-36.2800, -71.4200, 13)">
+                        <span class="text-white group-hover:text-sky-300 font-bold flex items-center gap-1.5 font-sans">
+                            <span>🏔️</span> Embalse Bullileo
+                        </span>
+                        <span class="text-[9px] text-slate-400">60M m³ • z13</span>
+                    </button>
+                    <button class="bg-slate-900/80 hover:bg-sky-950/50 border border-white/10 hover:border-sky-500/50 p-2.5 rounded-xl text-left transition-all group flex flex-col justify-between" onclick="flyTo(-36.1432, -71.8267, 14)">
+                        <span class="text-white group-hover:text-sky-300 font-bold flex items-center gap-1.5 font-sans">
+                            <span>🏛️</span> Parral Centro
+                        </span>
+                        <span class="text-[9px] text-slate-400">Canales • z14</span>
+                    </button>
+                    <button class="bg-slate-900/80 hover:bg-sky-950/50 border border-white/10 hover:border-sky-500/50 p-2.5 rounded-xl text-left transition-all group flex flex-col justify-between" onclick="flyTo(-36.0500, -71.7667, 14)">
+                        <span class="text-white group-hover:text-sky-300 font-bold flex items-center gap-1.5 font-sans">
+                            <span>🌾</span> Retiro Pueblo
+                        </span>
+                        <span class="text-[9px] text-slate-400">Pozos APR • z14</span>
+                    </button>
+                    <button class="bg-slate-900/80 hover:bg-sky-950/50 border border-white/10 hover:border-sky-500/50 p-2.5 rounded-xl text-left transition-all group flex flex-col justify-between" onclick="flyTo(-36.1300, -71.6500, 11)">
+                        <span class="text-white group-hover:text-sky-300 font-bold flex items-center gap-1.5 font-sans">
+                            <span>🗺️</span> Vista General
+                        </span>
+                        <span class="text-[9px] text-slate-400">Cuenca 122k ha • z11</span>
+                    </button>
+                    <button class="bg-slate-900/80 hover:bg-sky-950/50 border border-white/10 hover:border-sky-500/50 p-2.5 rounded-xl text-left transition-all group flex flex-col justify-between" onclick="flyTo(-36.1800, -71.6400, 14)">
+                        <span class="text-white group-hover:text-sky-300 font-bold flex items-center gap-1.5 font-sans">
+                            <span>🌊</span> Río Longaví
+                        </span>
+                        <span class="text-[9px] text-slate-400">Estación DGA • z14</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB: INVERSION -->
+            <div id="tab-investment" class="tab-content">
+                 <h2 class="text-sm text-slate-400 mb-4 font-semibold uppercase tracking-wider">Tesis Financiera Fundo Meniel</h2>
+                 
+                 <div class="grid grid-cols-2 gap-3 mb-6">
+                    <div class="bg-black/30 p-3 rounded border border-white/5">
+                        <div class="text-[10px] text-slate-500 uppercase">CAPEX Inicial</div>
+                        <div class="text-lg font-bold text-red-400 data-mono">$48.5M</div>
+                    </div>
+                    <div class="bg-black/30 p-3 rounded border border-white/5">
+                        <div class="text-[10px] text-slate-500 uppercase">TIR Proyectada</div>
+                        <div class="text-lg font-bold text-emerald-400 data-mono">18.6%</div>
+                    </div>
+                    <div class="bg-black/30 p-3 rounded border border-white/5">
+                        <div class="text-[10px] text-slate-500 uppercase">Payback</div>
+                        <div class="text-lg font-bold text-sky-400 data-mono">3.8 Años</div>
+                    </div>
+                    <div class="bg-black/30 p-3 rounded border border-white/5">
+                        <div class="text-[10px] text-slate-500 uppercase">Ahorro Bombeo/Año</div>
+                        <div class="text-lg font-bold text-emerald-400 data-mono">-$8.2M</div>
+                    </div>
+                 </div>
+
+                 <div class="bg-emerald-900/20 border border-emerald-500/30 rounded p-4 mb-6">
+                     <div class="text-xs text-emerald-400 font-bold mb-1">PÉRDIDA EVITADA (Riesgo Megasequía)</div>
+                     <div class="text-2xl font-black text-emerald-300 data-mono">$140,000,000 CLP</div>
+                     <p class="text-[10px] text-slate-400 mt-2">Valor asegurado de huerto de cerezos basado en reservas hídricas en suelo profundo (Keyline).</p>
+                 </div>
+
+                 <h3 class="text-xs text-slate-400 mb-2 font-semibold">Proyección ROI (10 Años)</h3>
+                 <div class="h-40 mb-6">
+                     <canvas id="roiChart"></canvas>
+                 </div>
+
+                 <div class="bg-indigo-900/20 border border-indigo-500/30 rounded p-4">
+                     <div class="text-xs text-indigo-400 font-bold mb-2">GOBERNANZA</div>
+                     <ul class="text-[11px] text-slate-300 space-y-1">
+                         <li>• <strong class="text-white">Meniel SpA:</strong> Vehículo de inversión de capital.</li>
+                         <li>• <strong class="text-white">Cooperativa Agua Viva:</strong> Gestión comunitaria de excedentes.</li>
+                         <li>• <strong class="text-white">MRV:</strong> Certificación de Carbono y Agua en Blockchain.</li>
+                     </ul>
+                 </div>
+            </div>
+
+            <!-- TAB: PIRO -->
+            <div id="tab-fire" class="tab-content">
+                 <h2 class="text-sm text-slate-400 mb-4 font-semibold uppercase tracking-wider">Simulador de Riesgo (FWI)</h2>
+
+                 <div class="bg-black/40 p-4 rounded-lg border border-white/10 mb-6 relative overflow-hidden">
+                     <div class="absolute right-0 top-0 h-full w-2" id="fwi-indicator" style="background-color: #10b981;"></div>
+                     <div class="text-[10px] text-slate-500 uppercase">Índice Fire Weather Index (Local)</div>
+                     <div class="text-3xl font-black mt-1 flex items-baseline gap-2">
+                         <span id="fwi-value" class="data-mono text-emerald-400">24</span>
+                         <span id="fwi-label" class="text-xs font-bold text-emerald-400 px-2 py-0.5 bg-emerald-900/30 rounded">RIESGO BAJO</span>
+                     </div>
+                 </div>
+
+                 <div class="space-y-5 mb-8">
+                     <div>
+                         <div class="flex justify-between text-xs mb-1">
+                             <span class="text-slate-400">Temperatura Ambient (°C)</span>
+                             <span class="text-white data-mono" id="val-temp">22 °C</span>
+                         </div>
+                         <input type="range" id="slide-temp" min="20" max="44" value="22" oninput="updateFWI()">
+                     </div>
+                     <div>
+                         <div class="flex justify-between text-xs mb-1">
+                             <span class="text-slate-400">Humedad Relativa (%)</span>
+                             <span class="text-white data-mono" id="val-hum">45 %</span>
+                         </div>
+                         <input type="range" id="slide-hum" min="8" max="60" value="45" oninput="updateFWI()">
+                     </div>
+                     <div>
+                         <div class="flex justify-between text-xs mb-1">
+                             <span class="text-slate-400">Viento Puelche (km/h)</span>
+                             <span class="text-white data-mono" id="val-wind">15 km/h</span>
+                         </div>
+                         <input type="range" id="slide-wind" min="5" max="75" value="15" oninput="updateFWI()">
+                     </div>
+                 </div>
+
+                 <h3 class="text-xs text-slate-400 mb-2 font-semibold">Comparativa de Vulnerabilidad (FWI)</h3>
+                 <div class="h-32 mb-6">
+                     <canvas id="fwiChart"></canvas>
+                 </div>
+
+                 <div class="bg-emerald-900/20 border border-emerald-500/30 rounded p-3 flex items-start gap-3">
+                     <div class="text-2xl pt-1">🌳</div>
+                     <div>
+                         <div class="text-xs text-emerald-400 font-bold">Cortafuego Verde Activo</div>
+                         <div class="text-[11px] text-slate-300 mt-1">Línea Keyline Sur perimetral: 2.4 km de especies nativas (Peumo/Quillay) hidratadas al 37% VWC. Reduce la velocidad de propagación un 64%.</div>
+                     </div>
+                 </div>
+            </div>
+
+            <!-- TAB: HIDRICO -->
+            <div id="tab-water" class="tab-content">
+                <h2 class="text-sm text-slate-400 mb-4 font-semibold uppercase tracking-wider">Seguridad Hídrica</h2>
+
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    <div class="bg-black/30 p-3 rounded border border-white/5">
+                        <div class="text-[10px] text-slate-500 uppercase">Infiltración</div>
+                        <div class="text-lg font-bold text-sky-400 data-mono">320 L/s</div>
+                    </div>
+                    <div class="bg-black/30 p-3 rounded border border-white/5">
+                        <div class="text-[10px] text-slate-500 uppercase">Atenuación Crecida</div>
+                        <div class="text-lg font-bold text-emerald-400 data-mono">-3.2%</div>
+                    </div>
+                    <div class="bg-black/30 p-3 rounded border border-white/5 col-span-2">
+                        <div class="text-[10px] text-slate-500 uppercase flex justify-between">
+                            <span>Autonomía Tranque Keyline</span>
+                            <span class="text-emerald-400 font-bold">100% Operativo</span>
+                        </div>
+                        <div class="text-2xl font-black text-white mt-1 data-mono">42 Días</div>
+                    </div>
+                </div>
+
+                <div class="space-y-5 mb-8">
+                     <div>
+                         <div class="flex justify-between text-xs mb-1">
+                             <span class="text-slate-400">Precipitación 24h (mm)</span>
+                             <span class="text-white data-mono" id="val-precip">0 mm</span>
+                         </div>
+                         <input type="range" id="slide-precip" min="10" max="220" value="10" oninput="updateWater()">
+                     </div>
+                     <div>
+                         <div class="flex justify-between text-xs mb-1">
+                             <span class="text-slate-400">Caudal Base Longaví (m³/s)</span>
+                             <span class="text-white data-mono" id="val-flow">125 m³/s</span>
+                         </div>
+                         <input type="range" id="slide-flow" min="30" max="650" value="125" oninput="updateWater()">
+                     </div>
+                 </div>
+
+                 <h3 class="text-xs text-slate-400 mb-2 font-semibold">Balance Hídrico Estacional (Simulado)</h3>
+                 <div class="h-40">
+                     <canvas id="waterChart"></canvas>
+                 </div>
+            </div>
+
+            <!-- TAB: RED CENTINELA & MODELAMIENTO ATMOSFÉRICO -->
+            <div id="tab-centinela" class="tab-content space-y-6">
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <h2 class="text-sm text-slate-300 font-bold uppercase tracking-wider flex items-center gap-2">
+                            <span>📡</span> Red Centinela Ground-Truth Mesh
+                        </h2>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded font-mono font-bold">
+                            9 Estaciones Enlazadas
+                        </span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">
+                        Integración de la micromalla IoT KioT in situ con la red meteorológica y fluviométrica pública del Estado (DMC, DGA, INIA).
+                    </p>
+                </div>
+
+                <!-- Grid de Nodos de la Red Centinela -->
+                <div class="space-y-3">
+                    <div class="text-[11px] font-bold text-sky-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                        <span>🔹</span> Malla IoT KioT • Fundo Meniel (Predial)
+                    </div>
+                    <div class="grid grid-cols-1 gap-2 text-xs font-mono">
+                        <div class="p-3 bg-black/40 border border-emerald-500/30 rounded-lg flex items-center justify-between">
+                            <div>
+                                <strong class="text-emerald-300 block">FDR-01 Cerezos (0-20 cm)</strong>
+                                <span class="text-[10px] text-slate-400">36.2% VWC • Bat 92% • LQI 98%</span>
+                            </div>
+                            <button onclick="flyTo(-36.2095, -71.6060, 16)" class="px-2.5 py-1 bg-emerald-950 hover:bg-emerald-900 border border-emerald-500/40 rounded text-[10px] text-emerald-300 font-sans transition-colors">
+                                Ver 🔍
+                            </button>
+                        </div>
+                        <div class="p-3 bg-black/40 border border-emerald-500/30 rounded-lg flex items-center justify-between">
+                            <div>
+                                <strong class="text-emerald-300 block">FDR-02 Avellano (20-60 cm)</strong>
+                                <span class="text-[10px] text-slate-400">34.8% VWC • Bat 88% • LQI 95%</span>
+                            </div>
+                            <button onclick="flyTo(-36.2120, -71.6030, 16)" class="px-2.5 py-1 bg-emerald-950 hover:bg-emerald-900 border border-emerald-500/40 rounded text-[10px] text-emerald-300 font-sans transition-colors">
+                                Ver 🔍
+                            </button>
+                        </div>
+                        <div class="p-3 bg-black/40 border border-emerald-500/30 rounded-lg flex items-center justify-between">
+                            <div>
+                                <strong class="text-emerald-300 block">FDR-03 Keyline Sur (Infiltración)</strong>
+                                <span class="text-[10px] text-slate-400">37.1% VWC • Bat 95% • Infiltración Activa</span>
+                            </div>
+                            <button onclick="flyTo(-36.2145, -71.6050, 16)" class="px-2.5 py-1 bg-emerald-950 hover:bg-emerald-900 border border-emerald-500/40 rounded text-[10px] text-emerald-300 font-sans transition-colors">
+                                Ver 🔍
+                            </button>
+                        </div>
+                        <div class="p-3 bg-black/40 border border-emerald-500/30 rounded-lg flex items-center justify-between">
+                            <div>
+                                <strong class="text-emerald-300 block">FDR-04 Pastura & Ganado (Silvopastoril)</strong>
+                                <span class="text-[10px] text-slate-400">35.0% VWC • Bat 90% • Zona PRV</span>
+                            </div>
+                            <button onclick="flyTo(-36.2105, -71.6080, 16)" class="px-2.5 py-1 bg-emerald-950 hover:bg-emerald-900 border border-emerald-500/40 rounded text-[10px] text-emerald-300 font-sans transition-colors">
+                                Ver 🔍
+                            </button>
+                        </div>
+                        <div class="p-3 bg-black/40 border border-sky-500/30 rounded-lg flex items-center justify-between">
+                            <div>
+                                <strong class="text-sky-300 block">Piezómetro Tranque Meniel</strong>
+                                <span class="text-[10px] text-slate-400">18,500 m³ • Cota 198m • Bat 99%</span>
+                            </div>
+                            <button onclick="flyTo(-36.2110, -71.6045, 16)" class="px-2.5 py-1 bg-sky-950 hover:bg-sky-900 border border-sky-500/40 rounded text-[10px] text-sky-300 font-sans transition-colors">
+                                Ver 🔍
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-[11px] font-bold text-amber-400 uppercase tracking-wider font-mono flex items-center gap-1.5 pt-2">
+                        <span>🏛️</span> Red Meteorológica & Hídrica Pública
+                    </div>
+                    <div class="grid grid-cols-1 gap-2 text-xs font-mono">
+                        <div class="p-3 bg-black/40 border border-purple-500/30 rounded-lg flex items-center justify-between">
+                            <div>
+                                <strong class="text-purple-300 block">INIA Retiro (Agroclimática)</strong>
+                                <span class="text-[10px] text-slate-400">22.4°C • HR 38% • ETo 4.8 mm/día</span>
+                            </div>
+                            <button onclick="flyTo(-36.0580, -71.7610, 14)" class="px-2.5 py-1 bg-purple-950 hover:bg-purple-900 border border-purple-500/40 rounded text-[10px] text-purple-300 font-sans transition-colors">
+                                Ver 🔍
+                            </button>
+                        </div>
+                        <div class="p-3 bg-black/40 border border-sky-500/30 rounded-lg flex items-center justify-between">
+                            <div>
+                                <strong class="text-sky-300 block">DGA Fluviométrica Río Longaví</strong>
+                                <span class="text-[10px] text-slate-400">Caudal 185 m³/s • Nivel 2.15m</span>
+                            </div>
+                            <button onclick="flyTo(-36.1750, -71.6700, 14)" class="px-2.5 py-1 bg-sky-950 hover:bg-sky-900 border border-sky-500/40 rounded text-[10px] text-sky-300 font-sans transition-colors">
+                                Ver 🔍
+                            </button>
+                        </div>
+                        <div class="p-3 bg-black/40 border border-amber-500/30 rounded-lg flex items-center justify-between">
+                            <div>
+                                <strong class="text-amber-300 block">DMC Parral Centro (Aeronáutica)</strong>
+                                <span class="text-[10px] text-slate-400">Viento Puelche: 38 km/h E-NE • 1014 hPa</span>
+                            </div>
+                            <button onclick="flyTo(-36.1432, -71.8267, 14)" class="px-2.5 py-1 bg-amber-950 hover:bg-amber-900 border border-amber-500/40 rounded text-[10px] text-amber-300 font-sans transition-colors">
+                                Ver 🔍
+                            </button>
+                        </div>
+                        <div class="p-3 bg-black/40 border border-sky-500/30 rounded-lg flex items-center justify-between">
+                            <div>
+                                <strong class="text-sky-300 block">DGA Embalse Bullileo</strong>
+                                <span class="text-[10px] text-slate-400">Volumen: 84.2 Hm³ • Cota 395 msnm (78%)</span>
+                            </div>
+                            <button onclick="flyTo(-36.2800, -71.4200, 13)" class="px-2.5 py-1 bg-sky-950 hover:bg-sky-900 border border-sky-500/40 rounded text-[10px] text-sky-300 font-sans transition-colors">
+                                Ver 🔍
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODELAMIENTO ATMOSFÉRICO LOCAL -->
+                <div class="border-t border-white/10 pt-4 space-y-3">
+                    <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                        <span>🌪️</span> Modelamiento Micro-Atmosférico Local
+                    </h3>
+
+                    <!-- 1. Viento Puelche -->
+                    <div class="p-3.5 bg-black/40 border border-red-500/40 rounded-xl space-y-2">
+                        <div class="flex items-center justify-between">
+                            <strong class="text-red-400 text-xs font-bold font-mono">1. Viento Puelche (Efecto Foehn)</strong>
+                            <span class="text-[10px] bg-red-950 text-red-300 border border-red-500/40 px-2 py-0.5 rounded font-mono font-bold animate-pulse">
+                                Regla 30-30-30 Activa
+                            </span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 font-sans leading-relaxed">
+                            Compresión adiabática del aire andino en descenso hacia el valle. Provoca ráfagas de 38 km/h del Este con humedad relativa menor a 20%, desecando severamente el follaje de cerezos y avellanos e incrementando el riesgo pirogénico.
+                        </p>
+                        <div class="p-2 rounded bg-red-950/40 text-[10px] font-mono text-red-200 border border-red-900/50">
+                            🛡️ <strong>Mitigación Predial:</strong> Cortavientos densos de Peumo/Quillay en orientación Este reducen velocidad del viento un 62% y conservan la humedad en el huerto.
+                        </div>
+                    </div>
+
+                    <!-- 2. Drenaje Catabático -->
+                    <div class="p-3.5 bg-black/40 border border-sky-500/40 rounded-xl space-y-2">
+                        <div class="flex items-center justify-between">
+                            <strong class="text-sky-300 text-xs font-bold font-mono">2. Drenaje Catabático & Inversión Térmica</strong>
+                            <span class="text-[10px] bg-sky-950 text-sky-300 border border-sky-500/40 px-2 py-0.5 rounded font-mono">
+                                Horario: 05:30 AM
+                            </span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 font-sans leading-relaxed">
+                            El aire enfriado por radiación nocturna se densifica (1.29 kg/m³) y resbala por gravedad hacia las cotas más bajas (&lt;170 msnm), generando bolsones de helada a -2.4°C en fondos de cuenca. Las terrazas Keyline a media ladera permanecen en la banda térmica positiva (+2.1°C).
+                        </p>
+                        <div class="p-2 rounded bg-sky-950/40 text-[10px] font-mono text-sky-200 border border-sky-900/50">
+                            ❄️ <strong>Zonificación de Heladas:</strong> Predice qué cuarteles requieren aspersión anti-helada antes del amanecer durante la floración primaveral.
+                        </div>
+                    </div>
+
+                    <!-- 3. Evapotranspiración Penman-Monteith -->
+                    <div class="p-3.5 bg-black/40 border border-emerald-500/40 rounded-xl space-y-2">
+                        <div class="flex items-center justify-between">
+                            <strong class="text-emerald-300 text-xs font-bold font-mono">3. Evapotranspiración ETo Penman-Monteith</strong>
+                            <span class="text-[10px] text-emerald-400 font-mono font-bold">5.1 mm/día</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 font-sans leading-relaxed">
+                            Cálculo de la demanda evaporativa atmosférica contrastada con el balance hídrico en tiempo real reportado por las sondas FDR a 0-20 cm y 20-60 cm en Fundo Meniel.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ESTRATEGIA GANADERA TERRITORIAL -->
+                <div class="border-t border-white/10 pt-4 space-y-3">
+                    <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                        <span>🐄</span> Estrategia Ganadera Territorial (Pastoreo Racional Voisin - PRV)
+                    </h3>
+
+                    <div class="grid grid-cols-2 gap-3 font-mono text-xs">
+                        <div class="p-3 bg-black/40 border border-white/10 rounded-lg">
+                            <span class="text-slate-400 text-[10px] block">Carga Animal Regional:</span>
+                            <strong class="text-emerald-400 text-base font-bold">1.8 UGM/ha</strong>
+                            <span class="text-[9px] text-slate-500 block">Equilibrio sin sobrepastoreo</span>
+                        </div>
+                        <div class="p-3 bg-black/40 border border-white/10 rounded-lg">
+                            <span class="text-slate-400 text-[10px] block">Reposo Forrajero:</span>
+                            <strong class="text-amber-400 text-base font-bold">42 Días</strong>
+                            <span class="text-[9px] text-slate-500 block">Punto óptimo de rebrote</span>
+                        </div>
+                    </div>
+
+                    <div class="p-3.5 bg-emerald-950/30 border border-emerald-500/40 rounded-xl space-y-2 font-sans text-xs">
+                        <strong class="text-emerald-300 block font-mono">🌱 Aporte Edáfico & Retención Hídrica</strong>
+                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                            La bosta y orina de 1.8 UGM/ha cicla <strong>+4.2 kg de materia orgánica por m²</strong> en dos temporadas. Cada 1% de incremento de MO en la cuenca retiene <strong>144.000 litros de agua extra por hectárea</strong>, reduciendo el estrés hídrico de cultivos vecinos y mitigando sequías.
+                        </p>
+                        <div class="p-2 rounded bg-black/40 text-[10px] font-mono text-emerald-200 border border-emerald-800/40">
+                            🔥 <strong>Cortafuegos Vivos:</strong> El pastoreo focalizado en franjas perimetrales de 25m elimina pasto seco antes del verano, creando barreras anti-incendio de costo cero.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TAB: ARQUITECTURA & API (EMBUDO TÁCTICO) -->
+            <div id="tab-architecture" class="tab-content space-y-5">
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <h2 class="text-sm text-purple-300 font-bold uppercase tracking-wider flex items-center gap-2 font-mono">
+                            <span>🏛️</span> Arquitectura: El Embudo Táctico
+                        </h2>
+                        <span class="text-[10px] bg-purple-500/20 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded font-mono font-bold">
+                            Holding Multi-Puerto
+                        </span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 leading-relaxed font-sans">
+                        Estructura desacoplada de soporte a la decisión: mientras las universidades modelan la macro-física teórica a kilómetros de resolución, el <strong>Embudo Táctico</strong> articula la inteligencia comunitaria y predial en tres niveles de escala.
+                    </p>
+                </div>
+
+                <!-- DIAGRAMA VISUAL DEL EMBUDO TÁCTICO -->
+                <div class="p-3.5 bg-black/50 border border-purple-500/30 rounded-xl space-y-2.5 font-mono text-[11px]">
+                    <div class="text-[10px] text-purple-400 font-bold uppercase tracking-wider flex items-center justify-between border-b border-purple-500/20 pb-1.5">
+                        <span>1. Macro-Escala (Institucional Pública)</span>
+                        <span class="text-slate-500 text-[9px]">DGA • DMC • INIA • ESA</span>
+                    </div>
+                    <p class="text-[10px] text-slate-300 font-sans">
+                        Consumo de pronósticos atmosféricos, satélites Sentinel-2 y aforos oficiales de ríos. <em>(Sin competir con modelos de supercómputo; se ingieren vía API abierta).</em>
+                    </p>
+
+                    <div class="text-[10px] text-cyan-400 font-bold uppercase tracking-wider flex items-center justify-between border-b border-cyan-500/20 pb-1.5 pt-2">
+                        <span>2. Meso-Escala: AgroTwin 2 Regional (:7777)</span>
+                        <span class="text-cyan-300 text-[9px] bg-cyan-950 px-1.5 py-0.5 rounded border border-cyan-800">B2B Institucional</span>
+                    </div>
+                    <p class="text-[10px] text-slate-300 font-sans">
+                        <strong>Mapeador Local & APRs:</strong> GIS sobrio para directivos, inversionistas y municipios. Gestiona los 10 Roles SII contiguos, 5 comités de agua potable rural, cotas de inundación y cortafuegos. <em>Genera las condiciones de borde para el predio.</em>
+                    </p>
+
+                    <div class="text-[10px] text-amber-400 font-bold uppercase tracking-wider flex items-center justify-between border-b border-amber-500/20 pb-1.5 pt-2">
+                        <span>3. Micro-Escala: AgriTwin 1 Predial (:7777)</span>
+                        <span class="text-amber-300 text-[9px] bg-amber-950 px-1.5 py-0.5 rounded border border-amber-800">Operativo Predial</span>
+                    </div>
+                    <p class="text-[10px] text-slate-300 font-sans">
+                        <strong>Gemelo Digital 3D (Meniel):</strong> Herramienta táctica inmersiva (Three.js) para el agricultor y agrónomo. Opera cuarteles de cerezos/avellanos, aspersión antihelada en cotas &lt;170m y pastoreo PRV recibiendo la telemetría regional por <code>/api/basin-sync</code>.
+                    </p>
+                </div>
+
+                <!-- LIVE API INSPECTOR -->
+                <div class="p-3.5 bg-obsidian-950 border border-white/10 rounded-xl space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-emerald-400 font-mono flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            API Regional en Vivo (:7777)
+                        </span>
+                        <button onclick="testLiveApi()" class="px-2.5 py-1 bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 border border-emerald-500/40 rounded text-[10px] font-mono transition-colors">
+                            📡 Probar Conexión
+                        </button>
+                    </div>
+                    
+                    <div class="text-[10px] text-slate-400 font-mono">
+                        Endpoint: <code class="text-sky-300 bg-black/40 px-1.5 py-0.5 rounded">GET /api/telemetry/summary</code>
+                    </div>
+
+                    <pre id="api-live-output" class="p-2.5 bg-black/80 rounded border border-white/5 font-mono text-[9px] text-emerald-300/90 max-h-48 overflow-y-auto overflow-x-hidden leading-relaxed whitespace-pre-wrap">Presiona "Probar Conexión" para consultar el payload en vivo...</pre>
+                </div>
+
+                <!-- CÓDIGOS Y SCRIPTS DE INTEGRACIÓN -->
+                <div class="space-y-3">
+                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                        <span>💻</span> Scripts & Tuberías de Acople
+                    </h3>
+
+                    <!-- Snippet 1: Node.js Bridge (:7773 a :7777) -->
+                    <div class="p-3 bg-black/40 border border-white/10 rounded-lg space-y-1.5">
+                        <div class="flex items-center justify-between text-[10px] font-mono text-amber-300">
+                            <strong>1. Node.js: Puente Predial (:7777) ↔ Regional (:7777)</strong>
+                            <span class="text-slate-500">server.cjs</span>
+                        </div>
+                        <pre class="p-2 bg-black/60 rounded text-[9px] font-mono text-slate-300 overflow-x-auto"><code>// En agritwin/server.cjs (:7777)
+http.get('http://127.0.0.1:7777/api/telemetry/summary', { timeout: 1200 }, (res) => {
+  let data = '';
+  res.on('data', c => data += c);
+  res.on('end', () => {
+    const regional = JSON.parse(data);
+    // Inyecta condiciones de cuenca en Fundo Meniel 3D
+    serveLiveBoundaryConditions(regional);
+  });
+});</code></pre>
+                    </div>
+
+                    <!-- Snippet 2: cURL / Bash Monitoring -->
+                    <div class="p-3 bg-black/40 border border-white/10 rounded-lg space-y-1.5">
+                        <div class="flex items-center justify-between text-[10px] font-mono text-sky-300">
+                            <strong>2. CLI: Verificación Rápida de Salud & Telemetría</strong>
+                            <span class="text-slate-500">Terminal macOS</span>
+                        </div>
+                        <pre class="p-2 bg-black/60 rounded text-[9px] font-mono text-slate-300 overflow-x-auto"><code># Salud del microservicio
+curl -s http://localhost:7777/api/health
+
+# Condiciones de borde sincronizadas
+curl -s http://localhost:7777/#galpon/api/basin-sync | jq .regionalCuenca.derived</code></pre>
+                    </div>
+
+                    <!-- Snippet 3: Python / Jupyter Data Pipeline -->
+                    <div class="p-3 bg-black/40 border border-white/10 rounded-lg space-y-1.5">
+                        <div class="flex items-center justify-between text-[10px] font-mono text-emerald-300">
+                            <strong>3. Python: Ingesta en Modelos Agronómicos</strong>
+                            <span class="text-slate-500">pipeline.py</span>
+                        </div>
+                        <pre class="p-2 bg-black/60 rounded text-[9px] font-mono text-slate-300 overflow-x-auto"><code>import requests
+telemetry = requests.get('http://localhost:7777/api/telemetry/summary').json()
+fwi = telemetry['derived']['fwi']['value']
+q_longavi = telemetry['hydrology']['rio_longavi']['caudal_m3_s']
+print(f"Estado Cuenca: FWI={fwi} | Caudal Longaví={q_longavi} m3/s")</code></pre>
+                    </div>
+                </div>
+
+                <!-- ENLACES AL HOLDING AGROTECH -->
+                <div class="border-t border-white/10 pt-4 space-y-2">
+                    <span class="text-[10px] text-slate-500 font-mono uppercase block">Navegación del Ecosistema AgroTech:</span>
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="http://localhost:7770" target="_blank" class="p-2.5 bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-500/40 rounded-lg flex items-center gap-2 text-emerald-300 text-xs font-mono transition-colors">
+                            <span>🏛️</span>
+                            <div>
+                                <span class="font-bold block text-[11px]">AgroTech HQ</span>
+                                <span class="text-[9px] text-slate-400 block">:7770 Cockpit</span>
+                            </div>
+                        </a>
+                        <a href="http://localhost:7777/#galpon" target="_blank" class="p-2.5 bg-amber-950/40 hover:bg-amber-900/60 border border-amber-500/40 rounded-lg flex items-center gap-2 text-amber-300 text-xs font-mono transition-colors">
+                            <span>🚜</span>
+                            <div>
+                                <span class="font-bold block text-[11px]">AgriTwin 1</span>
+                                <span class="text-[9px] text-slate-400 block">Galpón Predial 3D</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+
+    <!-- STATUS BAR -->
+    <div class="fixed bottom-0 left-0 right-0 h-8 bg-obsidian-900 z-50 flex items-center justify-between px-4 border-t border-white/10 text-[10px] text-slate-400 font-mono">
+        <div class="flex gap-4">
+            <span>🔴 En vivo</span>
+            <span>Sentinel-2 L2A</span>
+            <span class="hidden sm:inline">Copernicus DEM 30m</span>
+            <span class="hidden md:inline">Red Centinela KioT</span>
+        </div>
+        <div id="cursor-coords" class="text-emerald-400 hidden sm:block">
+            Lat: -36.21156, Lng: -71.60530
+        </div>
+        <div class="flex gap-4">
+            <span class="hidden sm:inline">WGS84 EPSG:4326</span>
+            <span id="zoom-level">Zoom: 13</span>
+            <span class="text-white">AgroTwin v2.0</span>
+        </div>
+    </div>
+
+    <!-- EXECUTIVE MODAL -->
+    <div id="exec-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 lg:p-10">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="relative w-full max-w-5xl bg-obsidian-900 border border-white/20 rounded-xl shadow-2xl flex flex-col max-h-full overflow-hidden">
+            
+            <div class="p-4 border-b border-white/10 flex justify-between items-center bg-obsidian-800">
+                <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                    <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Dossier Ejecutivo: Proyecto Meniel (Cuenca Maule Sur)
+                </h2>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6 bg-obsidian-900">
+                
+                <!-- Pillar 1 -->
+                <div class="bg-black/30 border border-white/5 rounded-lg p-5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="p-2 bg-emerald-900/30 rounded text-emerald-400">💼</div>
+                        <h3 class="text-sm font-bold text-white uppercase tracking-wider">1. Retorno Financiero</h3>
+                    </div>
+                    <ul class="text-sm text-slate-300 space-y-2">
+                        <li class="flex justify-between border-b border-white/5 pb-1"><span>CAPEX</span><span class="font-mono text-white">$48.5M CLP</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-1"><span>TIR Anual</span><span class="font-mono text-emerald-400">18.6%</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-1"><span>Payback</span><span class="font-mono text-white">3.8 Años</span></li>
+                        <li class="flex justify-between pb-1"><span>Ahorro OPEX / Año</span><span class="font-mono text-emerald-400">$8.2M CLP</span></li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="bg-black/30 border border-white/5 rounded-lg p-5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="p-2 bg-sky-900/30 rounded text-sky-400">💧</div>
+                        <h3 class="text-sm font-bold text-white uppercase tracking-wider">2. Seguridad Hídrica</h3>
+                    </div>
+                    <ul class="text-sm text-slate-300 space-y-2">
+                        <li class="flex justify-between border-b border-white/5 pb-1"><span>Reserva Tranque</span><span class="font-mono text-white">18,500 m³</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-1"><span>Infiltración Suelo</span><span class="font-mono text-sky-400">320 L/s</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-1"><span>Días de Autonomía</span><span class="font-mono text-white">42 Días</span></li>
+                        <li class="flex justify-between pb-1"><span>Mitigación Inundación</span><span class="font-mono text-sky-400">-3.2% Peak</span></li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="bg-black/30 border border-white/5 rounded-lg p-5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="p-2 bg-amber-900/30 rounded text-amber-400">🔥</div>
+                        <h3 class="text-sm font-bold text-white uppercase tracking-wider">3. Resiliencia al Fuego</h3>
+                    </div>
+                    <ul class="text-sm text-slate-300 space-y-2">
+                        <li class="flex justify-between border-b border-white/5 pb-1"><span>FWI Predio (Actual)</span><span class="font-mono text-emerald-400">24 (Bajo)</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-1"><span>FWI Entorno (Monocultivo)</span><span class="font-mono text-red-400">68 (Alto)</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-1"><span>Cortafuego Verde</span><span class="font-mono text-white">2.4 km</span></li>
+                        <li class="flex justify-between pb-1"><span>Pérdida Evitada</span><span class="font-mono text-emerald-400">$140M CLP</span></li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 4 -->
+                <div class="bg-black/30 border border-white/5 rounded-lg p-5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="p-2 bg-indigo-900/30 rounded text-indigo-400">⚖️</div>
+                        <h3 class="text-sm font-bold text-white uppercase tracking-wider">4. Gobernanza & ESG</h3>
+                    </div>
+                    <ul class="text-sm text-slate-300 space-y-2">
+                        <li class="flex justify-between border-b border-white/5 pb-1"><span>Estructura</span><span class="font-mono text-white text-right">SpA + Cooperativa</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-1"><span>Monitoreo MRV</span><span class="font-mono text-indigo-400">Blockchain (Activo)</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-1"><span>Certificación Carbono</span><span class="font-mono text-white">En proceso</span></li>
+                        <li class="flex justify-between pb-1"><span>Impacto Social</span><span class="font-mono text-white text-right">30 Familias</span></li>
+                    </ul>
+                </div>
+
+            </div>
+            
+            <div class="p-4 border-t border-white/10 bg-obsidian-800 flex justify-between items-center">
+                <div class="text-xs text-slate-500 font-mono">
+                    MRV Hash: 0x9f8b...3a2c
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="downloadFormalReport()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-4 py-2 rounded font-semibold transition-colors">
+                        Descargar Reporte (.txt)
+                    </button>
+                    <a href="http://localhost:7777/#galpon" class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-4 py-2 rounded font-semibold transition-colors">
+                        Ver Galpón Predial
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN SCRIPT -->
+    <script>
+        // --- 1. DATA DEFINITIONS ---
+
+        const LULC_CLASSES = [
+            { id: 'bosque', name: 'Bosque Nativo Esclerófilo', area: 18400, percent: 15.1, color: '#16a34a', hex: '#16a34a' },
+            { id: 'agricola', name: 'Agrícola Tradicional & Arroz', area: 42600, percent: 34.9, color: '#eab308', hex: '#eab308' },
+            { id: 'agua', name: 'Cuerpos de Agua & Embalses', area: 3200, percent: 2.6, color: '#0ea5e9', hex: '#0ea5e9' },
+            { id: 'cordillera', name: 'Cordillera & Montaña Andina', area: 24100, percent: 19.8, color: '#a1a1aa', hex: '#a1a1aa' },
+            { id: 'forestal', name: 'Monocultivo Forestal', area: 31800, percent: 26.1, color: '#dc2626', hex: '#dc2626' },
+            { id: 'urbano', name: 'Urbano Central', area: 1450, percent: 1.2, color: '#f97316', hex: '#f97316' },
+            { id: 'villorrios', name: 'Villorrios & Poblados', area: 820, percent: 0.7, color: '#f59e0b', hex: '#f59e0b' }
+        ];
+
+        // ─── 1.1 MOSAICO CATASTRAL PREDIAL RURAL (Roles SII & Derechos DGA) ───
+        const geojsonPredios = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "MENIEL",
+                        "name": "Fundo Meniel (Predio Piloto)",
+                        "rol": "142-88 Retiro",
+                        "comuna": "Retiro",
+                        "area_ha": 24.8,
+                        "crop": "Cerezos Lapins (12 ha) & Avellano Tonda (10 ha)",
+                        "water_L_s": 42.5,
+                        "vwc": "36.2%",
+                        "fwi": 24,
+                        "fwi_status": "Bajo (Keyline Activo)",
+                        "soil": "Franco-arcilloso estructurado",
+                        "owner": "Meniel SpA / Cooperativa Agua Viva",
+                        "color": "#10b981",
+                        "stroke": "#059669"
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.6090, -36.2085], [-71.6020, -36.2070], [-71.6005, -36.2135],
+                            [-71.6075, -36.2160], [-71.6090, -36.2085]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "SAN_JOSE",
+                        "name": "Agrícola San José de Longaví",
+                        "rol": "142-12 Retiro",
+                        "comuna": "Retiro",
+                        "area_ha": 68.4,
+                        "crop": "Arroz Zafiro & Cuarteles de Inundación",
+                        "water_L_s": 110.0,
+                        "vwc": "48.1%",
+                        "fwi": 18,
+                        "fwi_status": "Muy Bajo (Saturado)",
+                        "soil": "Arcilloso Vertisol de Vega",
+                        "owner": "Soc. Agrícola San José Ltda.",
+                        "color": "#eab308",
+                        "stroke": "#ca8a04"
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.6250, -36.1950], [-71.6050, -36.1920], [-71.6020, -36.2070],
+                            [-71.6090, -36.2085], [-71.6280, -36.2060], [-71.6250, -36.1950]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "LOS_BOLDOS",
+                        "name": "Fundo Forestal Los Boldos",
+                        "rol": "143-05 Retiro",
+                        "comuna": "Retiro",
+                        "area_ha": 112.5,
+                        "crop": "Monocultivo Pino Radiata (2012) & Eucalipto",
+                        "water_L_s": 8.0,
+                        "vwc": "18.4%",
+                        "fwi": 68,
+                        "fwi_status": "Crítico / Extremo (Puelche)",
+                        "soil": "Granítico degradado de ladera",
+                        "owner": "Consorcio Maderero Sur S.A.",
+                        "color": "#dc2626",
+                        "stroke": "#b91c1c"
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.5950, -36.2050], [-71.5600, -36.1980], [-71.5550, -36.2250],
+                            [-71.5920, -36.2280], [-71.6005, -36.2135], [-71.5950, -36.2050]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "RETIRO_PONIENTE",
+                        "name": "Hacienda Retiro Poniente",
+                        "rol": "138-20 Retiro",
+                        "comuna": "Retiro",
+                        "area_ha": 84.0,
+                        "crop": "Trigo Candeal, Avena & Maíz forrajero",
+                        "water_L_s": 75.0,
+                        "vwc": "31.0%",
+                        "fwi": 32,
+                        "fwi_status": "Moderado",
+                        "soil": "Aluvial franco profundo",
+                        "owner": "Agrícola & Ganadera Maule Sur",
+                        "color": "#f59e0b",
+                        "stroke": "#d97706"
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.6450, -36.1850], [-71.6250, -36.1820], [-71.6250, -36.1950],
+                            [-71.6480, -36.2050], [-71.6450, -36.1850]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "STA_LUCIA",
+                        "name": "Agrícola Santa Lucía del Huape",
+                        "rol": "140-15 Retiro",
+                        "comuna": "Retiro",
+                        "area_ha": 36.2,
+                        "crop": "Arándanos Duke & Moras de Exportación",
+                        "water_L_s": 30.0,
+                        "vwc": "34.5%",
+                        "fwi": 26,
+                        "fwi_status": "Bajo (Riego Goteo)",
+                        "soil": "Franco arenoso permeable",
+                        "owner": "Exportadora Huape Fruits",
+                        "color": "#8b5cf6",
+                        "stroke": "#7c3aed"
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.6075, -36.2160], [-71.6005, -36.2135], [-71.5980, -36.2280],
+                            [-71.6120, -36.2320], [-71.6075, -36.2160]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "EL_CULENAR",
+                        "name": "Comunidad Agrícola El Culenar (PRV)",
+                        "rol": "144-01 Retiro",
+                        "comuna": "Retiro",
+                        "area_ha": 54.8,
+                        "crop": "Silvopastoril PRV & Pastura Polifítica",
+                        "water_L_s": 25.0,
+                        "vwc": "35.8%",
+                        "fwi": 22,
+                        "fwi_status": "Bajo (Cortafuego Vivo)",
+                        "soil": "Franco con biomasa activa (+4.2 kg MO)",
+                        "owner": "Cooperativa Campesina Culenar",
+                        "color": "#14b8a6",
+                        "stroke": "#0d9488"
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.6280, -36.2060], [-71.6090, -36.2085], [-71.6075, -36.2160],
+                            [-71.6120, -36.2320], [-71.6320, -36.2260], [-71.6280, -36.2060]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "VINA_AUSTRAL",
+                        "name": "Viña Maule Austral (Secano)",
+                        "rol": "141-09 Parral",
+                        "comuna": "Parral",
+                        "area_ha": 42.1,
+                        "crop": "Viñedo Patrimonial País & Carignan (Secano)",
+                        "water_L_s": 12.0,
+                        "vwc": "22.0%",
+                        "fwi": 35,
+                        "fwi_status": "Moderado-Alto",
+                        "soil": "Granito meteorizado rojo",
+                        "owner": "Viñedos Maule Austral Ltda.",
+                        "color": "#ec4899",
+                        "stroke": "#db2777"
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.6600, -36.1950], [-71.6450, -36.1850], [-71.6480, -36.2050],
+                            [-71.6620, -36.2120], [-71.6600, -36.1950]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "EL_SAUCE",
+                        "name": "Hijuela El Sauce",
+                        "rol": "142-50 Retiro",
+                        "comuna": "Retiro",
+                        "area_ha": 19.3,
+                        "crop": "Alfalfa & Hortalizas de estación",
+                        "water_L_s": 18.0,
+                        "vwc": "33.2%",
+                        "fwi": 28,
+                        "fwi_status": "Bajo",
+                        "soil": "Franco aluvial",
+                        "owner": "Sucesión González",
+                        "color": "#a855f7",
+                        "stroke": "#9333ea"
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.6250, -36.1820], [-71.6050, -36.1780], [-71.6050, -36.1920],
+                            [-71.6250, -36.1950], [-71.6250, -36.1820]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "RESERVA_RIO",
+                        "name": "Reserva Fiscal Ribereña Río Longaví",
+                        "rol": "Fiscal DGA-01",
+                        "comuna": "Retiro / Longaví",
+                        "area_ha": 31.0,
+                        "crop": "Bosque Esclerófilo Ribereño (Peumo, Quillay, Sauce)",
+                        "water_L_s": "Caudal Ecológico",
+                        "vwc": "41.5%",
+                        "fwi": 15,
+                        "fwi_status": "Mínimo (Humedal Ribereño)",
+                        "soil": "Aluvial de cantos rodados y limo",
+                        "owner": "Bienes Nacionales / DGA",
+                        "color": "#06b6d4",
+                        "stroke": "#0891b2"
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.6400, -36.1700], [-71.6100, -36.1650], [-71.6050, -36.1780],
+                            [-71.6350, -36.1820], [-71.6400, -36.1700]
+                        ]]
+                    }
+                }
+            ]
+        };
+
+        // ─── 1.2 ZONIFICACIÓN DE AMENAZA DE INUNDACIÓN FLUVIAL (DGA / SENAPRED) ───
+        const geojsonInundacion = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "INUND_T10",
+                        "recurrence": "T = 10 Años (Alta Amenaza)",
+                        "caudal_critico": "180 m³/s",
+                        "descripcion": "Cauce activo y riberas bajas del Río Longaví. Desbordes recurrentes en temporales de invierno.",
+                        "afectacion": "Vegas agrícolas bajas, caminos ribereños y bocatomas de canales.",
+                        "cota_max": "165 msnm",
+                        "color": "#0284c7",
+                        "fillOpacity": 0.45
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.4500, -36.2420], [-71.4900, -36.2230], [-71.5300, -36.2080],
+                            [-71.5700, -36.1920], [-71.6100, -36.1810], [-71.6500, -36.1710],
+                            [-71.6900, -36.1620], [-71.7200, -36.1550], [-71.7250, -36.1590],
+                            [-71.6920, -36.1660], [-71.6520, -36.1760], [-71.6120, -36.1860],
+                            [-71.5720, -36.1970], [-71.5320, -36.2130], [-71.4920, -36.2280],
+                            [-71.4520, -36.2460], [-71.4500, -36.2420]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "INUND_T50",
+                        "recurrence": "T = 50 Años (Media Amenaza)",
+                        "caudal_critico": "340 m³/s",
+                        "descripcion": "Llanura aluvial y paleocauces de desborde del Río Longaví y esteros tributarios.",
+                        "afectacion": "Cuarteles de arrozales, parcelas colindantes y pozos de noria comarcales.",
+                        "cota_max": "172 msnm",
+                        "color": "#38bdf8",
+                        "fillOpacity": 0.30
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.4400, -36.2380], [-71.4850, -36.2170], [-71.5250, -36.2010],
+                            [-71.5650, -36.1840], [-71.6050, -36.1730], [-71.6550, -36.1630],
+                            [-71.7000, -36.1530], [-71.7350, -36.1480], [-71.7400, -36.1650],
+                            [-71.6950, -36.1750], [-71.6450, -36.1860], [-71.6020, -36.1970],
+                            [-71.5600, -36.2110], [-71.5200, -36.2260], [-71.4780, -36.2430],
+                            [-71.4380, -36.2580], [-71.4400, -36.2380]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "INUND_T100",
+                        "recurrence": "T = 100 Años (Baja Amenaza / Crecida Milenaria)",
+                        "caudal_critico": "520 m³/s",
+                        "descripcion": "Máxima envolvente de inundación histórica. Desborde masivo hacia fondos de cuenca.",
+                        "afectacion": "Comités APR, puentes rurales secundarios y subestaciones eléctricas.",
+                        "cota_max": "180 msnm",
+                        "color": "#7dd3fc",
+                        "fillOpacity": 0.18
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.4300, -36.2320], [-71.4750, -36.2100], [-71.5150, -36.1920],
+                            [-71.5580, -36.1750], [-71.6000, -36.1640], [-71.6600, -36.1520],
+                            [-71.7100, -36.1420], [-71.7500, -36.1380], [-71.7600, -36.1750],
+                            [-71.7050, -36.1880], [-71.6400, -36.2010], [-71.5950, -36.2150],
+                            [-71.5500, -36.2280], [-71.5050, -36.2450], [-71.4650, -36.2620],
+                            [-71.4250, -36.2750], [-71.4300, -36.2320]
+                        ]]
+                    }
+                }
+            ]
+        };
+
+        // ─── 1.3 ZONIFICACIÓN DE PELIGRO DE INCENDIO FORESTAL (CONAF / FWI PAISAJE) ───
+        const geojsonIncendios = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "FIRE_CRITICA",
+                        "zona": "Zona Crítica de Interfaz Forestal (Laderas Andinas)",
+                        "organismo": "CONAF / FWI Landscape",
+                        "peligro": "EXTREMO (FWI 68-82)",
+                        "factor": "Monocultivo de Pino/Eucalipto continuo + Descenso Adiabático Viento Puelche (38 km/h)",
+                        "especies": "Pinus radiata, Acacia dealbata, Matorral espinoso seco",
+                        "color": "#dc2626",
+                        "fillOpacity": 0.40
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.5500, -36.1000], [-71.4200, -36.0800], [-71.3800, -36.2200],
+                            [-71.4400, -36.3200], [-71.5200, -36.2600], [-71.5500, -36.1000]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "FIRE_MODERADA",
+                        "zona": "Secano Interior y Lomas de Pastizal",
+                        "organismo": "CONAF / SIT",
+                        "peligro": "ALTO (FWI 45-55)",
+                        "factor": "Pastura seca en verano con discontinuidad arbórea",
+                        "especies": "Gramíneas anuales, Espino (Acacia caven)",
+                        "color": "#f59e0b",
+                        "fillOpacity": 0.28
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.7200, -36.0600], [-71.6500, -36.0600], [-71.6400, -36.1600],
+                            [-71.7200, -36.1500], [-71.7200, -36.0600]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "FIRE_CORTAFUEGOS",
+                        "zona": "Cortafuegos Vivos & Keyline Protegido (Meniel)",
+                        "organismo": "AgroTwin SDSS / MRV",
+                        "peligro": "MITIGADO / RESILIENTE (FWI 24)",
+                        "factor": "Barrera perimetral de Peumo/Quillay hidratada (37% VWC) + Fajas PRV de 25m",
+                        "especies": "Cryptocarya alba (Peumo), Quillaja saponaria (Quillay), Pastura verde",
+                        "color": "#10b981",
+                        "fillOpacity": 0.65
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-71.6110, -36.2070], [-71.6000, -36.2055], [-71.5990, -36.2150],
+                            [-71.6095, -36.2180], [-71.6110, -36.2070]
+                        ]]
+                    }
+                }
+            ]
+        };
+
+        // ─── 1.4 COMITÉS DE AGUA POTABLE RURAL (APRs Cuenca Maule Sur) ───
+        const aprsData = [
+            {
+                name: "Comité APR Retiro Sur",
+                lat: -36.0650,
+                lng: -71.7580,
+                familias: 1450,
+                pozo_prof_m: 45,
+                bombeo_L_s: 8.5,
+                cota_msnm: 168,
+                vulnerabilidad: "Media (Baja cota de recarga estival)"
+            },
+            {
+                name: "Comité APR San José de Parral",
+                lat: -36.1520,
+                lng: -71.8150,
+                familias: 820,
+                pozo_prof_m: 32,
+                bombeo_L_s: 6.2,
+                cota_msnm: 162,
+                vulnerabilidad: "Alta (Emplazado en Faja de Inundación T=50)"
+            },
+            {
+                name: "Comité APR Copihue Oriente",
+                lat: -36.1150,
+                lng: -71.7200,
+                familias: 610,
+                pozo_prof_m: 28,
+                bombeo_L_s: 4.5,
+                cota_msnm: 175,
+                vulnerabilidad: "Baja (Monitoreo DGA estable)"
+            },
+            {
+                name: "Comité APR Villorrio Meniel",
+                lat: -36.2050,
+                lng: -71.6020,
+                familias: 240,
+                pozo_prof_m: 18,
+                bombeo_L_s: 3.1,
+                cota_msnm: 194,
+                vulnerabilidad: "Protegida (Recarga permanente por zanjas Keyline Meniel)"
+            },
+            {
+                name: "Comité APR Ajial - Longaví",
+                lat: -36.1850,
+                lng: -71.6850,
+                familias: 480,
+                pozo_prof_m: 35,
+                bombeo_L_s: 5.0,
+                cota_msnm: 166,
+                vulnerabilidad: "Media-Alta (Sensible a turbiedad en crecidas)"
+            }
+        ];
+
+        const fundoMenielCoords = [
+            [-36.2085, -71.6090],
+            [-36.2070, -71.6020],
+            [-36.2135, -71.6005],
+            [-36.2160, -71.6075],
+            [-36.2085, -71.6090]
+        ];
+
+        const sensors = [
+            // Red Centinela Local KioT (Fundo Meniel)
+            { name: "FDR-01 Cerezos (Fundo Meniel)", lat: -36.2095, lng: -71.6060, data: "36.2% VWC, Bat 92% • 0-20 cm", network: "KioT Mesh" },
+            { name: "FDR-02 Avellano (Fundo Meniel)", lat: -36.2120, lng: -71.6030, data: "34.8% VWC, Bat 88% • 20-60 cm", network: "KioT Mesh" },
+            { name: "FDR-03 Keyline Sur (Fundo Meniel)", lat: -36.2145, lng: -71.6050, data: "37.1% VWC, Bat 95% • Infiltración", network: "KioT Mesh" },
+            { name: "FDR-04 Pastura & Ganado (Meniel)", lat: -36.2105, lng: -71.6080, data: "35.0% VWC, Bat 90% • Silvopastoril", network: "KioT Mesh" },
+            { name: "Piezómetro Tranque (Meniel)", lat: -36.2110, lng: -71.6045, data: "18,500 m³, Bat 99% • Cota 198m", type: "water", network: "KioT Mesh" },
+            
+            // Estaciones Meteorológicas Públicas Oficiales (DMC / DGA / INIA)
+            { name: "Estación Agroclimática INIA Retiro", lat: -36.0580, lng: -71.7610, data: "T: 22.4°C, HR: 38%, ETo: 4.8 mm/día", type: "inia", network: "INIA Red Agroclimática" },
+            { name: "Estación Fluviométrica DGA Río Longaví", lat: -36.1750, lng: -71.6700, data: "Caudal Oficial: 185 m³/s, Nivel: 2.15m", type: "water", network: "DGA Aguas" },
+            { name: "Estación Meteorológica DMC Parral Centro", lat: -36.1432, lng: -71.8267, data: "Viento Puelche: 38 km/h E-NE, Presión 1014 hPa", type: "dmc", network: "DMC Aeronáutica" },
+            { name: "Estación Embalse Bullileo (DGA)", lat: -36.2800, lng: -71.4200, data: "Volumen: 84.2 Hm³, Cota: 395 msnm (Llenado 78%)", type: "water", network: "DGA Embalses" }
+        ];
+
+        const rivers = [
+            { name: "Río Longaví", coords: [[-36.1600,-71.7200], [-36.1750,-71.6700], [-36.1900,-71.6200], [-36.2100,-71.5500], [-36.2300,-71.4800]], color: '#38bdf8' },
+            { name: "Río Perquilauquén", coords: [[-36.0800,-71.8200], [-36.1100,-71.7500], [-36.1400,-71.6800]], color: '#0ea5e9' },
+            { name: "Canal Matriz Retiro", coords: [[-36.0550,-71.7600], [-36.1200,-71.7100], [-36.1800,-71.6500]], color: '#0284c7' }
+        ];
+
+        // --- 2. MAP INITIALIZATION ---
+        const map = L.map('map', {
+            center: [-36.1432, -71.65],
+            zoom: 11,
+            zoomControl: false
+        });
+
+        L.control.zoom({ position: 'bottomleft' }).addTo(map);
+
+        // Base Layers con Google Maps y Caché Local Offline
+        const googleHybrid = L.tileLayer('/api/tiles/google-hybrid/{z}/{x}/{y}.png', {
+            attribution: '&copy; Google Maps Satélite + Rutas (Caché Local Offline)',
+            maxZoom: 20
+        });
+
+        const googleSat = L.tileLayer('/api/tiles/google-sat/{z}/{x}/{y}.png', {
+            attribution: '&copy; Google Maps Satélite HD',
+            maxZoom: 20
+        });
+
+        const googleTerrain = L.tileLayer('/api/tiles/google-terrain/{z}/{x}/{y}.png', {
+            attribution: '&copy; Google Maps Relieve Topográfico',
+            maxZoom: 20
+        });
+
+        const googleStreets = L.tileLayer('/api/tiles/google-streets/{z}/{x}/{y}.png', {
+            attribution: '&copy; Google Maps Calles',
+            maxZoom: 20
+        });
+
+        const darkTactical = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; CARTO &copy; OpenStreetMap'
+        });
+
+        const esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri'
+        });
+
+        const baseLayers = {
+            "🛰️ Google Maps Híbrido": googleHybrid,
+            "🌍 Google Maps Satélite": googleSat,
+            "🏔️ Google Maps Terreno": googleTerrain,
+            "🗺️ Google Maps Calles": googleStreets,
+            "🕶️ Táctico Oscuro": darkTactical,
+            "🛰️ Satélite ESRI": esriSat
+        };
+
+        // Activar Google Maps Híbrido por defecto
+        googleHybrid.addTo(map);
+
+        L.control.layers(baseLayers, null, { position: 'topleft', collapsed: false }).addTo(map);
+
+        // Map Layers Object to hold references
+        const overlayLayers = {};
+
+        // 2.1 Mosaico Catastral Predial Rural (Roles SII)
+        const prediosLayer = L.geoJSON(geojsonPredios, {
+            style: function(feature) {
+                return {
+                    color: feature.properties.stroke || '#10b981',
+                    weight: 2,
+                    opacity: 0.9,
+                    fillColor: feature.properties.color || '#10b981',
+                    fillOpacity: 0.35
+                };
+            },
+            onEachFeature: function(feature, layer) {
+                const p = feature.properties;
+                layer.on('mouseover', function() { this.setStyle({ fillOpacity: 0.6, weight: 3 }); });
+                layer.on('mouseout', function() { this.setStyle({ fillOpacity: 0.35, weight: 2 }); });
+
+                const popupHtml = `
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; min-width: 240px; padding: 2px;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 4px; margin-bottom: 6px;">
+                            <strong style="color: ${p.color}; font-size: 12px;">${p.name}</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                            <span style="color: #94a3b8;">Rol SII:</span>
+                            <span style="color: #f8fafc; font-weight: bold; background: rgba(255,255,255,0.1); padding: 1px 4px; border-radius: 3px;">${p.rol}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                            <span style="color: #94a3b8;">Superficie:</span>
+                            <span style="color: #38bdf8; font-weight: bold;">${p.area_ha} ha</span>
+                        </div>
+                        <div style="margin-bottom: 4px;">
+                            <span style="color: #94a3b8; display: block; font-size: 10px;">Cultivo / Cobertura:</span>
+                            <span style="color: #cbd5e1; font-size: 10px;">${p.crop}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                            <span style="color: #94a3b8;">Derechos DGA:</span>
+                            <span style="color: #0ea5e9; font-weight: bold;">${p.water_L_s} L/s</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                            <span style="color: #94a3b8;">Humedad FDR:</span>
+                            <span style="color: #10b981; font-weight: bold;">${p.vwc}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                            <span style="color: #94a3b8;">FWI Riesgo:</span>
+                            <span style="color: ${p.fwi > 50 ? '#ef4444' : (p.fwi > 30 ? '#f59e0b' : '#10b981')}; font-weight: bold;">${p.fwi} (${p.fwi_status})</span>
+                        </div>
+                        <div style="border-top: 1px solid #1e293b; padding-top: 4px; margin-top: 4px; font-size: 9px; color: #64748b;">
+                            Propietario: ${p.owner}
+                        </div>
+                    </div>
+                `;
+                layer.bindPopup(popupHtml);
+            }
+        });
+        overlayLayers['predios'] = prediosLayer;
+        prediosLayer.addTo(map);
+
+        // 2.2 Zonificación de Amenaza de Inundación Fluvial (DGA / SENAPRED)
+        const inundacionLayer = L.geoJSON(geojsonInundacion, {
+            style: function(feature) {
+                const p = feature.properties;
+                return {
+                    color: p.color,
+                    weight: 2,
+                    dashArray: '4, 4',
+                    fillColor: p.color,
+                    fillOpacity: p.fillOpacity
+                };
+            },
+            onEachFeature: function(feature, layer) {
+                const p = feature.properties;
+                const popupHtml = `
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; min-width: 250px; padding: 2px;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #0369a1; padding-bottom: 4px; margin-bottom: 6px;">
+                            <strong style="color: ${p.color}; font-size: 12px;">🌊 ${p.recurrence}</strong>
+                        </div>
+                        <div style="margin-bottom: 4px;">
+                            <span style="color: #94a3b8; font-size: 10px;">Caudal Umbral:</span>
+                            <span style="color: #38bdf8; font-weight: bold;">&gt; ${p.caudal_critico}</span>
+                        </div>
+                        <div style="margin-bottom: 4px;">
+                            <span style="color: #94a3b8; font-size: 10px;">Cota Máx:</span>
+                            <span style="color: #f8fafc; font-weight: bold;">${p.cota_max}</span>
+                        </div>
+                        <p style="color: #cbd5e1; font-size: 10px; margin: 4px 0;">${p.descripcion}</p>
+                        <div style="background: rgba(14, 165, 233, 0.1); border-left: 2px solid ${p.color}; padding: 4px; font-size: 9px; color: #bae6fd;">
+                            Afectación: ${p.afectacion}
+                        </div>
+                    </div>
+                `;
+                layer.bindPopup(popupHtml);
+            }
+        });
+        overlayLayers['inundacion'] = inundacionLayer;
+        inundacionLayer.addTo(map);
+
+        // 2.3 Zonificación Pirogénica de Paisaje (CONAF / FWI)
+        const incendiosLayer = L.geoJSON(geojsonIncendios, {
+            style: function(feature) {
+                const p = feature.properties;
+                return {
+                    color: p.color,
+                    weight: 2,
+                    fillColor: p.color,
+                    fillOpacity: p.fillOpacity
+                };
+            },
+            onEachFeature: function(feature, layer) {
+                const p = feature.properties;
+                const popupHtml = `
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; min-width: 250px; padding: 2px;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #b91c1c; padding-bottom: 4px; margin-bottom: 6px;">
+                            <strong style="color: ${p.color}; font-size: 12px;">🔥 ${p.zona}</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                            <span style="color: #94a3b8;">Nivel Peligro:</span>
+                            <span style="color: ${p.color}; font-weight: bold;">${p.peligro}</span>
+                        </div>
+                        <div style="margin-bottom: 4px;">
+                            <span style="color: #94a3b8; font-size: 10px;">Factor Crítico:</span>
+                            <p style="color: #cbd5e1; font-size: 10px; margin: 2px 0;">${p.factor}</p>
+                        </div>
+                        <div style="font-size: 9px; color: #94a3b8;">
+                            Especies: ${p.especies}
+                        </div>
+                    </div>
+                `;
+                layer.bindPopup(popupHtml);
+            }
+        });
+        overlayLayers['incendios'] = incendiosLayer;
+        incendiosLayer.addTo(map);
+
+        // 2.4 Comités de Agua Potable Rural (APRs)
+        const aprLayerGroup = L.layerGroup();
+        aprsData.forEach(apr => {
+            const aprIcon = L.divIcon({
+                className: 'custom-div-icon',
+                html: `<div style="background: #0284c7; border: 2px solid white; border-radius: 50%; width: 14px; height: 14px; box-shadow: 0 0 10px rgba(14, 165, 233, 0.9);"></div>`,
+                iconSize: [16, 16]
+            });
+            const aprPopup = `
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; min-width: 220px; padding: 2px;">
+                    <div style="border-bottom: 1px solid #0369a1; padding-bottom: 4px; margin-bottom: 4px;">
+                        <strong style="color: #38bdf8; font-size: 12px;">🚰 ${apr.name}</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                        <span style="color: #94a3b8;">Familias:</span>
+                        <span style="color: #f8fafc; font-weight: bold;">${apr.familias.toLocaleString()}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                        <span style="color: #94a3b8;">Pozo Profundo:</span>
+                        <span style="color: #38bdf8;">${apr.pozo_prof_m} m</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                        <span style="color: #94a3b8;">Caudal Bombeo:</span>
+                        <span style="color: #0ea5e9; font-weight: bold;">${apr.bombeo_L_s} L/s</span>
+                    </div>
+                    <div style="font-size: 9px; color: #cbd5e1; margin-top: 4px; background: rgba(0,0,0,0.3); padding: 3px; border-radius: 3px;">
+                        Estado: ${apr.vulnerabilidad}
+                    </div>
+                </div>
+            `;
+            L.marker([apr.lat, apr.lng], { icon: aprIcon }).bindPopup(aprPopup).addTo(aprLayerGroup);
+        });
+        overlayLayers['aprs'] = aprLayerGroup;
+        aprLayerGroup.addTo(map);
+
+        // 2.5 Capas WMS Institucionales Oficiales (IDE Minagri & CONAF)
+        const wmsMinagri = L.tileLayer.wms('https://ide.minagri.gob.cl/geoserver/wms', {
+            layers: 'ciren:catastro_fruticola',
+            format: 'image/png',
+            transparent: true,
+            opacity: 0.65,
+            attribution: 'IDE Minagri / CIREN'
+        });
+        overlayLayers['wms_minagri'] = wmsMinagri;
+
+        const wmsConaf = L.tileLayer.wms('https://sit.conaf.cl/geoserver/wms', {
+            layers: 'conaf:snaspe_areas',
+            format: 'image/png',
+            transparent: true,
+            opacity: 0.65,
+            attribution: 'CONAF SIT'
+        });
+        overlayLayers['wms_conaf'] = wmsConaf;
+
+        // 2.2 Add Rivers
+        const riverLayerGroup = L.layerGroup();
+        rivers.forEach(r => {
+            L.polyline(r.coords, { color: r.color, weight: 3, opacity: 0.8 }).bindPopup(r.name).addTo(riverLayerGroup);
+        });
+        riverLayerGroup.addTo(map);
+        overlayLayers['rivers'] = riverLayerGroup;
+
+        // 2.3 Add Fundo Meniel Polygon
+        const menielLayer = L.polygon(fundoMenielCoords, {
+            color: '#10b981',
+            weight: 3,
+            fillColor: '#10b981',
+            fillOpacity: 0.2
+        }).bindPopup("<b>Fundo Meniel</b><br>24.8 ha<br>Proyecto Keyline").addTo(map);
+        overlayLayers['meniel'] = menielLayer;
+
+        // 2.4 Add Sensors & Ground-Truth Meteorological Mesh
+        const sensorLayerGroup = L.layerGroup();
+        sensors.forEach(s => {
+            let markerClass = 'pulse-marker';
+            if (s.type === 'water') markerClass = 'pulse-marker water';
+            else if (s.type === 'dmc') markerClass = 'pulse-marker dmc';
+            else if (s.type === 'inia') markerClass = 'pulse-marker inia';
+
+            const customIcon = L.divIcon({
+                className: 'custom-div-icon',
+                html: `<div class="${markerClass}"></div>`,
+                iconSize: [20, 20]
+            });
+
+            const popupContent = `
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 2px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 4px; margin-bottom: 4px;">
+                        <strong style="color: #10b981; font-size: 12px;">${s.name}</strong>
+                    </div>
+                    <span style="display: inline-block; padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.4); color: #94a3b8; font-size: 9px; margin-bottom: 4px;">Red: ${s.network || 'KioT Mesh'}</span>
+                    <div style="color: #cbd5e1; margin-top: 2px;">${s.data}</div>
+                    <div style="font-size: 9px; color: #64748b; margin-top: 4px;">WGS84: ${s.lat.toFixed(4)}, ${s.lng.toFixed(4)}</div>
+                </div>
+            `;
+
+            L.marker([s.lat, s.lng], { icon: customIcon })
+             .bindPopup(popupContent)
+             .addTo(sensorLayerGroup);
+        });
+        sensorLayerGroup.addTo(map);
+        overlayLayers['sensors'] = sensorLayerGroup;
+
+
+        // Map Events for Status Bar
+        map.on('mousemove', function(e) {
+            document.getElementById('cursor-coords').innerText = `Lat: ${e.latlng.lat.toFixed(5)}, Lng: ${e.latlng.lng.toFixed(5)}`;
+        });
+        map.on('zoomend', function() {
+            document.getElementById('zoom-level').innerText = `Zoom: ${map.getZoom()}`;
+        });
+
+        // FlyTo Function
+        function flyTo(lat, lng, zoom) {
+            map.flyTo([lat, lng], zoom, {
+                duration: 1.5
+            });
+        }
+
+        // Layer Toggling Function
+        function toggleLayer(layerId, checkbox) {
+            const layer = overlayLayers[layerId];
+            if (!layer) return;
+            if (checkbox.checked) {
+                map.addLayer(layer);
+            } else {
+                map.removeLayer(layer);
+            }
+        }
+
+
+        // --- 3. UI INITIALIZATION & LOGIC ---
+
+        // Real-time Clock
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('real-time-clock').innerText = now.toISOString().substr(11, 8);
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Tabs Logic
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active classes
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.remove('text-emerald-400', 'border-emerald-500');
+                    b.classList.add('text-slate-400', 'border-transparent');
+                });
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active to clicked
+                btn.classList.add('text-emerald-400', 'border-emerald-500');
+                btn.classList.remove('text-slate-400', 'border-transparent');
+                document.getElementById(btn.dataset.target).classList.add('active');
+            });
+        });
+
+        // Populate Layer Toggles
+        const toggleContainer = document.getElementById('layer-toggles');
+        toggleContainer.innerHTML = `
+            <div class="space-y-4">
+                <!-- SECCIÓN 1: CATASTRO & PREDIOS -->
+                <div>
+                    <div class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5 font-mono">
+                        <span>🏡</span> Mosaico Predial Comunal (Roles SII)
+                    </div>
+                    <label class="flex items-center justify-between p-2.5 rounded bg-black/30 hover:bg-white/5 cursor-pointer border border-emerald-500/20 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" checked onchange="toggleLayer('predios', this)" class="accent-emerald-500 w-4 h-4 cursor-pointer">
+                            <div class="w-3 h-3 rounded bg-emerald-500"></div>
+                            <div>
+                                <span class="text-xs text-emerald-300 font-semibold block">Catastro Predial Completo</span>
+                                <span class="text-[9px] text-slate-400">10 Predios • Retiro & Parral • Derechos DGA L/s</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] text-emerald-400 data-mono font-bold">508 ha</span>
+                    </label>
+                </div>
+
+                <!-- SECCIÓN 2: RIESGO DE INUNDACIÓN -->
+                <div>
+                    <div class="text-[10px] font-bold text-sky-400 uppercase tracking-wider mb-2 flex items-center gap-1.5 font-mono">
+                        <span>🌊</span> Amenaza Inundación Fluvial (DGA / SENAPRED)
+                    </div>
+                    <label class="flex items-center justify-between p-2.5 rounded bg-black/30 hover:bg-white/5 cursor-pointer border border-sky-500/20 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" checked onchange="toggleLayer('inundacion', this)" class="accent-sky-500 w-4 h-4 cursor-pointer">
+                            <div class="w-3 h-3 rounded bg-sky-500"></div>
+                            <div>
+                                <span class="text-xs text-sky-300 font-semibold block">Manchas de Inundación (T=10, 50, 100)</span>
+                                <span class="text-[9px] text-slate-400">Corredor Fluvial Río Longaví • Llanura Aluvial</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] text-sky-400 data-mono font-bold">DGA/MOP</span>
+                    </label>
+                </div>
+
+                <!-- SECCIÓN 3: RIESGO PIROGÉNICO -->
+                <div>
+                    <div class="text-[10px] font-bold text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1.5 font-mono">
+                        <span>🔥</span> Peligro Pirogénico Paisajístico (CONAF / FWI)
+                    </div>
+                    <label class="flex items-center justify-between p-2.5 rounded bg-black/30 hover:bg-white/5 cursor-pointer border border-amber-500/20 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" checked onchange="toggleLayer('incendios', this)" class="accent-amber-500 w-4 h-4 cursor-pointer">
+                            <div class="w-3 h-3 rounded bg-red-500"></div>
+                            <div>
+                                <span class="text-xs text-red-300 font-semibold block">Zonificación Incendios & Cortafuegos</span>
+                                <span class="text-[9px] text-slate-400">Interfaz Puelche vs Cortafuegos Vivos 25m</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] text-amber-400 data-mono font-bold">CONAF</span>
+                    </label>
+                </div>
+
+                <!-- SECCIÓN 4: INFRAESTRUCTURA HÍDRICA & APRs -->
+                <div>
+                    <div class="text-[10px] font-bold text-blue-400 uppercase tracking-wider mb-2 flex items-center gap-1.5 font-mono">
+                        <span>🚰</span> Comités Agua Potable (APRs) & Red Hídrica
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="flex items-center justify-between p-2 rounded bg-black/30 hover:bg-white/5 cursor-pointer border border-white/5 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" checked onchange="toggleLayer('aprs', this)" class="accent-blue-500 w-4 h-4 cursor-pointer">
+                                <div class="w-3 h-3 rounded-full bg-blue-500 border border-white"></div>
+                                <span class="text-xs text-slate-300">5 Comités APR Comunales</span>
+                            </div>
+                            <span class="text-[10px] text-slate-400 data-mono">3,600 hab</span>
+                        </label>
+                        <label class="flex items-center justify-between p-2 rounded bg-black/30 hover:bg-white/5 cursor-pointer border border-white/5 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" checked onchange="toggleLayer('rivers', this)" class="accent-sky-500 w-4 h-4 cursor-pointer">
+                                <div class="w-3 h-3 rounded bg-sky-400"></div>
+                                <span class="text-xs text-slate-300">Ríos Longaví, Perquilauquén & Canales</span>
+                            </div>
+                            <span class="text-[10px] text-slate-400 data-mono">Red DGA</span>
+                        </label>
+                        <label class="flex items-center justify-between p-2 rounded bg-black/30 hover:bg-white/5 cursor-pointer border border-white/5 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" checked onchange="toggleLayer('sensors', this)" class="accent-emerald-500 w-4 h-4 cursor-pointer">
+                                <div class="w-3 h-3 rounded-full bg-emerald-500 border border-white animate-pulse"></div>
+                                <span class="text-xs text-slate-300">Red Centinela KioT Mesh (9 Nodos)</span>
+                            </div>
+                            <span class="text-[10px] text-emerald-400 data-mono">En Vivo</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 5: CAPAS OFICIALES WMS -->
+                <div>
+                    <div class="text-[10px] font-bold text-purple-400 uppercase tracking-wider mb-2 flex items-center gap-1.5 font-mono">
+                        <span>🏛️</span> Servicios WMS Oficiales del Estado (Chile)
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="flex items-center justify-between p-2 rounded bg-black/30 hover:bg-white/5 cursor-pointer border border-purple-500/20 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" onchange="toggleLayer('wms_minagri', this)" class="accent-purple-500 w-4 h-4 cursor-pointer">
+                                <div class="w-3 h-3 rounded bg-purple-500"></div>
+                                <span class="text-xs text-purple-300">IDE Minagri / CIREN (Catastro WMS)</span>
+                            </div>
+                            <span class="text-[9px] bg-purple-950 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800">WMS</span>
+                        </label>
+                        <label class="flex items-center justify-between p-2 rounded bg-black/30 hover:bg-white/5 cursor-pointer border border-purple-500/20 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" onchange="toggleLayer('wms_conaf', this)" class="accent-purple-500 w-4 h-4 cursor-pointer">
+                                <div class="w-3 h-3 rounded bg-emerald-700"></div>
+                                <span class="text-xs text-purple-300">CONAF SIT (SNASPE & Incendios WMS)</span>
+                            </div>
+                            <span class="text-[9px] bg-purple-950 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800">WMS</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        `;
+
+
+        // Modals
+        function openModal() {
+            document.getElementById('exec-modal').classList.remove('hidden');
+            document.getElementById('exec-modal').classList.add('flex');
+        }
+        function closeModal() {
+            document.getElementById('exec-modal').classList.add('hidden');
+            document.getElementById('exec-modal').classList.remove('flex');
+        }
+
+        // Formal Report Download
+        function downloadFormalReport() {
+            const date = new Date().toISOString().split('T')[0];
+            const content = `
+================================================================================
+REPÚBLICA DE CHILE - DOSSIER INSTITUCIONAL
+SISTEMA DE SOPORTE DE DECISIÓN ESPACIAL (SDSS) - AGROTWIN REGIONAL
+================================================================================
+FECHA: ${date}
+UBICACIÓN: Cuenca Maule Sur (Parral - Retiro)
+ÁREA DE ESTUDIO: 122,070 Hectáreas
+PROYECTO: Fundo Meniel (Keyline)
+
+1. RETORNO FINANCIERO Y OPERATIVO
+--------------------------------------------------------------------------------
+- CAPEX Inicial: $48,500,000 CLP (Diseño Keyline + 5 Nodos IoT)
+- TIR Anual Proyectada: 18.6%
+- Período de Recuperación (Payback): 3.8 Años
+- Ahorro Energético (Bombeo): -$8,200,000 CLP/Año
+
+2. SEGURIDAD HÍDRICA Y RESILIENCIA
+--------------------------------------------------------------------------------
+- Capacidad Tranque Acumulador: 18,500 m³
+- Tasa de Infiltración de Suelo Mejorada: 320 L/s
+- Autonomía Hídrica: 42 Días continuos
+- Mitigación de Inundaciones (Peak): -3.2%
+- Estado Actual de Humedad (FDR Promedio): ~35.8% VWC
+
+3. RESILIENCIA AL FUEGO (PIRO-ESTRATÉGICO)
+--------------------------------------------------------------------------------
+- Fire Weather Index (FWI) Local: Riesgo Controlado (Verde)
+- Comparativa FWI Monocultivos Aledaños: Riesgo Alto (Rojo)
+- Barrera Verde Activa: 2.4 km perimetral (Peumo, Quillay) hidratada
+- Valor de Activo Resguardado (Pérdida Evitada): $140,000,000 CLP
+
+4. GOBERNANZA, ESG Y GESTIÓN COMUNITARIA
+--------------------------------------------------------------------------------
+- Vehículo de Inversión: Meniel SpA
+- Participación Local: Cooperativa de Agua Viva
+- Impacto Social Directo: 30 Familias rurales
+- Monitoreo y Reporte (MRV): Tecnología Blockchain
+- Certificación de Carbono y Agua: En proceso (Verra/Gold Standard)
+
+5. RED CENTINELA LOCAL (GROUND-TRUTH MESH)
+--------------------------------------------------------------------------------
+- Malla IoT KioT Predial: 5 Nodos in situ (FDR-01 Cerezos, FDR-02 Avellano, FDR-03 Keyline, FDR-04 PRV, Piezómetro Tranque)
+- Red Pública Oficial Enlazada: 4 Estaciones (INIA Retiro, DGA Río Longaví, DMC Parral Centro, DGA Embalse Bullileo)
+- Caudal Oficial Longaví: 185 m³/s (Nivel 2.15m)
+- Reserva Embalse Bullileo: 84.2 Hm³ (78% de capacidad)
+
+6. MODELAMIENTO MICRO-ATMOSFÉRICO LOCAL
+--------------------------------------------------------------------------------
+- Viento Puelche (Efecto Foehn): 38 km/h E-NE, compresión adiabática ladera andina
+- Regla 30-30-30: Temp >30°C, HR <30%, Viento >30 km/h (Alerta de desecación foliar y piro-riesgo)
+- Mitigación Foehn: Barrera verde perimetral de Peumo/Quillay (62% amortiguación)
+- Drenaje Catabático Nocturno: Enfriamiento radiativo a las 05:30 AM (-2.4°C bajo cota 170m)
+- Evapotranspiración Atmosférica ETo: 5.1 mm/día (Penman-Monteith)
+
+7. ESTRATEGIA GANADERA TERRITORIAL (PASTOREO RACIONAL VOISIN)
+--------------------------------------------------------------------------------
+- Carga Animal Regional: 1.8 UGM/ha en pasturas polifíticas perennes
+- Tiempo de Reposo Forrajero: 42 Días (Curva sigmoidea óptima de rebrote)
+- Biociclado de Nutrientes: +4.2 kg MO/m² en dos temporadas por deyección animal
+- Retención Hídrica Adicional: +144,000 Litros/ha por cada 1% de aumento de Materia Orgánica
+- Cortafuegos Pastoriles Vivos: Desbroce perimetral biológico en franjas de 25m
+
+DOCUMENTO GENERADO AUTOMÁTICAMENTE POR AGROTWIN REGIONAL V2.6
+================================================================================
+            `;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Reporte_Tecnico_MauleSur_${date}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // --- 4. CHARTS (Chart.js) ---
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'JetBrains Mono';
+
+        // 4.1 LULC Donut Chart
+        const ctxLulc = document.getElementById('lulcChart').getContext('2d');
+        new Chart(ctxLulc, {
+            type: 'doughnut',
+            data: {
+                labels: LULC_CLASSES.map(c => c.name),
+                datasets: [{
+                    data: LULC_CLASSES.map(c => c.area),
+                    backgroundColor: LULC_CLASSES.map(c => c.hex),
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) { label += ': '; }
+                                if (context.parsed !== null) {
+                                    label += context.parsed.toLocaleString() + ' ha';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                cutout: '75%'
+            }
+        });
+
+        // 4.2 ROI Line Chart
+        const ctxRoi = document.getElementById('roiChart').getContext('2d');
+        new Chart(ctxRoi, {
+            type: 'line',
+            data: {
+                labels: ['Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10'],
+                datasets: [
+                    {
+                        label: 'Flujo Caja Acumulado (CLP Millones)',
+                        data: [-48.5, -35.2, -20.1, -2.5, 18.4, 39.0, 58.2, 79.5, 98.1, 118.0, 135.5],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Breakeven',
+                        data: [0,0,0,0,0,0,0,0,0,0,0],
+                        borderColor: '#ef4444',
+                        borderWidth: 1,
+                        borderDash: [5, 5],
+                        pointRadius: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // 4.3 FWI Horizontal Bar Chart
+        const ctxFwi = document.getElementById('fwiChart').getContext('2d');
+        const fwiChart = new Chart(ctxFwi, {
+            type: 'bar',
+            data: {
+                labels: ['Fundo Meniel', 'Monocultivo Vecino'],
+                datasets: [{
+                    data: [24, 68],
+                    backgroundColor: ['#10b981', '#ef4444'],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { max: 100, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    y: { grid: { display: false } }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // 4.4 Water Area Chart
+        const ctxWater = document.getElementById('waterChart').getContext('2d');
+        new Chart(ctxWater, {
+            type: 'line',
+            data: {
+                labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+                datasets: [
+                    {
+                        label: 'Demanda Hídrica',
+                        data: [45, 42, 35, 20, 10, 5, 5, 10, 25, 38, 48, 50],
+                        borderColor: '#ef4444',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Oferta (Tranque + Suelo)',
+                        data: [20, 15, 15, 30, 60, 90, 100, 95, 70, 50, 30, 25],
+                        borderColor: '#0ea5e9',
+                        backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                },
+                plugins: { legend: { labels: { color: '#94a3b8', font: { size: 10 } } } }
+            }
+        });
+
+
+        // --- 5. SIMULATOR LOGIC ---
+
+        function updateFWI() {
+            const temp = parseFloat(document.getElementById('slide-temp').value);
+            const hum = parseFloat(document.getElementById('slide-hum').value);
+            const wind = parseFloat(document.getElementById('slide-wind').value);
+
+            document.getElementById('val-temp').innerText = temp + ' °C';
+            document.getElementById('val-hum').innerText = hum + ' %';
+            document.getElementById('val-wind').innerText = wind + ' km/h';
+
+            // Very simple pseudo-FWI calculation for demonstration
+            // Higher temp, lower hum, higher wind = higher FWI
+            let fwi = ((temp * 1.5) + (wind * 0.8) - (hum * 0.5));
+            if (fwi < 0) fwi = 5;
+            if (fwi > 100) fwi = 100;
+            fwi = Math.round(fwi);
+
+            document.getElementById('fwi-value').innerText = fwi;
+            
+            const labelEl = document.getElementById('fwi-label');
+            const indEl = document.getElementById('fwi-indicator');
+
+            let color, text, bg;
+            if (fwi < 30) {
+                color = '#10b981'; text = 'RIESGO BAJO'; bg = 'rgba(16, 185, 129, 0.3)';
+            } else if (fwi < 50) {
+                color = '#f59e0b'; text = 'RIESGO ALTO'; bg = 'rgba(245, 158, 11, 0.3)';
+            } else {
+                color = '#ef4444'; text = 'CATASTRÓFICO'; bg = 'rgba(239, 68, 68, 0.3)';
+            }
+
+            labelEl.innerText = text;
+            labelEl.style.color = color;
+            labelEl.style.backgroundColor = bg;
+            
+            indEl.style.backgroundColor = color;
+            document.getElementById('fwi-value').style.color = color;
+            
+            // Update Header
+            document.getElementById('hdr-fwi').innerText = `${fwi} (${text.split(' ')[1] || text})`;
+            document.getElementById('hdr-fwi').style.color = color;
+
+            // Update Chart
+            if (typeof fwiChart !== 'undefined') {
+                fwiChart.data.datasets[0].data[0] = fwi;
+                // The monoculture is always worse in this simulation
+                fwiChart.data.datasets[0].data[1] = Math.min(100, fwi + 44); 
+                fwiChart.update();
+            }
+
+            // REACCIÓN CARTOGRÁFICA DINÁMICA: Capa de Incendios CONAF
+            if (overlayLayers && overlayLayers['incendios']) {
+                overlayLayers['incendios'].setStyle(function(feature) {
+                    const p = feature.properties;
+                    if (p.id === 'FIRE_BARRERA') {
+                        // El cortafuegos verde PRV mantiene resiliencia constante
+                        return {
+                            color: '#10b981',
+                            weight: fwi > 50 ? 3 : 2,
+                            fillColor: '#10b981',
+                            fillOpacity: 0.65
+                        };
+                    } else if (p.id === 'FIRE_CRITICA') {
+                        // Interfaz forestal andina se intensifica fuertemente con FWI
+                        const alpha = Math.min(0.85, 0.25 + (fwi / 140));
+                        return {
+                            color: fwi > 50 ? '#dc2626' : p.color,
+                            weight: fwi > 50 ? 3 : 1.5,
+                            fillColor: fwi > 50 ? '#dc2626' : p.color,
+                            fillOpacity: alpha
+                        };
+                    } else {
+                        // Zona intermedia
+                        const alpha = Math.min(0.65, 0.15 + (fwi / 200));
+                        return {
+                            color: p.color,
+                            weight: 1.5,
+                            fillColor: p.color,
+                            fillOpacity: alpha
+                        };
+                    }
+                });
+            }
+        }
+
+        function updateWater() {
+            const precip = parseFloat(document.getElementById('slide-precip').value);
+            const flow = parseFloat(document.getElementById('slide-flow').value);
+
+            document.getElementById('val-precip').innerText = precip + ' mm';
+            document.getElementById('val-flow').innerText = flow + ' m³/s';
+
+            document.getElementById('hdr-caudal').innerText = flow.toFixed(1) + ' m³/s';
+
+            // REACCIÓN CARTOGRÁFICA DINÁMICA: Capa de Inundación según caudal
+            if (overlayLayers && overlayLayers['inundacion']) {
+                overlayLayers['inundacion'].setStyle(function(feature) {
+                    const p = feature.properties;
+                    if (p.id === 'INUND_T10') {
+                        // T=10 años (Q > 250 m³/s)
+                        const active = flow >= 250;
+                        return {
+                            color: active ? '#0284c7' : '#0369a1',
+                            weight: active ? 3 : 1.5,
+                            fillColor: '#0284c7',
+                            fillOpacity: active ? Math.min(0.85, 0.45 + (flow / 800)) : 0.2
+                        };
+                    } else if (p.id === 'INUND_T50') {
+                        // T=50 años (Q > 480 m³/s)
+                        const active = flow >= 480;
+                        return {
+                            color: active ? '#0369a1' : '#1e3a8a',
+                            weight: active ? 3 : 1,
+                            fillColor: '#0369a1',
+                            fillOpacity: active ? Math.min(0.75, 0.35 + (flow / 1000)) : 0.15
+                        };
+                    } else if (p.id === 'INUND_T100') {
+                        // T=100 años (Q > 850 m³/s)
+                        const active = flow >= 850;
+                        return {
+                            color: active ? '#1e3a8a' : '#0f172a',
+                            weight: active ? 3 : 1,
+                            fillColor: '#1d4ed8',
+                            fillOpacity: active ? 0.65 : 0.1
+                        };
+                    }
+                    return {
+                        color: p.color,
+                        weight: 1,
+                        fillColor: p.color,
+                        fillOpacity: p.fillOpacity
+                    };
+                });
+            }
+        }
+
+        // Llamada inicial para sincronizar estados de simulación
+        updateFWI();
+        updateWater();
+
+        // Live API Inspector Function
+        async function testLiveApi() {
+            const outEl = document.getElementById('api-live-output');
+            if (!outEl) return;
+            outEl.innerText = "Consultando GET /api/telemetry/summary...";
+            try {
+                const start = performance.now();
+                const res = await fetch('/api/telemetry/summary');
+                const json = await res.json();
+                const ms = Math.round(performance.now() - start);
+                outEl.innerText = `// HTTP 200 OK (${ms}ms) | Timestamp: ${new Date().toLocaleTimeString()}\n` + JSON.stringify(json, null, 2);
+            } catch (err) {
+                outEl.innerText = "// Error conectando a la API: " + err.message;
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // PROCEDURAL AUDIO ENGINE FOR DIEGETIC AOE HOTSPOTS
+        // ═══════════════════════════════════════════════════════════════════
+        let diegeticAudioCtx = null;
+        function playDiegeticAudio(type) {
+            try {
+                if (!diegeticAudioCtx && (window.AudioContext || window.webkitAudioContext)) {
+                    diegeticAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (!diegeticAudioCtx) return;
+                if (diegeticAudioCtx.state === 'suspended') diegeticAudioCtx.resume();
+
+                const t = diegeticAudioCtx.currentTime;
+                if (type === 'wood') {
+                    const osc = diegeticAudioCtx.createOscillator();
+                    const gain = diegeticAudioCtx.createGain();
+                    const filter = diegeticAudioCtx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(450, t);
+                    filter.frequency.exponentialRampToValueAtTime(100, t + 0.06);
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(220, t);
+                    osc.frequency.exponentialRampToValueAtTime(60, t + 0.06);
+                    gain.gain.setValueAtTime(0.18, t);
+                    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+                    osc.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(diegeticAudioCtx.destination);
+                    osc.start();
+                    osc.stop(t + 0.06);
+                } else if (type === 'bell') {
+                    [520, 1040, 1560].forEach((freq, idx) => {
+                        const osc = diegeticAudioCtx.createOscillator();
+                        const gain = diegeticAudioCtx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, t);
+                        const dur = 0.5 + idx * 0.15;
+                        gain.gain.setValueAtTime(0.08 / (idx + 1), t);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+                        osc.connect(gain);
+                        gain.connect(diegeticAudioCtx.destination);
+                        osc.start();
+                        osc.stop(t + dur);
+                    });
+                } else if (type === 'alert') {
+                    const osc = diegeticAudioCtx.createOscillator();
+                    const gain = diegeticAudioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(880, t);
+                    osc.frequency.setValueAtTime(440, t + 0.1);
+                    gain.gain.setValueAtTime(0.15, t);
+                    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+                    osc.connect(gain);
+                    gain.connect(diegeticAudioCtx.destination);
+                    osc.start();
+                    osc.stop(t + 0.25);
+                }
+            } catch (e) {
+                console.warn("Audio Context playback error:", e);
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // OVERLAY CONTROLLER (AOE LANDING vs MAPA GIS LEAFLET)
+        // ═══════════════════════════════════════════════════════════════════
+        function toggleCerroLandingOverlay() {
+            const overlay = document.getElementById('cerroLandingOverlay');
+            if (!overlay) return;
+            if (overlay.classList.contains('hidden')) {
+                showCerroLandingOverlay();
+            } else {
+                hideCerroLandingOverlay();
+            }
+        }
+
+        function showCerroLandingOverlay() {
+            const overlay = document.getElementById('cerroLandingOverlay');
+            const btnLanding = document.getElementById('navBtnLandingCerro');
+            const btnMap = document.getElementById('navBtnMapGis');
+            if (overlay) overlay.classList.remove('hidden');
+            if (btnLanding) {
+                btnLanding.className = 'px-2.5 py-1.5 rounded-lg font-bold text-sky-300 bg-sky-500/20 border border-sky-500/40 flex items-center gap-1.5 shadow-sm';
+            }
+            if (btnMap) {
+                btnMap.className = 'px-2.5 py-1.5 rounded-lg font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1.5';
+            }
+        }
+
+        function hideCerroLandingOverlay() {
+            const overlay = document.getElementById('cerroLandingOverlay');
+            const btnLanding = document.getElementById('navBtnLandingCerro');
+            const btnMap = document.getElementById('navBtnMapGis');
+            if (overlay) overlay.classList.add('hidden');
+            if (btnLanding) {
+                btnLanding.className = 'px-2.5 py-1.5 rounded-lg font-semibold text-slate-300 hover:text-sky-300 hover:bg-sky-500/10 transition-all flex items-center gap-1.5';
+            }
+            if (btnMap) {
+                btnMap.className = 'px-2.5 py-1.5 rounded-lg font-bold text-emerald-300 bg-emerald-500/20 border border-emerald-500/40 flex items-center gap-1.5 shadow-sm';
+            }
+            if (window.map) {
+                setTimeout(() => map.invalidateSize(), 150);
+            }
+        }
+
+        function selectSidebarTab(tabId) {
+            const btn = document.querySelector(`.tab-btn[data-target="${tabId}"]`);
+            if (btn) btn.click();
+        }
+
+        function openCerroMapWithTab(tabId) {
+            hideCerroLandingOverlay();
+            if (tabId) selectSidebarTab(tabId);
+        }
+
+        function flyToCerroLocation(lat, lng, zoom, name, tabId) {
+            hideCerroLandingOverlay();
+            flyTo(lat, lng, zoom);
+            if (tabId) selectSidebarTab(tabId);
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // CONTROLADORES DE MODALES DIEGÉTICOS (EL CERRO REGIONAL)
+        // ═══════════════════════════════════════════════════════════════════
+        function openCerroHotspotModal(id) {
+            playDiegeticAudio('bell');
+            const modal = document.getElementById('cerroHotspotModal');
+            const titleEl = document.getElementById('cerroModalTitle');
+            const badgeEl = document.getElementById('cerroModalBadge');
+            const bodyEl = document.getElementById('cerroModalBody');
+            if (!modal || !titleEl || !bodyEl) return;
+
+            if (id === 'drone') {
+                badgeEl.innerText = 'OBJ-CUENCA-01 • LULC';
+                titleEl.innerHTML = '<span>🛸</span> Monitoreo Aéreo LULC & Ortomosaico Sentinel-2';
+                bodyEl.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-2xl bg-sky-950/40 border border-sky-500/30 text-xs space-y-2">
+                            <div class="flex items-center justify-between font-mono">
+                                <span class="text-sky-300 font-bold">Sensor: MSI Sentinel-2B (Bandas B4, B8, B11)</span>
+                                <span class="text-emerald-400">Paso: 24h</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">
+                                Cobertura total de 122.070 ha procesada en Google Earth Engine. Clasificación supervisada Random Forest para discernir plantaciones comerciales de pino/eucalipto frente al mosaico agrícola tradicional del valle.
+                            </p>
+                        </div>
+
+                        <div class="space-y-2">
+                            <span class="text-[11px] font-mono text-slate-400 font-bold block">Distribución de Coberturas en la Cuenca:</span>
+                            <div class="space-y-1.5 font-mono text-xs">
+                                <div>
+                                    <div class="flex justify-between text-slate-300 mb-0.5"><span>🌲 Plantación Forestal (Pino/Eucalipto):</span><span class="text-amber-400 font-bold">48% (58.590 ha)</span></div>
+                                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-amber-500 h-full" style="width: 48%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-slate-300 mb-0.5"><span>🌾 Agrícola Bajo Riego (Cereales/Viñas):</span><span class="text-emerald-400 font-bold">34% (41.500 ha)</span></div>
+                                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full" style="width: 34%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-slate-300 mb-0.5"><span>🌿 Bosque Nativo & Matorral Esclerófilo:</span><span class="text-sky-400 font-bold">12% (14.650 ha)</span></div>
+                                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-sky-500 h-full" style="width: 12%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-slate-300 mb-0.5"><span>💧 Cuerpos de Agua & Centros Urbanos:</span><span class="text-cyan-400 font-bold">6% (7.330 ha)</span></div>
+                                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-cyan-500 h-full" style="width: 6%"></div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-t border-white/10 flex items-center justify-between gap-3">
+                            <button onclick="closeCerroHotspotModal(); openCerroMapWithTab('tab-territory');" class="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-slate-950 font-black font-mono text-xs shadow-lg transition-all">
+                                🗺️ Activar Capa LULC en Mapa GIS
+                            </button>
+                            <button onclick="closeCerroHotspotModal()" class="py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-slate-300 text-xs font-mono">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (id === 'mirador') {
+                badgeEl.innerText = 'OBJ-CUENCA-02 • MIRADOR';
+                titleEl.innerHTML = '<span>🔭</span> Vistas Predefinidas & Locaciones Estratégicas';
+                bodyEl.innerHTML = `
+                    <div class="space-y-4">
+                        <p class="text-xs text-slate-300">
+                            Haz clic en cualquiera de los puntos neurálgicos de la macro-cuenca para volar de inmediato en el visor cartográfico:
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <button onclick="closeCerroHotspotModal(); flyToCerroLocation(-36.21156, -71.60530, 15, 'Fundo Meniel', 'tab-territory');" class="p-3 rounded-xl bg-black/50 hover:bg-emerald-950/40 border border-emerald-500/40 text-left transition-all group">
+                                <div class="font-bold text-sm text-white group-hover:text-emerald-300 flex items-center justify-between">
+                                    <span>🏡 Fundo Meniel</span>
+                                    <span class="text-[10px] font-mono text-emerald-400">Keyline 18.5k m³</span>
+                                </div>
+                                <div class="text-[11px] text-slate-400 mt-1">Núcleo biofísico de retención y cortafuegos.</div>
+                            </button>
+                            <button onclick="closeCerroHotspotModal(); flyToCerroLocation(-36.2800, -71.4200, 13, 'Embalse Bullileo', 'tab-water');" class="p-3 rounded-xl bg-black/50 hover:bg-sky-950/40 border border-sky-500/40 text-left transition-all group">
+                                <div class="font-bold text-sm text-white group-hover:text-sky-300 flex items-center justify-between">
+                                    <span>🌊 Embalse Bullileo</span>
+                                    <span class="text-[10px] font-mono text-sky-400">89.5M m³</span>
+                                </div>
+                                <div class="text-[11px] text-slate-400 mt-1">Cabecera de riego y control de crecidas.</div>
+                            </button>
+                            <button onclick="closeCerroHotspotModal(); flyToCerroLocation(-36.0500, -71.7667, 14, 'Retiro Pueblo', 'tab-centinela');" class="p-3 rounded-xl bg-black/50 hover:bg-yellow-950/40 border border-yellow-500/40 text-left transition-all group">
+                                <div class="font-bold text-sm text-white group-hover:text-yellow-300 flex items-center justify-between">
+                                    <span>🌾 Retiro Pueblo</span>
+                                    <span class="text-[10px] font-mono text-yellow-400">Valle APR</span>
+                                </div>
+                                <div class="text-[11px] text-slate-400 mt-1">Pozos comunitarios y cultivos de arroz.</div>
+                            </button>
+                            <button onclick="closeCerroHotspotModal(); flyToCerroLocation(-36.1432, -71.8267, 14, 'Parral Centro', 'tab-territory');" class="p-3 rounded-xl bg-black/50 hover:bg-slate-800 border border-white/10 text-left transition-all group">
+                                <div class="font-bold text-sm text-white group-hover:text-slate-200 flex items-center justify-between">
+                                    <span>🚜 Parral Centro</span>
+                                    <span class="text-[10px] font-mono text-slate-400">Urbano</span>
+                                </div>
+                                <div class="text-[11px] text-slate-400 mt-1">Eje agroindustrial y logístico del Maule Sur.</div>
+                            </button>
+                            <button onclick="closeCerroHotspotModal(); flyToCerroLocation(-36.1300, -71.6500, 11, 'Vista General Cuenca', 'tab-territory');" class="p-3 rounded-xl bg-black/50 hover:bg-cyan-950/40 border border-cyan-500/40 text-left transition-all group">
+                                <div class="font-bold text-sm text-white group-hover:text-cyan-300 flex items-center justify-between">
+                                    <span>🗺️ Vista General Cuenca</span>
+                                    <span class="text-[10px] font-mono text-cyan-400">122k ha</span>
+                                </div>
+                                <div class="text-[11px] text-slate-400 mt-1">Perspectiva completa de cordillera a secano.</div>
+                            </button>
+                            <button onclick="closeCerroHotspotModal(); flyToCerroLocation(-36.1800, -71.6400, 14, 'Río Longaví Crossing', 'tab-water');" class="p-3 rounded-xl bg-black/50 hover:bg-blue-950/40 border border-blue-500/40 text-left transition-all group">
+                                <div class="font-bold text-sm text-white group-hover:text-blue-300 flex items-center justify-between">
+                                    <span>🌊 Río Longaví Crossing</span>
+                                    <span class="text-[10px] font-mono text-blue-400">DGA Quilaimo</span>
+                                </div>
+                                <div class="text-[11px] text-slate-400 mt-1">Caudal fluviométrico y zonas de anegamiento.</div>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (id === 'hidro') {
+                badgeEl.innerText = 'OBJ-CUENCA-03 • HIDROLOGÍA';
+                titleEl.innerHTML = '<span>📟</span> Dinámica Hídrica Fluvial & Simulación de Crecidas';
+                bodyEl.innerHTML = `
+                    <div class="space-y-4 text-xs font-mono">
+                        <div class="grid grid-cols-3 gap-2 text-center">
+                            <div class="p-2.5 rounded-xl bg-black/40 border border-white/5">
+                                <span class="text-[10px] text-slate-500 block">Caudal Real</span>
+                                <span class="text-sky-400 font-bold text-sm">124.5 m³/s</span>
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-black/40 border border-white/5">
+                                <span class="text-[10px] text-slate-500 block">Tiempo Concentración</span>
+                                <span class="text-slate-200 font-bold text-sm">tc = 6.2 h</span>
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-black/40 border border-white/5">
+                                <span class="text-[10px] text-slate-500 block">Reserva Keyline</span>
+                                <span class="text-emerald-400 font-bold text-sm">18.500 m³</span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-black/50 border border-white/10 space-y-3 font-sans">
+                            <div class="font-bold text-slate-200 text-xs">Simulador de Anegamiento Fluvial por Período de Retorno:</div>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button onclick="simulateFloodScenario(10)" class="p-2.5 rounded-xl bg-sky-950/60 border border-sky-500/40 hover:bg-sky-900/60 text-sky-200 font-mono text-xs font-bold transition-all text-center">
+                                    T = 10 Años
+                                    <span class="block text-[10px] text-sky-400 font-normal mt-0.5">180 m³/s</span>
+                                </button>
+                                <button onclick="simulateFloodScenario(50)" class="p-2.5 rounded-xl bg-sky-950/60 border border-sky-500/40 hover:bg-sky-900/60 text-sky-200 font-mono text-xs font-bold transition-all text-center">
+                                    T = 50 Años
+                                    <span class="block text-sky-400 font-normal mt-0.5">345 m³/s</span>
+                                </button>
+                                <button onclick="simulateFloodScenario(100)" class="p-2.5 rounded-xl bg-blue-950/60 border border-blue-500/40 hover:bg-blue-900/60 text-blue-200 font-mono text-xs font-bold transition-all text-center">
+                                    T = 100 Años
+                                    <span class="block text-blue-400 font-normal mt-0.5">520 m³/s</span>
+                                </button>
+                            </div>
+                            <div id="floodScenarioFeedback" class="text-[11px] font-mono text-slate-300 p-2.5 rounded-lg bg-black/30 border border-white/5">
+                                💡 Selecciona un período de retorno para modelar el área inundable del valle.
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex items-center justify-between gap-3">
+                            <button onclick="closeCerroHotspotModal(); openCerroMapWithTab('tab-water');" class="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-blue-500 to-sky-600 hover:from-blue-400 hover:to-sky-500 text-slate-950 font-black font-mono text-xs shadow-lg transition-all">
+                                💧 Abrir Capa Hídrica en GIS
+                            </button>
+                            <button onclick="closeCerroHotspotModal()" class="py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-slate-300 text-xs font-mono">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (id === 'clima') {
+                badgeEl.innerText = 'OBJ-CUENCA-04 • PIRO-METEOROLOGÍA';
+                titleEl.innerHTML = '<span>🌪️</span> Viento Puelche & Peligro de Incendios FWI';
+                bodyEl.innerHTML = `
+                    <div class="space-y-4 text-xs">
+                        <div class="p-4 rounded-2xl bg-amber-950/30 border border-amber-500/30 space-y-2">
+                            <div class="flex items-center justify-between font-mono">
+                                <span class="text-amber-300 font-bold">FWI Actual: 24 (Bajo)</span>
+                                <span class="text-slate-400">Viento: 38 km/h ESE</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed font-sans">
+                                El viento Puelche desciende catabáticamente desde la cordillera con humedad relativa menor al 25% y alta temperatura, desecando el combustible fino muerto (FFMC) en la interfaz forestal.
+                            </p>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-black/50 border border-white/10 space-y-3 font-mono">
+                            <div class="font-bold text-slate-200">Simulador de Propagación Rothermel:</div>
+                            <div class="grid grid-cols-2 gap-2 text-[11px]">
+                                <div class="p-2 rounded bg-black/30 border border-white/5">
+                                    <span class="text-slate-500 block">Vel. Llama en Pino:</span>
+                                    <span class="text-amber-400 font-bold">18.4 m/min</span>
+                                </div>
+                                <div class="p-2 rounded bg-black/30 border border-white/5">
+                                    <span class="text-slate-500 block">Longitud de Llama:</span>
+                                    <span class="text-red-400 font-bold">4.2 metros</span>
+                                </div>
+                            </div>
+                            <div class="text-[11px] text-emerald-400 bg-emerald-950/40 p-2.5 rounded-lg border border-emerald-500/30">
+                                🛡️ Con Faja Cortafuegos de 45m: Atenuación del 92% en avance de frente de fuego.
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex items-center justify-between gap-3">
+                            <button onclick="closeCerroHotspotModal(); openCerroMapWithTab('tab-fire');" class="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black font-mono text-xs shadow-lg transition-all">
+                                🔥 Ver Mapa FWI & Cortafuegos
+                            </button>
+                            <button onclick="closeCerroHotspotModal()" class="py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-slate-300 text-xs font-mono">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (id === 'lora') {
+                badgeEl.innerText = 'OBJ-CUENCA-05 • RED CENTINELA';
+                titleEl.innerHTML = '<span>📡</span> Red LoRaWAN & Telemetría de Pozos APR';
+                bodyEl.innerHTML = `
+                    <div class="space-y-4 text-xs font-mono">
+                        <p class="text-slate-300 font-sans leading-relaxed">
+                            Monitoreo en tiempo real de los 5 Comités de Agua Potable Rural (APR) de la cuenca baja de Retiro y Parral, integrados con la repetidora LoRaWAN en la cumbre:
+                        </p>
+                        <div class="overflow-x-auto rounded-xl border border-white/10">
+                            <table class="w-full text-[11px] text-left">
+                                <thead class="bg-black/60 text-slate-400 border-b border-white/10">
+                                    <tr>
+                                        <th class="py-2 px-3">Comité APR</th>
+                                        <th class="py-2 px-3">Pozo</th>
+                                        <th class="py-2 px-3">Familias</th>
+                                        <th class="py-2 px-3">Nivel Freático</th>
+                                        <th class="py-2 px-3">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-white/5 bg-black/30">
+                                    <tr>
+                                        <td class="py-2 px-3 font-bold text-white">Retiro Centro</td>
+                                        <td class="py-2 px-3 text-slate-400">68 m</td>
+                                        <td class="py-2 px-3 text-sky-400">1.450</td>
+                                        <td class="py-2 px-3 text-emerald-400 font-bold">-18.4 m</td>
+                                        <td class="py-2 px-3 text-emerald-400">✅ Normal</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-3 font-bold text-white">Copihue</td>
+                                        <td class="py-2 px-3 text-slate-400">52 m</td>
+                                        <td class="py-2 px-3 text-sky-400">680</td>
+                                        <td class="py-2 px-3 text-emerald-400 font-bold">-14.2 m</td>
+                                        <td class="py-2 px-3 text-emerald-400">✅ Normal</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-3 font-bold text-white">Romeral-San Luis</td>
+                                        <td class="py-2 px-3 text-slate-400">44 m</td>
+                                        <td class="py-2 px-3 text-sky-400">380</td>
+                                        <td class="py-2 px-3 text-yellow-400 font-bold">-12.1 m</td>
+                                        <td class="py-2 px-3 text-yellow-400">⚠️ Alerta</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-3 font-bold text-white">Villaseca</td>
+                                        <td class="py-2 px-3 text-slate-400">58 m</td>
+                                        <td class="py-2 px-3 text-sky-400">420</td>
+                                        <td class="py-2 px-3 text-emerald-400 font-bold">-16.8 m</td>
+                                        <td class="py-2 px-3 text-emerald-400">✅ Normal</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-3 font-bold text-white">Los Cuarteles</td>
+                                        <td class="py-2 px-3 text-slate-400">36 m</td>
+                                        <td class="py-2 px-3 text-sky-400">290</td>
+                                        <td class="py-2 px-3 text-emerald-400 font-bold">-9.5 m</td>
+                                        <td class="py-2 px-3 text-emerald-400">✅ Normal</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pt-2 flex items-center justify-between gap-3">
+                            <button onclick="closeCerroHotspotModal(); openCerroMapWithTab('tab-centinela');" class="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black font-mono text-xs shadow-lg transition-all">
+                                📡 Ver Sensores en Mapa
+                            </button>
+                            <button onclick="closeCerroHotspotModal()" class="py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-slate-300 text-xs font-mono">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (id === 'obras') {
+                badgeEl.innerText = 'OBJ-CUENCA-06 • OBRAS PAISAJE';
+                titleEl.innerHTML = '<span>🛠️</span> Portafolio de Inversión Paisajística (420M CLP)';
+                bodyEl.innerHTML = `
+                    <div class="space-y-4 text-xs font-mono">
+                        <p class="text-slate-300 font-sans leading-relaxed">
+                            Proyectos aprobados para financiamiento conjunto con el Gobierno Regional del Maule y la Asociación de Canalistas:
+                        </p>
+                        <div class="space-y-2">
+                            <div class="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center justify-between">
+                                <div>
+                                    <div class="font-bold text-white font-sans text-sm">1. Tranque Bullileo 2 (Compensación)</div>
+                                    <div class="text-[11px] text-slate-400">Retención de 45.000 m³ en pie de monte</div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sky-400 font-bold">$180M CLP</span>
+                                    <span class="block text-[10px] text-emerald-400">65% Avance</span>
+                                </div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center justify-between">
+                                <div>
+                                    <div class="font-bold text-white font-sans text-sm">2. Faja Cortafuegos Borde Cordillera</div>
+                                    <div class="text-[11px] text-slate-400">Franja continua de 45m de ancho (28 km)</div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-amber-400 font-bold">$95M CLP</span>
+                                    <span class="block text-emerald-400">80% Avance</span>
+                                </div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center justify-between">
+                                <div>
+                                    <div class="font-bold text-white font-sans text-sm">3. Reforestación Ribereña Nativa</div>
+                                    <div class="text-[11px] text-slate-400">Quillay, Maytenus y Peumo en bordes fluviales</div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-emerald-400 font-bold">$65M CLP</span>
+                                    <span class="block text-yellow-400">45% Avance</span>
+                                </div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center justify-between">
+                                <div>
+                                    <div class="font-bold text-white font-sans text-sm">4. Telemetría Pozos APR LoRaWAN</div>
+                                    <div class="text-[11px] text-slate-400">Instalación de 5 sondas hidrostáticas de nivel</div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-cyan-400 font-bold">$80M CLP</span>
+                                    <span class="block text-emerald-400">90% Avance</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-2 flex items-center justify-between gap-3">
+                            <button onclick="closeCerroHotspotModal(); openCerroMapWithTab('tab-obras');" class="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-slate-950 font-black font-mono text-xs shadow-lg transition-all">
+                                🛠️ Ver Obras en Mapa GIS
+                            </button>
+                            <button onclick="closeCerroHotspotModal()" class="py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-slate-300 text-xs font-mono">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeCerroHotspotModal() {
+            const modal = document.getElementById('cerroHotspotModal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        function simulateFloodScenario(returnPeriod) {
+            const feedback = document.getElementById('floodScenarioFeedback');
+            if (!feedback) return;
+            if (returnPeriod === 10) {
+                feedback.innerHTML = `🌊 <b>T = 10 Años (Q = 180 m³/s):</b> Desborde controlado en ribera sur. El Tranque Keyline (18.500 m³) retiene el 42% del exceso local.`;
+                feedback.className = "text-[11px] font-mono text-sky-300 p-2.5 rounded-lg bg-sky-950/60 border border-sky-500/40";
+            } else if (returnPeriod === 50) {
+                feedback.innerHTML = `⚠️ <b>T = 50 Años (Q = 345 m³/s):</b> Inundación de 340 ha de vega baja en Retiro. Fajas de infiltración y zanjas Keyline disipan velocidad de flujo de 2.4 m/s a 0.8 m/s.`;
+                feedback.className = "text-[11px] font-mono text-amber-300 p-2.5 rounded-lg bg-amber-950/60 border border-amber-500/40";
+            } else if (returnPeriod === 100) {
+                feedback.innerHTML = `🚨 <b>T = 100 Años (Q = 520 m³/s):</b> Crecida centenaria. Se activan compuertas de emergencia de Embalse Bullileo y vertederos de desvío hacia canales matrices.`;
+                feedback.className = "text-[11px] font-mono text-red-300 p-2.5 rounded-lg bg-red-950/60 border border-red-500/40";
+            }
+        }
+
+        // Auto-enrutador de hash inicial para agritwin-regional
+        function handleRegionalHash() {
+            const hash = window.location.hash.replace('#', '');
+            if (hash === 'map') {
+                hideCerroLandingOverlay();
+            } else if (hash.startsWith('cerro-')) {
+                showCerroLandingOverlay();
+                openCerroHotspotModal(hash.replace('cerro-', ''));
+            } else {
+                showCerroLandingOverlay();
+            }
+        }
+        window.addEventListener('DOMContentLoaded', handleRegionalHash);
+        window.addEventListener('hashchange', handleRegionalHash);
+
+    </script>
+</body>
+</html>
