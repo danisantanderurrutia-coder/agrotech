@@ -25,6 +25,7 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
   const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
   const [showSpeakerNotes, setShowSpeakerNotes] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [zoomedImage, setZoomedImage] = useState<string | null>(null);
 
   const getActiveDeck = (): PitchSlide[] => {
     switch (deckType) {
@@ -39,15 +40,16 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
   const activeDeck: PitchSlide[] = getActiveDeck();
   const currentSlide: PitchSlide = activeDeck[currentSlideIndex] || activeDeck[0];
 
-  // Capítulos del Pitch Unificado (23 slides) con sus índices correspondientes
+  // Capítulos del Pitch Unificado (28 slides) con sus índices correspondientes
   const UNIFIED_CHAPTERS = [
     { label: 'Portada', slideIdx: 0, range: 'Slide 1' },
-    { label: 'Índice', slideIdx: 1, range: 'Slide 2' },
-    { label: '1. Visión & Diagnóstico', slideIdx: 2, range: 'Slides 3-4' },
-    { label: '2. Ecosistema & Exp.', slideIdx: 4, range: 'Slides 5-11' },
-    { label: '3. Datos & Negocio', slideIdx: 11, range: 'Slides 12-17' },
-    { label: '4. Org & Era IA', slideIdx: 17, range: 'Slides 18-21' },
-    { label: '5. Escala & Ask', slideIdx: 21, range: 'Slides 22-23' },
+    { label: '¿Quiénes Somos?', slideIdx: 1, range: 'Slide 2' },
+    { label: 'Índice', slideIdx: 2, range: 'Slide 3' },
+    { label: '1. Visión & Diagnóstico', slideIdx: 3, range: 'Slides 4-6' },
+    { label: '2. Ecosistema & Exp.', slideIdx: 6, range: 'Slides 7-15' },
+    { label: '3. Datos & Negocio', slideIdx: 15, range: 'Slides 16-21' },
+    { label: '4. Org & Era IA', slideIdx: 21, range: 'Slides 22-26' },
+    { label: '5. Escala & Ask', slideIdx: 26, range: 'Slides 27-28' },
   ];
 
   // Helper para saber en qué capítulo está el slide actual
@@ -55,11 +57,12 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
     if (deckType !== 'unified') return -1;
     if (currentSlideIndex === 0) return 0;
     if (currentSlideIndex === 1) return 1;
-    if (currentSlideIndex <= 3) return 2;
-    if (currentSlideIndex <= 10) return 3;
-    if (currentSlideIndex <= 16) return 4;
+    if (currentSlideIndex === 2) return 2;
+    if (currentSlideIndex <= 5) return 3;
+    if (currentSlideIndex <= 14) return 4;
     if (currentSlideIndex <= 20) return 5;
-    return 6;
+    if (currentSlideIndex <= 25) return 6;
+    return 7;
   };
 
   const activeChapterIdx = getCurrentChapterIndex();
@@ -230,18 +233,28 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
             {/* Left Visual HUD Container (If Image Available) */}
             {currentSlide.image && (
               <div className="lg:col-span-5 relative group">
-                <div className="relative rounded-2xl overflow-hidden border-2 border-emerald-200 shadow-md bg-emerald-50/40">
+                <div 
+                  onClick={() => setZoomedImage(currentSlide.image || null)}
+                  className="relative rounded-2xl overflow-hidden border-2 border-emerald-200 shadow-md bg-emerald-50/40 cursor-zoom-in group"
+                  title="Haz clic para agrandar la imagen"
+                >
                   <img 
                     src={currentSlide.image} 
                     alt={currentSlide.title}
                     className="w-full h-48 sm:h-64 lg:h-72 object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
                   
                   {/* Badge Overlay */}
                   <div className="absolute top-3 left-3 px-3 py-1 rounded-lg bg-white/95 backdrop-blur-md text-amber-950 text-[11px] font-mono font-bold border border-amber-300 shadow-sm flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-amber-600" />
                     <span>{currentSlide.badge || 'Agro-Precisión Maule'}</span>
+                  </div>
+
+                  {/* Zoom In Button Hint */}
+                  <div className="absolute top-3 right-3 p-1.5 rounded-lg bg-black/60 backdrop-blur-md text-white border border-white/30 opacity-80 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-[10px] font-mono font-bold">
+                    <Maximize2 className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Agrandar</span>
                   </div>
 
                   {/* Telemetry Bar at Image Bottom */}
@@ -268,43 +281,58 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
                 </p>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-emerald-50/90 border border-emerald-200 text-xs sm:text-sm text-emerald-950 font-sans font-medium shadow-sm">
-                {currentSlide.content.headline}
-              </div>
+              {/* Headline / Manifesto Quote */}
+              {currentSlide.badge === 'MANIFIESTO' || currentSlide.content.points.length === 0 ? (
+                <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-emerald-900 to-[#0B2519] border-2 border-emerald-600/40 text-amber-100 shadow-lg relative overflow-hidden">
+                  <div className="absolute top-0 right-0 -mr-6 -mt-6 w-24 h-24 rounded-full bg-amber-400/10 blur-xl pointer-events-none" />
+                  <span className="text-amber-400 font-mono text-[10px] uppercase font-bold tracking-widest block mb-1.5">
+                    DECLARACIÓN FUNDACIONAL
+                  </span>
+                  <blockquote className="text-base sm:text-xl font-serif font-extrabold leading-snug tracking-tight text-white drop-shadow-sm">
+                    "{currentSlide.content.headline}"
+                  </blockquote>
+                </div>
+              ) : (
+                <div className="p-3.5 rounded-xl bg-emerald-50/90 border border-emerald-200 text-xs sm:text-sm text-emerald-950 font-sans font-medium shadow-sm">
+                  {currentSlide.content.headline}
+                </div>
+              )}
 
               {/* Bullet Points */}
-              <div className="space-y-2 pt-1">
-                {currentSlide.content.points.map((point, idx) => {
-                  const isIndexSlide = deckType === 'unified' && currentSlideIndex === 1;
-                  const chapterSlideTargets = [2, 4, 11, 17, 21];
-                  const targetSlide = chapterSlideTargets[idx];
+              {currentSlide.content.points.length > 0 && (
+                <div className="space-y-2 pt-1">
+                  {currentSlide.content.points.map((point, idx) => {
+                    const isIndexSlide = deckType === 'unified' && currentSlideIndex === 2;
+                    const chapterSlideTargets = [0, 1, 3, 6, 15, 21, 26];
+                    const targetSlide = chapterSlideTargets[idx];
 
-                  return (
-                    <div 
-                      key={idx} 
-                      onClick={() => {
-                        if (isIndexSlide && targetSlide !== undefined) {
-                          handleJumpToSlide(targetSlide);
-                        }
-                      }}
-                      className={`flex items-start gap-2.5 text-xs sm:text-sm font-sans font-medium leading-relaxed transition-all ${
-                        isIndexSlide 
-                          ? 'p-2.5 rounded-xl bg-emerald-50/80 border border-emerald-300/80 hover:bg-emerald-100/90 hover:border-emerald-500 cursor-pointer text-emerald-950 shadow-xs' 
-                          : 'text-slate-700'
-                      }`}
-                    >
-                      <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${isIndexSlide ? 'text-emerald-700' : 'text-emerald-600'}`} />
-                      <span className="flex-1">{point}</span>
-                      {isIndexSlide && (
-                        <span className="text-[10px] font-mono font-bold text-emerald-800 bg-white px-2.5 py-0.5 rounded-md border border-emerald-300 shrink-0 flex items-center gap-1">
-                          <span>Ir al Capítulo</span>
-                          <ArrowRight className="w-3 h-3 text-emerald-600" />
-                        </span>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+                    return (
+                      <div 
+                        key={idx} 
+                        onClick={() => {
+                          if (isIndexSlide && targetSlide !== undefined) {
+                            handleJumpToSlide(targetSlide);
+                          }
+                        }}
+                        className={`flex items-start gap-2.5 text-xs sm:text-sm font-sans font-medium leading-relaxed transition-all ${
+                          isIndexSlide 
+                            ? 'p-2.5 rounded-xl bg-emerald-50/80 border border-emerald-300/80 hover:bg-emerald-100/90 hover:border-emerald-500 cursor-pointer text-emerald-950 shadow-xs' 
+                            : 'text-slate-700'
+                        }`}
+                      >
+                        <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${isIndexSlide ? 'text-emerald-700' : 'text-emerald-600'}`} />
+                        <span className="flex-1">{point}</span>
+                        {isIndexSlide && (
+                          <span className="text-[10px] font-mono font-bold text-emerald-800 bg-white px-2.5 py-0.5 rounded-md border border-emerald-300 shrink-0 flex items-center gap-1">
+                            <span>Ir al Capítulo</span>
+                            <ArrowRight className="w-3 h-3 text-emerald-600" />
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
 
               {/* Key Metrics Grid if present */}
               {currentSlide.content.metrics && (
@@ -413,6 +441,46 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
 
       </div>
 
+      {/* Lightbox Modal for Zoomed Image */}
+      {zoomedImage && (
+        <div 
+          onClick={() => setZoomedImage(null)}
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-8 animate-fadeIn"
+        >
+          <div className="relative max-w-5xl w-full max-h-[90vh] flex flex-col items-center">
+            {/* Top Close bar */}
+            <div className="w-full flex items-center justify-between pb-3 text-white">
+              <span className="font-mono text-xs text-emerald-400 font-bold uppercase tracking-wider">
+                {currentSlide.title} • Vista Ampliada
+              </span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setZoomedImage(null);
+                }}
+                className="px-3 py-1.5 rounded-xl bg-white/20 hover:bg-white/30 text-white font-mono text-xs flex items-center gap-1.5 transition-colors border border-white/20"
+              >
+                <X className="w-4 h-4" />
+                <span>Cerrar (Esc)</span>
+              </button>
+            </div>
+
+            {/* Large Image */}
+            <div 
+              onClick={(e) => e.stopPropagation()} 
+              className="relative rounded-2xl overflow-hidden border-2 border-emerald-400/50 shadow-2xl bg-black/50 max-h-[80vh] flex items-center justify-center"
+            >
+              <img 
+                src={zoomedImage} 
+                alt={currentSlide.title} 
+                className="max-h-[78vh] w-auto max-w-full object-contain rounded-xl"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
+
