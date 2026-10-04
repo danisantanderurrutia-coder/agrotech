@@ -39,14 +39,15 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
   const activeDeck: PitchSlide[] = getActiveDeck();
   const currentSlide: PitchSlide = activeDeck[currentSlideIndex] || activeDeck[0];
 
-  // Capítulos del Pitch Unificado con sus índices correspondientes
+  // Capítulos del Pitch Unificado (23 slides) con sus índices correspondientes
   const UNIFIED_CHAPTERS = [
     { label: 'Portada', slideIdx: 0, range: 'Slide 1' },
     { label: 'Índice', slideIdx: 1, range: 'Slide 2' },
-    { label: '1. Diagnóstico & Tech', slideIdx: 2, range: 'Slides 3-4' },
-    { label: '2. Mercado & Ventas', slideIdx: 4, range: 'Slides 5-7' },
-    { label: '3. Gobernanza Dual', slideIdx: 7, range: 'Slides 8-9' },
-    { label: '4. Cierre & Ask', slideIdx: 9, range: 'Slides 10-11' },
+    { label: '1. Visión & Diagnóstico', slideIdx: 2, range: 'Slides 3-4' },
+    { label: '2. Ecosistema & Exp.', slideIdx: 4, range: 'Slides 5-11' },
+    { label: '3. Datos & Negocio', slideIdx: 11, range: 'Slides 12-17' },
+    { label: '4. Org & Era IA', slideIdx: 17, range: 'Slides 18-21' },
+    { label: '5. Escala & Ask', slideIdx: 21, range: 'Slides 22-23' },
   ];
 
   // Helper para saber en qué capítulo está el slide actual
@@ -55,9 +56,10 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
     if (currentSlideIndex === 0) return 0;
     if (currentSlideIndex === 1) return 1;
     if (currentSlideIndex <= 3) return 2;
-    if (currentSlideIndex <= 6) return 3;
-    if (currentSlideIndex <= 8) return 4;
-    return 5;
+    if (currentSlideIndex <= 10) return 3;
+    if (currentSlideIndex <= 16) return 4;
+    if (currentSlideIndex <= 20) return 5;
+    return 6;
   };
 
   const activeChapterIdx = getCurrentChapterIndex();
@@ -274,7 +276,7 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
               <div className="space-y-2 pt-1">
                 {currentSlide.content.points.map((point, idx) => {
                   const isIndexSlide = deckType === 'unified' && currentSlideIndex === 1;
-                  const chapterSlideTargets = [2, 4, 7, 9];
+                  const chapterSlideTargets = [2, 4, 11, 17, 21];
                   const targetSlide = chapterSlideTargets[idx];
 
                   return (

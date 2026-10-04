@@ -434,10 +434,10 @@ def create_deck():
     add_header(s7, "Modelo Comercial, Planes y Retorno de Inversión (ROI)", "06 / PRICING & FINANZAS")
 
     plans = [
-        ("BÁSICO (PREDIAL)", "$45.000 CLP/mes", "Hasta 10 ha\n\n• Índices Sentinel-2 (NDVI, NDWI)\n• Alerta de heladas vía WhatsApp\n• 1 usuario predial\n• Setup digital: $120.000"),
-        ("PRO (FRUTÍCOLA / VIÑA)", "$85.000 CLP/mes", "Hasta 50 ha\n\n• Gemelo 3D WebGL completo\n• Balance hídrico FAO-56 diario\n• Predicción heladas 72h\n• Telemetría KioT multi-nodo"),
-        ("ENTERPRISE / EXPORTADOR", "$160.000 CLP/mes", "> 50 ha / Exportadoras\n\n• Trazabilidad satelital EUDR\n• API LoRaWAN ilimitada\n• Vuelos multiespectrales dron\n• Soporte prioritario 24/7"),
-        ("HARDWARE KIOT", "$185k - $380k CLP", "Venta directa o HaaS\n\n• Kit Riego: $185.000 (58% margen)\n• Kit Heladas: $220.000\n• Modelo HaaS: $28.000/mes\n• Instalación vía Cooperativa")
+        ("PLAN BÁSICO (PREDIAL)", "$50 USD/mes", "Hasta 10 ha\n\n• Índices Sentinel-2 (NDVI, NDWI)\n• Alerta de heladas vía WhatsApp\n• 1 usuario predial\n• Setup digital: $120 USD"),
+        ("PLAN PRO (FRUTÍCOLA / VIÑA)", "$92 USD/mes", "Hasta 50 ha\n\n• Gemelo 3D WebGL completo\n• Balance hídrico FAO-56 diario\n• Predicción heladas 72h\n• Telemetría KioT multi-nodo"),
+        ("PLAN EMPRESA (EXPORTADOR)", "$170 USD/mes", "> 50 ha / Exportadoras\n\n• Trazabilidad satelital EUDR\n• API LoRaWAN ilimitada\n• Vuelos multiespectrales dron\n• Soporte prioritario 24/7"),
+        ("KITS A.P.I.S. / KIOT", "$90 - $300 USD", "Manufactura en Talca\n\n• Costo BOM: ~$90 USD ($85k CLP)\n• Venta nodo: ~$300 USD ($280k CLP)\n• Margen bruto de hardware: 70%\n• Instalación vía Cooperativa")
     ]
 
     card_wp = Inches(2.75)

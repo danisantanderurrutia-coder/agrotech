@@ -1321,272 +1321,557 @@ export const COMMERCIAL_PITCH_SLIDES: PitchSlide[] = [
 ];
 
 export const UNIFIED_PITCH_SLIDES: PitchSlide[] = [
+  // ==========================================
+  // CAPÍTULO 1: VISIÓN, MISIÓN & DIAGNÓSTICO
+  // ==========================================
   {
     id: 1,
     title: 'AgroTech Chile',
-    subtitle: 'Inteligencia Biofísica y Gemelos Digitales para el Blindaje Climático del Campo',
-    category: 'Portada General',
+    subtitle: 'Modelos de Economía Regenerativa y Alta Tecnología para la Resiliencia Climática',
+    category: 'Capítulo 1 • Visión & Diagnóstico',
     image: './img-agri-hub-farm.jpg',
     badge: 'ECOSISTEMA MAULE 2026',
     content: {
-      headline: 'Fusión de Microelectrónica de Bajo Costo en Maule con Modelado Biofísico 3D y Teledetección Satelital',
+      headline: 'La Fusión de la Permacultura Biofísica y la Computación Espacial en el Corazón de Chile',
       points: [
-        'Resuelve las 3 amenazas críticas del agro: heladas primaverales, sobrecostos de bombeo y barreras regulatorias de exportación.',
-        'Fabricación y calibración territorial en Talca (Valle Central de Chile) con soporte presencial en menos de 2 horas.',
-        'Meta: Proteger más de 500 predios de alto valor en Maule, O’Higgins y Ñuble con tecnología soberana y accesible.'
+        'Proponemos un modelo de sociedad donde la Naturaleza y la Economía son aliadas, situando la regeneración ecológica en el centro del desarrollo.',
+        'Microelectrónica modular de fabricación local en Maule calibrada con modelos climáticos biofísicos y teledetección satelital.',
+        'Soberanía tecnológica para productores agrícolas frente a los límites planetarios y la crisis climática global.'
       ],
       metrics: [
+        { label: 'Enfoque', value: 'Permacultura + IA', detail: 'Sistemas regenerativos' },
         { label: 'Base Operativa', value: 'Región del Maule', detail: 'Valle Central de Chile' },
-        { label: 'Ecosistema', value: '3 Capas Integradas', detail: 'Física, Digital y Regulatoria' },
-        { label: 'Margen Blended', value: '78% Bruto', detail: 'Hardware local + SaaS recurrente' }
+        { label: 'Alcance', value: 'Predio & Cuenca', detail: 'De 1 ha a 122.000 ha' }
       ]
     },
-    speakerNotes: 'Bienvenidos a AgroTech Chile. Unimos la microelectrónica de manufactura maulina con gemelos digitales biofísicos para blindar los campos ante el cambio climático.'
+    speakerNotes: 'Bienvenidos a AgroTech Chile. Unimos la permacultura, la microelectrónica maulina y la computación geoespacial para transformar la crisis climática en una oportunidad económica regenerativa.'
   },
   {
     id: 2,
-    title: 'Índice Modular & Mapa de Navegación',
-    subtitle: 'Presentación ejecutiva por capítulos con rutas de salto rápido según tu perfil',
-    category: 'Navegación Modular',
+    title: 'Mapa de Navegación & Estructura Modular',
+    subtitle: '5 Capítulos temáticos para navegar de forma continua o saltar directamente según tu interés',
+    category: 'Capítulo 1 • Visión & Diagnóstico',
     image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?auto=format&fit=crop&w=1200&q=80',
-    badge: 'ESTRUCTURA POR CAPÍTULOS',
+    badge: 'ESTRUCTURA DE 5 CAPÍTULOS',
     content: {
-      headline: 'Salta directamente a la sección de tu interés u omite capítulos según el tiempo disponible:',
+      headline: 'Presentación ejecutiva de 23 diapositivas organizada en 5 bloques modulares independientes:',
       points: [
-        'Capítulo 1 (Slides 3-4): Diagnóstico & Ecosistema Tecnológico (El dolor crítico + Hardware KioT + AgriTwin + Pasaporte Verde).',
-        'Capítulo 2 (Slides 5-7): Mercado, Modelo Comercial & Ventas (TAM/SAM/SOM + Precios y Márgenes + GTM y Subsidios CNR).',
-        'Capítulo 3 (Slides 8-9): Gobernanza Territorial & Estructura Dual (SpA Tecnológica + Cooperativa de Terreno + Slicing Pie).',
-        'Capítulo 4 (Slides 10-11): Hoja de Ruta & Próximos Pasos (Hitos 2026–2027 + El Ask modular para Inversores, Clientes o Fondos).'
+        'Cap. 1 (Slides 1-4): Visión, Misión Ética & Diagnóstico del Campo (Policrisis, Límites Planetarios y Principio Rector).',
+        'Cap. 2 (Slides 5-11): Ecosistema de Productos & Experiencia (AgriTwin, Árbol Alquímico, Cuencas, Kits APIS, El Panal, Multi-Dispositivo y HQ).',
+        'Cap. 3 (Slides 12-17): Motor de Datos, Mercado & Negocio (Data Stacking, The Flywheel, Segmentación USD, BOM, Moats y Hooks).',
+        'Cap. 4 (Slides 18-21): Organización, Modelo Social & Era de la IA (3 Pilares, Roles y Talento Buscado, SpA + Coop, Comunidad sobre Audiencia).',
+        'Cap. 5 (Slides 22-23): Escalabilidad Territorial & El Ask (Expansión Maule > Chile > LatAm > Europa y Ronda Semilla).'
       ],
       metrics: [
-        { label: 'Ruta Inversor', value: '7 - 10 min', detail: 'Cap. 2 (Mercado/Finanzas) + Cap. 4' },
-        { label: 'Ruta Agricultor', value: '10 - 12 min', detail: 'Cap. 1 (Solución) + Cap. 2 (Ventas)' },
-        { label: 'Ruta Cooperativa', value: '12 - 15 min', detail: 'Cap. 3 (Gobernanza) + Cap. 4' }
+        { label: 'Ruta Inversor', value: 'Cap. 3 + 4 + 5', detail: 'Métricas, Moats y El Ask' },
+        { label: 'Ruta Agricultor', value: 'Cap. 1 + 2 + 3', detail: 'Dolor, Solución, Precios USD' },
+        { label: 'Ruta Comunitaria', value: 'Cap. 1 + 2 + 4', detail: 'El Panal, Social & Alianzas' }
       ],
       highlightBox: {
-        title: 'Navegación Ágil',
-        text: 'Utiliza los botones de capítulo superiores en cualquier momento para saltar directamente a la sección deseada.'
+        title: 'Navegación Ágil en Vivo',
+        text: 'Utiliza los botones de capítulo superiores en cualquier momento para saltar directamente a la sección deseada o volver al índice.'
       }
     },
-    speakerNotes: 'Esta presentación está diseñada para ser completamente modular: podemos profundizar en tecnología, en números comerciales o en gobernanza según sus prioridades.'
+    speakerNotes: 'Esta presentación contiene 23 diapositivas organizadas modularmente: podemos recorrer la historia completa o saltar directo a los capítulos que más interesen a esta mesa.'
   },
   {
     id: 3,
-    title: 'El Costo Real de la Inacción en el Campo',
-    subtitle: 'Heladas devastadoras, ineficiencia hídrica y barreras normativas de la Unión Europea',
-    category: 'Capítulo 1 • Diagnóstico',
+    title: 'La Policrisis Ambiental & El Dolor en el Campo',
+    subtitle: 'Límites planetarios en tensión: megadesastres climáticos y la brecha tecnológica rural',
+    category: 'Capítulo 1 • Visión & Diagnóstico',
     image: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80',
-    badge: 'EL DOLOR CRÍTICO',
+    badge: 'POLICRISIS & GAP RURAL',
     content: {
-      headline: 'Los productores agrícolas pierden millones por falta de telemetría y trazabilidad oportuna:',
+      headline: 'En esta grieta ambiental y económica crece y prospera AgroTech Chile:',
       points: [
-        '1. Heladas de Primavera: Una sola noche a -2°C destruye entre $15M y $35M CLP por hectárea en cerezas o arándanos cuajados.',
-        '2. Desperdicio Energético e Hídrico: +38% de sobrecosto eléctrico en bombas de pozo profundo al regar a ciegas o en horas punta.',
-        '3. Riesgo de Rechazo EUDR: 100% de riesgo de retención en puertos europeos para fruta sin polígono satelital de no-deforestación.'
+        'Heladas Primaverales: Pérdidas de $15M a $35M CLP por hectárea en cerezas o arándanos en una sola noche (-2°C destruye toda la cosecha anual).',
+        'Megasequía Estructural: Más de US$ 1.200 millones en pérdidas acumuladas (Capes UC) y sobrecosto del +38% en la factura eléctrica de bombas de pozo por regar a ciegas.',
+        'Incendios e Inundaciones: Más de 122.000 ha en riesgo extremo en la interfaz rural-forestal por monocultivos y crecidas repentinas no monitoreadas.',
+        'Gap Tecnológico Rural: Agricultores y pobladores altamente dependientes de la agroindustria y desprovistos de herramientas modernas accesibles.'
       ],
       metrics: [
         { label: 'Pérdida Helada', value: '$15M - $35M', detail: 'Por hectárea afectada' },
-        { label: 'Sobrecosto Riego', value: '+38% Energía', detail: 'Falta de estratificación de suelo' },
-        { label: 'Barrera UE', value: '100% Riesgo', detail: 'Normativa EUDR no-deforestación' }
+        { label: 'Megasequía Chile', value: 'US$ 1.200M', detail: 'Pérdidas acumuladas' },
+        { label: 'Cuenca en Riesgo', value: '122.000 ha', detail: 'Interfaz vulnerable' }
       ]
     },
-    speakerNotes: 'El agricultor no invierte por lujo: invierte porque cada helada o cada metro cúbico mal bombeado amenaza la viabilidad completa de su temporada.'
+    speakerNotes: 'El agricultor maulino enfrenta una policrisis sin precedentes. No estamos vendiendo un gadget: estamos resolviendo pérdidas catastróficas que ponen en jaque el patrimonio familiar.'
   },
   {
     id: 4,
-    title: 'Arquitectura de la Solución (3 Capas Integradas)',
-    subtitle: 'Hardware de terreno, inteligencia biofísica y cumplimiento regulatorio en una sola plataforma',
-    category: 'Capítulo 1 • Ecosistema Tecnológico',
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
-    badge: 'ARQUITECTURA TRIÁDICA',
+    title: 'Misión & Los Tres Pilares Permaculturales',
+    subtitle: 'Cuidado de la Tierra, Cuidado de las Personas y Repartición Justa del Futuro',
+    category: 'Capítulo 1 • Visión & Diagnóstico',
+    image: 'https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?auto=format&fit=crop&w=1200&q=80',
+    badge: 'PRINCIPIO RECTOR ÉTICO',
     content: {
-      headline: 'Una sola solución integrada de punta a punta:',
+      headline: 'Una base filosófica sólida que guía el diseño de nuestros productos y relaciones comerciales:',
       points: [
-        '1. Capa Física (KioT): Microestaciones climáticas y sondas de suelo a 20, 40 y 60 cm, ensambladas en Talca con LoRaWAN y 4G solar.',
-        '2. Capa Digital (AgriTwin): Gemelo digital 3D predial que modela balance FAO-56 Penman-Monteith y alerta heladas con 6h de anticipación.',
-        '3. Capa Regulatoria (Pasaporte Verde): Certificación automatizada de polígonos satelitales Sentinel/Planet para exportación libre de deforestación.'
+        '1. Cuidado de la Tierra: Proteger y regenerar el suelo vivo, los corredores biológicos, los humedales y la eficiencia hídrica de cuenca.',
+        '2. Cuidado de las Personas: Proveer acceso a herramientas tecnológicas de frontera para una vida rural digna, sana, autónoma y comunitaria.',
+        '3. Repartición Justa (Cuidado del Futuro): Limitar el consumo extractivo, redistribuir los excedentes operacionales y devolver recursos al sistema.'
       ],
       metrics: [
-        { label: 'Anticipación Helada', value: '6 Horas', detail: 'Alertas predictivas por WhatsApp' },
-        { label: 'Profundidades Suelo', value: '20 / 40 / 60 cm', detail: 'Medición capacitiva de humedad' },
-        { label: 'Autonomía KioT', value: '100% Solar', detail: 'Batería LiFePO4 de larga vida' }
+        { label: 'Tierra', value: 'Regeneración', detail: 'Suelo vivo y agua' },
+        { label: 'Personas', value: 'Soberanía', detail: 'Acceso tecnológico' },
+        { label: 'Futuro', value: 'Reparto Justo', detail: 'Economía circular' }
       ],
       highlightBox: {
-        title: 'Soporte Territorial Inmediato',
-        text: 'Frente a fallas en marcas importadas que tardan semanas, nuestro servicio técnico local asiste el predio en menos de 2 horas.'
+        title: 'Principio Rector Comercial',
+        text: '"No vendas para cerrar un trato; vende para abrir una relación basada en la confianza."'
       }
     },
-    speakerNotes: 'Integramos la sonda en el barro con el gemelo digital en la nube y el pasaporte que exige el importador en Europa, todo en un único flujo sin fisuras.'
+    speakerNotes: 'Nuestra ética permacultural es nuestra mayor ventaja competitiva. El campo confía en quien demuestra compromiso con la tierra y las familias, no en intermediarios fríos.'
   },
+
+  // ==========================================
+  // CAPÍTULO 2: ECOSISTEMA DE PRODUCTOS & EXPERIENCIA
+  // ==========================================
   {
     id: 5,
-    title: 'Oportunidad de Mercado & Fosos Defensivos (Moats)',
-    subtitle: 'Dimensionamiento comercial y barreras de entrada competitivas en el Cono Sur',
-    category: 'Capítulo 2 • Mercado & Comercial',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
-    badge: 'MERCADO & MOATS',
+    title: 'Construir un Ecosistema de Productos',
+    subtitle: 'Una arquitectura integral que entrelaza el predio, la cuenca, la comunidad y el mercado',
+    category: 'Capítulo 2 • Ecosistema & Experiencia',
+    image: './img-forest-rewild.jpg',
+    badge: 'VISIÓN SISTÉMICA',
     content: {
-      headline: 'Mercado validado de alta necesidad y barreras competitivas sustentables:',
+      headline: 'Para levantar un edificio se necesita un plano maestro: nuestro ecosistema es un engranaje completo:',
       points: [
-        'TAM Global: $4.2B USD en agricultura de precisión y gestión bioclimática en Latinoamérica.',
-        'SAM Cono Sur: $380M USD en sector frutícola, vitivinícola y avellanero exportador de Chile y Argentina.',
-        'SOM Inicial Maule: $4.8M USD capturando 500 predios de alto valor en los valles de Maule, O’Higgins y Ñuble.',
-        'Fosos Defensivos: Costo de hardware 60% inferior al importado + Algoritmos calibrados específicamente para microcuencas maulinas.'
+        'No somos una aplicación aislada: somos una suite interconectada que responde a cada nivel de la escala rural.',
+        'Escala Predial: AgriTwin 3D interactivo para simulación microclimática, balance hídrico y monitoreo de flora y fauna.',
+        'Escala Cuenca: AgroTwin Regional (122.000 ha) para gestión macro de ríos, canales y riesgos de inundaciones e incendios.',
+        'Escala Comunitaria: El Panal para intercambio de recursos y RewildMapper + Pasaporte Verde para exportación y biodiversidad.'
       ],
       metrics: [
-        { label: 'TAM LatAm', value: '$4.2B USD', detail: 'Mercado AgTech en expansión' },
-        { label: 'SAM Frutícola', value: '$380M USD', detail: 'Chile y Cono Sur' },
-        { label: 'SOM Inicial', value: '$4.8M USD', detail: '500 predios de alto valor' }
+        { label: 'Suite Integral', value: '6 Productos', detail: 'Interconectados vía API' },
+        { label: 'Cobertura', value: 'Micro a Macro', detail: 'Del surco a la cuenca' },
+        { label: 'Estándar', value: 'Global & Local', detail: 'FAO-56, Sentinel, EUDR' }
       ]
     },
-    speakerNotes: 'Nuestros competidores venden estaciones meteorológicas genéricas importadas a precios prohibitivos. Nosotros ofrecemos un ecosistema integrado con ventaja de costos local.'
+    speakerNotes: 'Cada producto alimenta al siguiente. El sensor alimenta al gemelo predial, el predio alimenta a la cuenca regional, y la cuenca permite la exportación con pasaporte verde.'
   },
   {
     id: 6,
-    title: 'Modelo de Ingresos & Precios',
-    subtitle: 'Flujo de caja equilibrado entre venta de equipamiento y suscripciones recurrentes SaaS',
-    category: 'Capítulo 2 • Mercado & Comercial',
-    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80',
-    badge: 'PRICING & REVENUE',
+    title: 'Producto Central: AgriTwin Predial & El Árbol Alquímico',
+    subtitle: 'Simulación digital en tiempo real del predio, los sensores y los procesos biofísicos',
+    category: 'Capítulo 2 • Ecosistema & Experiencia',
+    image: './arbol_alquimico_splash.jpg',
+    badge: 'EL ÁRBOL DE AGRITWIN',
     content: {
-      headline: 'Monetización diversificada adaptada a la escala de cada productor:',
+      headline: 'El Árbol Alquímico representa la vida y los flujos del predio modelados en computación espacial:',
       points: [
-        'AgriTwin Core (SaaS Básico): $35.000 CLP/mes — Monitoreo satelital, alertas climáticas y NDVI predial.',
-        'AgriTwin Pro (SaaS + KioT): $85.000 CLP/mes — Telemetría en vivo, auditoría de riego FAO-56 y alerta anticipada de heladas.',
-        'Cuenca Corporativa: Desde $220.000 CLP/mes — Para viñas, asociaciones de canalistas y exportadoras multi-fundo.',
-        'Hardware KioT Venta/Comodato: $280.000 CLP por nodo (Costo BOM $85.000 CLP → 70% margen bruto de fabricación).',
-        'Pasaporte Verde EUDR: $350.000 CLP por temporada/predio para certificación oficial de exportación europea.'
+        'Conexión Remota al Predio: Visualización interactiva 3D WebGL con posición solar, microclima y estado biológico de cada cuartel.',
+        'Ramas Especializadas: Ramas dedicadas para el huerto/cultivos, el establo/animales, el suelo vivo y la infraestructura hídrica.',
+        'Recomendaciones Proactivas: Alertas predictivas de heladas con 6 horas de anticipación y cálculo diario de evapotranspiración FAO-56.'
       ],
       metrics: [
-        { label: 'AgriTwin Básico', value: '$35.000 /mes', detail: 'Monitoreo satelital' },
-        { label: 'AgriTwin Pro', value: '$85.000 /mes', detail: 'SaaS + Hardware telemétrico' },
-        { label: 'Margen Hardware', value: '70% Bruto', detail: 'BOM optimizado en Talca' }
+        { label: 'Motor 3D', value: 'WebGL / PBR', detail: 'Simulación biofísica in situ' },
+        { label: 'Anticipación', value: '6 Horas', detail: 'Prevención de heladas' },
+        { label: 'Monitoreo', value: 'Flora + Fauna', detail: 'Manejo holístico predial' }
       ]
     },
-    speakerNotes: 'Diversificamos los ingresos con recurrencia mensual en software de alto margen y venta accesible de hardware que genera fidelización de largo plazo.'
+    speakerNotes: 'El Árbol Alquímico es el corazón visual de AgriTwin: las raíces absorben los datos del suelo y la atmósfera, y las ramas representan las distintas dimensiones productivas del predio.'
   },
   {
     id: 7,
-    title: 'Unit Economics & Estrategia Go-To-Market',
-    subtitle: 'Márgenes de software, bajo costo de adquisición y apalancamiento en subsidios estatales',
-    category: 'Capítulo 2 • Mercado & Comercial',
-    image: 'https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?auto=format&fit=crop&w=1200&q=80',
-    badge: 'UNIT ECONOMICS & GTM',
+    title: 'Escala Territorial: AgroTwin Regional (122.000 ha)',
+    subtitle: 'Visor macro de cuenca para comprender flujos hídricos, masa boscosa y amenazas climáticas',
+    category: 'Capítulo 2 • Ecosistema & Experiencia',
+    image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80',
+    badge: 'GESTIÓN DE CUENCA',
     content: {
-      headline: 'Eficiencia de capital y tracción en terreno probada:',
+      headline: 'La resiliencia no termina en el cerco del vecino: se gestiona a escala de cuenca hidrográfica:',
       points: [
-        'Márgenes Excepcionales: Margen bruto blended del 78% y 93% en el SaaS recurrente cloud.',
-        'Ratio LTV / CAC: 12.1x con retención proyectada sobre 96% anual (un agricultor que salva una helada jamás cancela su suscripción).',
-        'Embudo de Terreno "Zero-Risk": Instalación de 1 nodo piloto por 30 días sin costo; conversión superior al 80% tras la primera alerta efectiva.',
-        'Apalancamiento Estatal: Integración con consultores de la Ley 18.450 (CNR) e INDAP/CORFO, donde el Estado bonifica hasta el 80% de la inversión.'
+        'Visor Regional Parral y Retiro: Cobertura de 122.000 hectáreas integrando cuencas de los ríos Longaví, Perquilauquén y embalses.',
+        'Monitoreo Multicapa: Manchas de inundación fluvial (DGA/SENAPRED), piro-riesgo de incendios y catastro comunal de roles SII.',
+        'Herramienta Clave para Licitaciones y GORE: Soporte estratégico para Asociaciones de Canalistas, municipios y planes de cuenca.'
       ],
       metrics: [
-        { label: 'Margen SaaS', value: '93% Bruto', detail: 'Infraestructura cloud escalable' },
-        { label: 'Ratio LTV/CAC', value: '12.1x', detail: 'Altísima retención anual' },
-        { label: 'Subsidio CNR', value: 'Hasta 80%', detail: 'Financiamiento estatal bonificado' }
-      ],
-      highlightBox: {
-        title: 'Estrategia Ganar-Ganar',
-        text: 'El agricultor moderniza su predio financiado mayoritariamente por fondos públicos, y AgroTech asegura contratos anuales de telemetría y software.'
-      }
+        { label: 'Área Modelada', value: '122.070 ha', detail: 'Cuenca Longaví / Parral / Retiro' },
+        { label: 'Integración', value: 'DGA + MOP', detail: 'Caudales y embalses en vivo' },
+        { label: 'Prevención', value: 'Piro + Fluvial', detail: 'Mitigación de desastres' }
+      ]
     },
-    speakerNotes: 'Los unit economics son extraordinariamente sanos gracias a la combinación de márgenes de software con un canal de ventas asistido por subsidios de riego del Estado.'
+    speakerNotes: 'A escala macro, AgroTwin Regional se transforma en un mapa maestro para los gobiernos regionales y juntas de vigilancia, anticipando desbordes y coordinando el agua de cuenca.'
   },
   {
     id: 8,
-    title: 'Gobernanza Territorial & Estructura Dual',
-    subtitle: 'Blindaje de propiedad intelectual en SpA y arraigo comunitario en Cooperativa de Terreno',
-    category: 'Capítulo 3 • Gobernanza Dual',
-    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80',
-    badge: 'ESTRUCTURA CORPORATIVA',
+    title: 'Kits A.P.I.S. de Automatización',
+    subtitle: 'Automatización, Producción e Integración de Sistemas: Los ojos del gemelo digital',
+    category: 'Capítulo 2 • Ecosistema & Experiencia',
+    image: './kiot-hardware.png',
+    badge: 'HARDWARE A.P.I.S. / KIOT',
     content: {
-      headline: 'El modelo híbrido que une alta tecnología global con ejecución local transparente:',
+      headline: 'Mecatrónica rural robusta fabricada en Talca para resistir la intemperie maulina:',
       points: [
-        'AgroTech SpA (Vehículo de Capital e IP): Radicada como sociedad por acciones. Custodia el código fuente, modelos biofísicos, algoritmos predictivos, marca y rondas de inversión.',
-        'Cooperativa Territorial Maule (Vehículo Operativo): Encargada del ensamblaje del hardware KioT, instalación en terreno, mantenimiento predial y vinculación vecinal.',
-        'Alineación de Incentivos: Los técnicos e instaladores locales participan de los excedentes operacionales, eliminando la rotación de personal y asegurando lealtad territorial.'
+        'Ojos del Gemelo Digital: Sondas capacitivas de suelo a 3 profundidades (20, 40 y 60 cm) + microestación meteorológica con radiación UV.',
+        'Conectividad Híbrida: Protocolos LoRaWAN de largo alcance (hasta 15 km en línea de vista) y respaldo 4G celular con autonomía 100% solar.',
+        'Control Actuador de Riego: KioT Valve automatiza válvulas solenoides e inyección de bioinsumos basado en el balance hídrico real.'
       ],
       metrics: [
-        { label: 'AgroTech SpA', value: '100% Custodia IP', detail: 'Software, modelos y licencias' },
-        { label: 'Cooperativa', value: 'Brazo Operativo', detail: 'Instalaciones y soporte predial' },
-        { label: 'Impacto Social', value: 'Trabajo Digno', detail: 'Retención de talento joven en Maule' }
+        { label: 'Autonomía', value: '100% Solar', detail: 'Batería LiFePO4 de 5+ años' },
+        { label: 'Costo BOM', value: '$90 USD', detail: '~$85.000 CLP en manufactura' },
+        { label: 'Soporte', value: '< 2 Horas', detail: 'Respuesta presencial en Maule' }
       ]
     },
-    speakerNotes: 'La SpA protege la inversión y la propiedad intelectual ante cualquier fondo o socio, mientras que la Cooperativa garantiza que la operación de campo sea sólida, leal y comunitaria.'
+    speakerNotes: 'A.P.I.S. significa Automatización, Producción e Integración de Sistemas. Fabricamos en Talca con gabinetes estancos IP65, logrando un costo de manufactura 60% inferior a marcas importadas.'
   },
   {
     id: 9,
-    title: 'Distribución Dinámica (Slicing Pie) & Escalabilidad',
-    subtitle: 'Justicia distributiva transparente y expansión mediante red de instaladores certificados',
-    category: 'Capítulo 3 • Gobernanza Dual',
-    image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=80',
-    badge: 'SLICING PIE & ESCALA',
+    title: 'Escala Vecinal: El Panal & Biodiversidad de Exportación',
+    subtitle: 'Intercambio comunitario de excedentes + RewildMapper Tier-2 y Pasaporte Verde EUDR',
+    category: 'Capítulo 2 • Ecosistema & Experiencia',
+    image: './rewildmapper-gis.png',
+    badge: 'EL PANAL & BIODIVERSIDAD',
     content: {
-      headline: 'Crecimiento sin deuda y protección societaria desde el primer día:',
+      headline: 'Autonomía comunitaria y pasaporte a los mercados globales más exigentes:',
       points: [
-        'Modelo Slicing Pie: Reparto accionario dinámico y equitativo basado en el riesgo real asumido (horas técnicas, capital, propiedad intelectual e infraestructura) antes del break-even.',
-        'Blindaje Legal: Reglas claras de propiedad intelectual; las licencias centrales residen exclusivamente en la SpA, impidiendo bloqueos o disputas societarias.',
-        'Red de Micro-Agencias: Formación técnica de egresados de liceos agrícolas e institutos del Maule como instaladores certificados para escalar a nuevas regiones sin inflar costos fijos.'
+        'El Panal (Escala Vecinal): Módulo participativo para modelar el intercambio de agua, energía solar y mano de obra comunitaria con asambleas locales.',
+        'RewildMapper (PWA Offline): Registro de biodiversidad y conservación de bosque nativo emitiendo certificados de Créditos de Biodiversidad (PBC) bajo estándar IPCC Tier-2.',
+        'Pasaporte Verde EUDR: Certificación satelital automatizada libre de deforestación para cerezas, vinos y avellanos que exportan a la Unión Europea.'
       ],
       metrics: [
-        { label: 'Modelo Dinámico', value: 'Slicing Pie', detail: 'Equidad matemática previa a utilidades' },
-        { label: 'Red Técnica', value: 'Micro-Agencias', detail: 'Instaladores certificados por cuenca' },
-        { label: 'Estructura Costo', value: '100% Variable', detail: 'Escalamiento sin sobrecarga fija' }
-      ],
-      highlightBox: {
-        title: 'Justicia Distributiva',
-        text: 'Nadie trabaja gratis y nadie se apropia indebidamente del valor ajeno. Cada contribución queda registrada con multiplicadores de riesgo auditables.'
-      }
+        { label: 'El Panal', value: 'Circuitos Cortos', detail: 'Autonomía frente a corporaciones' },
+        { label: 'RewildMapper', value: 'IPCC Tier-2', detail: 'PWA 100% desconectada' },
+        { label: 'EUDR UE', value: '100% Compliance', detail: 'Trazabilidad georreferenciada' }
+      ]
     },
-    speakerNotes: 'Slicing Pie resuelve el principal motivo de fracaso en startups en etapa temprana: las disputas entre socios. Aquí la matemática define la justicia del esfuerzo.'
+    speakerNotes: 'El Panal democratiza la economía local campesina. En paralelo, RewildMapper y Pasaporte Verde le dan al exportador la llave que exige la Unión Europea para no rechazar su fruta.'
   },
   {
     id: 10,
-    title: 'Hoja de Ruta 2026–2027',
-    subtitle: 'Hitos clave de validación, escalamiento productivo y expansión regional',
-    category: 'Capítulo 4 • Cierre & Hoja de Ruta',
-    image: 'https://images.unsplash.com/photo-1508873696983-2df5293cb32f?auto=format&fit=crop&w=1200&q=80',
-    badge: 'ROADMAP 2026-2027',
+    title: 'Ecosistema Multi-Dispositivo & Experiencia de Usuario',
+    subtitle: 'La tecnología vive en el canal correcto según el momento del día y la tarea del productor',
+    category: 'Capítulo 2 • Ecosistema & Experiencia',
+    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
+    badge: 'MULTI-DEVICE EXPERIENCE',
     content: {
-      headline: 'Plan de ejecución acelerado y metas operacionales verificables:',
+      headline: 'Diseñado para eliminar la fricción técnica y adaptarse a la vida real del campo:',
       points: [
-        'Q1–Q2 2026: Consolidación de 30 predios piloto en Maule (Parral, Retiro, Talca) y certificación del módulo satelital EUDR para cerezas y avellanos.',
-        'Q3–Q4 2026: Fabricación en serie de 100 nodos KioT v2 y cierre de convenios comerciales con consultoras CNR y cooperativas de agua.',
-        '2027: Expansión de cuenca a los valles de O’Higgins y Ñuble, e inicio del primer piloto binacional en la región de Cuyo/Mendoza (Argentina).'
+        '1. App Completa (Escritorio / PWA): Entorno robusto para planificación de temporada, simulación 3D de predio y generación de carpetas técnicas CNR Ley 18.450.',
+        '2. Web Online Predial: Acceso ágil vía navegador para consultar el gemelo digital desde cualquier equipo por administradores, agrónomos o compradores.',
+        '3. Celular en el Bolsillo: Notificaciones push críticas, menú interactivo de sensores y canal de WhatsApp directo para emergencias de heladas y soporte.'
       ],
       metrics: [
-        { label: 'Meta Q2 2026', value: '30 Predios', detail: 'Pilotos validados en Maule' },
-        { label: 'Meta Q4 2026', value: '100 Nodos KioT', detail: 'Producción en serie local' },
-        { label: 'Expansión 2027', value: '3 Regiones + Cuyo', detail: 'Escalamiento en Cono Sur' }
+        { label: 'Escritorio', value: 'Análisis Completo', detail: 'Simulación 3D y reportes CNR' },
+        { label: 'Web Online', value: 'Acceso Ágil', detail: 'Visor predial en cualquier browser' },
+        { label: 'Celular', value: 'WhatsApp Directo', detail: 'Alertas críticas en la madrugada' }
       ]
     },
-    speakerNotes: 'Tenemos un plan realista con metas medibles trimestre a trimestre. No prometemos hipótesis abstractas: vamos de la cuenca del Maule al Cono Sur paso a paso.'
+    speakerNotes: 'El agricultor no abre una laptop pesada a las 3 de la mañana en medio de una helada. Para eso está WhatsApp en el teléfono. La laptop se usa para planificar el riego de la semana.'
   },
   {
     id: 11,
-    title: 'Llamado a la Acción Modular',
-    subtitle: 'El próximo paso concreto adaptado a la mesa en la que estamos sentados',
-    category: 'Capítulo 4 • Cierre & Hoja de Ruta',
+    title: 'AgroTech HQ: Panel Hub Central & Red de Asesores',
+    subtitle: 'El centro neurálgico que conecta los datos del predio con el criterio de agrónomos expertos',
+    category: 'Capítulo 2 • Ecosistema & Experiencia',
+    image: './img-coastal-hud.jpg',
+    badge: 'PANEL HUB & ASESORES',
+    content: {
+      headline: 'La inteligencia no es solo código: es la sinergia entre modelos y especialistas de campo:',
+      points: [
+        'Panel Hub Maestro: Consola unificada donde convergen telemetría en vivo, balances hídricos, mapas de cuenca y gestión comercial.',
+        'Red de Asesores Especializados: Asesores dedicados en Agroecología, Riego y CNR, Microbiología de suelos, Derecho cooperativo y Teledetección.',
+        'Cuaderno del Operador Integrado: Registro digital de labores prediales que alimenta el aprendizaje continuo de los modelos analíticos.'
+      ],
+      metrics: [
+        { label: 'Hub Maestro', value: 'Panel Central', detail: 'Consola integral unificada' },
+        { label: 'Asesores', value: 'Red Híbrida', detail: 'IA + Agrónomos de terreno' },
+        { label: 'Cuaderno', value: 'Notas de Campo', detail: 'Trazabilidad de labores' }
+      ]
+    },
+    speakerNotes: 'AgroTech HQ es la torre de control: combina la analítica de datos con asesores expertos humanos e IA, transformando simples gráficos en decisiones agronómicas rentables.'
+  },
+
+  // ==========================================
+  // CAPÍTULO 3: MOTOR DE DATOS, MERCADO & NEGOCIO
+  // ==========================================
+  {
+    id: 12,
+    title: 'Data Stacking + The Flywheel en el Agro',
+    subtitle: 'Cómo el apilamiento de capas de datos acelera el valor agronómico y las barreras de entrada',
+    category: 'Capítulo 3 • Motor de Datos & Mercado',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80',
+    badge: 'DATA STACKING & FLYWHEEL',
+    content: {
+      headline: 'El motor analítico que se vuelve exponencialmente más inteligente con cada temporada:',
+      points: [
+        'Data Stacking: Apilamiento armónico de 4 fuentes: (1) Satélites Sentinel/Planet, (2) Sensores de suelo APIS, (3) Notas de campo del agricultor, (4) Modelos biofísicos FAO-56.',
+        'Efecto Volante (The Flywheel): Más datos apilados ➔ Predicciones de helada y balance de riego más exactos ➔ Mayor ahorro económico comprobado ➔ Mayor adopción de predios vecinos.',
+        'Efecto Red de Cuenca: Cada nuevo predio que se suma densifica la malla de microclima, haciendo que los pronósticos de toda la cuenca sean imbatibles para gigantes globales.'
+      ],
+      metrics: [
+        { label: 'Capas de Datos', value: '4 Fuentes Clave', detail: 'Satélite, IoT, Usuario, Biofísica' },
+        { label: 'Precisión', value: '+40% Ajuste', detail: 'Calibración hiperlocal en cuenca' },
+        { label: 'Efecto Red', value: 'Flywheel Activo', detail: 'Más predios = Mejor predicción' }
+      ]
+    },
+    speakerNotes: 'El Data Stacking crea un foso defensivo imbatible: una empresa extranjera puede poner una estación, pero no tiene el apilamiento de datos históricos calibrados en esta cuenca.'
+  },
+  {
+    id: 13,
+    title: 'El Negocio Adaptado a Cada Perfil de Cliente',
+    subtitle: 'Estructura comercial en USD segmentada para agricultores, grandes empresas y sector público',
+    category: 'Capítulo 3 • Motor de Datos & Mercado',
+    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80',
+    badge: 'PLANES EN USD',
+    content: {
+      headline: 'Planes comerciales transparentes y accesibles diseñados para cada escala de operación:',
+      points: [
+        'Plan Básico Predial: $50 USD / mes (hasta 10 ha) — Índices Sentinel-2 (NDVI, NDWI), alertas WhatsApp de helada, 1 usuario, setup $120 USD.',
+        'Plan Pro Frutícola/Viña: $92 USD / mes (hasta 50 ha) — Gemelo 3D WebGL completo, balance FAO-56 diario, predicción 72h, telemetría APIS multinodo.',
+        'Plan Empresa / Exportadoras: $170 USD / mes (> 50 ha) — Trazabilidad satelital EUDR, API LoRaWAN ilimitada, vuelos multiespectrales con dron y soporte 24/7.',
+        'Licitaciones Públicas & GORE: Contratos corporativos para cuencas completas, juntas de vigilancia y proyectos bonificados por la Ley CNR 18.450.'
+      ],
+      metrics: [
+        { label: 'Plan Básico', value: '$50 USD / mes', detail: 'Satelital + WhatsApp' },
+        { label: 'Plan Pro', value: '$92 USD / mes', detail: 'Gemelo 3D + Telemetría APIS' },
+        { label: 'Plan Empresa', value: '$170 USD / mes', detail: 'EUDR + Drones + Soporte 24/7' }
+      ]
+    },
+    speakerNotes: 'Nuestros precios en USD son altamente competitivos para el productor chileno e internacional: desde $50 USD al mes para el pequeño agricultor hasta planes corporativos con EUDR.'
+  },
+  {
+    id: 14,
+    title: 'Unit Economics, Costos BOM & Márgenes de Negocio',
+    subtitle: 'Combinación óptima de margen bruto en hardware con alta recurrencia de software cloud',
+    category: 'Capítulo 3 • Motor de Datos & Mercado',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+    badge: 'FINANZAS & UNIT ECONOMICS',
+    content: {
+      headline: 'Estructura financiera eficiente con márgenes atractivos y rápido retorno de inversión:',
+      points: [
+        'Bill of Materials (BOM) Hardware: Costo de fabricación de ~$90 USD ($85.000 CLP); precio de venta de ~$300 USD ($280.000 CLP) ➔ Margen Bruto del 70%.',
+        'Margen Bruto SaaS Cloud: 93% recurrente mensual con costo de servidor marginal por predio.',
+        'Ratio LTV / CAC: 12.1x con retención proyectada mayor al 96% anual (el agricultor que previene una sola helada asegura el servicio por años).'
+      ],
+      metrics: [
+        { label: 'Margen Hardware', value: '70% Bruto', detail: 'BOM $90 USD vs Venta $300 USD' },
+        { label: 'Margen SaaS', value: '93% Recurrente', detail: 'Bajo costo de cómputo' },
+        { label: 'LTV / CAC', value: '12.1x', detail: 'Alta retención en el agro' }
+      ]
+    },
+    speakerNotes: 'El hardware genera flujo de caja inmediato con 70% de margen bruto, y abre la puerta al SaaS con 93% de margen recurrente y un ratio LTV/CAC de 12 a 1.'
+  },
+  {
+    id: 15,
+    title: 'Fosos Defensivos (Moats) & Ventaja Local',
+    subtitle: 'Por qué nuestras ventajas territoriales y de costos superan a las multinacionales del agro',
+    category: 'Capítulo 3 • Motor de Datos & Mercado',
+    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80',
+    badge: 'VENTAJA COMPETITIVA',
+    content: {
+      headline: 'Construimos barreras de entrada técnicas, operacionales y comunitarias difíciles de franquear:',
+      points: [
+        'Manufactura Local con Soporte Inmediato: Mientras marcas importadas tardan semanas en despachar repuestos, AgroTech asiste el predio en menos de 2 horas.',
+        'Calibración Territorial de Cuenca: Modelos microclimáticos entrenados con la topografía y vientos del Maule, donde pronósticos genéricos fallan.',
+        'Integración Triple Nativa: Ninguna solución competidora fusiona hardware físico + gemelo digital 3D + pasaporte regulatorio EUDR en una sola factura.'
+      ],
+      metrics: [
+        { label: 'Costo Hardware', value: '-60% vs Importado', detail: 'Sin fletes internacionales' },
+        { label: 'Soporte Terreno', value: '< 2 Horas', detail: 'Técnicos certificados locales' },
+        { label: 'Cumplimiento', value: 'Llave en Mano', detail: 'Satelital + Ley CNR + EUDR' }
+      ]
+    },
+    speakerNotes: 'Un competidor de Silicon Valley no puede enviar a un técnico a Retiro o Parral en 2 horas. Nosotros estamos ahí, con las botas en el barro y costos 60% menores.'
+  },
+  {
+    id: 16,
+    title: 'Implementación por Etapas (Roadmap Comercial)',
+    subtitle: 'Estrategia de despliegue progresivo para reducir la fricción de entrada y escalar valor',
+    category: 'Capítulo 3 • Motor de Datos & Mercado',
+    image: 'https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?auto=format&fit=crop&w=1200&q=80',
+    badge: 'DESPLIEGUE POR ETAPAS',
+    content: {
+      headline: 'Una ruta estructurada que acompaña la madurez digital de cada productor y cuenca:',
+      points: [
+        'Etapa 1 • Twin (Digitalización Base): Despliegue de visores satelitales Sentinel y gemelo digital básico sin fricción de instalación física.',
+        'Etapa 2 • Kits e Integración (Hardware de Suelo): Instalación de microelectrónica APIS/KioT en cuarteles críticos con calibración de riego FAO-56.',
+        'Etapa 3 • Social & Asesoría (Comunidad y Mercado): Activación del módulo El Panal, consultorías de cuenca, extensión campesina y redes territoriales.'
+      ],
+      metrics: [
+        { label: 'Etapa 1', value: 'Twin Digital', detail: 'Adopción inmediata sin hardware' },
+        { label: 'Etapa 2', value: 'Kits APIS', detail: 'Telemetría y balance en suelo' },
+        { label: 'Etapa 3', value: 'Social & Red', detail: 'El Panal y circuitos cortos' }
+      ]
+    },
+    speakerNotes: 'No le pedimos al agricultor que cambie toda su operación el día uno. Entramos con el gemelo digital satelital, sumamos los kits de suelo, y culminamos en la red comunitaria.'
+  },
+  {
+    id: 17,
+    title: 'Estrategia de "Hooks" (Ganchos de Adquisición)',
+    subtitle: 'Derribando la inercia del campo mediante ganchos gratuitos y pilotos de cero riesgo',
+    category: 'Capítulo 3 • Motor de Datos & Mercado',
+    image: 'https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?auto=format&fit=crop&w=1200&q=80',
+    badge: 'HOOKS DE CONVERSIÓN',
+    content: {
+      headline: 'La regla de oro en el agro es "Ver para Creer": entramos con valor antes de cobrar:',
+      points: [
+        'Hook 1 • Ramas de Twins Gratuitas: Acceso libre freemium a las ramas de Animales/Establo y Plantas/Huerto para generar hábito diario.',
+        'Hook 2 • Informes Prediales Gratuitos: Entrega de diagnóstico agroclimático y NDVI express de 2 páginas en 24 horas sin costo alguno.',
+        'Hook 3 • Kits Baratos & Piloto 30 Días: Instalación de 1 nodo APIS en el cuartel más helador; si no genera valor o alerta útil, se retira a costo cero.'
+      ],
+      highlightBox: {
+        title: 'Conversión Superior al 80%',
+        text: 'Cuando un agricultor recibe su primera alerta de helada a tiempo y salva su brote, el piloto gratuito se transforma orgánicamente en contrato anual.'
+      },
+      metrics: [
+        { label: 'Twins Gratis', value: 'Ramas Básicas', detail: 'Huerto y Establo sin costo' },
+        { label: 'Informes', value: 'Express 24h', detail: 'Diagnóstico satelital de entrada' },
+        { label: 'Piloto', value: '30 Días Cero Riesgo', detail: 'Garantía total de valor' }
+      ]
+    },
+    speakerNotes: 'Nuestros ganchos derriban la resistencia inicial. El informe gratuito y la rama de establo crean el vínculo; el piloto de 30 días sin riesgo cierra la venta anual.'
+  },
+
+  // ==========================================
+  // CAPÍTULO 4: ORGANIZACIÓN, MODELO SOCIAL & ERA IA
+  // ==========================================
+  {
+    id: 18,
+    title: 'La Startup en Tres Pilares Organizacionales',
+    subtitle: 'Estructura equilibrada entre desarrollo técnico, arquitectura digital e infraestructura social',
+    category: 'Capítulo 4 • Organización & Era de la IA',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80',
+    badge: 'TRIADA ORGANIZACIONAL',
+    content: {
+      headline: 'Tres pilares interconectados que sostienen el crecimiento sustentable de AgroTech:',
+      points: [
+        '1. Pilar Técnico (Sensores & Asesores): Taller de diseño y ensamblaje PCB, banco de pruebas de sondas APIS y acompañamiento agronómico presencial.',
+        '2. Pilar Digital (Twins & Arquitectura de Datos): Desarrollo de gemelos 3D WebGL, pipelines de datos satelitales, algoritmos de IA predictiva y APIs de integración.',
+        '3. Pilar Social (Comunidad & Soberanía): Creación de infraestructura comunitaria (El Panal), vinculación con liceos técnicos, talleres escolares y circuitos de economía local.'
+      ],
+      metrics: [
+        { label: 'Pilar Técnico', value: 'Hardware & Suelo', detail: 'Manufactura y asesores de campo' },
+        { label: 'Pilar Digital', value: 'Twins & Datos', detail: 'Software, APIs e IA predictiva' },
+        { label: 'Pilar Social', value: 'Comunidad', detail: 'Infraestructura vecinal y extensión' }
+      ]
+    },
+    speakerNotes: 'Nuestra organización no es solo una oficina de programadores. Tiene un pilar técnico de manufactura de hardware y un pilar social de construcción comunitaria en los valles.'
+  },
+  {
+    id: 19,
+    title: 'Dinámica de Equipo, Roles & Talento Buscado',
+    subtitle: 'Sinergia de ejecución entre desarrollo y ventas, y convocatoria activa de perfiles estratégicos',
+    category: 'Capítulo 4 • Organización & Era de la IA',
+    image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=80',
+    badge: 'ROLES & TALENTO BUSCADO',
+    content: {
+      headline: 'El equipo digital desarrolla el producto, el equipo de ventas lo mueve, y repartimos utilidades con justicia:',
+      points: [
+        'Dirección Digital & Biofísica: Lidera la arquitectura de gemelos digitales, algoritmos agroclimáticos e integración satelital.',
+        'Dirección Técnica de Hardware & Terreno: Lidera la manufactura de kits APIS, telemetría LoRaWAN y validación con botas en el barro.',
+        'Dirección Comercial & Alianzas: Mueve el producto en predios, asociaciones de canalistas y licitaciones públicas de cuenca.',
+        'Buscamos Profesionales Clave (¿Este puedes ser tú?): Desarrollador Fullstack GIS WebGL, Ingeniero Agrónomo de Cuenca y Gestor de Proyectos Ley CNR 18.450.'
+      ],
+      metrics: [
+        { label: 'Equipo Digital', value: 'Crea & Modela', detail: 'Software, IA y arquitectura' },
+        { label: 'Equipo Ventas', value: 'Mueve & Cierra', detail: 'Terreno, alianzas y cuencas' },
+        { label: 'Convocatoria', value: 'Talento Estratégico', detail: 'GIS, Agronomía, Ley CNR' }
+      ]
+    },
+    speakerNotes: 'El equipo digital crea el producto; el equipo comercial y de campo lo mueve en los fundos. Invitamos activamente a profesionales clave a sumarse a esta misión.'
+  },
+  {
+    id: 20,
+    title: 'Estructura Dual (SpA + Cooperativa) & Slicing Pie',
+    subtitle: 'Custodia legal de la propiedad intelectual combinada con reparto justo de excedentes en terreno',
+    category: 'Capítulo 4 • Organización & Era de la IA',
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80',
+    badge: 'GOBERNANZA DUAL',
+    content: {
+      headline: 'Un modelo corporativo ético adaptado al territorio que blinda la IP y retiene el talento:',
+      points: [
+        'AgroTech SpA (Vehículo de Capital e IP): Holding corporativa custodia de las licencias, código fuente, modelos biofísicos y vehículo para inversión.',
+        'Cooperativa Territorial Maule (Vehículo de Terreno): Brazo ejecutor donde los técnicos locales ensamblan, instalan y dan soporte, participando de los excedentes operacionales.',
+        'Modelo Dinámico Slicing Pie: Reparto societario y de utilidades ajustado matemáticamente al aporte real de valor, horas técnicas y riesgo asumido.'
+      ],
+      metrics: [
+        { label: 'AgroTech SpA', value: '100% Custodia IP', detail: 'Software, modelos y licencias' },
+        { label: 'Cooperativa', value: 'Brazo de Terreno', detail: 'Reparto justo de excedentes' },
+        { label: 'Slicing Pie', value: 'Modelo Dinámico', detail: 'Alineación total de incentivos' }
+      ]
+    },
+    speakerNotes: 'El modelo dual SpA + Cooperativa resuelve el dilema clásico: protegemos la IP y el capital en la SpA, mientras que la Cooperativa garantiza que la gente de campo sea socia del éxito.'
+  },
+  {
+    id: 21,
+    title: 'Las Tres Claves para Triunfar en la Era de la IA',
+    subtitle: 'Por qué el software agrícola del futuro no compite solo con pantallas, sino con pertenencia real',
+    category: 'Capítulo 4 • Organización & Era de la IA',
+    image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80',
+    badge: 'FILOSOFÍA ERA IA',
+    content: {
+      headline: 'En un mundo saturado de software genérico, la ventaja insustituible reside en la raíz física y social:',
+      points: [
+        '1. Transformar la Audiencia en Comunidad: No buscamos usuarios pasivos; construimos una red colaborativa de campesinos, técnicos y expertos que comparten saberes.',
+        '2. La Experiencia Exterior al Software: El verdadero valor no está encerrado en la pantalla, sino en las botas en el barro, en la calibración física y en la relación humana de confianza.',
+        '3. Volverlo Parte de la Vida Cotidiana: El sistema es el cuaderno del operador donde anota sus labores, la alerta de WhatsApp que le salva la cosecha y la tranquilidad familiar.'
+      ],
+      highlightBox: {
+        title: 'El Foso de la Era de la IA',
+        text: 'Cualquiera puede programar una interfaz; pero nadie puede replicar fácilmente la confianza de una comunidad territorial arraigada en el barro.'
+      },
+      metrics: [
+        { label: 'Comunidad', value: 'Pertenencia Real', detail: 'Red humana de colaboración' },
+        { label: 'Exterior', value: 'Botas en el Barro', detail: 'Validación en terreno físico' },
+        { label: 'Cotidiano', value: 'Hábito Diario', detail: 'Cuaderno de notas y WhatsApp' }
+      ]
+    },
+    speakerNotes: 'La IA automatiza el código, pero no reemplaza la comunidad ni el trabajo en el suelo. Convertir la audiencia en comunidad y el software en un hábito diario es nuestra mayor barrera.'
+  },
+
+  // ==========================================
+  // CAPÍTULO 5: ESCALABILIDAD, HOJA DE RUTA & ASK
+  // ==========================================
+  {
+    id: 22,
+    title: 'Escalabilidad & Proyección de Impacto 2026–2030',
+    subtitle: 'Expansión geográfica multinivel, educación lúdica y proyectos de infraestructura pública',
+    category: 'Capítulo 5 • Escalabilidad & El Ask',
+    image: 'https://images.unsplash.com/photo-1508873696983-2df5293cb32f?auto=format&fit=crop&w=1200&q=80',
+    badge: 'ESCALABILIDAD 2030',
+    content: {
+      headline: 'Una hoja de ruta de expansión estructurada desde el Valle Central de Chile hacia el mundo:',
+      points: [
+        'Expansión Geográfica: Maule ➔ Chile (O’Higgins, Ñuble, Valparaíso) ➔ Latinoamérica (Cuyo/Mendoza) ➔ Europa (Cumplimiento EUDR).',
+        'Nuevos Productos Digitales & Drones: Modelos especializados para invernaderos intensivos, mapeo aéreo multiespectral y salud de suelos.',
+        'Educación & Juegos de Simulación: Juegos de mesa educativos y simuladores digitales para transferir la cultura agroecológica a escuelas y comunidades.',
+        'Convenios con Gobiernos Regionales: Alianzas estratégicas para implementar la tecnología de cuenca en sectores rurales amplios y vulnerables.'
+      ],
+      metrics: [
+        { label: 'Expansión', value: '4 Fases Geográficas', detail: 'Maule > Chile > LatAm > Europa' },
+        { label: 'Educación', value: 'Juegos & Escuela', detail: 'Cultura agroecológica temprana' },
+        { label: 'Sector Público', value: 'Convenios GORE', detail: 'Implementación a gran escala' }
+      ]
+    },
+    speakerNotes: 'Escalamos no solo en hectáreas, sino en sociedad: llevamos la tecnología a liceos, creamos juegos de mesa educativos y cerramos convenios de gran escala con gobiernos regionales.'
+  },
+  {
+    id: 23,
+    title: 'Hoja de Ruta Operativa & El "Ask" Modular',
+    subtitle: 'Metas verificables a 24 meses y llamado a la acción adaptado a cada mesa de diálogo',
+    category: 'Capítulo 5 • Escalabilidad & El Ask',
     image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80',
     badge: 'EL ASK MODULAR',
     content: {
-      headline: 'Construyamos juntos el futuro de la resiliencia agrícola:',
+      headline: 'El próximo paso concreto adaptado a la mesa en la que estamos sentados:',
       points: [
-        'Para Inversionistas & Ángeles: Ronda semilla de €75.000 / $80M CLP (45% hardware y componentes, 35% software y modelos IA, 20% despliegue comercial).',
-        'Para Agricultores & Exportadoras: Piloto sin riesgo de 30 días con una estación KioT en el cuartel más vulnerable. Si no genera valor medible, se retira a costo cero.',
-        'Para Fondos Públicos & Aliados: Alianza para modernizar la pequeña y mediana agricultura del Maule, reduciendo el consumo hídrico de la cuenca y protegiendo el patrimonio exportador.'
-      ],
-      metrics: [
-        { label: 'Ronda Semilla', value: '€75.000', detail: '$80M CLP para aceleración' },
-        { label: 'Piloto Predial', value: '30 Días', detail: 'Cero riesgo para el agricultor' },
-        { label: 'Impacto Cuenca', value: '+30% Eficiencia', detail: 'Ahorro hídrico y energético' }
+        'Para Inversionistas & Ángeles: Ronda semilla de €75.000 / $80.000 USD (45% hardware y componentes, 35% software y modelos IA, 20% comercialización).',
+        'Para Agricultores & Exportadoras: Piloto sin riesgo de 30 días con 1 estación APIS en el cuartel más vulnerable. Si no genera valor medible, se retira a costo cero.',
+        'Para Profesionales & Aliados Estratégicos: Únete al equipo para co-construir el polo agrotecnológico y regenerativo más innovador de Sudamérica.'
       ],
       highlightBox: {
-        title: 'Da el Paso con AgroTech',
-        text: 'Tecnología biofísica nacida en Chile con estándar global. Contáctanos hoy para activar tu piloto o participar de la ronda.'
-      }
+        title: 'Sé Parte de la Transformación',
+        text: 'Alta tecnología nacida en Chile con estándar global y justicia distributiva. Conversemos hoy.'
+      },
+      metrics: [
+        { label: 'Ronda Semilla', value: '$80.000 USD', detail: '€75.000 para aceleración de stock' },
+        { label: 'Piloto Predial', value: '30 Días', detail: 'Cero riesgo para el agricultor' },
+        { label: 'Talento', value: 'Convocatoria Abierta', detail: 'Desarrolladores y agrónomos' }
+      ]
     },
-    speakerNotes: 'Ya sea como inversor, como agricultor o como aliado de cuenca, la invitación está sobre la mesa. Salgamos a la cancha juntos.'
+    speakerNotes: 'Ya sea como inversor en nuestra ronda de $80.000 USD, como agricultor probando un piloto sin riesgo de 30 días, o como profesional sumándote a nuestro equipo: la puerta está abierta.'
   }
 ];
 
