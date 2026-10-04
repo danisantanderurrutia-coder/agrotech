@@ -22,13 +22,29 @@ export const InternalPartnerPage: React.FC<InternalPartnerPageProps> = ({ onNavi
       {/* Header Banner */}
       <div className="bg-[#0B2519] py-12 border-b border-[#1E3A2B] text-white">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-4">
-          <button 
-            onClick={() => onNavigate('landing')}
-            className="inline-flex items-center gap-2 font-sans font-bold text-xs text-amber-400 hover:underline"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Volver a Inicio</span>
-          </button>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <button 
+              onClick={() => onNavigate('landing')}
+              className="inline-flex items-center gap-2 font-sans font-bold text-xs text-amber-400 hover:underline"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Volver a Inicio</span>
+            </button>
+
+            {/* HQ privado (:7770) y suites solo existen en la máquina local */}
+            {(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && (
+              <a
+                href="http://localhost:7770"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#071A11] border border-amber-500/40 text-amber-300 text-[11px] font-mono font-bold hover:bg-amber-500 hover:text-[#0B2519] transition-all"
+                title="Consola privada del fundador (servidor local :7770)"
+              >
+                <Lock className="w-3 h-3" />
+                <span>Abrir AgroTech HQ (:7770)</span>
+              </a>
+            )}
+          </div>
 
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2.5">

@@ -315,16 +315,19 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
         {/* Action Buttons & Internal Partner Access */}
         <div className="flex items-center gap-2.5">
 
-          {/* Private Founder Mission Control HQ Link (:7770 Air-Gapped) */}
-          <a
-            href="http://localhost:7770"
-            target="_blank"
-            rel="noopener noreferrer"
-            title="Consola Privada Fundador • AgroTech HQ (:7770)"
-            className="p-2 rounded-xl border bg-[#071A11] border-amber-500/50 text-amber-400 hover:bg-amber-500 hover:text-[#0B2519] transition-all shadow-sm flex items-center justify-center"
+          {/* Panel de Administrador de la web (vista interna de esta misma app) */}
+          <button
+            onClick={() => handleNavClick('internal')}
+            title="Panel de Administrador • Acceso Interno Socios"
+            aria-label="Panel de Administrador"
+            className={`p-2 rounded-xl border transition-all shadow-sm flex items-center justify-center ${
+              currentView === 'internal' || currentView === 'social'
+                ? 'bg-amber-500 border-amber-400 text-[#0B2519]'
+                : 'bg-[#071A11] border-amber-500/50 text-amber-400 hover:bg-amber-500 hover:text-[#0B2519]'
+            }`}
           >
             <Lock className="w-4 h-4" />
-          </a>
+          </button>
 
           <button
             onClick={onOpenPitchDeck}
