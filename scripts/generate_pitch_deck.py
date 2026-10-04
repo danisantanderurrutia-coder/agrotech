@@ -535,66 +535,79 @@ def create_deck():
         pb.font.color.rgb = C_MUTED
 
     # =========================================================================
-    # SLIDE 9: ESTRUCTURA DE EQUIPO Y GOBERNANZA
+    # SLIDE 9: GOBERNANZA TERRITORIAL & ESTRUCTURA DUAL
     # =========================================================================
     s9 = prs.slides.add_slide(blank_layout)
     set_slide_background(s9)
-    add_header(s9, "Estructura Organizacional: Modelo Dual SpA + Cooperativa", "08 / GOBERNANZA & EQUIPO")
+    add_header(s9, "Gobernanza Territorial: Modelo Dual SpA + Cooperativa & Slicing Pie", "08 / GOBERNANZA & ESCALABILIDAD")
 
-    # Team cards (4 founders)
-    team = [
-        ("Daniel Santander", "Fundador & Dirección General", "Arquitecto de AgriTwin, autor intelectual del código, estrategia de producto y alianzas ESG internacionales."),
-        ("Paulina Urrutia", "Dirección Técnica & Hardware", "Dirección de taller de manufactura en Talca, diseño PCB KiCad, gabinetes IP65 y validación de campo."),
-        ("Wladimir", "Dirección Financiera & Comunitaria", "Modelación financiera, convenios con APRs, gestión del Pasaporte Verde y vinculación campesina."),
-        ("Pablo", "Inteligencia Comercial & Software", "Modelación de algoritmos de optimización, CRM comercial, calculadoras de ROI y soporte técnico.")
+    # 3 Pillars of Dual Structure
+    pillars = [
+        ("🏛️ AgroTech SpA", "Vehículo de Capital e IP", [
+            "Sociedad por acciones custodia del código fuente y modelos biofísicos.",
+            "Titularidad de marcas, patentes y licencias internacionales.",
+            "Vehículo limpio para captación de capital privado y fondos de innovación."
+        ]),
+        ("🚜 Cooperativa Territorial", "Brazo Operativo de Campo", [
+            "Ensamblaje local de hardware KioT y mantención en predio.",
+            "Soporte técnico in situ en menos de 2 horas en la cuenca del Maule.",
+            "Distribución equitativa de excedentes operacionales entre técnicos locales."
+        ]),
+        ("🥧 Modelo Slicing Pie", "Justicia Distributiva y Escala", [
+            "Reparto dinámico según horas técnicas, riesgo y aportes reales de valor.",
+            "Blindaje de IP exclusivo en la SpA que previene disputas societarias.",
+            "Red de micro-agencias con técnicos agrícolas locales certificados."
+        ])
     ]
 
-    card_wt = Inches(2.75)
-    gapt = Inches(0.2)
+    card_wt = Inches(3.7)
+    gapt = Inches(0.25)
     start_xt = Inches(0.8)
 
-    for i, (name, role, bio) in enumerate(team):
+    for i, (title, subtitle, bullets) in enumerate(pillars):
         cx = start_xt + i * (card_wt + gapt)
-        add_card(s9, cx, Inches(1.6), card_wt, Inches(3.2), C_CARD_BG)
+        add_card(s9, cx, Inches(1.6), card_wt, Inches(3.4), C_CARD_BG)
         
-        tb = s9.shapes.add_textbox(cx + Inches(0.15), Inches(1.75), card_wt - Inches(0.3), Inches(2.9))
+        tb = s9.shapes.add_textbox(cx + Inches(0.15), Inches(1.75), card_wt - Inches(0.3), Inches(3.1))
         tf = tb.text_frame
         tf.word_wrap = True
 
         pn = tf.paragraphs[0]
-        pn.text = name
+        pn.text = title
         pn.font.size = Pt(14)
         pn.font.bold = True
         pn.font.color.rgb = C_WHITE
         pn.space_after = Pt(2)
 
         pr = tf.add_paragraph()
-        pr.text = role
+        pr.text = subtitle
         pr.font.size = Pt(10)
         pr.font.bold = True
         pr.font.color.rgb = C_EMERALD
-        pr.space_after = Pt(8)
+        pr.space_after = Pt(10)
 
-        pb = tf.add_paragraph()
-        pb.text = bio
-        pb.font.size = Pt(9.5)
-        pb.font.color.rgb = C_MUTED
+        for b in bullets:
+            pb = tf.add_paragraph()
+            pb.text = f"• {b}"
+            pb.font.size = Pt(9.5)
+            pb.font.color.rgb = C_MUTED
+            pb.space_after = Pt(4)
 
     # Dual Governance bottom card
-    add_card(s9, Inches(0.8), Inches(5.1), Inches(11.733), Inches(1.9), C_CARD_ALT, C_GOLD)
-    tb_gov = s9.shapes.add_textbox(Inches(1.0), Inches(5.2), Inches(11.3), Inches(1.7))
+    add_card(s9, Inches(0.8), Inches(5.2), Inches(11.733), Inches(1.8), C_CARD_ALT, C_GOLD)
+    tb_gov = s9.shapes.add_textbox(Inches(1.0), Inches(5.3), Inches(11.3), Inches(1.6))
     tf_gov = tb_gov.text_frame
     tf_gov.word_wrap = True
 
     pg1 = tf_gov.paragraphs[0]
-    pg1.text = "🏛️ MODELO DE GOBERNANZA DUAL Y RED COOPERATIVA ASOCIADA"
+    pg1.text = "🛡️ BLINDAJE ESTRATÉGICO Y ALINEACIÓN DE INCENTIVOS TERRITORIALES"
     pg1.font.size = Pt(12)
     pg1.font.bold = True
     pg1.font.color.rgb = C_GOLD
     pg1.space_after = Pt(4)
 
     pg2 = tf_gov.add_paragraph()
-    pg2.text = "• AgroTech SpA: Holding propietaria de los activos tecnológicos, licenciamiento de software y captación de capital de riesgo.\n• Cooperativa de Trabajo AgroTech: Brazo ejecutor donde participan los profesionales de terreno (Luis González en drones multiespectrales, Dra. Camila Morales en microbiología de suelos, Matías Riquelme en derecho cooperativo e Ignacia Valenzuela en vínculo campesino).\n• Propiedad Intelectual blindada: Licencia exclusiva de explotación a favor de la SpA con cláusula de reversión bioética."
+    pg2.text = "• Separación Estricta: La IP y el software escalable nunca se fragmentan, residen 100% en la SpA.\n• Cero Rotación de Terreno: Los instaladores y técnicos locales son cooperados de la entidad operativa, compartiendo beneficios de instalación y fidelizando a las familias agrícolas.\n• Escalabilidad Nacional: El modelo se replica por cuencas asociando cooperativas y micro-agencias locales homologadas bajo estándar AgroTech."
     pg2.font.size = Pt(10)
     pg2.font.color.rgb = C_WHITE
 

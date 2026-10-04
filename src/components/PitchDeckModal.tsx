@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { PROJECT_PITCH_SLIDES, MARKET_PITCH_SLIDES, ORGANIZATION_PITCH_SLIDES, COMMERCIAL_PITCH_SLIDES } from '../data/mockData';
+import { 
+  UNIFIED_PITCH_SLIDES,
+  PROJECT_PITCH_SLIDES, 
+  MARKET_PITCH_SLIDES, 
+  ORGANIZATION_PITCH_SLIDES, 
+  COMMERCIAL_PITCH_SLIDES 
+} from '../data/mockData';
 import { PitchSlide } from '../types';
 import { 
   X, ChevronLeft, ChevronRight, Maximize2, Minimize2, 
   Presentation, CheckCircle2, MessageSquare, Sparkles, Activity, Radio, 
-  Globe, ShieldCheck, ArrowRight, Layers, Sun, BarChart3, Users, TrendingUp
+  Globe, ShieldCheck, ArrowRight, Layers, Sun, BarChart3, Users, TrendingUp,
+  Bookmark, ListOrdered
 } from 'lucide-react';
 
 interface PitchDeckModalProps {
   isOpen: boolean;
   onClose: () => void;
-  initialDeckType?: 'project' | 'market' | 'organization' | 'commercial';
+  initialDeckType?: 'unified' | 'project' | 'market' | 'organization' | 'commercial';
 }
 
-export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose, initialDeckType = 'project' }) => {
-  const [deckType, setDeckType] = useState<'project' | 'market' | 'organization' | 'commercial'>(initialDeckType);
+export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose, initialDeckType = 'unified' }) => {
+  const [deckType, setDeckType] = useState<'unified' | 'project' | 'market' | 'organization' | 'commercial'>(initialDeckType);
   const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
   const [showSpeakerNotes, setShowSpeakerNotes] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
@@ -24,12 +31,36 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
       case 'market': return MARKET_PITCH_SLIDES;
       case 'organization': return ORGANIZATION_PITCH_SLIDES;
       case 'commercial': return COMMERCIAL_PITCH_SLIDES;
-      default: return PROJECT_PITCH_SLIDES;
+      case 'project': return PROJECT_PITCH_SLIDES;
+      default: return UNIFIED_PITCH_SLIDES;
     }
   };
 
   const activeDeck: PitchSlide[] = getActiveDeck();
   const currentSlide: PitchSlide = activeDeck[currentSlideIndex] || activeDeck[0];
+
+  // Capítulos del Pitch Unificado con sus índices correspondientes
+  const UNIFIED_CHAPTERS = [
+    { label: 'Portada', slideIdx: 0, range: 'Slide 1' },
+    { label: 'Índice', slideIdx: 1, range: 'Slide 2' },
+    { label: '1. Diagnóstico & Tech', slideIdx: 2, range: 'Slides 3-4' },
+    { label: '2. Mercado & Ventas', slideIdx: 4, range: 'Slides 5-7' },
+    { label: '3. Gobernanza Dual', slideIdx: 7, range: 'Slides 8-9' },
+    { label: '4. Cierre & Ask', slideIdx: 9, range: 'Slides 10-11' },
+  ];
+
+  // Helper para saber en qué capítulo está el slide actual
+  const getCurrentChapterIndex = (): number => {
+    if (deckType !== 'unified') return -1;
+    if (currentSlideIndex === 0) return 0;
+    if (currentSlideIndex === 1) return 1;
+    if (currentSlideIndex <= 3) return 2;
+    if (currentSlideIndex <= 6) return 3;
+    if (currentSlideIndex <= 8) return 4;
+    return 5;
+  };
+
+  const activeChapterIdx = getCurrentChapterIndex();
 
   // Keyboard navigation
   useEffect(() => {
@@ -64,7 +95,11 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
     }
   };
 
-  const handleSwitchDeck = (newType: 'project' | 'market' | 'organization' | 'commercial') => {
+  const handleJumpToSlide = (idx: number) => {
+    setCurrentSlideIndex(Math.min(Math.max(idx, 0), activeDeck.length - 1));
+  };
+
+  const handleSwitchDeck = (newType: 'unified' | 'project' | 'market' | 'organization' | 'commercial') => {
     setDeckType(newType);
     setCurrentSlideIndex(0);
   };
@@ -74,8 +109,8 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
       isFullscreen ? 'p-0' : 'p-2 sm:p-5'
     }`}>
       
-      {/* Top Header Bar (Luminous Light Theme with 4-Deck Switcher) */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-white/95 border-b border-emerald-200 rounded-2xl shadow-sm py-2.5 px-4">
+      {/* Top Header Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-white/95 border-b border-emerald-200 rounded-2xl shadow-sm py-2 px-4">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-300 p-1 flex items-center justify-center shrink-0 shadow-sm">
             <img src="./logo-peumo-quantum.jpg" alt="AgroTech Chile Emblem" className="w-full h-full object-contain rounded-lg" />
@@ -85,9 +120,9 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
               <h3 className="font-extrabold text-sm text-[#0B2519] tracking-wide font-sans">
                 URRUTIA AGROTECH
               </h3>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-950 border border-amber-300 font-mono font-bold flex items-center gap-1">
-                <Sun className="w-3 h-3 text-amber-600" />
-                <span>PITCH DECK</span>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-950 border border-emerald-300 font-mono font-bold flex items-center gap-1">
+                <Sun className="w-3 h-3 text-emerald-600" />
+                <span>PITCH UNIFICADO</span>
               </span>
             </div>
             <p className="text-[11px] text-emerald-800 font-mono">
@@ -96,56 +131,34 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
           </div>
         </div>
 
-        {/* Central Deck Selector Toggle (4 Decks) */}
-        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-sans font-bold">
-          <button
-            onClick={() => handleSwitchDeck('project')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
-              deckType === 'project'
-                ? 'bg-emerald-800 text-white shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <Layers className="w-3.5 h-3.5" />
-            <span>1. Proyecto (10)</span>
-          </button>
-
-          <button
-            onClick={() => handleSwitchDeck('market')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
-              deckType === 'market'
-                ? 'bg-amber-500 text-[#0B2519] shadow-sm font-extrabold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <BarChart3 className="w-3.5 h-3.5" />
-            <span>2. Mercado (11)</span>
-          </button>
-
-          <button
-            onClick={() => handleSwitchDeck('organization')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
-              deckType === 'organization'
-                ? 'bg-cyan-800 text-white shadow-sm font-extrabold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <Users className="w-3.5 h-3.5 text-cyan-300" />
-            <span>3. Organización (10)</span>
-          </button>
-
-          <button
-            onClick={() => handleSwitchDeck('commercial')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
-              deckType === 'commercial'
-                ? 'bg-emerald-600 text-white shadow-sm font-extrabold ring-2 ring-emerald-400/50'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <TrendingUp className="w-3.5 h-3.5 text-emerald-300" />
-            <span>4. Comercial & Ventas (10)</span>
-          </button>
-        </div>
+        {/* Central Chapter Selector / Jumper */}
+        {deckType === 'unified' ? (
+          <div className="flex flex-wrap items-center gap-1 p-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-sans">
+            {UNIFIED_CHAPTERS.map((chap, cIdx) => (
+              <button
+                key={chap.label}
+                onClick={() => handleJumpToSlide(chap.slideIdx)}
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all font-bold ${
+                  activeChapterIdx === cIdx
+                    ? 'bg-emerald-800 text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/70'
+                }`}
+                title={`Saltar a ${chap.label} (${chap.range})`}
+              >
+                <span>{chap.label}</span>
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handleSwitchDeck('unified')}
+              className="px-3 py-1.5 rounded-lg bg-emerald-800 text-white text-xs font-bold shadow-sm"
+            >
+              ← Volver al Pitch Unificado
+            </button>
+          </div>
+        )}
 
         {/* Top Right Controls */}
         <div className="flex items-center gap-2">
@@ -259,12 +272,36 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
 
               {/* Bullet Points */}
               <div className="space-y-2 pt-1">
-                {currentSlide.content.points.map((point, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 font-sans font-medium leading-relaxed">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <span>{point}</span>
-                  </div>
-                ))}
+                {currentSlide.content.points.map((point, idx) => {
+                  const isIndexSlide = deckType === 'unified' && currentSlideIndex === 1;
+                  const chapterSlideTargets = [2, 4, 7, 9];
+                  const targetSlide = chapterSlideTargets[idx];
+
+                  return (
+                    <div 
+                      key={idx} 
+                      onClick={() => {
+                        if (isIndexSlide && targetSlide !== undefined) {
+                          handleJumpToSlide(targetSlide);
+                        }
+                      }}
+                      className={`flex items-start gap-2.5 text-xs sm:text-sm font-sans font-medium leading-relaxed transition-all ${
+                        isIndexSlide 
+                          ? 'p-2.5 rounded-xl bg-emerald-50/80 border border-emerald-300/80 hover:bg-emerald-100/90 hover:border-emerald-500 cursor-pointer text-emerald-950 shadow-xs' 
+                          : 'text-slate-700'
+                      }`}
+                    >
+                      <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${isIndexSlide ? 'text-emerald-700' : 'text-emerald-600'}`} />
+                      <span className="flex-1">{point}</span>
+                      {isIndexSlide && (
+                        <span className="text-[10px] font-mono font-bold text-emerald-800 bg-white px-2.5 py-0.5 rounded-md border border-emerald-300 shrink-0 flex items-center gap-1">
+                          <span>Ir al Capítulo</span>
+                          <ArrowRight className="w-3 h-3 text-emerald-600" />
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
 
               {/* Key Metrics Grid if present */}
