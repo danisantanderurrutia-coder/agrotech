@@ -521,7 +521,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   Sensores FDR y Penman-Monteith en 3 estratos de suelo en el <strong>Fundo Meniels</strong>.
                 </p>
                 <span className="inline-block text-[10px] font-mono px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-700">
-                  Puerto 7773
+                  WebGL 3D • Micro-Escala
                 </span>
               </div>
 
@@ -535,7 +535,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   Agrega 122.000 ha de cuenca Maule. Modela índices <strong>FWI de incendios</strong> y <strong>TWI de crecidas</strong>.
                 </p>
                 <span className="inline-block text-[10px] font-mono px-2.5 py-1 rounded bg-amber-900 text-amber-200 border border-amber-600 font-bold">
-                  Puerto 7774
+                  GIS Cuenca • 122.000 ha
                 </span>
               </div>
 
@@ -549,7 +549,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   Cruza telemetría con <strong>Sentinel-2</strong>, emite el <strong>Pasaporte Verde QR</strong> y gestiona la SpA.
                 </p>
                 <span className="inline-block text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700">
-                  Puerto 7771
+                  Plataforma Central • HoldCo
                 </span>
               </div>
 
@@ -571,19 +571,19 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   onClick={() => openAppTab('http://localhost:7773')}
                   className="px-3 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-bold hover:bg-amber-400"
                 >
-                  Abrir 7773
+                  Abrir AgriTwin 3D
                 </button>
                 <button
                   onClick={() => openAppTab('http://localhost:7774')}
                   className="px-3 py-1.5 rounded-lg bg-amber-600 text-white font-bold hover:bg-amber-500"
                 >
-                  Abrir 7774
+                  Abrir Regional
                 </button>
                 <button
                   onClick={() => openAppTab('http://localhost:7772')}
                   className="px-3 py-1.5 rounded-lg bg-emerald-700 text-white font-bold hover:bg-emerald-600"
                 >
-                  Abrir 7772
+                  Abrir Rewild
                 </button>
               </div>
             </div>
@@ -607,7 +607,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   <div className="flex items-center gap-2">
                     <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">AgriTwin 3D</h2>
                     <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-bold">
-                      Puerto 7773 • Escala Predial
+                      Suite Predial • Three.js WebGL
                     </span>
                   </div>
                   <p className="text-xs text-slate-500 font-serif">
@@ -622,7 +622,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-[#0B2519] font-sans text-xs font-extrabold shadow-lg transition-all active:scale-95 ring-2 ring-amber-300/50"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  <span>Abrir AgriTwin 3D en Puerto 7773 (Pestaña Dedicada)</span>
+                  <span>Abrir AgriTwin 3D en Vivo (Pestaña Dedicada)</span>
                 </button>
               </div>
             </div>
@@ -711,7 +711,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   <div className="flex items-center gap-2">
                     <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">AgriTwin Cuenca (Regional / Cerro)</h2>
                     <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-950 font-bold border border-amber-300">
-                      Hub Puerto 7777 • Escala Macro (122.000 ha)
+                      Cartografía Regional • Escala Macro (122.000 ha)
                     </span>
                   </div>
                   <p className="text-xs text-slate-500 font-serif">
@@ -726,7 +726,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-slate-950 font-sans text-xs font-extrabold shadow-lg transition-all active:scale-95 ring-2 ring-amber-300/50"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  <span>Abrir AgriTwin Cuenca en Hub :7777 (#cerro)</span>
+                  <span>Abrir AgriTwin Cuenca Regional</span>
                 </button>
               </div>
             </div>
@@ -812,7 +812,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                 <div className="p-4 rounded-2xl bg-[#080503] border border-amber-600/30 space-y-2">
                   <h4 className="font-bold text-amber-300 font-sans flex items-center gap-2">
                     <span>🌱</span>
-                    <span>Del Predio Meniels (:7773) a la Cuenca (:7774)</span>
+                    <span>Del Predio Meniels (3D) a la Cuenca Regional</span>
                   </h4>
                   <p className="leading-relaxed">
                     Las obras de permacultura diseñadas en AgriTwin 1 (tranque Keyline de 18.500 m³ y cortinas de árboles nativos) se incorporan en tiempo real a la cartografía regional. Esto reduce el coeficiente de escorrentía comunal y atenúa el pico de inundación en Retiro un <strong>3.2%</strong>.
@@ -822,7 +822,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                 <div className="p-4 rounded-2xl bg-[#080503] border border-amber-600/30 space-y-2">
                   <h4 className="font-bold text-cyan-300 font-sans flex items-center gap-2">
                     <span>📡</span>
-                    <span>De la Cuenca (:7774) al Predio Meniels (:7773)</span>
+                    <span>De la Cuenca Regional al Predio Meniels (3D)</span>
                   </h4>
                   <p className="leading-relaxed">
                     Las alertas macroscópicas de viento Puelche (65 km/h) y sequedad regional se transmiten hacia el motor 3D de AgriTwin 1, activando automáticamente el protocolo de riego nocturno y el encendido preventivo de microaspersores anti-heladas en los cuarteles críticos.
@@ -839,13 +839,13 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                     onClick={() => openAppTab('http://localhost:7774')}
                     className="px-4 py-2 rounded-xl bg-amber-600 text-slate-950 font-bold hover:bg-amber-500 transition-all shadow"
                   >
-                    Ver en Cuenca (:7774)
+                    Ver en Cuenca Regional
                   </button>
                   <button
                     onClick={() => openAppTab('http://localhost:7773')}
                     className="px-4 py-2 rounded-xl bg-emerald-700 text-white font-bold hover:bg-emerald-600 transition-all shadow"
                   >
-                    Ver en 3D (:7773)
+                    Ver en AgriTwin 3D
                   </button>
                 </div>
               </div>
@@ -869,7 +869,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   <div className="flex items-center gap-2">
                     <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Rewild Suite</h2>
                     <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 font-bold">
-                      Puerto 7772 • Suite de Campo
+                      Suite de Campo PWA • Offline
                     </span>
                   </div>
                   <p className="text-xs text-slate-500 font-serif">
@@ -925,7 +925,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   <span>Servidor Local Python</span>
                 </h4>
                 <p className="text-xs text-slate-600 font-serif">
-                  Corre con <strong>server.py</strong> en el puerto 7772 o mediante el icono <strong>Rewild.app</strong> en tu Escritorio.
+                  Corre con <strong>server.py</strong> de forma autónoma o mediante el icono <strong>Rewild.app</strong> en tu Escritorio.
                 </p>
               </div>
             </div>

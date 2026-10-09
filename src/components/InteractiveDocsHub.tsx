@@ -158,27 +158,27 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
               <span>CENTRO DE DOCUMENTACIÓN & DATOS INTERACTIVO • URRUTIA AGROTECH</span>
             </div>
 
-            {/* Ports Status Strip */}
+            {/* Services Status Strip */}
             <div className="flex items-center gap-2 bg-[#071810]/90 px-3.5 py-1.5 rounded-xl border border-emerald-500/30 text-[11px] font-mono">
               <span className="flex items-center gap-1.5 text-slate-300">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>7771 (Madre)</span>
+                <span>Plataforma Madre</span>
               </span>
               <span className="text-slate-600">|</span>
               <span className="flex items-center gap-1.5 text-amber-300">
                 <span className={`w-2 h-2 rounded-full ${serversStatus.agritwin ? 'bg-amber-400' : 'bg-slate-500'}`} />
-                <span>7773 (AgriTwin)</span>
+                <span>AgriTwin 3D</span>
               </span>
               <span className="text-slate-600">|</span>
               <span className="flex items-center gap-1.5 text-emerald-300">
                 <span className={`w-2 h-2 rounded-full ${serversStatus.rewild ? 'bg-emerald-400' : 'bg-slate-500'}`} />
-                <span>7772 (Rewild)</span>
+                <span>Rewild Suite</span>
               </span>
               <button 
                 onClick={triggerPing}
                 disabled={isPinging}
                 className="ml-2 text-slate-400 hover:text-white p-1 rounded transition-colors"
-                title="Verificar puertos locales"
+                title="Verificar conexión de servicios locales"
               >
                 <RefreshCw className={`w-3 h-3 ${isPinging ? 'animate-spin' : ''}`} />
               </button>
@@ -375,8 +375,8 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                       {product.architectureRole}
                     </span>
                     {product.port && (
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-50 text-amber-900 border border-amber-300 font-bold">
-                        Puerto {product.port}
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-900 border border-emerald-300 font-bold">
+                        En Línea • Demo 3D
                       </span>
                     )}
                   </div>
@@ -423,7 +423,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                       className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-sans text-xs font-bold transition-all shadow-sm"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
-                      <span>Abrir Puerto {product.port}</span>
+                      <span>Abrir Demo en Vivo</span>
                     </button>
                   )}
                   <button
@@ -1238,7 +1238,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                   <span className="w-3 h-3 rounded-full bg-amber-500" />
                   <span className="w-3 h-3 rounded-full bg-emerald-500" />
                   <span className="text-white font-bold ml-2">
-                    {activeLiveSite === 'agritwin' ? 'AgriTwin 3D WebGL Canvas (Puerto 7773)' : 'Rewild Field Suite (Puerto 7772)'}
+                    {activeLiveSite === 'agritwin' ? 'AgriTwin 3D WebGL Canvas (Predio Meniels)' : 'Rewild Field Suite (PWA Campo)'}
                   </span>
                 </div>
 
@@ -1365,19 +1365,19 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                <span className="font-bold text-slate-900 block">1. Terminal 1 (AgroTech 7771)</span>
+                <span className="font-bold text-slate-900 block">1. Terminal 1 (Plataforma Madre)</span>
                 <code className="p-2 rounded bg-slate-200 text-slate-800 block text-[11px]">
                   npm run dev
                 </code>
               </div>
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                <span className="font-bold text-slate-900 block">2. Terminal 2 (AgriTwin 7773)</span>
+                <span className="font-bold text-slate-900 block">2. Terminal 2 (AgriTwin 3D)</span>
                 <code className="p-2 rounded bg-slate-200 text-slate-800 block text-[11px]">
                   node agritwin/server.cjs
                 </code>
               </div>
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                <span className="font-bold text-slate-900 block">3. Terminal 3 (Rewild 7772)</span>
+                <span className="font-bold text-slate-900 block">3. Terminal 3 (Rewild Suite)</span>
                 <code className="p-2 rounded bg-slate-200 text-slate-800 block text-[11px]">
                   python3 rewild/server.py
                 </code>

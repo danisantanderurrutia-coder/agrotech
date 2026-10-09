@@ -27,17 +27,17 @@ export const CHANGELOG_DATA: ChangelogMilestone[] = [
     category: 'arquitectura',
     badgeColor: 'purple',
     isCurrent: true,
-    summary: 'Consolidación del Holding AgroTech en 5 capas interoperables, integración nativa del Vault de Obsidian en AgroTech HQ (:7770), despliegue de la Red Centinela Ground-Truth Mesh con estaciones DMC/DGA/INIA, modelamiento micro-atmosférico y Ganadería PRV.',
+    summary: 'Consolidación del Holding AgroTech en 5 capas interoperables, integración nativa del Vault de Obsidian en AgroTech HQ, despliegue de la Red Centinela Ground-Truth Mesh con estaciones DMC/DGA/INIA, modelamiento micro-atmosférico y Ganadería PRV.',
     deliverables: [
-      'AgroTech HQ (:7770): Cabina de mando privada para fundadores con integración REST directa al Vault de Obsidian (/Documents/Agrotech/Agro Tech).',
+      'AgroTech HQ: Cabina de mando privada para fundadores con integración REST directa al Vault de Obsidian (/Documents/Agrotech/Agro Tech).',
       'Renderizado en tiempo real de notas Markdown y enlaces profundos obsidian://open para edición inmediata.',
-      'Red Centinela Local en AgroTwin Regional (:7774): Enlace de 5 nodos KioT con 4 estaciones oficiales (INIA Retiro, DGA Longaví, DMC Parral, DGA Bullileo).',
+      'Red Centinela Local en AgroTwin Regional: Enlace de 5 nodos KioT con 4 estaciones oficiales (INIA Retiro, DGA Longaví, DMC Parral, DGA Bullileo).',
       'Modelamiento Micro-Atmosférico: Regla 30-30-30 en Viento Puelche (Foehn), drenaje catabático de heladas a 05:30 AM y balance ETo Penman-Monteith.',
-      'Ganadería Regenerativa & PRV en AgriTwin 1 (:7773): Matriz de 6 especies (bovinos, ovinos, gallinas, equinos, cerdos, piscicultura) con 1.8 UGM/ha y +4.2 kg MO/m².',
+      'Ganadería Regenerativa & PRV en AgriTwin 1: Matriz de 6 especies (bovinos, ovinos, gallinas, equinos, cerdos, piscicultura) con 1.8 UGM/ha y +4.2 kg MO/m².',
       'Generador de Informes Técnicos y Mapas de Riesgo Dinámicos con descarga .txt y exportación formal para auditorías CNR/CORFO.',
       'Módulo de 4 Fases de Transición Permacultural de Julio Pérez y Paulina Urrutia en Fundo Meniel (24.8 ha).'
     ],
-    systemImpact: 'Gobernanza y documentación estratégica 100% blindadas en HQ (:7770), sincronizadas con la malla IoT física y la cartografía territorial de la Cuenca Maule Sur (:7774).'
+    systemImpact: 'Gobernanza y documentación estratégica 100% blindadas en HQ, sincronizadas con la malla IoT física y la cartografía territorial de la Cuenca Maule Sur.'
   },
   {
     id: 'milestone-8',
@@ -65,9 +65,9 @@ export const CHANGELOG_DATA: ChangelogMilestone[] = [
     timestamp: 'Viernes 25 Sep 2026, 19:15 hrs',
     category: 'regional',
     badgeColor: 'amber',
-    summary: 'Nacimiento de la aplicación independiente AgroTwin Regional (:7774) y reconstrucción del menú del gemelo digital como un taller diegético estilo Age of Empires II.',
+    summary: 'Nacimiento de la aplicación independiente AgroTwin Regional y reconstrucción del menú del gemelo digital como un taller diegético estilo Age of Empires II.',
     deliverables: [
-      'Nueva aplicación independiente agritwin-regional/ corriendo en servidor Node.js (puerto 7774).',
+      'Nueva aplicación independiente agritwin-regional/ para cartografía macro de cuenca.',
       'Simulador de Riesgo de Incendios FWI (Fine Fuel Moisture Code, vientos Puelche, factor combustible pino vs nativo).',
       'Simulador de Riesgo de Inundaciones TWI (Topographic Wetness Index, caudal ríos Longaví/Perquilauquén, períodos de retorno a 10, 50 y 100 años).',
       'Taller Agrícola con 6 estaciones diegéticas interactivas recortadas en PNG (Tablero IoT, Libreta Biofísica, Mesa de Planos, Libro ESG, Radio Comunal, Caja de Herramientas).',
@@ -146,11 +146,11 @@ export const CHANGELOG_DATA: ChangelogMilestone[] = [
     timestamp: 'Viernes 25 Sep 2026, 10:15 hrs',
     category: 'arquitectura',
     badgeColor: 'cyan',
-    summary: 'Separación de la plataforma en 3 motores autónomos (Madre Comercial 7771, PWA Rewild 7772, AgriTwin Three.js 7773) para garantizar fluidez a 60 FPS sin colapsar memoria.',
+    summary: 'Separación de la plataforma en 3 motores autónomos (Madre Comercial, PWA Rewild, AgriTwin Three.js) para garantizar fluidez a 60 FPS sin colapsar memoria.',
     deliverables: [
-      'Servidor Vite principal en puerto 7771 optimizado para ventas y catálogo B2B.',
-      'Servidor Rewild en puerto 7772 para relevamiento de biodiversidad en campo con SQLite/LocalStorage.',
-      'Servidor AgriTwin en puerto 7773 con Three.js r128, shaders PBR y relieve DEM dinámico.',
+      'Servidor Vite principal optimizado para ventas y catálogo B2B.',
+      'Servidor Rewild para relevamiento de biodiversidad en campo con SQLite/LocalStorage.',
+      'Servidor AgriTwin con Three.js r128, shaders PBR y relieve DEM dinámico.',
       'Protocolo de comunicación postMessage y lanzadores desacoplados.'
     ],
     systemImpact: 'Carga instantánea de la tienda y portafolio en cualquier dispositivo móvil sin esperar la inicialización de motores 3D pesados.'
@@ -275,7 +275,7 @@ export const ChangelogHistorySection: React.FC = () => {
           {[
             { id: 'all', label: 'Todos' },
             { id: 'arquitectura', label: 'Arquitectura' },
-            { id: 'regional', label: 'Regional 7774' },
+            { id: 'regional', label: 'AgroTwin Regional' },
             { id: 'agritwin', label: 'AgriTwin 3D' },
             { id: 'gobernanza', label: 'Gobernanza SpA' },
             { id: 'esg', label: 'MRV / ESG' },

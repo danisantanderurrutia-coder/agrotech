@@ -909,7 +909,7 @@ export const PermacultureSection: React.FC<PermacultureSectionProps> = ({ onNavi
                   className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-slate-950 font-sans text-xs font-extrabold shadow-md transition-all"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  <span>Abrir Hub Master (:7777)</span>
+                  <span>Abrir Hub Unificado</span>
                 </a>
                 <a
                   href="http://localhost:7773"
@@ -918,30 +918,30 @@ export const PermacultureSection: React.FC<PermacultureSectionProps> = ({ onNavi
                   className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white font-sans text-xs font-bold shadow-md transition-all"
                 >
                   <Cpu className="w-4 h-4 text-emerald-300" />
-                  <span>Predio 3D (:7773)</span>
+                  <span>AgriTwin 3D en Vivo</span>
                 </a>
               </div>
             </div>
 
             <p className="text-xs sm:text-sm font-serif text-slate-600 leading-relaxed max-w-3xl">
               Esta sección mapea cómo la permacultura no se queda en teoría: se encuentra 100% implementada en la infraestructura 
-              técnica y biológica actual de AgroTech, integrando el orquestador de 6 puertos, las 6 salas del Hub Master, 
+              técnica y biológica actual de AgroTech, integrando la arquitectura de servicios interconectados, las 6 salas del Hub Master, 
               los 8 potreros de Pastoreo Racional Voisin (PRV), el censo animal SAG y las obras hidráulicas y agrovoltaicas.
             </p>
           </div>
 
-          {/* 1. Orquestador de Servicios (6 Puertos) */}
+          {/* 1. Orquestador de Servicios */}
           <div className="space-y-4">
             <h4 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
               <Zap className="w-4 h-4 text-amber-500" />
-              <span>1. Arquitectura del Orquestador de Servicios (6 Puertos en Red)</span>
+              <span>1. Arquitectura del Orquestador de Servicios (Módulos Conectados)</span>
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {AGROTECH_CURRENT_INFRASTRUCTURE.orchestratorPorts.map((srv) => (
                 <div key={srv.port} className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono font-extrabold px-2 py-0.5 rounded bg-[#0B2519] text-amber-400">
-                      Puerto {srv.port}
+                      Módulo • {srv.name}
                     </span>
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                   </div>
@@ -952,11 +952,11 @@ export const PermacultureSection: React.FC<PermacultureSectionProps> = ({ onNavi
             </div>
           </div>
 
-          {/* 2. Las 6 Salas Operativas del Hub Master (:7777) */}
+          {/* 2. Las 6 Salas Operativas del Hub Unificado */}
           <div className="space-y-4">
             <h4 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
               <Layers className="w-4 h-4 text-blue-600" />
-              <span>2. Las 6 Salas de Operación en el Hub Master (:7777)</span>
+              <span>2. Las 6 Salas de Operación en el Hub Unificado</span>
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {AGROTECH_CURRENT_INFRASTRUCTURE.hubModules.map((mod) => (
@@ -967,7 +967,7 @@ export const PermacultureSection: React.FC<PermacultureSectionProps> = ({ onNavi
                         {mod.permacultureZone}
                       </span>
                       <span className="text-[10px] font-mono text-slate-400 font-bold">
-                        Puerto {mod.port} • {mod.hash}
+                        {mod.name}
                       </span>
                     </div>
                     <h5 className="font-extrabold text-base text-slate-900">{mod.name}</h5>

@@ -1627,7 +1627,7 @@ export const UNIFIED_PITCH_SLIDES: PitchSlide[] = [
       ],
       metrics: [
         { label: 'Escritorio', value: 'Análisis Completo', detail: 'Simulación 3D y reportes CNR' },
-        { label: 'Web Online', value: 'Acceso Ágil', detail: 'Visor predial en cualquier browser' },
+        { label: 'Web Online', value: 'Acceso Ágil', detail: 'Gemelo digital 3D en cualquier browser' },
         { label: 'Celular', value: 'WhatsApp Directo', detail: 'Alertas críticas en la madrugada' }
       ]
     },

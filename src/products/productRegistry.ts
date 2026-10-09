@@ -477,11 +477,11 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
     graphicAssets: [
       {
         id: 'ga-satellites-visor',
-        name: 'Visor Satelital Predial AgroTech',
+        name: 'Cartografía & Informes de Riesgo Satelital AgroTech',
         type: 'map-layer',
         url: '#gis-demo',
         previewUrl: './rewildmapper-gis.png',
-        description: 'Capa interactiva con cambio de paleta NDVI / Térmico / Carbono.'
+        description: 'Capa interactiva de diagnóstico con paleta NDVI / Térmico / Heladas / Agua.'
       },
       {
         id: 'ga-terra-logo',
