@@ -226,7 +226,7 @@ export const ChangelogHistorySection: React.FC = () => {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
             <div className="p-3.5 rounded-xl bg-emerald-950/70 border border-emerald-500/30 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono text-emerald-400 block font-bold">PUERTO 7771</span>
+                <span className="text-[10px] font-mono text-emerald-400 block font-bold">PLATAFORMA MADRE</span>
                 <span className="text-xs font-bold text-white">AgroTech Web</span>
               </div>
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -234,7 +234,7 @@ export const ChangelogHistorySection: React.FC = () => {
 
             <div className="p-3.5 rounded-xl bg-emerald-950/70 border border-emerald-500/30 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono text-amber-400 block font-bold">PUERTO 7773</span>
+                <span className="text-[10px] font-mono text-amber-400 block font-bold">GEMELO PREDIAL</span>
                 <span className="text-xs font-bold text-white">AgriTwin 3D</span>
               </div>
               <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
@@ -242,15 +242,15 @@ export const ChangelogHistorySection: React.FC = () => {
 
             <div className="p-3.5 rounded-xl bg-emerald-950/70 border border-emerald-500/30 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono text-cyan-400 block font-bold">PUERTO 7774</span>
-                <span className="text-xs font-bold text-white">AgroTwin Regional</span>
+                <span className="text-[10px] font-mono text-cyan-400 block font-bold">CUENCA REGIONAL</span>
+                <span className="text-xs font-bold text-white">AgroTwin 122k ha</span>
               </div>
               <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
             </div>
 
             <div className="p-3.5 rounded-xl bg-emerald-950/70 border border-emerald-500/30 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono text-emerald-400 block font-bold">PUERTO 7772</span>
+                <span className="text-[10px] font-mono text-emerald-400 block font-bold">SUITE CAMPO PWA</span>
                 <span className="text-xs font-bold text-white">Rewild Suite</span>
               </div>
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />

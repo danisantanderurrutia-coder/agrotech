@@ -1117,7 +1117,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">
-                    PUERTO 7773 • 3D WEBGL
+                    SUITE PREDIAL • 3D WEBGL
                   </span>
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
                 </div>
@@ -1139,7 +1139,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                   className="w-full py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-sans text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1.5"
                 >
                   <Eye className="w-4 h-4" />
-                  <span>{activeLiveSite === 'agritwin' ? 'Ocultar Visor' : 'Cargar Visor Embebido'}</span>
+                  <span>{activeLiveSite === 'agritwin' ? 'Ocultar Demo' : 'Cargar Demo Embebida'}</span>
                 </button>
                 <button
                   onClick={() => window.open('http://localhost:7773', '_blank')}
@@ -1156,7 +1156,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900 font-bold">
-                    PUERTO 7772 • PWA OFFLINE
+                    SUITE DE CAMPO • PWA OFFLINE
                   </span>
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                 </div>
@@ -1178,7 +1178,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                   className="w-full py-2.5 px-3 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white font-sans text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1.5"
                 >
                   <Eye className="w-4 h-4 text-emerald-300" />
-                  <span>{activeLiveSite === 'rewild' ? 'Ocultar Visor' : 'Cargar Visor Embebido'}</span>
+                  <span>{activeLiveSite === 'rewild' ? 'Ocultar Demo' : 'Cargar Demo Embebida'}</span>
                 </button>
                 <button
                   onClick={() => {
@@ -1198,7 +1198,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900 font-bold">
-                    PUERTO 7771 • MADRE
+                    PLATAFORMA CENTRAL • HOLDCO
                   </span>
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                 </div>

@@ -361,44 +361,59 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             <span>Inicio</span>
           </button>
 
+          {/* 1. AgriTwin 3D Flagship */}
+          <button onClick={() => handleNavClick('agritwin')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-amber-300 font-bold bg-emerald-950/60 border border-emerald-500/40">
+            <Cpu className="w-4 h-4 text-amber-400" />
+            <span>AgriTwin 3D (Tronco & 6 Ramas)</span>
+          </button>
+
+          {/* 2. Kits KioT Hardware */}
           <button onClick={() => handleNavClick('hardware')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
-            <Cpu className="w-4 h-4 text-emerald-400" />
-            <span>Sensores y Kits</span>
+            <Activity className="w-4 h-4 text-emerald-400" />
+            <span>Kits A.P.I.S. / KioT Hardware</span>
           </button>
 
+          {/* 3. Informes de Riesgo Predial */}
           <button onClick={() => handleNavClick('satellites')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
-            <Map className="w-4 h-4 text-amber-400" />
-            <span>Inteligencia Satelital & ESG</span>
+            <FileText className="w-4 h-4 text-blue-400" />
+            <span>Informes de Riesgo Predial (24h)</span>
           </button>
 
-          <button onClick={() => handleNavClick('apps')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-amber-300 font-bold bg-amber-950/40 border border-amber-500/30">
-            <Layers className="w-4 h-4 text-amber-400" />
-            <span>Ecosistema de 3 Suites</span>
+          {/* 4. Pasaporte Verde UE */}
+          <button onClick={() => handleNavClick('satellites-pasaporte')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
+            <QrCode className="w-4 h-4 text-amber-400" />
+            <span>Pasaporte Verde UE (EUDR)</span>
+          </button>
+
+          {/* 5. Rewild Suite */}
+          <button onClick={() => handleNavClick('rewild-hub')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
+            <Trees className="w-4 h-4 text-emerald-400" />
+            <span>Rewild Suite (Biodiversidad ESG)</span>
           </button>
 
           <button onClick={() => handleNavClick('store')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
             <ShoppingBag className="w-4 h-4 text-amber-400" />
-            <span>Tienda (Merch, Libros & Manuales)</span>
+            <span>Tienda</span>
           </button>
 
           <button onClick={() => handleNavClick('community')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
             <Users className="w-4 h-4 text-emerald-400" />
-            <span>Comunidad (Red & Bitácora de Terreno)</span>
+            <span>Comunidad</span>
           </button>
 
           <button onClick={() => handleNavClick('join')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-amber-300 font-extrabold bg-gradient-to-r from-amber-950/80 to-emerald-950/80 border border-amber-400/50 shadow-sm">
             <Heart className="w-4 h-4 text-rose-400 animate-pulse" />
-            <span>✨ Sé Parte (Membresías & Apoyo)</span>
+            <span>✨ Sé Parte</span>
           </button>
 
           <button onClick={() => handleNavClick('courses')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
             <GraduationCap className="w-4 h-4 text-amber-400" />
-            <span>Cursos & Webinars</span>
+            <span>Cursos</span>
           </button>
 
           <button onClick={() => handleNavClick('blog')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
             <Newspaper className="w-4 h-4 text-emerald-400" />
-            <span>Blog Agroclimático</span>
+            <span>Blog</span>
           </button>
 
           <button onClick={() => handleNavClick('somos')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
@@ -408,7 +423,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
 
           <button onClick={() => handleNavClick('internal')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-amber-400 font-bold bg-amber-950/40 border border-amber-500/30">
             <Lock className="w-4 h-4 text-amber-400" />
-            <span>Panel Interno Socios</span>
+            <span>Panel de Administrador</span>
           </button>
         </div>
       )}

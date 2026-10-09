@@ -112,8 +112,10 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
           </h1>
 
           <p className="text-slate-200 text-sm sm:text-base font-serif leading-relaxed">
-            Para garantizar que la navegación comercial sea instantánea y ligera, separamos la plataforma en tres entornos técnicos desacoplados. 
-            La <strong>Plataforma Central AgroTech</strong> coordina la inteligencia satelital, la tienda y la gobernanza SpA/Cooperativa, mientras que cada <strong>Suite Especializada</strong> (Gemelo 3D Predial, Cartografía Territorial Regional y Auditoría PWA de Campo) corre en puertos dedicados sin ralentizar tu navegador.
+            Para garantizar máxima fluidez y escalabilidad, la arquitectura se divide en tres suites autónomas: 
+            la <strong>Plataforma Central AgroTech</strong> (inteligencia comercial, satelital y gobernanza SpA/Cooperativa), 
+            <strong>AgriTwin 3D Predial</strong> (simulación biofísica brote a brote y microclima) y 
+            <strong>AgroTwin Regional</strong> (cuenca macro de 122.000 ha y gestión hidrológica).
           </p>
 
           {/* Quick status bar */}
@@ -121,33 +123,33 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
             {/* AgroTech */}
             <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[#071810] border border-emerald-500/30">
               <span className={`w-2.5 h-2.5 rounded-full ${agrotechOnline ? 'bg-emerald-400 animate-pulse' : 'bg-slate-400'}`} />
-              <span className="text-slate-300 font-bold">AgroTech Core (7771)</span>
+              <span className="text-slate-300 font-bold">AgroTech Core</span>
             </div>
 
             {/* AgriTwin Predial */}
             <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[#071810] border border-emerald-500/30">
               <span className={`w-2.5 h-2.5 rounded-full ${agritwinOnline ? 'bg-amber-400 animate-pulse' : 'bg-slate-500'}`} />
-              <span className="text-slate-300">AgriTwin Predial (7773)</span>
+              <span className="text-slate-300">AgriTwin Predial 3D</span>
               <span className={`text-[10px] px-1.5 py-0.2 rounded font-sans ${agritwinOnline ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-slate-800 text-slate-400'}`}>
-                {agritwinOnline ? 'Online' : 'Listo'}
+                {agritwinOnline ? 'Online' : 'Disponible'}
               </span>
             </div>
 
             {/* AgroTwin Regional */}
             <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[#071810] border border-amber-500/40">
               <span className={`w-2.5 h-2.5 rounded-full ${agritwinRegionalOnline ? 'bg-amber-400 animate-pulse' : 'bg-slate-500'}`} />
-              <span className="text-amber-200 font-bold">Regional Maule (7774)</span>
+              <span className="text-amber-200 font-bold">Regional Maule</span>
               <span className={`text-[10px] px-1.5 py-0.2 rounded font-sans ${agritwinRegionalOnline ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-slate-800 text-slate-400'}`}>
-                {agritwinRegionalOnline ? 'Online' : 'Listo'}
+                {agritwinRegionalOnline ? 'Online' : 'Disponible'}
               </span>
             </div>
 
             {/* Rewild Suite */}
             <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[#071810] border border-emerald-500/30">
               <span className={`w-2.5 h-2.5 rounded-full ${rewildOnline ? 'bg-emerald-400 animate-pulse' : 'bg-slate-500'}`} />
-              <span className="text-slate-300">Rewild Suite (7772)</span>
+              <span className="text-slate-300">Rewild Suite</span>
               <span className={`text-[10px] px-1.5 py-0.2 rounded font-sans ${rewildOnline ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-slate-800 text-slate-400'}`}>
-                {rewildOnline ? 'Online' : 'Listo'}
+                {rewildOnline ? 'Online' : 'Disponible'}
               </span>
             </div>
 
@@ -158,7 +160,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
               title="Actualizar estado de conexión"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${checkingStatus ? 'animate-spin' : ''}`} />
-              <span>Verificar Puertos</span>
+              <span>Verificar Conexión</span>
             </button>
           </div>
         </div>
@@ -188,7 +190,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
             }`}
           >
             <Cpu className="w-4 h-4 text-amber-400" />
-            <span>2. AgriTwin 3D Predial (:7773)</span>
+            <span>2. AgriTwin 3D Predial</span>
           </button>
 
           <button
@@ -200,7 +202,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
             }`}
           >
             <Mountain className="w-4 h-4 text-amber-400" />
-            <span>3. AgriTwin Cuenca / Regional (:7774)</span>
+            <span>3. AgroTwin Cuenca Regional</span>
           </button>
 
           <button
@@ -212,7 +214,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
             }`}
           >
             <Trees className="w-4 h-4 text-emerald-400" />
-            <span>4. Rewild Suite de Campo (:7772)</span>
+            <span>4. Rewild Suite de Campo</span>
           </button>
 
           <button
@@ -247,7 +249,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
               <div className="space-y-4 relative z-10">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 font-bold border border-emerald-300">
-                    NÚCLEO CENTRAL • PUERTO 7771
+                    NÚCLEO CENTRAL • HOLDCO
                   </span>
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
                 </div>
@@ -305,7 +307,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
               <div className="space-y-4 relative z-10">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-amber-100 text-amber-950 font-bold border border-amber-300">
-                    SUITE PREDIAL 3D • PUERTO 7773
+                    SUITE PREDIAL 3D • 6 RAMAS
                   </span>
                   <span className={`w-2.5 h-2.5 rounded-full ${agritwinOnline ? 'bg-emerald-500' : 'bg-amber-400'} animate-pulse`} />
                 </div>
@@ -351,7 +353,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-[#0B2519] font-sans text-xs font-extrabold transition-all shadow-md active:scale-98"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  <span>Abrir AgriTwin 3D (:7773)</span>
+                  <span>Abrir AgriTwin 3D</span>
                 </button>
                 <button
                   onClick={() => setSelectedTab('agritwin')}
@@ -369,7 +371,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
               <div className="space-y-4 relative z-10">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-amber-100 text-amber-950 font-bold border border-amber-300">
-                    SUITE REGIONAL • PUERTO 7774
+                    SUITE REGIONAL • 122K HA
                   </span>
                   <span className={`w-2.5 h-2.5 rounded-full ${agritwinRegionalOnline ? 'bg-emerald-500' : 'bg-amber-500'} animate-pulse`} />
                 </div>
@@ -404,7 +406,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   </div>
                   <div className="flex items-center gap-2">
                     <Check className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                    <span>Acople Directo con Fundo Meniels (7773)</span>
+                    <span>Acople Directo con Fundo Meniels</span>
                   </div>
                 </div>
               </div>
@@ -415,7 +417,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-500 text-slate-950 font-sans text-xs font-extrabold transition-all shadow-md active:scale-98"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  <span>Abrir Cuenca / Regional (:7777)</span>
+                  <span>Abrir Cuenca Regional</span>
                 </button>
                 <button
                   onClick={() => setSelectedTab('regional')}
@@ -433,7 +435,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
               <div className="space-y-4 relative z-10">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 font-bold border border-emerald-300">
-                    SUITE CAMPO PWA • PUERTO 7772
+                    BIOMONITOREO • PWA OFFLINE
                   </span>
                   <span className={`w-2.5 h-2.5 rounded-full ${rewildOnline ? 'bg-emerald-500' : 'bg-amber-400'} animate-pulse`} />
                 </div>
