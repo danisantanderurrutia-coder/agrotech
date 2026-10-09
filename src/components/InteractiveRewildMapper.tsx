@@ -55,8 +55,8 @@ export const InteractiveRewildMapper: React.FC<InteractiveRewildMapperProps> = (
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <Map className="w-3.5 h-3.5 text-amber-400" />
-            <span>1. Visor Satelital Predial</span>
+            <FileText className="w-3.5 h-3.5 text-amber-400" />
+            <span>1. Informes de Riesgo (24h)</span>
           </button>
 
           <button
@@ -85,29 +85,29 @@ export const InteractiveRewildMapper: React.FC<InteractiveRewildMapperProps> = (
         </div>
       </div>
 
-      {/* PRODUCT 1: VISOR SATELITAL PREDIAL */}
+      {/* PRODUCT 1: INFORMES DE RIESGO PREDIAL EXPRESS */}
       {currentTab === 'visor' && (
         <div className="space-y-6 animate-fadeIn">
           <div className="max-w-3xl space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
-              <Map className="w-3.5 h-3.5 text-emerald-700" />
-              <span>Producto #1 • Diagnóstico Satelital Abierto</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-900 text-xs font-bold">
+              <FileText className="w-3.5 h-3.5 text-blue-700" />
+              <span>Servicio Geofísico • Entrega 24 a 48 Horas</span>
             </div>
-            <h3 className="text-2xl font-extrabold text-[#0B2519]">Visor Satelital Predial (Sentinel-2 L2A)</h3>
+            <h3 className="text-2xl font-extrabold text-[#0B2519]">Informe de Riesgo Climático & Viabilidad Hídrica</h3>
             <p className="text-slate-600 text-sm font-serif">
-              Accede a capas espectrales NDVI, índice hídrico NDWI y comportamiento térmico de suelo con resolución espacial de 10m por píxel, integrando modelos meteorológicos de la Agencia Espacial Europea.
+              Diagnóstico geofísico pre-compra en PDF de 15 a 20 páginas con datos Sentinel-2, Landsat y modelos hidrológicos oficiales de la DGA y la NASA. Evalúa el riesgo real antes de invertir en una parcela o fundo.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
             {/* GIS Map View Frame */}
-            <div className="lg:col-span-8 bg-[#0B2519] p-5 rounded-2xl border border-emerald-500/30 space-y-4 text-white shadow-xl">
+            <div className="lg:col-span-7 bg-[#0B2519] p-5 rounded-2xl border border-emerald-500/30 space-y-4 text-white shadow-xl">
               
               <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono bg-[#071810] p-3 rounded-xl border border-emerald-900">
                 <div className="flex items-center gap-2 text-emerald-200">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>SENTINEL-2 L2A • Predio Maule-Cordillera A4</span>
+                  <span>AUDITORÍA SATELITAL • Fundo Meniel (Retiro)</span>
                 </div>
 
                 <div className="flex items-center gap-1 bg-[#0B2519] p-1 rounded-lg border border-emerald-900">
@@ -125,7 +125,7 @@ export const InteractiveRewildMapper: React.FC<InteractiveRewildMapperProps> = (
                       activeLayer === 'thermal' ? 'bg-amber-600 text-white' : 'text-emerald-200/70 hover:text-white'
                     }`}
                   >
-                    Térmico Suelo
+                    Heladas 15 Años
                   </button>
                   <button
                     onClick={() => setActiveLayer('carbon')}
@@ -133,7 +133,7 @@ export const InteractiveRewildMapper: React.FC<InteractiveRewildMapperProps> = (
                       activeLayer === 'carbon' ? 'bg-teal-600 text-white' : 'text-emerald-200/70 hover:text-white'
                     }`}
                   >
-                    Carbono
+                    Agua Subterránea
                   </button>
                 </div>
               </div>
@@ -141,7 +141,7 @@ export const InteractiveRewildMapper: React.FC<InteractiveRewildMapperProps> = (
               <div className="relative rounded-xl overflow-hidden border border-emerald-900 group shadow-md">
                 <img 
                   src="./rewildmapper-gis.png" 
-                  alt="Visor Satelital Predial View" 
+                  alt="Diagnóstico Satelital Predial View" 
                   className="w-full h-auto object-cover group-hover:scale-102 transition-transform duration-700 bg-[#071810]"
                 />
 
@@ -157,34 +157,69 @@ export const InteractiveRewildMapper: React.FC<InteractiveRewildMapperProps> = (
 
                 <div className="absolute bottom-3 left-3 bg-[#0B2519]/90 backdrop-blur-md p-3 rounded-lg border border-emerald-500/30 text-xs font-mono space-y-1.5 max-w-[220px]">
                   <span className="text-emerald-400 font-bold block text-[10px] uppercase">
-                    CAPA ACTIVA: {activeLayer.toUpperCase()}
+                    CAPA TÉCNICA: {activeLayer.toUpperCase()}
                   </span>
                   <div className="h-2 rounded bg-gradient-to-r from-amber-500 via-yellow-400 to-emerald-500" />
                   <div className="flex justify-between text-[9px] text-emerald-200/80">
-                    <span>Suelo Expuesto</span>
-                    <span>Bosque Nativo</span>
+                    <span>Riesgo Crítico</span>
+                    <span>Zona Segura</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Features Info Panel */}
-            <div className="lg:col-span-4 bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4 font-sans text-xs text-slate-700">
-              <span className="text-amber-800 font-bold block text-xs uppercase">BENEFICIOS DEL VISOR:</span>
-              <ul className="space-y-2.5">
+            {/* Commercial Ordering Panel */}
+            <div className="lg:col-span-5 bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-5 font-sans text-xs text-slate-700 shadow-sm">
+              <div className="space-y-1 border-b border-slate-200 pb-3">
+                <span className="text-blue-700 font-bold block text-xs uppercase">COTIZACIÓN EXPRESS:</span>
+                <h4 className="text-base font-extrabold text-slate-900">Solicitar Informe Técnico de tu Terreno</h4>
+                <p className="text-[11px] text-slate-500 font-serif">
+                  Indica tu comuna o rol predial y recibe el reporte geofísico formal en tu correo.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <div className="p-3 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
+                  <div>
+                    <span className="text-slate-900 font-bold block text-xs">Informe Express (24 Horas)</span>
+                    <span className="text-[10px] text-slate-500 font-mono">15 páginas • Heladas + Agua</span>
+                  </div>
+                  <span className="font-mono font-extrabold text-emerald-700 text-sm">$85.000 CLP</span>
+                </div>
+
+                <div className="p-3 rounded-xl bg-white border border-blue-200 bg-blue-50/40 flex items-center justify-between">
+                  <div>
+                    <span className="text-blue-950 font-bold block text-xs">Estudio Completo Inversión (48h)</span>
+                    <span className="text-[10px] text-slate-500 font-mono">25 páginas • Microcuenca + TWI</span>
+                  </div>
+                  <span className="font-mono font-extrabold text-blue-900 text-sm">$180.000 CLP</span>
+                </div>
+              </div>
+
+              <ul className="space-y-2 pt-1">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                  <span><strong>Evaluación Hídrica Pre-Compra:</strong> Analiza la disponibilidad de agua subterránea a 10 años.</span>
+                  <span><strong>Disponibilidad de agua a 10 años:</strong> Modelos geofísicos y pozos DGA cercanos.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                  <span><strong>Histórico de Heladas:</strong> Registro acumulado de eventos bajo 0°C en los últimos 15 años.</span>
+                  <span><strong>Histórico de heladas a 15 años:</strong> Frecuencia acumulada bajo 0°C en floración.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                  <span><strong>Resolución Espacial:</strong> 10 metros por píxel con pase de satélite cada 5 días.</span>
+                  <span><strong>Validez Inmobiliaria & Bancaria:</strong> Firma técnica de Geofísico U. de Chile.</span>
                 </li>
               </ul>
+
+              <a
+                href="https://wa.me/56976696142?text=Hola%20AgroTech%20Chile,%20deseo%20solicitar%20un%20Informe%20de%20Riesgo%20Clim%C3%A1tico%20Predial%20para%20mi%20terreno."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3 rounded-xl bg-blue-900 hover:bg-blue-800 text-white font-sans font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-sm"
+              >
+                <FileText className="w-4 h-4 text-amber-300" />
+                <span>Solicitar Informe por WhatsApp</span>
+              </a>
             </div>
 
           </div>

@@ -3,7 +3,7 @@ export interface ProductLine {
   number: number;
   title: string;
   tagline: string;
-  category: 'Risk Analysis' | 'Hardware IoT' | 'Automation & AI' | 'Export ESG' | 'BioTech & Token' | 'Education' | 'Publishing';
+  category: 'Digital Twin' | 'Risk Analysis' | 'Hardware IoT' | 'Automation & AI' | 'Export ESG' | 'BioTech & Token' | 'Education' | 'Publishing';
   businessModel: string;
   priceRange: string;
   targetAudience: string[];

@@ -29,11 +29,11 @@ export const SatellitesPage: React.FC<SatellitesPageProps> = ({ onNavigate, init
             </div>
             
             <h1 className="text-3xl sm:text-5xl font-extrabold text-white">
-              Inteligencia Satelital: <span className="text-amber-400">3 Soluciones de Campo</span>
+              Inteligencia Satelital & <span className="text-amber-400">Certificación ESG</span>
             </h1>
 
             <p className="text-base text-emerald-100/80 font-serif max-w-3xl">
-              1. Visor Satelital Predial • 2. RewildMapper SaaS (Carbono & Biodiversidad) • 3. Pasaporte Verde de Exportación a la Unión Europea.
+              1. Informes de Riesgo Predial Express (24h) • 2. RewildMapper SaaS (Carbono & PBC) • 3. Pasaporte Verde de Exportación a la Unión Europea (EUDR).
             </p>
           </div>
         </div>

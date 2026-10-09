@@ -100,150 +100,150 @@ export const BOM_MATRIX: BomItem[] = [
 
 export const PRODUCT_PORTFOLIO: ProductLine[] = [
   {
-    id: 'climate-reports',
+    id: 'agritwin-suite',
     number: 1,
-    title: 'Informes de Riesgo Climático Predial',
-    tagline: 'Diagnóstico satelital e hídrico pre-compra para parcelas y fundos en el Maule',
-    category: 'Risk Analysis',
-    businessModel: 'Venta por informe (B2B / B2C)',
-    priceRange: '€80 - €200 por reporte',
-    targetAudience: ['Compradores de parcelas', 'Corredores de propiedades rurales', 'Agricultores pequeños y medianos'],
-    description: 'Reporte técnico en PDF de alta resolución que evalúa la factibilidad climática e hídrica de cualquier terreno en el Maule antes de realizar la inversión.',
+    title: 'AgriTwin 3D: Gemelo Digital Predial',
+    tagline: 'Plataforma central biofísica: Un Tronco Central y 6 Ramas de simulación y gestión predial',
+    category: 'Digital Twin',
+    businessModel: 'Suscripción SaaS Anual/Mensual B2B',
+    priceRange: '$45.000 - $160.000 CLP / mes',
+    targetAudience: ['Agricultores y fruticultores', 'Viñedos y exportadoras del Maule', 'Administradores de fundos comerciales'],
+    description: 'El corazón biofísico de AgroTech Chile. Replica el predio en 3D WebGL con balance hídrico diario FAO-56, simulación de drenaje térmico katabático (heladas) con 72h de anticipación y 6 ramas especializadas (Galpón IoT, Invernadero, Establo PRV, Rewilding, Cuenca Regional y Mesa Vecinal).',
     keyFeatures: [
-      'Disponibilidad de agua subterránea a 10 años (modelos geofísicos open-data)',
-      'Histórico de heladas y eventos térmicos extremos (últimos 15 años)',
-      'Simulación de riesgo de inundación y comportamiento térmico del suelo',
-      'Integración de Sentinel-2, Landsat 8/9 y modelos meteorológicos abiertos'
+      'Visualización 3D interactiva con iluminación solar astronómica y topografía DEM 12.5m',
+      'Predicción katabática de heladas con 72 horas de anticipación a nivel de brote/cuartel',
+      'Balance de humedad en 3 estratos de suelo (0-20, 20-60, 60-100cm) vía FAO-56 y sondas FDR',
+      'Despliegue de 6 Ramas Productivas: Galpón IoT, Cultivos, Establo PRV, Rewilding, Cuenca 122k ha y Mesa DAO'
     ],
     specs: {
-      'Formato': 'PDF técnico interactivo 15-20 páginas',
-      'Tiempo de Entrega': '24 a 48 horas automáticas',
-      'Resolución Espacial': '10m px satelital + datos locales',
-      'Fuentes': 'ESA Sentinel, NASA SRTM, DGA Chile, Agromet'
+      'Motor 3D': 'Three.js / WebGL 2.0 PBR',
+      'Planes SaaS': 'Básico ($45k/mes) • Pro ($85k/mes) • Enterprise ($160k/mes)',
+      'Latencia Sensor': 'Sub-50ms vía WebSockets',
+      'Resolución Espacial': '10m píxel satelital + microclima de surco'
     },
-    impactMetric: 'Reduce el riesgo de inversión inmobiliaria rural en un 85%',
-    iconName: 'FileText',
-    highlightColor: 'from-blue-500 to-cyan-400'
+    impactMetric: 'Amortización en 1 sola noche al salvar el 90% de brotes ante heladas de radiación',
+    iconName: 'Activity',
+    highlightColor: 'from-emerald-500 to-cyan-400'
   },
   {
     id: 'kiot-hardware',
     number: 2,
-    title: 'KioT Anti-Heladas & Riego',
-    tagline: 'Nodo de control plug-and-play IP65 con sensores de campo y transmisión LoRa/WiFi',
+    title: 'Kits A.P.I.S. / KioT Hardware & Riego',
+    tagline: 'Los ojos físicos del gemelo digital: microelectrónica maulina IP65 autónoma',
     category: 'Hardware IoT',
-    businessModel: 'Venta de Hardware + Suscripción Cloud opcional',
-    priceRange: '$180.000 - $320.000 CLP por kit completo',
+    businessModel: 'Venta de Hardware + Instalación Cooperativa + HaaS',
+    priceRange: '$185.000 - $380.000 CLP por kit',
     targetAudience: ['Fruticultores (arándanos, manzanos, cerezos)', 'Vitivinicultores del Valle del Maule'],
-    description: 'Kit de hardware robusto fabricado localmente en Maule para monitoreo crítico de heladas y estrés hídrico a nivel de microclima de árbol/parra.',
+    description: 'Nodos de telemetría de campo fabricados en Talca con un 70% de margen bruto. Alimentan directamente las ramas de AgriTwin midiendo heladas, estratos de suelo y automatizando electroválvulas de riego.',
     keyFeatures: [
-      'Gabinete estanco IP65 resistente a radiación UV y lluvias maulinas',
-      'Sensor de temperatura DS18B20 de alta precisión (±0.5°C) para alerta rápida de congelamiento',
-      'Sensor capacitivo de humedad de suelo anticorrosivo',
-      'Microcontrolador ESP32 con antena externa WiFi / LoRaWAN para cobertura en zonas ciegas'
+      'Gabinete estanco IP65 resistente a radiación UV y lluvias torrenciales maulinas',
+      'Sondas de acero inoxidable DS18B20 (±0.5°C) y sensores capacitivos tri-estrato FDR',
+      'Microcontrolador ESP32-S3 con LoRaWAN 915MHz de hasta 15 km y panel solar LiFePO4',
+      'Actuador KioT Valve para automatización de electroválvulas y bombas en horario valle'
     ],
     specs: {
-      'Microcontrolador': 'ESP32 Dual Core 240MHz',
-      'Conectividad': 'LoRaWAN 915MHz / WiFi 2.4GHz',
-      'Autonomía': 'Batería LiFePO4 + Panel Solar integrado',
-      'Rango Térmico': '-20°C a +70°C (Precisión ±0.5°C)'
+      'Kit Riego Base': '$185.000 CLP (Sonda suelo + Relé válvula)',
+      'Kit Anti-Heladas': '$220.000 CLP (Sonda DS18B20 + Sirena 110dB)',
+      'Estación Solar Completa': '$380.000 CLP (3 Nodos mesh + Panel solar + Soporte)',
+      'Modelo Arriendo HaaS': '$28.000 CLP / mes con mantención incluida'
     },
-    impactMetric: 'Previene hasta un 90% la pérdida de brotes por heladas tempranas',
+    impactMetric: 'Reduce el costo eléctrico de bombeo entre 30% y 38% y previene pérdidas por heladas',
     iconName: 'Cpu',
-    highlightColor: 'from-emerald-500 to-green-400'
+    highlightColor: 'from-amber-500 to-emerald-400'
   },
   {
-    id: 'automation-ecosystem',
+    id: 'climate-reports',
     number: 3,
-    title: 'Ecosistema de Automatización & Biotecnología',
-    tagline: 'Control inteligente centralizado: hardware local + satélite + IA predial',
-    category: 'Automation & AI',
-    businessModel: 'Suscripción SaaS + Consultoría e Instalación',
-    priceRange: 'Desde $45.000 CLP / mes por predio',
-    targetAudience: ['Agrónomos administradores', 'Exportadoras agrícolas interprediales'],
-    description: 'El pilar tecnológico más avanzado. Conecta la automatización física de riego y electroválvulas con predicciones de IA basadas en imágenes satelitales.',
+    title: 'Informes de Riesgo Agroclimático Predial',
+    tagline: 'Diagnóstico geofísico pre-compra e inversión: agua a 10 años y heladas a 15 años',
+    category: 'Risk Analysis',
+    businessModel: 'Venta directa por informe con entrega en 24h - 48h',
+    priceRange: '$85.000 - $180.000 CLP (€95 - €180)',
+    targetAudience: ['Compradores de parcelas', 'Corredores de propiedades rurales', 'Agricultores en expansión'],
+    description: 'Diagnóstico técnico formal en PDF de alta fidelidad elaborado a partir de modelos geofísicos abiertos (Sentinel, Landsat, SRTM, DGA). Evalúa la viabilidad hídrica y térmica de un terreno antes de cerrar la compra o iniciar la plantación.',
     keyFeatures: [
-      'Automatización autónoma de válvulas de riego según evaporación satelital',
-      'Alertas preventivas por IA en WhatsApp/Telegram sobre heladas imminentes',
-      'Visualizador 3D de capas de humedad y gradiente de biomasa predial',
-      'Asistente de IA Agronómica AgroTech Chile entrenado en microbiología de suelos del Maule'
+      'Disponibilidad de agua subterránea y comportamiento de acuíferos a 10 años',
+      'Histórico de eventos térmicos extremos y heladas de los últimos 15 años',
+      'Simulación de riesgo de inundación TWI, piro-riesgo FWI y drenaje de aire frío',
+      'Entrega garantizada en formato PDF técnico de 15 a 20 páginas'
     ],
     specs: {
-      'Latencia de Alerta': '< 15 segundos vía Push/SMS',
-      'Protocolos': 'Modbus, MQTT, HTTP REST, LoRaWAN',
-      'IA Engine': 'Modelos de clima predial AgroTech Chile',
-      'Integración': 'Sistemas de riego Netafim/Hunter/RainBird'
+      'Informe Express (24h)': '$85.000 CLP (~€95) • 15 páginas',
+      'Estudio Geofísico Profundo (48h)': '$180.000 CLP (~€180) • 25 páginas + Microcuenca',
+      'Resolución Espacial': '10m px satelital + calibración local Maule',
+      'Fuentes Oficiales': 'ESA Sentinel, NASA SRTM, DGA Chile, Agromet'
     },
-    impactMetric: 'Ahorro del 35% en consumo hídrico y 40% en electricidad de bombas',
-    iconName: 'Activity',
-    highlightColor: 'from-cyan-500 to-blue-600'
+    impactMetric: 'Reduce el riesgo de inversión inmobiliaria rural y pérdida de capital en un 85%',
+    iconName: 'FileText',
+    highlightColor: 'from-blue-500 to-cyan-400'
   },
   {
     id: 'green-passport',
     number: 4,
-    title: 'Pasaporte Verde de Exportación',
-    tagline: 'Certificación ecológica digital con captura de carbono para el mercado europeo',
+    title: 'Pasaporte Verde de Exportación UE',
+    tagline: 'Certificación ecológica digital y auditoría libre de deforestación (EUDR)',
     category: 'Export ESG',
-    businessModel: 'Fee por certificación B2B + Renovación anual',
-    priceRange: '€500 - €2.000 por fundo exportador',
-    targetAudience: ['Exportadoras de vino, manzanas y berries del Maule', 'Compradores ESG de la Unión Europea'],
-    description: 'Sello ecológico auditable que mide la salud ambiental del predio (captura de carbono en suelos y bosques nativos) para posicionar la fruta en Europa a precios premium.',
+    businessModel: 'Fee por certificación por predio + Renovación anual',
+    priceRange: '€650 - €1.800 por predio exportador',
+    targetAudience: ['Exportadoras de vino, manzanas, cerezas y berries', 'Brokers y compradores ESG de la UE'],
+    description: 'Dossier digital auditado satelitalmente contra deforestación conforme al reglamento europeo EUDR y CSRD. Incluye código QR dinámico para pallets de exportación que certifica ante aduanas y supermercados europeos.',
     keyFeatures: [
-      'Cálculo satelital de biomasa y secuestro anual de CO2e (Sentinel 2/Landsat)',
-      'Verificación de biodiversidad en bordes de arroyos y parches nativos',
+      'Cálculo satelital multiespectral de no-deforestación histórica (Sentinel-2 / Landsat)',
+      'Verificación de biodiversidad en bordes de arroyos y parches de bosque nativo',
       'Pasaporte Digital QR dinámico impreso en pallets de exportación',
       'Auditoría compatible con normativas de sostenibilidad UE (CSRD & EUDR)'
     ],
     specs: {
-      'Estándar': 'Basado en IPCC Tier 2 / GHG Protocol',
-      'Verificación': 'Auditoría satelital mensual',
-      'Salida': 'Dashboard público con verificación Blockchain/QR',
+      'Estándar Regulatorio': 'Reglamento EUDR UE 2023/1115 & GHG Protocol',
+      'Plazo de Entrega': '5 días hábiles con dossier auditado',
+      'Salida': 'Dashboard público con verificación QR y Ledger auditable',
       'Idiomas': 'Español, Inglés, Alemán'
     },
-    impactMetric: 'Permite sobreprecio del 12-18% en envíos a supermercados europeos',
+    impactMetric: 'Garantiza acceso sin trabas arancelarias y permite sobreprecio del 12-18% en Europa',
     iconName: 'Globe',
     highlightColor: 'from-amber-500 to-yellow-400'
   },
   {
     id: 'biotoken-rewild',
     number: 5,
-    title: 'BioToken Rewild & RewildMapper',
+    title: 'RewildMapper SaaS & BioToken PBC',
     tagline: 'Certificación de biodiversidad vegetal nativa y mercado de activos ecológicos',
     category: 'BioTech & Token',
-    businessModel: 'Fee de emisión de tokens + Suscripción SaaS RewildMapper + Marketplace',
-    priceRange: 'SaaS RewildMapper: $65.000 CLP/mes + % sobre tokens transados',
-    targetAudience: ['Propietarios de bosques nativos maulinos', 'Empresas con compromisos ESG en Chile y Europa'],
-    description: 'Análogo ecológico de los mercados de carbono enfocado en la restauración vegetal nativa activa (boldo, peumo, roble). Certifica unidades de biodiversidad recuperada.',
+    businessModel: 'Suscripción SaaS + Comisión de emisión de certificados (12%)',
+    priceRange: '$65.000 CLP / mes + comisión transaccional',
+    targetAudience: ['Propietarios de bosques nativos maulinos', 'Empresas con compromisos de mitigación ESG'],
+    description: 'Herramienta SaaS PWA para el diagnóstico y monitoreo de bosques esclerófilos nativos (boldo, peumo, roble). Emite Unidades de Biodiversidad Vegetal (PBC) bajo metodología IPCC Tier-2.',
     keyFeatures: [
-      'Software SaaS RewildMapper: Diagnóstico satelital con IA para planes de restauración',
+      'Software SaaS RewildMapper con soporte offline PWA para relevamiento en campo',
       'Generación de Certificados de Biodiversidad Vegetal (PBC - Plant Biodiversity Certificates)',
-      'Monitoreo satelital continuo de cobertura nativa y tasa de regeneración',
-      'Marketplace B2B para conectar conservacionistas locales con financiamiento corporativo ESG'
+      'Monitoreo satelital continuo de cobertura nativa y tasa de regeneración cada 5 días',
+      'Conexión con fondos de compensación ambiental y programas corporativos ESG'
     ],
     specs: {
       'Plataforma SaaS': 'RewildMapper Cloud GIS Engine',
       'Métrica Base': 'Índice de Diversidad Vegetal Nativa (IDVN)',
       'Monitoreo Satelital': 'Pases cada 5 días (Sentinel-2 Spectral)',
-      'Certificación': 'Auditable por terceros y comunidades'
+      'Auditoría': 'Verificación territorial por la Cooperativa AgroTech'
     },
-    impactMetric: 'Ha impulsado la restauración de +450 hectáreas de bosque nativo maulino',
+    impactMetric: 'Ha impulsado la custodia y regeneración de +450 hectáreas de bosque nativo maulino',
     iconName: 'Leaf',
     highlightColor: 'from-green-500 to-emerald-400'
   },
   {
     id: 'seminars-courses',
     number: 6,
-    title: 'Seminarios & Cursos Urrutia Edulab',
-    tagline: 'Programa educativo presencial y online para agricultores y juego "Raíces y Chips"',
+    title: 'Seminarios & Cursos AgroTech Edulab',
+    tagline: 'Talleres presenciales "Manos en la Tierra", webinars y juego "Raíces y Chips"',
     category: 'Education',
     businessModel: 'Venta de entradas + Suscripciones online + Venta de juego de cartas',
-    priceRange: '$25.000 - $120.000 CLP por alumno',
+    priceRange: '$15.000 - $120.000 CLP',
     targetAudience: ['Agricultores locales', 'Estudiantes de agronomía', 'Comunidades escolares maulinas'],
-    description: 'División educativa Urrutia Edulab. Convierte el conocimiento mecatrónico y ecológico en talleres de campo, webinars y el juego educativo de cartas "Raíces y Chips".',
+    description: 'División educativa y formativa. Convierte el conocimiento agronómico y tecnológico en talleres prácticos de campo en el Maule, webinars técnicos y el juego de cartas educativo "Raíces y Chips".',
     keyFeatures: [
-      'Juego de cartas educativo infantil "Raíces y Chips" sobre ecosistemas y heladas',
+      'Juego de cartas didáctico "Raíces y Chips" sobre ecosistemas agrícolas y heladas ($15.000 CLP)',
       'Talleres presenciales "Manos en la Tierra" en el Maule (sensores, biotecnología y compostaje)',
-      'Cursos online de precisión agrícola y manejo de microclimas con Google Earth Engine',
-      'Comunidad agrícola de precisión con apoyo técnico continuo'
+      'Cursos online de precisión agrícola y manejo de microclimas con herramientas abiertas',
+      'Transferencia técnica respaldada por los profesionales de la Cooperativa'
     ],
     specs: {
       'Modalidades': 'Presencial en campo (Maule) + Streaming HD',
@@ -251,31 +251,31 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
       'Certificación': 'Diploma de Capacitación Técnica AgroTech Chile',
       'Frecuencia': '2 talleres presenciales al mes + webinars'
     },
-    impactMetric: '+320 agricultores y 15 colegios maulinos capacitados',
+    impactMetric: '+320 agricultores y 15 colegios maulinos capacitados en permacultura y tecnología',
     iconName: 'GraduationCap',
     highlightColor: 'from-purple-500 to-indigo-400'
   },
   {
     id: 'agricultural-manuals',
     number: 7,
-    title: 'Manuales & Libros Agrícolas Prácticos',
-    tagline: 'Guías de campo ilustradas con IA: pasos claros, cero jerga, 100% aplicables',
+    title: 'Manuales & Guías de Campo AgroTech',
+    tagline: 'Guías de campo prácticas ilustradas: pasos claros, cero jerga, 100% aplicables',
     category: 'Publishing',
     businessModel: 'Venta digital (Ebook/PDF) + Impresión bajo demanda (POD)',
-    priceRange: '$12.000 - $28.000 CLP por libro',
+    priceRange: '$12.000 - $28.000 CLP por guía',
     targetAudience: ['Parceleros de fin de semana', 'Pequeños productores', 'Aficionados a la permacultura'],
-    description: 'Manuales prácticos diseñados para el agricultor que aprende haciendo. Diagramas visuales con IA, pasos directos y consejos probados en el suelo maulino.',
+    description: 'Manuales prácticos diseñados para el agricultor que aprende haciendo. Diagramas visuales, esquemas de circuitos mecatrónicos y consejos probados en el suelo maulino.',
     keyFeatures: [
-      'Línea editorial de precisión agrícola: infografías claras y explicaciones sin rodeos',
-      'Capítulos sobre control de heladas casero, sensores caseros y abonos nativos',
-      'Ilustraciones técnicas generadas por IA y esquemas de circuito paso a paso',
+      'Línea editorial de precisión agrícola: infografías claras y explicaciones directas',
+      'Capítulos sobre control de heladas en campo, sensores caseros y biopreparados',
+      'Esquemas de circuitos mecatrónicos y manejo de agua paso a paso',
       'Distribución digital inmediata en PDF/ePub e impresa en papel kraft ecológico'
     ],
     specs: {
       'Páginas': '120 - 180 páginas a color',
-      'Formato': 'Digital PDF/ePub + Físico Rustico Tapa Blanda',
+      'Formato': 'Digital PDF/ePub + Físico Rústico Tapa Blanda',
       'Idioma': 'Español (Chile/Latam)',
-      'Licencia': 'Open-knowledge agro-geek'
+      'Licencia': 'Conocimiento libre AgroTech Chile'
     },
     impactMetric: '+1.200 copias digitales y físicas distribuidas en el centro de Chile',
     iconName: 'BookOpen',

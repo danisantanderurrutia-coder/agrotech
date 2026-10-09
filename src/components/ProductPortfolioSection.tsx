@@ -217,21 +217,32 @@ export const ProductPortfolioSection: React.FC = () => {
               </div>
 
               {/* Action */}
-              <div className="pt-4 flex items-center justify-between border-t border-slate-200">
-                <button
-                  onClick={() => alert(`Descargando Ficha Técnica PDF para: ${selectedProduct.title}`)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-emerald-400 text-xs font-sans font-bold hover:bg-slate-800 transition-colors"
+              <div className="pt-4 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200">
+                <a
+                  href={`https://wa.me/56976696142?text=Hola%20AgroTech%20Chile,%20me%20interesa%20cotizar%20formalmente%20el%20producto:%20${encodeURIComponent(selectedProduct.title)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-700 text-white text-xs font-sans font-bold hover:bg-emerald-600 transition-colors shadow-sm"
                 >
-                  <Download className="w-4 h-4" />
-                  <span>Descargar Ficha PDF (Simulación)</span>
-                </button>
+                  <span>Cotizar este Producto vía WhatsApp</span>
+                </a>
 
-                <button
-                  onClick={() => setModalOpen(false)}
-                  className="px-5 py-2 rounded-xl bg-emerald-800 text-white font-bold text-xs hover:bg-emerald-700 transition-all shadow-sm"
-                >
-                  Cerrar
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => alert(`Ficha Técnica Oficial AgroTech Chile: ${selectedProduct.title}\nID: ${selectedProduct.id}\nPrecio: ${selectedProduct.priceRange}\nModelo: ${selectedProduct.businessModel}`)}
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 border border-slate-300 text-slate-700 text-xs font-sans font-medium hover:bg-slate-200 transition-colors"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Ver Ficha Técnica</span>
+                  </button>
+
+                  <button
+                    onClick={() => setModalOpen(false)}
+                    className="px-4 py-2 rounded-xl bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 transition-all"
+                  >
+                    Cerrar
+                  </button>
+                </div>
               </div>
 
             </div>

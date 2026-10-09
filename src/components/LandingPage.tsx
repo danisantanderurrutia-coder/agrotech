@@ -47,77 +47,84 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenPitchDeck, onNav
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
           {/* Card 1: Kit KioT */}
-          <div className="glass-panel p-6 rounded-2xl border border-slate-200 hover:border-emerald-500/50 transition-all space-y-4 flex flex-col justify-between group shadow-sm bg-white">
-            <div className="space-y-3">
+          {/* Card 1: AgriTwin 3D (Flagship Hero) */}
+          <div className="glass-panel p-6 rounded-2xl border-2 border-emerald-500/80 hover:border-emerald-400 transition-all space-y-4 flex flex-col justify-between group shadow-lg bg-gradient-to-b from-white to-emerald-50/30 relative overflow-hidden">
+            <div className="absolute top-0 right-0 bg-emerald-600 text-white text-[9px] font-mono font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+              FLAGSHIP • 6 RAMAS
+            </div>
+
+            <div className="space-y-3 pt-2">
               <div className="flex items-center justify-between font-mono text-xs">
-                <span className="px-2.5 py-1 rounded bg-emerald-100 text-emerald-800 font-bold border border-emerald-300">
-                  HARDWARE IOT
+                <span className="px-2.5 py-1 rounded bg-emerald-100 text-emerald-900 font-bold border border-emerald-300">
+                  GEMELO DIGITAL 3D
                 </span>
-                <span className="text-amber-700 font-bold">$180k-320k CLP</span>
+                <span className="text-emerald-700 font-bold">Desde $45.000 / mes</span>
               </div>
 
-              <h3 className="text-xl font-bold text-slate-900 group-hover:text-emerald-800 transition-colors">
-                Estación Telemétrica Anti-Heladas
+              <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors">
+                AgriTwin 3D: Tronco & 6 Ramas
               </h3>
 
               <p className="text-xs text-slate-600 font-serif leading-relaxed">
-                Nodo estanco IP65 autónomo con sensor DS18B20 (±0.5°C) y conectividad LoRa/WiFi para alertar heladas en arándanos y viñedos.
+                El corazón de AgroTech. Simulación biofísica 3D en tiempo real: heladas katabáticas con 72h de anticipación, balance hídrico FAO-56 y gestión de cuarteles.
+              </p>
+            </div>
+
+            <div className="space-y-2 pt-2">
+              <button
+                onClick={() => onNavigate('agritwin')}
+                className="w-full py-2.5 rounded-xl bg-[#0B2519] border border-emerald-500/50 text-amber-300 font-mono text-xs font-bold hover:bg-[#123827] transition-colors flex items-center justify-center gap-1.5 shadow-md"
+              >
+                <span>Explorar Gemelo 3D en Vivo</span>
+                <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
+              </button>
+            </div>
+          </div>
+
+          {/* Card 2: Kits KioT Hardware */}
+          <div className="glass-panel p-6 rounded-2xl border border-slate-200 hover:border-amber-500/50 transition-all space-y-4 flex flex-col justify-between group shadow-sm bg-white">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between font-mono text-xs">
+                <span className="px-2.5 py-1 rounded bg-amber-100 text-amber-900 font-bold border border-amber-300">
+                  HARDWARE A.P.I.S.
+                </span>
+                <span className="text-amber-800 font-bold">$185k - $380k CLP</span>
+              </div>
+
+              <h3 className="text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors">
+                Kits KioT Anti-Heladas & Riego
+              </h3>
+
+              <p className="text-xs text-slate-600 font-serif leading-relaxed">
+                Los ojos físicos del gemelo digital. Gabinete estanco IP65 autónomo con sondas DS18B20 (±0.5°C), suelo tri-estrato FDR y enlace LoRaWAN 915MHz.
               </p>
             </div>
 
             <button
               onClick={() => onNavigate('hardware')}
-              className="w-full py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-emerald-400 font-mono text-xs font-bold hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5"
+              className="w-full py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-amber-300 font-mono text-xs font-bold hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5"
             >
-              <span>Ver Especificaciones Teóricas</span>
+              <span>Cotizar Kits de Hardware</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          {/* Card 2: Informes Climáticos */}
-          <div className="glass-panel p-6 rounded-2xl border border-slate-200 hover:border-amber-500/50 transition-all space-y-4 flex flex-col justify-between group shadow-sm bg-white">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between font-mono text-xs">
-                <span className="px-2.5 py-1 rounded bg-amber-100 text-amber-900 font-bold border border-amber-300">
-                  RIESGO PREDIAL
-                </span>
-                <span className="text-emerald-800 font-bold">€80 - €200</span>
-              </div>
-
-              <h3 className="text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors">
-                Informes de Riesgo Climático
-              </h3>
-
-              <p className="text-xs text-slate-600 font-serif leading-relaxed">
-                Reporte PDF pre-compra de parcelas con histórico de heladas a 15 años y disponibilidad hídrica subterránea de la ESA/NASA.
-              </p>
-            </div>
-
-            <button
-              onClick={() => onNavigate('satellites')}
-              className="w-full py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-amber-400 font-mono text-xs font-bold hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5"
-            >
-              <span>Solicitar Informe Predial</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
-          {/* Card 3: RewildMapper */}
+          {/* Card 3: Pasaporte Verde UE & Informes */}
           <div className="glass-panel p-6 rounded-2xl border border-slate-200 hover:border-emerald-600/50 transition-all space-y-4 flex flex-col justify-between group shadow-sm bg-white">
             <div className="space-y-3">
               <div className="flex items-center justify-between font-mono text-xs">
                 <span className="px-2.5 py-1 rounded bg-emerald-950 text-emerald-300 font-bold">
-                  SATÉLITE & ESG
+                  EXPORTACIÓN & ESG
                 </span>
-                <span className="text-emerald-800 font-bold">$65.000 CLP/mes</span>
+                <span className="text-emerald-800 font-bold">€650 - €1.800</span>
               </div>
 
               <h3 className="text-xl font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
-                RewildMapper & Pasaporte Verde
+                Pasaporte Verde UE & Informes
               </h3>
 
               <p className="text-xs text-slate-600 font-serif leading-relaxed">
-                Plataforma SaaS de diagnóstico satelital que certifica unidades de biodiversidad nativa (PBC) para exportadoras chilenas en la UE.
+                Certificación de no-deforestación EUDR con QR en pallets para exportadoras + Informes Geofísicos de Factibilidad y Riesgo Predial en 24h a 48h.
               </p>
             </div>
 
@@ -125,7 +132,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenPitchDeck, onNav
               onClick={() => onNavigate('satellites')}
               className="w-full py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-emerald-300 font-mono text-xs font-bold hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5"
             >
-              <span>Probar Visor RewildMapper</span>
+              <span>Certificar / Pedir Informe</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>

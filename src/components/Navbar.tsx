@@ -94,14 +94,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
 
             {productsDropdownOpen && (
               <div className="absolute top-full left-0 mt-2 w-92 bg-[#0B2519] rounded-2xl border border-emerald-500/40 p-2.5 space-y-1.5 shadow-2xl animate-fadeIn z-50">
-                {/* Highlight: Ecosistema de 3 Suites Tecnológicas */}
+                {/* Header Ecosistema */}
                 <button
-                  onClick={() => handleNavClick('apps')}
-                  className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all border ${
-                    currentView === 'apps'
-                      ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-[#0B2519] border-amber-400 shadow-md font-bold'
-                      : 'bg-gradient-to-r from-[#071A11] to-[#0d2a1c] text-white border-emerald-500/40 hover:border-amber-400/70 shadow-sm'
-                  }`}
+                  onClick={() => handleNavClick('hub')}
+                  className="w-full flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-emerald-950 via-emerald-900 to-[#0B2519] border border-amber-500/40 text-white hover:border-amber-400 transition-all text-left shadow-sm group"
                 >
                   <div className="flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-lg bg-[#0B2519] border border-amber-400/40 p-1 flex items-center justify-center shrink-0">
@@ -109,20 +105,21 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <span className="font-extrabold text-xs">Ecosistema de 3 Suites</span>
-                        <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-amber-400 text-slate-950 font-black">AUTÓNOMOS</span>
+                        <span className="font-extrabold text-xs">Ecosistema AgroTech</span>
+                        <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-amber-400 text-slate-950 font-black">SUITE MAULE</span>
                       </div>
-                      <span className="text-[10px] text-emerald-200/80 font-sans block">Predial (7773) + Regional (7774) + Rewild (7772)</span>
+                      <span className="text-[10px] text-emerald-200/80 font-sans block">Gemelos Digitales • Hardware • Certificación</span>
                     </div>
                   </div>
-                  <ArrowRight className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <ArrowRight className="w-3.5 h-3.5 text-amber-400 shrink-0 group-hover:translate-x-0.5 transition-transform" />
                 </button>
 
                 <div className="my-1 border-t border-emerald-900/60" />
 
+                {/* 1. AgriTwin 3D Flagship */}
                 <button
                   onClick={() => handleNavClick('agritwin')}
-                  className={`w-full flex items-start gap-3 p-2 rounded-xl text-left transition-colors ${
+                  className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors ${
                     currentView === 'agritwin' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
                   }`}
                 >
@@ -132,15 +129,35 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                   <div>
                     <div className="flex items-center gap-1.5">
                       <span className="font-bold text-xs text-white">AgriTwin 3D (Gemelo Digital)</span>
-                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 font-bold">PUERTO 7773</span>
+                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-emerald-400/20 text-emerald-300 font-bold">FLAGSHIP • 6 RAMAS</span>
                     </div>
-                    <span className="text-[10px] text-emerald-200/70 font-sans block">Motor Three.js, microclima y telemetría de brote.</span>
+                    <span className="text-[10px] text-emerald-200/70 font-sans block">Simulación biofísica, heladas katabáticas y FAO-56.</span>
                   </div>
                 </button>
 
+                {/* 2. Kits KioT Hardware */}
+                <button
+                  onClick={() => handleNavClick('hardware')}
+                  className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors ${
+                    currentView === 'hardware' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
+                  }`}
+                >
+                  <div className="w-6 h-6 rounded-lg bg-amber-500/20 border border-amber-400 flex items-center justify-center shrink-0 mt-0.5 text-amber-400">
+                    <Activity className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-bold text-xs text-white">Kits A.P.I.S. / KioT Hardware</span>
+                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 font-bold">HARDWARE IP65</span>
+                    </div>
+                    <span className="text-[10px] text-emerald-200/70 font-sans block">Sondas FDR tri-estrato, heladas y válvulas LoRaWAN.</span>
+                  </div>
+                </button>
+
+                {/* 3. Rewild Suite */}
                 <button
                   onClick={() => handleNavClick('rewild-hub')}
-                  className={`w-full flex items-start gap-3 p-2 rounded-xl text-left transition-colors ${
+                  className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors ${
                     currentView === 'rewild-hub' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
                   }`}
                 >
@@ -150,7 +167,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                   <div>
                     <div className="flex items-center gap-1.5">
                       <span className="font-bold text-xs text-white">Rewild Suite (Biodiversidad)</span>
-                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-emerald-400/20 text-emerald-300 font-bold">PUERTO 7772</span>
+                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-emerald-400/20 text-emerald-300 font-bold">ESG & RESTAURACIÓN</span>
                     </div>
                     <span className="text-[10px] text-emerald-200/70 font-sans block">Field Suite & GoWild Survey para bosque nativo.</span>
                   </div>
@@ -158,73 +175,60 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
 
                 <div className="my-1 border-t border-emerald-900/60" />
 
+                {/* 4. Informes de Riesgo Predial (Reemplazo comercial de Visor) */}
                 <button
-                  onClick={() => handleNavClick('hardware')}
-                  className={`w-full flex items-start gap-3 p-2 rounded-xl text-left transition-colors ${
-                    currentView === 'hardware' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
+                  onClick={() => handleNavClick('satellites')}
+                  className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors ${
+                    currentView === 'satellites' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
                   }`}
                 >
-                  <Cpu className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <div className="w-6 h-6 rounded-lg bg-blue-500/20 border border-blue-400 flex items-center justify-center shrink-0 mt-0.5 text-blue-300">
+                    <FileText className="w-3.5 h-3.5" />
+                  </div>
                   <div>
-                    <span className="font-bold text-xs block text-white">KioT Sensores & Hardware</span>
-                    <span className="text-[10px] text-emerald-200/70 font-sans block">Cultivo protegido, anti-heladas y microclima IP65.</span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-bold text-xs text-white">Informes de Riesgo Predial</span>
+                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-blue-400/20 text-blue-300 font-bold">24H EXPRESS</span>
+                    </div>
+                    <span className="text-[10px] text-emerald-200/70 font-sans block">Diagnóstico geofísico pre-compra: agua y heladas.</span>
                   </div>
                 </button>
 
-                <button
-                  onClick={() => handleNavClick('satellites-visor')}
-                  className={`w-full flex items-start gap-3 p-2 rounded-xl text-left transition-colors ${
-                    currentView === 'satellites-visor' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
-                  }`}
-                >
-                  <Map className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-bold text-xs block text-white">Visor Satelital Predial</span>
-                    <span className="text-[10px] text-emerald-200/70 font-sans block">Imágenes Sentinel-2, NDVI & riesgo hídrico.</span>
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('satellites-rewild')}
-                  className={`w-full flex items-start gap-3 p-2 rounded-xl text-left transition-colors ${
-                    currentView === 'satellites-rewild' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
-                  }`}
-                >
-                  <Trees className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-bold text-xs block text-white">RewildMapper SaaS</span>
-                    <span className="text-[10px] text-emerald-200/70 font-sans block">Cálculo CO2e IPCC & Certificados de Biodiversidad.</span>
-                  </div>
-                </button>
-
+                {/* 5. Pasaporte Verde UE */}
                 <button
                   onClick={() => handleNavClick('satellites-pasaporte')}
-                  className={`w-full flex items-start gap-3 p-2 rounded-xl text-left transition-colors ${
+                  className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors ${
                     currentView === 'satellites-pasaporte' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
                   }`}
                 >
-                  <QrCode className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                  <div className="w-6 h-6 rounded-lg bg-amber-500/20 border border-amber-400 flex items-center justify-center shrink-0 mt-0.5 text-amber-400">
+                    <QrCode className="w-3.5 h-3.5" />
+                  </div>
                   <div>
-                    <span className="font-bold text-xs block text-white">Pasaporte Verde UE</span>
-                    <span className="text-[10px] text-emerald-200/70 font-sans block">Certificación ESG Pallets QR para Europa.</span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-bold text-xs text-white">Pasaporte Verde UE (EUDR)</span>
+                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 font-bold">CERTIFICACIÓN</span>
+                    </div>
+                    <span className="text-[10px] text-emerald-200/70 font-sans block">Auditoría no-deforestación y QR para pallets a Europa.</span>
                   </div>
                 </button>
 
-                <a
-                  href="http://localhost:7774"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full flex items-start gap-3 p-2 rounded-xl text-left transition-colors hover:bg-[#071A11] text-white border-t border-emerald-900/40 mt-1 pt-2"
+                {/* 6. AgroTwin Regional */}
+                <button
+                  onClick={() => handleNavClick('territorial')}
+                  className="w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors hover:bg-[#071A11] text-white border-t border-emerald-900/40 mt-1 pt-2"
                 >
-                  <MapPin className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-bold text-xs flex items-center gap-1.5 text-amber-300">
-                      <span>AgroTwin Regional (:7774)</span>
-                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-950 text-amber-200 border border-amber-500/40 uppercase">Macro</span>
-                    </span>
-                    <span className="text-[10px] text-emerald-200/70 font-sans block">Cuenca 122k ha, Riesgos FWI incendios y TWI inundaciones.</span>
+                  <div className="w-6 h-6 rounded-lg bg-teal-500/20 border border-teal-400 flex items-center justify-center shrink-0 mt-0.5 text-teal-300">
+                    <MapPin className="w-3.5 h-3.5" />
                   </div>
-                </a>
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-bold text-xs text-amber-300">AgroTwin Regional (Cuenca)</span>
+                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-950 text-amber-200 border border-amber-500/40 font-mono">122K HA</span>
+                    </div>
+                    <span className="text-[10px] text-emerald-200/70 font-sans block">Gestión de cuenca Longaví/Retiro, FWI y crecidas fluviales.</span>
+                  </div>
+                </button>
               </div>
             )}
           </div>
