@@ -94,28 +94,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
 
             {productsDropdownOpen && (
               <div className="absolute top-full left-0 mt-2 w-92 bg-[#0B2519] rounded-2xl border border-emerald-500/40 p-2.5 space-y-1.5 shadow-2xl animate-fadeIn z-50">
-                {/* Ver Catálogo Completo */}
-                <button
-                  onClick={() => handleNavClick('landing')}
-                  className="w-full flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-emerald-950 via-emerald-900 to-[#0B2519] border border-amber-500/40 text-white hover:border-amber-400 transition-all text-left shadow-sm group"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-[#0B2519] border border-amber-400/40 p-1 flex items-center justify-center shrink-0">
-                      <img src="./logo-peumo-quantum.jpg" alt="Logo" className="w-full h-full object-contain rounded" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-extrabold text-xs">Catálogo AgroTech Chile</span>
-                        <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-amber-400 text-slate-950 font-black">7 LÍNEAS</span>
-                      </div>
-                      <span className="text-[10px] text-emerald-200/80 font-sans block">Gemelos Digitales • Hardware • Certificación</span>
-                    </div>
-                  </div>
-                  <ArrowRight className="w-3.5 h-3.5 text-amber-400 shrink-0 group-hover:translate-x-0.5 transition-transform" />
-                </button>
-
-                <div className="my-1 border-t border-emerald-900/60" />
-
                 {/* 1. AgriTwin 3D Flagship */}
                 <button
                   onClick={() => handleNavClick('agritwin')}
