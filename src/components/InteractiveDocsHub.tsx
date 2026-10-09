@@ -18,17 +18,18 @@ import {
   PredioProfile,
   ProductCategory
 } from '../products';
+import { PermacultureSection } from './PermacultureSection';
 
 interface InteractiveDocsHubProps {
   onNavigate?: (viewId: string) => void;
-  initialTab?: 'products' | 'predios' | 'sensors' | 'graphics' | 'scripts' | 'vault';
+  initialTab?: 'products' | 'predios' | 'sensors' | 'graphics' | 'scripts' | 'vault' | 'permaculture';
 }
 
 export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({ 
   onNavigate,
   initialTab = 'products'
 }) => {
-  const [activeTab, setActiveTab] = useState<'products' | 'predios' | 'sensors' | 'graphics' | 'scripts' | 'vault'>(initialTab);
+  const [activeTab, setActiveTab] = useState<'products' | 'predios' | 'sensors' | 'graphics' | 'scripts' | 'vault' | 'permaculture'>(initialTab);
   const [selectedProductId, setSelectedProductId] = useState<string>('all');
   const [selectedPredioId, setSelectedPredioId] = useState<string>(ALL_PREDIOS[0].id);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -344,6 +345,18 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
         >
           <BookOpen className="w-4 h-4 text-amber-400" />
           <span>6. Obsidian Vault & Manifiesto</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('permaculture')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sans text-xs font-bold transition-all shrink-0 ${
+            activeTab === 'permaculture'
+              ? 'bg-[#0B2519] text-white shadow-md ring-2 ring-emerald-400/50'
+              : 'bg-emerald-50 text-emerald-950 border border-emerald-300 hover:bg-emerald-100 font-extrabold'
+          }`}
+        >
+          <Trees className="w-4 h-4 text-emerald-600" />
+          <span>7. Permacultura (Plan Maestro & Principios)</span>
         </button>
       </div>
 
@@ -1168,11 +1181,14 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                   <span>{activeLiveSite === 'rewild' ? 'Ocultar Visor' : 'Cargar Visor Embebido'}</span>
                 </button>
                 <button
-                  onClick={() => window.open('http://localhost:7772/rewilding-field-suite.html', '_blank')}
+                  onClick={() => {
+                    const url = (window.location.hostname === 'localhost' && serversStatus.rewild) ? 'http://localhost:7772/rewilding-field-suite.html' : './rewild/rewilding-field-suite.html';
+                    window.open(url, '_blank');
+                  }}
                   className="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-sans text-xs font-bold transition-all flex items-center justify-center gap-1.5"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
-                  <span>Abrir en Nueva Pestaña</span>
+                  <span>Abrir en Nueva Pestaña ↗</span>
                 </button>
               </div>
             </div>
@@ -1244,7 +1260,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
               </div>
 
               <iframe
-                src={activeLiveSite === 'agritwin' ? 'http://localhost:7773' : 'http://localhost:7772/rewilding-field-suite.html'}
+                src={activeLiveSite === 'agritwin' ? 'http://localhost:7773' : (window.location.hostname === 'localhost' && serversStatus.rewild ? 'http://localhost:7772/rewilding-field-suite.html' : './rewild/rewilding-field-suite.html')}
                 title="Live Site Embed"
                 className="w-full h-[650px] border-0"
               />
@@ -1375,75 +1391,158 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
       {/* ===================== TAB 6: OBSIDIAN VAULT & MANIFIESTO ===================== */}
       {activeTab === 'vault' && (
         <div className="space-y-6">
-          
           <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+            
+            {/* Header */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-5">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-900 flex items-center justify-center shrink-0">
-                  <BookOpen className="w-5 h-5" />
+                <div className="w-12 h-12 rounded-2xl bg-purple-100 border border-purple-200 text-purple-900 flex items-center justify-center shrink-0 shadow-sm">
+                  <BookOpen className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-lg text-slate-900">Visor de Notas de Obsidian Vault</h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-extrabold text-xl text-slate-900">Vault de Obsidian Agro Tech</h3>
+                    <span className="text-xs px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800 font-mono font-bold">
+                      {ALL_DOC_NOTES.length} notas sincronizadas
+                    </span>
+                  </div>
                   <p className="text-xs text-slate-500 font-serif">
-                    Conexión directa con la carpeta <code>Agro Tech/</code> y soporte para wikilinks <code>[[...]]</code>.
+                    Fuente de verdad viva conectada directamente a <code>Agro Tech/</code> con resolución de wikilinks y soporte MRV.
                   </p>
                 </div>
               </div>
 
-              {/* Note Selector Pills */}
-              <div className="flex flex-wrap items-center gap-2">
-                {ALL_DOC_NOTES.map(note => (
-                  <button
-                    key={note.id}
-                    onClick={() => setSelectedNoteId(note.id)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-sans font-bold transition-all ${
-                      selectedNoteId === note.id
-                        ? 'bg-purple-900 text-white shadow-sm'
-                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                    }`}
-                  >
-                    {note.title.split(' ')[0]}
-                  </button>
-                ))}
-              </div>
+              {/* Obsidian Native App Launcher Link */}
+              {currentNote?.vaultPath && (
+                <a
+                  href={`obsidian://open?vault=Agro%20Tech&file=${encodeURIComponent(currentNote.vaultPath.replace(/^Agro Tech\//, '').replace(/\.md$/, ''))}`}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-50 text-purple-900 hover:bg-purple-100 border border-purple-300 font-sans text-xs font-bold transition-all w-fit shrink-0 shadow-sm"
+                  title="Abrir nota directamente en la app Obsidian"
+                >
+                  <ExternalLink className="w-3.5 h-3.5 text-purple-700" />
+                  <span>Abrir en Obsidian Desktop</span>
+                </a>
+              )}
             </div>
 
-            {/* Note Header */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 flex-wrap">
-                <h4 className="font-extrabold text-xl text-slate-900">{currentNote.title}</h4>
-                {currentNote.tags.map((tag, i) => (
-                  <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-50 text-purple-800 border border-purple-200 font-bold">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <p className="text-xs text-slate-600 font-serif">{currentNote.summary}</p>
-            </div>
-
-            {/* Markdown Rendered Preview */}
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 font-serif text-sm leading-relaxed whitespace-pre-wrap">
-              {currentNote.contentMarkdown}
-            </div>
-
-            {/* Wikilinks Badges */}
-            {currentNote.wikilinks && (
-              <div className="pt-2 border-t border-slate-100 space-y-2">
-                <span className="text-[10px] font-mono text-slate-400 block font-bold uppercase">
-                  ENLACES WIKI CONECTADOS (GRAPH VIEW)
+            {/* Note Filter & Search Grid */}
+            <div className="space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <span className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">
+                  Catálogo de Notas Vivas
                 </span>
-                <div className="flex flex-wrap gap-1.5">
-                  {currentNote.wikilinks.map((wl, i) => (
-                    <span key={i} className="text-xs font-mono px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-900 border border-emerald-200 font-bold">
-                      [[{wl}]]
-                    </span>
-                  ))}
+                <span className="text-xs text-slate-400 font-mono">
+                  Haz clic en cualquier píldora para inspeccionar
+                </span>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 max-h-48 overflow-y-auto p-2 bg-slate-50 rounded-2xl border border-slate-200">
+                {ALL_DOC_NOTES.map(note => {
+                  const isSelected = selectedNoteId === note.id || currentNote?.id === note.id;
+                  const isReport = note.category === 'informe-generado' || note.vaultPath?.includes('Informes Generados');
+                  const isTemplate = note.category === 'plantilla' || note.vaultPath?.includes('Plantillas Informes');
+
+                  return (
+                    <button
+                      key={note.id}
+                      onClick={() => setSelectedNoteId(note.id)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-sans font-bold transition-all flex items-center gap-1.5 ${
+                        isSelected
+                          ? 'bg-purple-900 text-white shadow-md scale-105'
+                          : isReport
+                          ? 'bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-100'
+                          : isTemplate
+                          ? 'bg-blue-50 text-blue-900 border border-blue-200 hover:bg-blue-100'
+                          : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
+                      }`}
+                    >
+                      {isReport && <FileText className="w-3 h-3 text-amber-600" />}
+                      {isTemplate && <FileText className="w-3 h-3 text-blue-600" />}
+                      <span>{note.title}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Current Note Header Details */}
+            {currentNote && (
+              <div className="space-y-4 pt-4 border-t border-slate-100">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h4 className="font-extrabold text-2xl text-slate-900">{currentNote.title}</h4>
+                      {currentNote.vaultPath && (
+                        <span className="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-300">
+                          {currentNote.vaultPath}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-slate-600 font-serif leading-relaxed">{currentNote.summary}</p>
+                  </div>
+                  
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-1.5 shrink-0 max-w-xs">
+                    {(currentNote.tags || []).map((tag: string, i: number) => (
+                      <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-50 text-purple-800 border border-purple-200 font-bold">
+                        #{tag.replace(/^#/, '')}
+                      </span>
+                    ))}
+                  </div>
                 </div>
+
+                {/* Markdown Rendered Content */}
+                <div className="p-6 sm:p-8 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 font-serif text-sm leading-relaxed whitespace-pre-wrap max-h-[600px] overflow-y-auto shadow-inner">
+                  {currentNote.contentMarkdown}
+                </div>
+
+                {/* Interactive Wikilinks Badges */}
+                {currentNote.wikilinks && currentNote.wikilinks.length > 0 && (
+                  <div className="pt-4 border-t border-slate-100 space-y-2">
+                    <span className="text-[11px] font-mono text-slate-500 block font-bold uppercase tracking-wider">
+                      🔗 ENLACES WIKI CONECTADOS (GRAPH VIEW INTERACTIVO)
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {currentNote.wikilinks.map((wl: string, i: number) => {
+                        const targetNote = ALL_DOC_NOTES.find((n: any) => 
+                          n.title?.toLowerCase() === wl.toLowerCase() || 
+                          n.fileName?.replace(/\.md$/, '').toLowerCase() === wl.toLowerCase() ||
+                          (n.aliases && n.aliases.some((a: string) => a.toLowerCase() === wl.toLowerCase()))
+                        );
+
+                        return (
+                          <button
+                            key={i}
+                            onClick={() => {
+                              if (targetNote) {
+                                setSelectedNoteId(targetNote.id);
+                              }
+                            }}
+                            className={`text-xs font-mono px-3 py-1.5 rounded-xl border transition-all flex items-center gap-1.5 ${
+                              targetNote
+                                ? 'bg-emerald-50 text-emerald-900 border-emerald-300 hover:bg-emerald-100 hover:scale-105 cursor-pointer font-bold shadow-xs'
+                                : 'bg-slate-100 text-slate-500 border-slate-300 opacity-70 cursor-default'
+                            }`}
+                            title={targetNote ? `Ir a nota: ${targetNote.title}` : 'Nota no encontrada en vault'}
+                          >
+                            <span>[[{wl}]]</span>
+                            {targetNote && <ChevronRight className="w-3 h-3 text-emerald-700" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
-          </div>
 
+          </div>
         </div>
+      )}
+
+      {/* ===================== TAB 7: PERMACULTURA (PLAN MAESTRO & PRINCIPIOS) ===================== */}
+      {activeTab === 'permaculture' && (
+        <PermacultureSection onNavigate={onNavigate} />
       )}
 
     </div>

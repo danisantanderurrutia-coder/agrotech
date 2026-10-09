@@ -6,9 +6,10 @@ import {
   Zap, Database, Radio, Server, Check, Flame, ChevronRight,
   MapPin, Shield, Mountain, Droplets, Wind
 } from 'lucide-react';
+import { PermacultureSection } from './PermacultureSection';
 
 interface EcosystemAppsHubProps {
-  initialApp?: 'agritwin' | 'regional' | 'rewild' | 'overview';
+  initialApp?: 'agritwin' | 'regional' | 'rewild' | 'overview' | 'permaculture';
   onNavigate?: (viewId: string) => void;
 }
 
@@ -16,9 +17,15 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
   initialApp = 'overview', 
   onNavigate 
 }) => {
-  const [selectedTab, setSelectedTab] = useState<'overview' | 'agritwin' | 'regional' | 'rewild'>(
-    initialApp === 'agritwin' ? 'agritwin' : initialApp === 'regional' ? 'regional' : initialApp === 'rewild' ? 'rewild' : 'overview'
+  const [selectedTab, setSelectedTab] = useState<'overview' | 'agritwin' | 'regional' | 'rewild' | 'permaculture'>(
+    initialApp === 'agritwin' ? 'agritwin' : initialApp === 'regional' ? 'regional' : initialApp === 'rewild' ? 'rewild' : initialApp === 'permaculture' ? 'permaculture' : 'overview'
   );
+  
+  useEffect(() => {
+    if (initialApp) {
+      setSelectedTab(initialApp);
+    }
+  }, [initialApp]);
   
   // Live ping status (Zero iframe overhead)
   const [agrotechOnline, setAgrotechOnline] = useState<boolean | null>(true);
@@ -48,7 +55,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
     }
 
     try {
-      const regRes = await fetch('http://localhost:7774', { method: 'HEAD', mode: 'no-cors' })
+      const regRes = await fetch('http://localhost:7777', { method: 'HEAD', mode: 'no-cors' })
         .then(() => true)
         .catch(() => false);
       setAgritwinRegionalOnline(regRes);
@@ -73,6 +80,15 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
     const interval = setInterval(checkServers, 15000);
     return () => clearInterval(interval);
   }, []);
+
+  const getRewildUrl = (file = 'rewilding-field-suite.html') => {
+    // Si estamos corriendo en GitHub Pages u otro host remoto, usar ruta relativa integrada
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    if (!isLocalhost || !rewildOnline) {
+      return `./rewild/${file}`;
+    }
+    return `http://localhost:7772/${file}`;
+  };
 
   const openAppTab = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
@@ -184,7 +200,7 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
             }`}
           >
             <Mountain className="w-4 h-4 text-amber-400" />
-            <span>3. AgroTwin Regional Maule (:7774)</span>
+            <span>3. AgriTwin Cuenca / Regional (:7774)</span>
           </button>
 
           <button
@@ -197,6 +213,18 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
           >
             <Trees className="w-4 h-4 text-emerald-400" />
             <span>4. Rewild Suite de Campo (:7772)</span>
+          </button>
+
+          <button
+            onClick={() => setSelectedTab('permaculture')}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-sans text-xs font-bold transition-all ${
+              selectedTab === 'permaculture'
+                ? 'bg-[#0B2519] text-white shadow-md ring-2 ring-emerald-400/50'
+                : 'bg-emerald-50 text-emerald-950 border border-emerald-300 hover:bg-emerald-100 font-extrabold'
+            }`}
+          >
+            <Trees className="w-4 h-4 text-emerald-600" />
+            <span>5. Permacultura (Plan Maestro & Docs)</span>
           </button>
         </div>
 
@@ -383,17 +411,17 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
 
               <div className="pt-4 border-t border-slate-100 space-y-2">
                 <button
-                  onClick={() => openAppTab('http://localhost:7774')}
+                  onClick={() => openAppTab('http://localhost:7777/#cerro')}
                   className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-500 text-slate-950 font-sans text-xs font-extrabold transition-all shadow-md active:scale-98"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  <span>Abrir Regional (:7774)</span>
+                  <span>Abrir Cuenca / Regional (:7777)</span>
                 </button>
                 <button
                   onClick={() => setSelectedTab('regional')}
                   className="w-full text-center text-[11px] text-slate-500 hover:text-slate-800 font-sans font-bold"
                 >
-                  Ver Ficha Civilisation & Acople $\rightarrow$
+                  Ver Ficha Cuenca & Acople $\rightarrow$
                 </button>
               </div>
             </div>
@@ -447,11 +475,11 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
 
               <div className="pt-4 border-t border-slate-100 space-y-2">
                 <button
-                  onClick={() => openAppTab('http://localhost:7772/rewilding-field-suite.html')}
+                  onClick={() => openAppTab(getRewildUrl('rewilding-field-suite.html'))}
                   className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white font-sans text-xs font-bold transition-all shadow-md active:scale-98"
                 >
                   <ExternalLink className="w-4 h-4 text-emerald-300" />
-                  <span>Abrir Field Suite (:7772)</span>
+                  <span>Abrir Rewild Field Suite ↗</span>
                 </button>
                 <button
                   onClick={() => setSelectedTab('rewild')}
@@ -679,24 +707,24 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">AgroTwin Regional</h2>
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">AgriTwin Cuenca (Regional / Cerro)</h2>
                     <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-950 font-bold border border-amber-300">
-                      Puerto 7774 • Escala Macro (122.000 ha)
+                      Hub Puerto 7777 • Escala Macro (122.000 ha)
                     </span>
                   </div>
                   <p className="text-xs text-slate-500 font-serif">
-                    Cartografía Estratégica Civilisation • Modelación de Incendios FWI e Inundaciones TWI Maule
+                    Cartografía Estratégica & Mirador Cerro • Modelación de Incendios FWI e Hidrología de Cuenca Maule Sur
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
                 <button
-                  onClick={() => openAppTab('http://localhost:7774')}
+                  onClick={() => openAppTab('http://localhost:7777/#cerro')}
                   className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-slate-950 font-sans text-xs font-extrabold shadow-lg transition-all active:scale-95 ring-2 ring-amber-300/50"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  <span>Abrir AgroTwin Regional en Puerto 7774 (Pestaña Dedicada)</span>
+                  <span>Abrir AgriTwin Cuenca en Hub :7777 (#cerro)</span>
                 </button>
               </div>
             </div>
@@ -850,19 +878,19 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
 
               <div className="flex flex-wrap items-center gap-3">
                 <button
-                  onClick={() => openAppTab('http://localhost:7772/rewilding-field-suite.html')}
+                  onClick={() => openAppTab(getRewildUrl('rewilding-field-suite.html'))}
                   className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white font-sans text-xs font-bold shadow-lg transition-all active:scale-95 ring-2 ring-emerald-500/40"
                 >
                   <ExternalLink className="w-4 h-4 text-emerald-300" />
-                  <span>Abrir Field Suite en Puerto 7772 (Pestaña Dedicada)</span>
+                  <span>Abrir Field Suite PWA (Pestaña Dedicada)</span>
                 </button>
 
                 <button
-                  onClick={() => openAppTab('http://localhost:7772/gowild-survey.html')}
+                  onClick={() => openAppTab(getRewildUrl('gowild-survey.html'))}
                   className="flex items-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-400 font-sans text-xs font-bold border border-emerald-600/30 transition-all shadow-md"
                 >
                   <Trees className="w-4 h-4 text-emerald-400" />
-                  <span>Abrir GoWild Survey (7772)</span>
+                  <span>Abrir GoWild Survey Clásico</span>
                 </button>
               </div>
             </div>
@@ -902,6 +930,11 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
 
           </div>
         </div>
+      )}
+
+      {/* TAB 5: PERMACULTURA (PLAN MAESTRO & DOCS) */}
+      {selectedTab === 'permaculture' && (
+        <PermacultureSection onNavigate={onNavigate} />
       )}
 
     </div>
