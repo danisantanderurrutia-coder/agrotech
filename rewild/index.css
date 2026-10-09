@@ -159,6 +159,8 @@ input:focus,textarea:focus,select:focus,button:focus-visible{outline:2px solid v
 }
 .btn-primary{background:var(--gold);color:#FFFFFF;box-shadow:0 2px 6px rgba(184,130,25,.3);}
 .btn-primary:hover{background:var(--gold-dark);transform:translateY(-1px);}
+.btn-canopy{background:var(--canopy);color:#FFFFFF;}
+.btn-canopy:hover{background:var(--canopy-deep);transform:translateY(-1px);}
 .btn-ghost{background:transparent;border:1.5px solid var(--canopy);color:var(--canopy);}
 .btn-ghost:hover{background:var(--canopy);color:#FFFFFF;}
 .btn-horizon{background:var(--horizon);color:#FFFFFF;}
@@ -170,8 +172,8 @@ input:focus,textarea:focus,select:focus,button:focus-visible{outline:2px solid v
   position:absolute;top:-10px;left:12px;background:var(--canopy);color:#FFFFFF;font-size:11px;font-weight:700;
   padding:2px 9px;border-radius:20px;
 }
-.add-row{border:1.5px dashed var(--gold);border-radius:9px;padding:10px;text-align:center;color:var(--gold-dark);
-  background:rgba(184,130,25,.08);cursor:pointer;font-size:13px;font-weight:600;}
+.add-row{border:1.5px dashed var(--gold);border-radius:9px;padding:12px;text-align:center;color:var(--gold-dark);
+  background:rgba(184,130,25,.08);cursor:pointer;font-size:13.5px;font-weight:600;transition:.15s background;}
 .add-row:hover{background:rgba(184,130,25,.16);}
 
 /* patches / pits list */
@@ -182,8 +184,41 @@ input:focus,textarea:focus,select:focus,button:focus-visible{outline:2px solid v
 .patch-card .pname{font-weight:700;font-size:15px;color:var(--canopy);font-family:'Fraunces',serif;}
 .patch-card .pmeta{font-size:12px;color:var(--ink-dim);margin-top:2px;}
 
+/* toast notification */
+.toast-badge{
+  position:fixed;bottom:24px;right:24px;background:var(--canopy-deep);color:#FFFFFF;border:1px solid var(--gold);
+  border-radius:30px;padding:9px 18px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:8px;
+  box-shadow:0 6px 22px rgba(0,0,0,.25);z-index:9999;animation:fadein .2s ease-out;
+}
+@keyframes fadein{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* eco score metric widgets */
+.eco-kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0;}
+.eco-kpi-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px;position:relative;overflow:hidden;}
+.eco-kpi-title{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-dim);font-weight:700;}
+.eco-kpi-val{font-size:24px;font-weight:700;font-family:'Fraunces',serif;color:var(--canopy);margin:4px 0 2px;}
+.eco-kpi-sub{font-size:11.5px;color:var(--ink-dim);}
+
+/* layer stepper header */
+.layer-stepper{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px;}
+.layer-step{
+  flex:1;min-width:130px;padding:8px 12px;border-radius:8px;border:1px solid var(--line);
+  background:var(--paper-2);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px;
+}
+.layer-step.active{background:var(--canopy);color:#FFFFFF;border-color:var(--canopy);font-weight:600;}
+.layer-step.done{border-color:var(--canopy);background:var(--moss-light);color:var(--canopy);}
+
+/* specialized visual controls (vess selector, soil swatches) */
+.score-pill-group{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;}
+.score-pill{
+  border:1.5px solid var(--line);background:var(--paper-2);border-radius:8px;padding:8px 12px;
+  cursor:pointer;font-size:12.5px;font-weight:600;color:var(--ink);transition:.15s;
+}
+.score-pill:hover{border-color:var(--canopy);}
+.score-pill.active{background:var(--canopy);border-color:var(--canopy);color:#FFFFFF;}
+
 @media print{
-  .footer-nav,.topbar .ladder,.top-tools,.session-bar,.backhome{display:none!important;}
+  .footer-nav,.topbar .ladder,.top-tools,.session-bar,.backhome,.toast-badge{display:none!important;}
   body{background:#fff;color:#111;}
   .card{box-shadow:none;border:1px solid #999;break-inside:avoid;background:#fff;color:#111;}
 }
@@ -193,3 +228,4 @@ input:focus,textarea:focus,select:focus,button:focus-visible{outline:2px solid v
   .home-body,.hero,.info-hero,.info-body{padding-left:16px;padding-right:16px;}
   .hero h1{font-size:28px;}
 }
+

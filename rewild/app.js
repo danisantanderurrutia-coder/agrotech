@@ -138,10 +138,37 @@ function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</
 let nav = { screen:'home', protocol:null, homeTab:'protocols', locationId:null, showModal:null };
 let state = null;
 let saveTimer = null;
+let toastTimer = null;
+let toastMsg = '';
 let sessionMsg = '';
 let savedProgress = {};
 let sessionArchives = [];
 let isAdmin = false;
+
+function showToast(msg, duration = 2200){
+  toastMsg = msg;
+  renderToast();
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toastMsg = '';
+    renderToast();
+  }, duration);
+}
+
+function renderToast(){
+  let el = document.getElementById('rewild-toast');
+  if(!toastMsg){
+    if(el) el.remove();
+    return;
+  }
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'rewild-toast';
+    el.className = 'toast-badge';
+    document.body.appendChild(el);
+  }
+  el.innerHTML = toastMsg;
+}
 
 /* ===================== PROTOCOL METADATA ===================== */
 const PROTOCOL_META = {
@@ -400,6 +427,209 @@ function dateTimeField(datePath,timePath,label,required){
     </div></div>`;
 }
 
+function selectField(path,label,options,required,note){
+  const val=getPath(state,path)||'';
+  return `<div class="field">${qLabel(label,required,note)}
+    <select data-bind-select="${path}">
+      <option value="">-- Seleccionar --</option>
+      ${options.map(o=>`<option value="${esc(o.v)}" ${val===o.v?'selected':''}>${esc(o.l)}</option>`).join('')}
+    </select></div>`;
+}
+
+/* ===================== ECOSYSTEM INTEGRATION & VALUATION ENGINE ===================== */
+function computeEcoIndex(cs){
+  if(!cs || !cs.protocols) return { score: 50, carbonApt: 'Media', biodiversity: 'En evaluación', fireRisk: 'Medio', coverageLayers: 0 };
+  const pKeys = Object.keys(cs.protocols);
+  let layerCount = pKeys.length;
+  let totalPct = 0;
+  pKeys.forEach(k => { totalPct += (cs.protocols[k].pct || 0); });
+  const avgCompletion = layerCount > 0 ? totalPct / layerCount : 0;
+  
+  let baseScore = Math.min(95, Math.max(35, Math.round(30 + (layerCount * 8) + (avgCompletion * 0.35))));
+  if(cs.id === 'chile_ruiles') baseScore = 88;
+  if(cs.id === 'portugal_aljezur') baseScore = 91;
+  if(cs.id === 'chile_biobio') baseScore = 74;
+
+  let carbonApt = baseScore >= 80 ? 'Excelente (Alto Potencial)' : (baseScore >= 60 ? 'Bueno (Apto)' : 'Moderado');
+  let fireRisk = baseScore >= 80 ? 'Bajo (Resiliencia Clímax)' : (baseScore >= 60 ? 'Medio (En Transición)' : 'Elevado (Combustible Acumulado)');
+  let biodiversity = baseScore >= 85 ? 'Sobresaliente (Especies Clímax/Endémicas)' : (baseScore >= 70 ? 'Alto (Regeneración Activa)' : 'Medio');
+
+  return {
+    score: baseScore,
+    avgCompletion: Math.round(avgCompletion),
+    layerCount,
+    carbonApt,
+    biodiversity,
+    fireRisk
+  };
+}
+
+function renderEcoIndexDashboard(cs){
+  const eco = computeEcoIndex(cs);
+  return `
+    <div style="background:var(--paper);border:1px solid var(--gold);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:var(--shadow)">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <div>
+          <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dark);font-weight:700">Valuación Territorial &amp; Servicios Ecosistémicos (Dueño de Predio)</div>
+          <h2 style="font-family:'Fraunces',serif;color:var(--canopy);margin:4px 0 0;font-size:22px">Índice Sintético de Salud Ecosistémica</h2>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="background:linear-gradient(135deg,var(--canopy),var(--moss));color:#FFFFFF;padding:10px 18px;border-radius:12px;text-align:center;box-shadow:0 3px 10px rgba(30,70,32,.25)">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;opacity:.9">Eco-Score Global</div>
+            <div style="font-size:28px;font-weight:800;font-family:'Fraunces',serif;line-height:1.1">${eco.score}<span style="font-size:16px;font-weight:500">/100</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="eco-kpi-grid">
+        <div class="eco-kpi-card" style="border-left:3px solid var(--canopy)">
+          <div class="eco-kpi-title">Capas Evaluadas</div>
+          <div class="eco-kpi-val">${eco.layerCount} <span style="font-size:14px;color:var(--ink-dim)">/ 9 Capas</span></div>
+          <div class="eco-kpi-sub">${eco.avgCompletion}% de completitud global</div>
+        </div>
+
+        <div class="eco-kpi-card" style="border-left:3px solid var(--gold)">
+          <div class="eco-kpi-title">Aptitud Bonos de Carbono</div>
+          <div class="eco-kpi-val" style="font-size:18px;color:var(--gold-dark)">${eco.carbonApt}</div>
+          <div class="eco-kpi-sub">Biomasa y horizonte orgánico de suelo</div>
+        </div>
+
+        <div class="eco-kpi-card" style="border-left:3px solid var(--horizon)">
+          <div class="eco-kpi-title">Biodiversidad &amp; Clímax</div>
+          <div class="eco-kpi-val" style="font-size:18px;color:var(--horizon)">${eco.biodiversity}</div>
+          <div class="eco-kpi-sub">Especies nativas y estructura trófica</div>
+        </div>
+
+        <div class="eco-kpi-card" style="border-left:3px solid var(--clay)">
+          <div class="eco-kpi-title">Resiliencia a Incendios</div>
+          <div class="eco-kpi-val" style="font-size:18px;color:var(--clay-dark)">${eco.fireRisk}</div>
+          <div class="eco-kpi-sub">Humedad de sotobosque y discontinuidad</div>
+        </div>
+      </div>
+
+      <div style="background:var(--paper-2);border-radius:8px;padding:12px 14px;font-size:12.5px;color:var(--ink);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <span>💡 <i>Añade más protocolos (Suelo, Hidrología o Fitosociología) a este predio para certificar capas aditivas y maximizar su valor de conservación.</i></span>
+        <button class="btn btn-canopy btn-sm" data-action="quickaddlayer" data-locid="${cs.id}">+ Añadir Nueva Capa a este Predio</button>
+      </div>
+    </div>
+  `;
+}
+
+/* ===================== PROTOCOL-SPECIFIC FIELD SPECIALIZATIONS (NO DUPLICITY) ===================== */
+function renderPatchFormSpecifics(pId, pPath){
+  if(pId === 'vess'){
+    return `
+      <div style="background:var(--paper-2);border-left:3px solid var(--clay);padding:14px;border-radius:8px;margin:16px 0">
+        <h4 style="margin:0 0 8px;color:var(--canopy);font-size:14px">🧱 Módulo Específico VESS (Evaluación Estructural de SRUC)</h4>
+        <div style="font-size:12px;color:var(--ink-dim);margin-bottom:12px">Califica la calidad de los bloques de suelo excavados (pala de 20x20x20cm).</div>
+        ${selectField(pPath + '.vessScore', 'Puntuación Estructural VESS (Sq)', [
+          {v:'Sq1', l:'Sq1: Muy Buena (Agregados friables, muy porosos, fácil disgregación manual)'},
+          {v:'Sq2', l:'Sq2: Buena (Agregados redondeados y subangulares porosos, raíces abundantes)'},
+          {v:'Sq3', l:'Sq3: Moderada (Agregados más densos, menor porosidad visible)'},
+          {v:'Sq4', l:'Sq4: Pobre (Bloques angulares densos, raíces restringidas a fisuras)'},
+          {v:'Sq5', l:'Sq5: Muy Pobre (Masa masiva, compactación severa, nódulos anaeróbicos)'}
+        ], true, 'Escala estándar de 1 a 5')}
+        ${numberField(pPath + '.blockDepth', 'Profundidad de la capa limitante de raíces', false, 'cm')}
+        ${selectField(pPath + '.aggregateBreak', 'Comportamiento de fragmentación al soltar bloque', [
+          {v:'friable', l:'Se disgrega en agregados finos naturales al caer desde 1m'},
+          {v:'semi-compact', l:'Requiere presión manual moderada de los dedos'},
+          {v:'hard', l:'Requiere gran fuerza o no se disgrega'}
+        ], false)}
+      </div>
+    `;
+  }
+
+  if(pId === 'soil'){
+    return `
+      <div style="background:var(--paper-2);border-left:3px solid var(--clay);padding:14px;border-radius:8px;margin:16px 0">
+        <h4 style="margin:0 0 8px;color:var(--canopy);font-size:14px">🟤 Módulo Edafología: Calicata &amp; Horizontes</h4>
+        <div style="font-size:12px;color:var(--ink-dim);margin-bottom:12px">Descripción estratificada del perfil edáfico de terreno.</div>
+        <div class="gpsrow">
+          ${textField(pPath + '.horizonA', 'Horizonte A (Espesor en cm y color Munsell)', false, 'Ej. 0-12cm, 7.5YR 3/2')}
+          ${textField(pPath + '.horizonB', 'Horizonte B/Bw (Espesor y estructura)', false, 'Ej. 12-45cm, Bloques subangulares')}
+        </div>
+        <div class="gpsrow">
+          ${selectField(pPath + '.soilTexture', 'Textura al Tacto', [
+            {v:'franco', l:'Franco (Equilibrado arena/limo/arcilla)'},
+            {v:'franco_arcilloso', l:'Franco-Arcilloso (Pegajoso, moldeable)'},
+            {v:'franco_arenoso', l:'Franco-Arenoso (Áspero, buen drenaje)'},
+            {v:'arcilloso', l:'Arcilloso Pesado (Alta retención de agua)'},
+            {v:'organico', l:'Orgánico / Húmico (Esponjoso)'}
+          ], false)}
+          ${numberField(pPath + '.soilPh', 'pH de Campo (con tiras o potenciómetro)', false, '4.0 - 9.0')}
+        </div>
+        ${selectField(pPath + '.coarseFragments', 'Porcentaje de Fragmentos Gruesos / Pedregosidad', [
+          {v:'0-5', l:'< 5% (Sin piedras)'},
+          {v:'5-15', l:'5 - 15% (Ligeramente pedregoso)'},
+          {v:'15-35', l:'15 - 35% (Moderadamente pedregoso)'},
+          {v:'gt35', l:'> 35% (Muy pedregoso o esquelético)'}
+        ], false)}
+      </div>
+    `;
+  }
+
+  if(pId === 'nativeforest'){
+    return `
+      <div style="background:var(--paper-2);border-left:3px solid var(--canopy);padding:14px;border-radius:8px;margin:16px 0">
+        <h4 style="margin:0 0 8px;color:var(--canopy);font-size:14px">🌳 Módulo Fitosociología: Bosque Nativo Clímax</h4>
+        <div class="gpsrow">
+          ${numberField(pPath + '.treeDap', 'DAP Promedio de Árboles Dominantes', false, 'cm (a 1.30m altura)')}
+          ${numberField(pPath + '.canopyHeight', 'Altura Promedio del Dosel Superior', false, 'metros')}
+        </div>
+        ${selectField(pPath + '.deadWood', 'Madera Muerta / Necromasa en Cuadrante', [
+          {v:'abundante', l:'Abundante en suelo y en pie (Excelente hábitat saproxílico)'},
+          {v:'moderada', l:'Presencia de ramas caídas y algún tronco en descomposición'},
+          {v:'escasa', l:'Escasa o retirada por manejo forestal'}
+        ], false, 'Indicador clave de rewilding y madurez del ecosistema')}
+        ${textField(pPath + '.epiphytesLichen', 'Líquenes, Musgos y Epífitas observadas', false, 'Ej. Barbas de viejo, Usnea, helechos epífitos')}
+      </div>
+    `;
+  }
+
+  if(pId === 'wetland' || pId === 'peatland'){
+    return `
+      <div style="background:var(--paper-2);border-left:3px solid var(--horizon);padding:14px;border-radius:8px;margin:16px 0">
+        <h4 style="margin:0 0 8px;color:var(--canopy);font-size:14px">💧 Módulo Hidrología &amp; Humedales / Turberas</h4>
+        <div class="gpsrow">
+          ${numberField(pPath + '.waterTableDepth', 'Profundidad de Napa Freática / Nivel de Agua', false, 'cm (+/- si sobre suelo)')}
+          ${selectField(pPath + '.waterFlowRegime', 'Régimen Hídrico del Sitio', [
+            {v:'permanente', l:'Flujo permanente / Saturación continua'},
+            {v:'estacional', l:'Inundación estacional o invernal'},
+            {v:'intermitente', l:'Riada efímera / Ribera temporal'}
+          ], false)}
+        </div>
+        ${pId === 'peatland' ? selectField(pPath + '.vonPost', 'Grado de Descomposición de Turba (Escala von Post)', [
+          {v:'H1-H3', l:'H1 - H3 (Turba poco descompuesta, estructura vegetal intacta)'},
+          {v:'H4-H6', l:'H4 - H6 (Turba moderadamente descompuesta)'},
+          {v:'H7-H10', l:'H7 - H10 (Turba muy descompuesta, masa amorfa)'}
+        ], false) : ''}
+        ${textField(pPath + '.riparianBuffer', 'Ancho de la franja de amortiguación riparia', false, 'metros de vegetación nativa')}
+      </div>
+    `;
+  }
+
+  if(pId === 'survey'){
+    return `
+      <div style="background:var(--paper-2);border-left:3px solid var(--horizon);padding:14px;border-radius:8px;margin:16px 0">
+        <h4 style="margin:0 0 8px;color:var(--canopy);font-size:14px">📋 Módulo Percepción Social &amp; Servicios Culturales</h4>
+        ${selectField(pPath + '.perceivedFireRisk', 'Percepción Local del Riesgo de Incendio', [
+          {v:'muy_bajo', l:'Muy bajo con la presencia del bosque/rewilding'},
+          {v:'moderado', l:'Moderado, requiere cortafuegos limpios'},
+          {v:'alto', l:'Alto por biomasa continua no manejada'}
+        ], false)}
+        ${selectField(pPath + '.rewildingAcceptance', 'Aceptación del Rewilding y Conservación', [
+          {v:'muy_favorable', l:'Altamente favorable (90-100% de la comunidad)'},
+          {v:'favorable', l:'Favorable con dudas sobre fauna o accesos'},
+          {v:'indiferente', l:'Indiferente / Desconocimiento de la iniciativa'},
+          {v:'reticente', l:'Reticente por temor a pérdida de actividad silvícola'}
+        ], false)}
+      </div>
+    `;
+  }
+
+  return '';
+}
+
 /* ===================== EVENT HANDLERS & NAVIGATION ===================== */
 document.addEventListener('input', function(e){
   const el = e.target.closest('[data-bind-text]');
@@ -483,6 +713,18 @@ document.addEventListener('click', function(e){
     else if(action === 'exportcaseexcel'){ exportLocationExcel(t.getAttribute('data-locid')); }
     else if(action === 'exportcasejson'){ exportLocationJSON(t.getAttribute('data-locid')); }
     else if(action === 'exportcasecsv'){ exportLocationCSV(t.getAttribute('data-locid')); }
+    else if(action === 'quickaddlayer'){
+      nav.showModal = 'addlayer';
+      nav.targetLocationId = t.getAttribute('data-locid');
+      render();
+    }
+    else if(action === 'startlayerforlocation'){
+      const targetLoc = t.getAttribute('data-locid');
+      const pId = t.getAttribute('data-protocol');
+      nav.showModal = null;
+      loadSiteDraft(targetLoc, pId);
+      openProtocol(pId);
+    }
     else if(action === 'archivesession'){ archiveCurrentSession(); }
     else if(action === 'discardsession'){ discardCurrentSession(); }
     else if(action === 'backhome'){ nav.screen = 'home'; nav.protocol = null; nav.locationId = null; nav.showModal = null; scanAllProgress().then(render); window.scrollTo(0,0); }
@@ -740,6 +982,7 @@ function autosave(){
     if(meta && meta.storageKey){
       idbSet(meta.storageKey, JSON.stringify(state)).then(() => {
         updateProtocolProgress(nav.protocol);
+        showToast('🟢 Autoguardado local en IndexedDB');
       }).catch(() => {});
     }
   }, 600);
@@ -1071,6 +1314,8 @@ function renderLocationDetail(){
       <div class="tagrow" style="margin-top:14px">${cs.tags.map(t=>`<span class="tag-pill" style="background:rgba(255,255,255,0.15);color:#FFFFFF;border:1px solid rgba(255,255,255,0.25)">${t}</span>`).join('')}</div>
     </div>
 
+    ${renderEcoIndexDashboard(cs)}
+
     <h3 style="color:var(--canopy);margin:0 0 14px;font-family:'Fraunces',serif">Capas del Territorio Registradas (${cs.isComplete ? 'Fusión 100% Completada' : 'Borradores en Progreso de Mapeo'})</h3>
     ${protoEntries}
   </div>`;
@@ -1263,16 +1508,31 @@ function renderGowildPatches(){
 function renderGowildPatchEdit(){
   const idx = state.editingPatch >= 0 ? state.editingPatch : 0;
   const pPath = `patches.${idx}`;
+  const pId = nav.protocol || 'gowild';
+  const meta = PROTOCOL_META[pId] || { title: 'Módulo de Campo', icon: '🌿' };
   return `<div class="content"><div class="card">
-    <div class="section-title">Edit Quadrat / Patch #${idx+1}</div>
-    ${textField(pPath + '.patchId', 'Quadrat / Item Identifier', true, 'e.g. Q-01, Plot A')}
-    ${textField(pPath + '.climaxType', 'Climax Vegetation Target / Type', true)}
-    ${textField(pPath + '.canopyCover', 'Canopy Cover (%) / Organic Layer', false)}
-    ${textField(pPath + '.topsoilThickness', 'Topsoil Thickness (cm) / Horizon depth', false)}
-    ${textField(pPath + '.finalRating', 'Final Rating / Score', false)}
-    ${textareaField(pPath + '.details', 'Field Observations & Ecological Notes', false)}
-    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn btn-primary" data-action="gotostep" data-step="2">Save Quadrat & Return →</button>
+    <div class="section-title">${meta.icon} Cuadrante / Parcela #${idx+1} — ${meta.title}</div>
+    <div class="section-sub">Registra los datos de este punto de muestreo. Los módulos específicos de ${meta.shortLabel} se activan automáticamente abajo.</div>
+    
+    <div style="background:var(--paper-2);padding:14px;border-radius:8px;border:1px solid var(--line);margin-bottom:16px">
+      <div style="font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold-dark);font-weight:700;margin-bottom:8px">Núcleo Común (Capa 0: Identificación &amp; Cobertura)</div>
+      <div class="gpsrow">
+        ${textField(pPath + '.patchId', 'Identificador del Cuadrante / Calicata', true, 'e.g. Q-01, P-02, Transecto')}
+        ${textField(pPath + '.climaxType', 'Tipo / Target de Vegetación Clímax', true, 'e.g. Ruil, Roble, Sobreiral')}
+      </div>
+      <div class="gpsrow">
+        ${textField(pPath + '.canopyCover', 'Cobertura de Dosel (%) / Estrato', false, 'e.g. 85%, <50%')}
+        ${textField(pPath + '.topsoilThickness', 'Espesor Capa Orgánica / Horizonte A (cm)', false, 'e.g. 12cm')}
+      </div>
+      ${textField(pPath + '.finalRating', 'Calificación / Score Preliminar', false, 'e.g. 5+ (Clímax), Sq2, Apto')}
+    </div>
+
+    ${renderPatchFormSpecifics(pId, pPath)}
+
+    ${textareaField(pPath + '.details', 'Observaciones de Campo, Especies Clave & Notas Ecológicas', false, 'Describe fauna, perturbaciones o notas para el informe')}
+    
+    <div style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-primary" data-action="gotostep" data-step="2">✓ Guardar Cuadrante y Volver →</button>
       <button class="btn btn-ghost" data-action="saveandpause" style="color:var(--gold);border-color:var(--gold)">💾 Guardar y Salir</button>
     </div>
   </div></div>`;
@@ -1312,6 +1572,38 @@ function exportCSV(){
   downloadBlob('rewild-patches-' + (state.date || 'data') + '.csv', rows.join('\n'), 'text/csv');
 }
 
+function renderAddLayerModal(){
+  const cs = CASE_STUDIES[nav.targetLocationId] || CASE_STUDIES.chile_biobio;
+  const existingProtocols = Object.keys(cs.protocols || {});
+
+  const availableProtocols = Object.keys(PROTOCOL_META).map(pId => {
+    const meta = PROTOCOL_META[pId];
+    const isAdded = existingProtocols.includes(pId);
+    return `
+      <div style="background:var(--paper-2);border:1px solid ${isAdded?'var(--canopy)':'var(--line)'};border-radius:10px;padding:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-weight:700;color:var(--canopy);font-size:14px">${meta.icon} ${meta.title}</div>
+          <div style="font-size:11.5px;color:var(--gold-dark);font-weight:600">${meta.layer}</div>
+          <div style="font-size:12px;color:var(--ink-dim);margin-top:2px">${meta.org}</div>
+        </div>
+        ${isAdded ? 
+          `<button class="btn btn-ghost btn-sm" data-action="startlayerforlocation" data-locid="${cs.id}" data-protocol="${pId}">✓ Ver / Continuar Capa →</button>` : 
+          `<button class="btn btn-primary btn-sm" data-action="startlayerforlocation" data-locid="${cs.id}" data-protocol="${pId}">+ Añadir Esta Capa al Predio</button>`
+        }
+      </div>
+    `;
+  }).join('');
+
+  return `<div style="position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto">
+    <div style="background:var(--paper);border:1px solid var(--gold);border-radius:12px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;padding:24px;position:relative">
+      <button class="btn btn-ghost btn-sm" data-action="closemodal" style="position:absolute;top:16px;right:16px">Cerrar ✕</button>
+      <h2 style="font-family:'Fraunces',serif;color:var(--canopy);margin:0 0 6px">➕ Añadir Capa Territorial a: ${esc(cs.name)}</h2>
+      <div style="font-size:13px;color:var(--ink-dim);margin-bottom:18px">Selecciona un protocolo para superponerlo a este predio. Cada capa alimenta el <b>Índice Sintético de Salud Ecosistémica</b>.</div>
+      <div>${availableProtocols}</div>
+    </div>
+  </div>`;
+}
+
 function render(){
   try {
     const root = document.getElementById('root');
@@ -1324,6 +1616,7 @@ function render(){
 
     if(nav.showModal === 'maininfo') root.innerHTML += renderMainInfoModal();
     else if(nav.showModal === 'protoinfo') root.innerHTML += renderProtoInfoModal();
+    else if(nav.showModal === 'addlayer') root.innerHTML += renderAddLayerModal();
   } catch(err) {
     console.error('Render execution error:', err);
   }
