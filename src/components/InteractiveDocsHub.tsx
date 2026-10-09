@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { 
-  Database, Layers, Cpu, Globe, Trees, Terminal, ExternalLink, 
+  Database, Layers, Cpu, Globe, Trees, ExternalLink, 
   Copy, Check, Download, Search, RefreshCw, Radio, Sparkles, 
   MapPin, Shield, BookOpen, FileText, ChevronRight, Activity, 
   Compass, Flame, Sun, Droplets, Wind, Maximize2, Minimize2,
@@ -331,8 +331,8 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
               : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
           }`}
         >
-          <Terminal className="w-4 h-4 text-emerald-400" />
-          <span>5. Terminal de Scripts & APIs</span>
+          <Code2 className="w-4 h-4 text-emerald-400" />
+          <span>5. Automatización & APIs</span>
         </button>
 
         <button
@@ -1135,18 +1135,11 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
 
               <div className="space-y-2 pt-2 border-t border-slate-100">
                 <button
-                  onClick={() => setActiveLiveSite(activeLiveSite === 'agritwin' ? 'none' : 'agritwin')}
+                  onClick={() => window.open('http://localhost:7773', '_blank')}
                   className="w-full py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-sans text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1.5"
                 >
-                  <Eye className="w-4 h-4" />
-                  <span>{activeLiveSite === 'agritwin' ? 'Ocultar Demo' : 'Cargar Demo Embebida'}</span>
-                </button>
-                <button
-                  onClick={() => window.open('http://localhost:7773', '_blank')}
-                  className="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-sans text-xs font-bold transition-all flex items-center justify-center gap-1.5"
-                >
                   <ExternalLink className="w-3.5 h-3.5" />
-                  <span>Abrir en Nueva Pestaña</span>
+                  <span>Abrir AgriTwin 3D App ↗</span>
                 </button>
               </div>
             </div>
@@ -1174,21 +1167,14 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
 
               <div className="space-y-2 pt-2 border-t border-slate-100">
                 <button
-                  onClick={() => setActiveLiveSite(activeLiveSite === 'rewild' ? 'none' : 'rewild')}
-                  className="w-full py-2.5 px-3 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white font-sans text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1.5"
-                >
-                  <Eye className="w-4 h-4 text-emerald-300" />
-                  <span>{activeLiveSite === 'rewild' ? 'Ocultar Demo' : 'Cargar Demo Embebida'}</span>
-                </button>
-                <button
                   onClick={() => {
                     const url = (window.location.hostname === 'localhost' && serversStatus.rewild) ? 'http://localhost:7772/rewilding-field-suite.html' : './rewild/rewilding-field-suite.html';
                     window.open(url, '_blank');
                   }}
-                  className="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-sans text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+                  className="w-full py-2.5 px-3 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white font-sans text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1.5"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
-                  <span>Abrir en Nueva Pestaña ↗</span>
+                  <span>Abrir Rewild PWA App ↗</span>
                 </button>
               </div>
             </div>
@@ -1226,46 +1212,6 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
             </div>
 
           </div>
-
-          {/* Embedded Viewer Container */}
-          {activeLiveSite !== 'none' && (
-            <div className={`rounded-3xl border-2 border-emerald-500/50 overflow-hidden shadow-2xl bg-slate-950 animate-fadeIn ${
-              fullScreenEmbed ? 'fixed inset-4 z-50' : ''
-            }`}>
-              <div className="bg-slate-900 px-4 py-3 flex items-center justify-between text-xs font-mono text-slate-300 border-b border-slate-800">
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-rose-500" />
-                  <span className="w-3 h-3 rounded-full bg-amber-500" />
-                  <span className="w-3 h-3 rounded-full bg-emerald-500" />
-                  <span className="text-white font-bold ml-2">
-                    {activeLiveSite === 'agritwin' ? 'AgriTwin 3D WebGL Canvas (Predio Meniels)' : 'Rewild Field Suite (PWA Campo)'}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setFullScreenEmbed(!fullScreenEmbed)}
-                    className="hover:text-white flex items-center gap-1 text-[11px]"
-                  >
-                    {fullScreenEmbed ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
-                    <span>{fullScreenEmbed ? 'Salir' : 'Maximizar'}</span>
-                  </button>
-                  <button
-                    onClick={() => setActiveLiveSite('none')}
-                    className="text-rose-400 hover:text-rose-300 font-bold ml-2"
-                  >
-                    ✕ Cerrar
-                  </button>
-                </div>
-              </div>
-
-              <iframe
-                src={activeLiveSite === 'agritwin' ? 'http://localhost:7773' : (window.location.hostname === 'localhost' && serversStatus.rewild ? 'http://localhost:7772/rewilding-field-suite.html' : './rewild/rewilding-field-suite.html')}
-                title="Live Site Embed"
-                className="w-full h-[650px] border-0"
-              />
-            </div>
-          )}
 
           {/* Brand Assets & Official Vector Logos Gallery */}
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4">
@@ -1313,15 +1259,15 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
               <div>
                 <span className="text-[10px] font-mono text-amber-400 font-bold uppercase tracking-wider block">
-                  CLI & RUNNER DE COMANDOS
+                  INTEGRACIÓN & SERVICIOS DE DATOS
                 </span>
                 <h3 className="text-xl font-extrabold text-white flex items-center gap-2">
-                  <Terminal className="w-5 h-5 text-emerald-400" />
-                  <span>Catálogo de Scripts de Producción & Simulación</span>
+                  <Code2 className="w-5 h-5 text-emerald-400" />
+                  <span>Automatización & Servicios de Simulación</span>
                 </h3>
               </div>
               <span className="text-xs font-mono text-slate-400">
-                1-Click Copy • macOS (zsh) & Linux
+                APIs & Endpoints del Ecosistema
               </span>
             </div>
 
@@ -1353,35 +1299,6 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-
-          {/* Quick Start Commands Cheat Sheet */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4">
-            <h4 className="font-extrabold text-sm text-slate-900 flex items-center gap-2">
-              <Code2 className="w-4 h-4 text-emerald-700" />
-              <span>Cheat Sheet: Iniciar los 3 Sistemas Simultáneamente</span>
-            </h4>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                <span className="font-bold text-slate-900 block">1. Terminal 1 (Plataforma Madre)</span>
-                <code className="p-2 rounded bg-slate-200 text-slate-800 block text-[11px]">
-                  npm run dev
-                </code>
-              </div>
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                <span className="font-bold text-slate-900 block">2. Terminal 2 (AgriTwin 3D)</span>
-                <code className="p-2 rounded bg-slate-200 text-slate-800 block text-[11px]">
-                  node agritwin/server.cjs
-                </code>
-              </div>
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                <span className="font-bold text-slate-900 block">3. Terminal 3 (Rewild Suite)</span>
-                <code className="p-2 rounded bg-slate-200 text-slate-800 block text-[11px]">
-                  python3 rewild/server.py
-                </code>
-              </div>
             </div>
           </div>
 

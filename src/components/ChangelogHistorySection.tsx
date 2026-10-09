@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   History, GitCommit, CheckCircle2, Sparkles, Layers, Cpu, 
-  ShieldCheck, Sprout, ArrowRight, Clock, Server, Terminal,
+  ShieldCheck, Sprout, ArrowRight, Clock, Server,
   ExternalLink, FileCode, Users, Database, Globe, Filter
 } from 'lucide-react';
 
@@ -380,7 +380,7 @@ export const ChangelogHistorySection: React.FC = () => {
                   </div>
 
                   <div className="p-3 rounded-xl bg-slate-900 text-white font-mono text-xs flex items-center gap-2">
-                    <Terminal className="w-4 h-4 text-amber-400 shrink-0" />
+                    <Layers className="w-4 h-4 text-amber-400 shrink-0" />
                     <div>
                       <span className="text-amber-400 font-bold">Impacto en el Ecosistema: </span>
                       <span className="text-slate-300 font-sans">{m.systemImpact}</span>

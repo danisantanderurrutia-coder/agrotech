@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Layers, Cpu, Globe, ExternalLink, Terminal, CheckCircle2, 
+  Layers, Cpu, Globe, ExternalLink, CheckCircle2, 
   AlertCircle, Play, RefreshCw, Sparkles, Trees, ShieldCheck, 
   Activity, ArrowRight, Compass, Info, Maximize2, MonitorPlay,
   Zap, Database, Radio, Server, Check, Flame, ChevronRight,
@@ -617,12 +617,21 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
-                <button
-                  onClick={() => openAppTab('http://localhost:7773')}
-                  className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-[#0B2519] font-sans text-xs font-extrabold shadow-lg transition-all active:scale-95 ring-2 ring-amber-300/50"
+                <a
+                  href={`https://wa.me/56976696142?text=${encodeURIComponent('Hola AgroTech Chile, me interesa cotizar una suscripción o demostración técnica de AgriTwin 3D (Tronco & 6 Ramas) para mi predio.')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-sans text-xs font-extrabold shadow-lg transition-all active:scale-95"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  <span>Abrir AgriTwin 3D en Vivo (Pestaña Dedicada)</span>
+                  <span>Cotizar Suscripción vía WhatsApp</span>
+                </a>
+                <button
+                  onClick={() => openAppTab('http://localhost:7773')}
+                  className="flex items-center gap-2 px-4 py-3.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/50 font-sans text-xs font-bold transition-all"
+                >
+                  <Cpu className="w-4 h-4 text-amber-400" />
+                  <span>Lanzar Aplicación Standalone 3D</span>
                 </button>
               </div>
             </div>
@@ -660,35 +669,95 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
               </div>
             </div>
 
-            {/* 3 Enterprise Ready Modules Breakdown */}
+            {/* 6 Ramas Productivas */}
             <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                <div>
+                  <span className="text-[10px] font-mono font-bold text-amber-700 uppercase">ARQUITECTURA BIOFÍSICA</span>
+                  <h3 className="text-lg font-extrabold text-slate-900">
+                    Un Tronco Biofísico Central • 6 Ramas Especializadas
+                  </h3>
+                </div>
+                <span className="text-xs font-mono text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full font-bold">
+                  SaaS B2B • LTV/CAC 12.1x
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-1.5 border-l-4 border-l-emerald-600">
+                  <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase block">Rama 1</span>
+                  <h4 className="text-sm font-bold text-slate-900">El Galpón Predial (IoT)</h4>
+                  <p className="text-xs text-slate-600 font-serif">
+                    Telemetría microclimática brote a brote, sondas FDR y conexión WebSocket con relés de riego.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-1.5 border-l-4 border-l-green-600">
+                  <span className="text-[10px] font-mono font-bold text-green-800 uppercase block">Rama 2</span>
+                  <h4 className="text-sm font-bold text-slate-900">Invernadero & Cultivos</h4>
+                  <p className="text-xs text-slate-600 font-serif">
+                    Biofábrica, producción de Bokashi (1.5 kg/árbol), consorcios de trébol y agrovoltaico 120 kWp.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-1.5 border-l-4 border-l-amber-600">
+                  <span className="text-[10px] font-mono font-bold text-amber-800 uppercase block">Rama 3</span>
+                  <h4 className="text-sm font-bold text-slate-900">Establo & Ganadería PRV</h4>
+                  <p className="text-xs text-slate-600 font-serif">
+                    Pastoreo Racional Voisin en 8 potreros (1.8 UGM/ha, +4.2 kg MO/m²) y flota Egg Mobile.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-1.5 border-l-4 border-l-teal-600">
+                  <span className="text-[10px] font-mono font-bold text-teal-800 uppercase block">Rama 4</span>
+                  <h4 className="text-sm font-bold text-slate-900">Incursión Rewilding (Bosque Nativo)</h4>
+                  <p className="text-xs text-slate-600 font-serif">
+                    Corredor ribereño esclerófilo (peumo, quillay, boldo) con auditoría IPCC y BioToken PBC.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-1.5 border-l-4 border-l-blue-600">
+                  <span className="text-[10px] font-mono font-bold text-blue-800 uppercase block">Rama 5</span>
+                  <h4 className="text-sm font-bold text-slate-900">La Cumbre del Cerro (Cuenca Macro)</h4>
+                  <p className="text-xs text-slate-600 font-serif">
+                    Cartografía de 122.000 ha de cuenca Maule Sur, riesgo de incendios FWI e hidrología TWI.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-1.5 border-l-4 border-l-purple-600">
+                  <span className="text-[10px] font-mono font-bold text-purple-800 uppercase block">Rama 6</span>
+                  <h4 className="text-sm font-bold text-slate-900">Mesa Vecinal & Gobernanza DAO</h4>
+                  <p className="text-xs text-slate-600 font-serif">
+                    Pactos colaborativos con parceleros colindantes, asambleas y economía de los hombros.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Planes Comerciales AgriTwin */}
+            <div className="space-y-4 pt-4 border-t border-slate-100">
               <h3 className="text-base font-bold text-slate-900">
-                Los 3 Módulos Operativos de AgriTwin
+                Planes Comerciales de Suscripción Predial
               </h3>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2 border-l-4 border-l-emerald-600">
-                  <span className="text-[10px] font-mono font-bold text-emerald-800 uppercase block">Módulo 1</span>
-                  <h4 className="text-sm font-bold text-slate-900">AgriTwin Enterprise (Viñas & Frutales)</h4>
-                  <p className="text-xs text-slate-600 font-serif">
-                    Curva de estrés hídrico CWSI, lámina de reposición de riego semanal ($mm$), y optimización de tarifas eléctricas de bombeo.
-                  </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-sans">
+                <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                  <span className="text-xs font-mono font-bold text-slate-500 uppercase">PLAN BÁSICO</span>
+                  <div className="text-2xl font-extrabold text-slate-900">$45.000 <span className="text-xs font-normal text-slate-500">CLP/mes</span></div>
+                  <p className="text-xs text-slate-600 font-serif">Para parceleros familiares de hasta 5 ha. Alertas críticas de heladas por WhatsApp y visor satelital quincenal.</p>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2 border-l-4 border-l-blue-600">
-                  <span className="text-[10px] font-mono font-bold text-blue-800 uppercase block">Módulo 2</span>
-                  <h4 className="text-sm font-bold text-slate-900">AgriTwin Territorial (Municipios & APRs)</h4>
-                  <p className="text-xs text-slate-600 font-serif">
-                    Semáforo hidrogeológico de recarga de cuenca, índice FWI de piro-riesgo y mapa de cortafuegos en interfaz periurbana.
-                  </p>
+                <div className="p-6 rounded-2xl bg-emerald-50 border-2 border-emerald-500 space-y-3 shadow-md relative">
+                  <span className="absolute top-3 right-3 text-[9px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-600 text-white uppercase">MÁS POPULAR</span>
+                  <span className="text-xs font-mono font-bold text-emerald-800 uppercase">PLAN PRO</span>
+                  <div className="text-2xl font-extrabold text-emerald-950">$85.000 <span className="text-xs font-normal text-slate-500">CLP/mes</span></div>
+                  <p className="text-xs text-slate-600 font-serif">Para predios comerciales de 5 a 25 ha. Gemelo 3D completo, balance FAO-56 diario, 6 ramas y hasta 6 nodos KioT conectados.</p>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2 border-l-4 border-l-amber-500">
-                  <span className="text-[10px] font-mono font-bold text-amber-800 uppercase block">Módulo 3</span>
-                  <h4 className="text-sm font-bold text-slate-900">AgriTwin ESG / MRV (Fondos & UE)</h4>
-                  <p className="text-xs text-slate-600 font-serif">
-                    Series temporales de biomasa de carbono Tier-2, índice de integridad ecológica y reporte de cero deforestación (EUDR).
-                  </p>
+                <div className="p-6 rounded-2xl bg-slate-900 text-white border border-slate-800 space-y-3">
+                  <span className="text-xs font-mono font-bold text-amber-400 uppercase">PLAN ENTERPRISE</span>
+                  <div className="text-2xl font-extrabold text-white">$160.000 <span className="text-xs font-normal text-slate-400">CLP/mes</span></div>
+                  <p className="text-xs text-slate-300 font-serif">Para viñas y exportadoras (&gt;25 ha). Sensores ilimitados, Pasaporte Verde EUDR con QR, auditoría CNR y soporte de agrónomo 24/7.</p>
                 </div>
               </div>
             </div>
@@ -921,8 +990,8 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
 
               <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
                 <h4 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                  <Terminal className="w-4 h-4 text-slate-700" />
-                  <span>Servidor Local Python</span>
+                  <Cpu className="w-4 h-4 text-emerald-700" />
+                  <span>Servidor Local Autónomo</span>
                 </h4>
                 <p className="text-xs text-slate-600 font-serif">
                   Corre con <strong>server.py</strong> de forma autónoma o mediante el icono <strong>Rewild.app</strong> en tu Escritorio.

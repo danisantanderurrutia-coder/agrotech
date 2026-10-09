@@ -7,6 +7,7 @@ import { KiotTelemetrySimulator } from './KiotTelemetrySimulator';
 import { InteractiveRewildMapper } from './InteractiveRewildMapper';
 import { HeroSection } from './HeroSection';
 import { BlackBoxAndSolutionsSection } from './BlackBoxAndSolutionsSection';
+import { ProductPortfolioSection } from './ProductPortfolioSection';
 
 interface LandingPageProps {
   onOpenPitchDeck: () => void;
@@ -138,6 +139,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenPitchDeck, onNav
           </div>
 
         </div>
+      </section>
+
+      {/* PORTAFOLIO COMPLETO DE 7 LÍNEAS DE PRODUCTOS & PRECIOS */}
+      <section className="max-w-7xl mx-auto px-4 lg:px-8">
+        <ProductPortfolioSection />
       </section>
 
       {/* CONSOLA DUAL DE DEMOSTRACIÓN (IoT TELEMETRY + REWILDMAPPER) */}
