@@ -58,14 +58,14 @@ export function App() {
           />
         )}
 
-        {(currentView === 'apps' || currentView === 'agritwin') && (
+        {(currentView === 'apps' || currentView === 'agritwin' || currentView === 'hub') && (
           <EcosystemAppsHub 
-            initialApp="agritwin"
+            initialApp={currentView === 'hub' ? 'overview' : 'agritwin'}
             onNavigate={handleNavigate}
           />
         )}
 
-        {currentView === 'regional' && (
+        {(currentView === 'regional' || currentView === 'territorial') && (
           <EcosystemAppsHub 
             initialApp="regional"
             onNavigate={handleNavigate}

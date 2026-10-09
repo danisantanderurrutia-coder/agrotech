@@ -94,9 +94,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
 
             {productsDropdownOpen && (
               <div className="absolute top-full left-0 mt-2 w-92 bg-[#0B2519] rounded-2xl border border-emerald-500/40 p-2.5 space-y-1.5 shadow-2xl animate-fadeIn z-50">
-                {/* Header Ecosistema */}
+                {/* Ver Catálogo Completo */}
                 <button
-                  onClick={() => handleNavClick('hub')}
+                  onClick={() => handleNavClick('landing')}
                   className="w-full flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-emerald-950 via-emerald-900 to-[#0B2519] border border-amber-500/40 text-white hover:border-amber-400 transition-all text-left shadow-sm group"
                 >
                   <div className="flex items-center gap-2.5">
@@ -105,8 +105,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <span className="font-extrabold text-xs">Ecosistema AgroTech</span>
-                        <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-amber-400 text-slate-950 font-black">SUITE MAULE</span>
+                        <span className="font-extrabold text-xs">Catálogo AgroTech Chile</span>
+                        <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-amber-400 text-slate-950 font-black">7 LÍNEAS</span>
                       </div>
                       <span className="text-[10px] text-emerald-200/80 font-sans block">Gemelos Digitales • Hardware • Certificación</span>
                     </div>
@@ -175,7 +175,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
 
                 <div className="my-1 border-t border-emerald-900/60" />
 
-                {/* 4. Informes de Riesgo Predial (Reemplazo comercial de Visor) */}
+                {/* 4. Informes de Riesgo Predial */}
                 <button
                   onClick={() => handleNavClick('satellites')}
                   className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors ${
@@ -210,23 +210,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                       <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 font-bold">CERTIFICACIÓN</span>
                     </div>
                     <span className="text-[10px] text-emerald-200/70 font-sans block">Auditoría no-deforestación y QR para pallets a Europa.</span>
-                  </div>
-                </button>
-
-                {/* 6. AgroTwin Regional */}
-                <button
-                  onClick={() => handleNavClick('territorial')}
-                  className="w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors hover:bg-[#071A11] text-white border-t border-emerald-900/40 mt-1 pt-2"
-                >
-                  <div className="w-6 h-6 rounded-lg bg-teal-500/20 border border-teal-400 flex items-center justify-center shrink-0 mt-0.5 text-teal-300">
-                    <MapPin className="w-3.5 h-3.5" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-bold text-xs text-amber-300">AgroTwin Regional (Cuenca)</span>
-                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-950 text-amber-200 border border-amber-500/40 font-mono">122K HA</span>
-                    </div>
-                    <span className="text-[10px] text-emerald-200/70 font-sans block">Gestión de cuenca Longaví/Retiro, FWI y crecidas fluviales.</span>
                   </div>
                 </button>
               </div>
