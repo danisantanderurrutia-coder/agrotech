@@ -657,7 +657,40 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
   }
 ];
 
+import obsidianDocsData from '../data/obsidianDocs.json';
+
 export const ALL_DATA_SOURCES = PRODUCTS_REGISTRY.flatMap(p => p.dataSources);
 export const ALL_SCRIPTS = PRODUCTS_REGISTRY.flatMap(p => p.scripts);
 export const ALL_GRAPHIC_ASSETS = PRODUCTS_REGISTRY.flatMap(p => p.graphicAssets);
-export const ALL_DOC_NOTES = PRODUCTS_REGISTRY.flatMap(p => p.documentationNotes);
+
+// Combine static product notes with all dynamically scanned Obsidian Vault notes (26 notes)
+const staticNotes = PRODUCTS_REGISTRY.flatMap(p => p.documentationNotes);
+const scannedVaultNotes = (obsidianDocsData?.notes || []).map((n: any) => ({
+  id: n.id,
+  title: n.title,
+  tags: n.tags,
+  vaultPath: n.vaultPath,
+  summary: n.summary,
+  contentMarkdown: n.contentMarkdown,
+  wikilinks: n.wikilinks,
+  category: n.category
+}));
+
+// Eliminar duplicados priorizando notas de vault
+const notesMap = new Map();
+for (const note of scannedVaultNotes) {
+  notesMap.set(note.vaultPath || note.id, note);
+}
+for (const note of staticNotes) {
+  if (!notesMap.has(note.vaultPath || note.id)) {
+    notesMap.set(note.vaultPath || note.id, note);
+  }
+}
+
+export const ALL_DOC_NOTES = Array.from(notesMap.values());
+export const VAULT_DOC_METADATA = {
+  updatedAt: obsidianDocsData?.updatedAt,
+  totalNotes: obsidianDocsData?.totalNotes || ALL_DOC_NOTES.length,
+  categories: obsidianDocsData?.categories || {}
+};
+

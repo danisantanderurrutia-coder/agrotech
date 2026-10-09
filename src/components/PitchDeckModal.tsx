@@ -199,19 +199,19 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
       </div>
 
       {/* Main Slide Stage (Transformed Luminous High-Contrast Executive Theme) */}
-      <div className="flex-1 flex flex-col justify-center items-center my-2 sm:my-4 px-2 overflow-y-auto">
+      <div className="flex-1 min-h-0 flex flex-col justify-center items-center my-1 sm:my-2 px-1 sm:px-2 overflow-y-auto">
         
-        <div className="w-full max-w-6xl rounded-3xl border-2 border-emerald-500/20 bg-white/95 shadow-2xl shadow-emerald-950/15 p-5 sm:p-9 relative overflow-hidden flex flex-col justify-between min-h-[480px] sm:min-h-[540px]">
+        <div className="w-full max-w-6xl max-h-full rounded-2xl sm:rounded-3xl border-2 border-emerald-500/20 bg-white/95 shadow-2xl shadow-emerald-950/15 p-4 sm:p-6 lg:p-7 relative overflow-hidden flex flex-col justify-between">
           
           {/* Subtle Ambient Light Glows */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
 
           {/* Slide Top Metadata Header */}
-          <div className="flex items-center justify-between font-mono text-xs border-b border-emerald-100 pb-3 mb-4 relative z-10">
+          <div className="flex items-center justify-between font-mono text-xs border-b border-emerald-100 pb-2 mb-2 sm:mb-3 relative z-10 shrink-0">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse" />
-              <span className="text-emerald-900 font-bold uppercase tracking-wider">
+              <span className="text-emerald-900 font-bold uppercase tracking-wider text-[11px] sm:text-xs">
                 {currentSlide.category}
               </span>
             </div>
@@ -221,18 +221,18 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
                   {currentSlide.badge}
                 </span>
               )}
-              <span className="text-amber-700 font-extrabold font-mono">
+              <span className="text-amber-700 font-extrabold font-mono text-[11px] sm:text-xs">
                 SLIDE {currentSlideIndex + 1} / {activeDeck.length}
               </span>
             </div>
           </div>
 
           {/* Main Slide Content Grid: Left Visual Image HUD + Right Copy */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center flex-1 relative z-10 my-2">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-center flex-1 min-h-0 relative z-10 overflow-y-auto pr-1">
             
             {/* Left Visual HUD Container (If Image Available) */}
             {currentSlide.image && (
-              <div className="lg:col-span-5 relative group">
+              <div className="lg:col-span-5 relative group shrink-0">
                 <div 
                   onClick={() => setZoomedImage(currentSlide.image || null)}
                   className="relative rounded-2xl overflow-hidden border-2 border-emerald-200 shadow-md bg-emerald-50/40 cursor-zoom-in group"
@@ -241,26 +241,26 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
                   <img 
                     src={currentSlide.image} 
                     alt={currentSlide.title}
-                    className="w-full h-48 sm:h-64 lg:h-72 object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-36 sm:h-48 md:h-56 lg:h-60 max-h-[32vh] object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
                   
                   {/* Badge Overlay */}
-                  <div className="absolute top-3 left-3 px-3 py-1 rounded-lg bg-white/95 backdrop-blur-md text-amber-950 text-[11px] font-mono font-bold border border-amber-300 shadow-sm flex items-center gap-1.5">
+                  <div className="absolute top-2.5 left-2.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-lg bg-white/95 backdrop-blur-md text-amber-950 text-[10px] sm:text-[11px] font-mono font-bold border border-amber-300 shadow-sm flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-amber-600" />
                     <span>{currentSlide.badge || 'Agro-Precisión Maule'}</span>
                   </div>
 
                   {/* Zoom In Button Hint */}
-                  <div className="absolute top-3 right-3 p-1.5 rounded-lg bg-black/60 backdrop-blur-md text-white border border-white/30 opacity-80 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-[10px] font-mono font-bold">
-                    <Maximize2 className="w-3.5 h-3.5" />
+                  <div className="absolute top-2.5 right-2.5 p-1 sm:p-1.5 rounded-lg bg-black/60 backdrop-blur-md text-white border border-white/30 opacity-80 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-[10px] font-mono font-bold">
+                    <Maximize2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                     <span className="hidden sm:inline">Agrandar</span>
                   </div>
 
                   {/* Telemetry Bar at Image Bottom */}
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-mono bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-lg border border-emerald-200 text-slate-800 shadow-sm font-bold">
+                  <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-[10px] sm:text-[11px] font-mono bg-white/95 backdrop-blur-md px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-emerald-200 text-slate-800 shadow-sm font-bold">
                     <div className="flex items-center gap-1.5 text-emerald-800">
-                      <Radio className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
+                      <Radio className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600 animate-pulse" />
                       <span>Red Telemetría LoRa</span>
                     </div>
                     <span className="text-amber-700 font-extrabold">Maule 2026</span>
@@ -270,37 +270,37 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
             )}
 
             {/* Right Main Text & Data Column */}
-            <div className={`${currentSlide.image ? 'lg:col-span-7' : 'lg:col-span-12'} space-y-4`}>
+            <div className={`${currentSlide.image ? 'lg:col-span-7' : 'lg:col-span-12'} space-y-2.5 sm:space-y-3.5`}>
               
-              <div className="space-y-1.5">
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B2519] tracking-tight leading-tight">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#0B2519] tracking-tight leading-tight">
                   {currentSlide.title}
                 </h2>
-                <p className="text-sm sm:text-base text-amber-800 font-serif font-extrabold">
+                <p className="text-xs sm:text-sm lg:text-base text-amber-800 font-serif font-extrabold">
                   {currentSlide.subtitle}
                 </p>
               </div>
 
               {/* Headline / Manifesto Quote */}
               {currentSlide.badge === 'MANIFIESTO' || currentSlide.content.points.length === 0 ? (
-                <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-emerald-900 to-[#0B2519] border-2 border-emerald-600/40 text-amber-100 shadow-lg relative overflow-hidden">
+                <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-br from-emerald-900 to-[#0B2519] border-2 border-emerald-600/40 text-amber-100 shadow-lg relative overflow-hidden">
                   <div className="absolute top-0 right-0 -mr-6 -mt-6 w-24 h-24 rounded-full bg-amber-400/10 blur-xl pointer-events-none" />
-                  <span className="text-amber-400 font-mono text-[10px] uppercase font-bold tracking-widest block mb-1.5">
+                  <span className="text-amber-400 font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-widest block mb-1">
                     DECLARACIÓN FUNDACIONAL
                   </span>
-                  <blockquote className="text-base sm:text-xl font-serif font-extrabold leading-snug tracking-tight text-white drop-shadow-sm">
+                  <blockquote className="text-sm sm:text-base lg:text-lg font-serif font-extrabold leading-snug tracking-tight text-white drop-shadow-sm">
                     "{currentSlide.content.headline}"
                   </blockquote>
                 </div>
               ) : (
-                <div className="p-3.5 rounded-xl bg-emerald-50/90 border border-emerald-200 text-xs sm:text-sm text-emerald-950 font-sans font-medium shadow-sm">
+                <div className="p-2.5 sm:p-3 rounded-xl bg-emerald-50/90 border border-emerald-200 text-xs sm:text-sm text-emerald-950 font-sans font-medium shadow-sm leading-snug">
                   {currentSlide.content.headline}
                 </div>
               )}
 
               {/* Bullet Points */}
               {currentSlide.content.points.length > 0 && (
-                <div className="space-y-2 pt-1">
+                <div className="space-y-1.5 sm:space-y-2 pt-0.5">
                   {currentSlide.content.points.map((point, idx) => {
                     const isIndexSlide = deckType === 'unified' && currentSlideIndex === 2;
                     const chapterSlideTargets = [0, 1, 3, 6, 15, 21, 26];
@@ -314,16 +314,16 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
                             handleJumpToSlide(targetSlide);
                           }
                         }}
-                        className={`flex items-start gap-2.5 text-xs sm:text-sm font-sans font-medium leading-relaxed transition-all ${
+                        className={`flex items-start gap-2 text-xs sm:text-sm font-sans font-medium leading-relaxed transition-all ${
                           isIndexSlide 
-                            ? 'p-2.5 rounded-xl bg-emerald-50/80 border border-emerald-300/80 hover:bg-emerald-100/90 hover:border-emerald-500 cursor-pointer text-emerald-950 shadow-xs' 
+                            ? 'p-2 rounded-xl bg-emerald-50/80 border border-emerald-300/80 hover:bg-emerald-100/90 hover:border-emerald-500 cursor-pointer text-emerald-950 shadow-xs' 
                             : 'text-slate-700'
                         }`}
                       >
-                        <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${isIndexSlide ? 'text-emerald-700' : 'text-emerald-600'}`} />
+                        <CheckCircle2 className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 mt-0.5 ${isIndexSlide ? 'text-emerald-700' : 'text-emerald-600'}`} />
                         <span className="flex-1">{point}</span>
                         {isIndexSlide && (
-                          <span className="text-[10px] font-mono font-bold text-emerald-800 bg-white px-2.5 py-0.5 rounded-md border border-emerald-300 shrink-0 flex items-center gap-1">
+                          <span className="text-[10px] font-mono font-bold text-emerald-800 bg-white px-2 py-0.5 rounded-md border border-emerald-300 shrink-0 flex items-center gap-1">
                             <span>Ir al Capítulo</span>
                             <ArrowRight className="w-3 h-3 text-emerald-600" />
                           </span>
@@ -336,12 +336,12 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
 
               {/* Key Metrics Grid if present */}
               {currentSlide.content.metrics && (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
                   {currentSlide.content.metrics.map((m, idx) => (
-                    <div key={idx} className="p-3 rounded-xl bg-slate-50 border border-emerald-200 font-mono shadow-sm">
-                      <span className="text-[10px] text-emerald-800 block uppercase tracking-wider font-bold">{m.label}</span>
-                      <span className="text-[#0B2519] font-extrabold text-sm sm:text-base block">{m.value}</span>
-                      <span className="text-[10px] text-amber-700 font-sans font-bold block mt-0.5">{m.detail}</span>
+                    <div key={idx} className="p-2 sm:p-2.5 rounded-xl bg-slate-50 border border-emerald-200 font-mono shadow-sm">
+                      <span className="text-[9px] sm:text-[10px] text-emerald-800 block uppercase tracking-wider font-bold">{m.label}</span>
+                      <span className="text-[#0B2519] font-extrabold text-xs sm:text-sm lg:text-base block">{m.value}</span>
+                      <span className="text-[9px] sm:text-[10px] text-amber-700 font-sans font-bold block mt-0.5">{m.detail}</span>
                     </div>
                   ))}
                 </div>
@@ -349,11 +349,11 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
 
               {/* Highlight Box if present */}
               {currentSlide.content.highlightBox && (
-                <div className="p-3.5 rounded-xl bg-gradient-to-r from-amber-50 to-emerald-50 border border-amber-300 text-xs space-y-1 shadow-sm">
-                  <span className="font-bold text-amber-900 uppercase font-mono block text-[11px]">
+                <div className="p-2.5 sm:p-3 rounded-xl bg-gradient-to-r from-amber-50 to-emerald-50 border border-amber-300 text-xs space-y-1 shadow-sm">
+                  <span className="font-bold text-amber-900 uppercase font-mono block text-[10px] sm:text-[11px]">
                     💡 {currentSlide.content.highlightBox.title}
                   </span>
-                  <p className="text-slate-800 font-serif leading-relaxed">
+                  <p className="text-slate-800 font-serif leading-relaxed text-[11px] sm:text-xs">
                     {currentSlide.content.highlightBox.text}
                   </p>
                 </div>
@@ -364,7 +364,7 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
           </div>
 
           {/* Slide Footer Branding */}
-          <div className="pt-3 border-t border-emerald-100 flex items-center justify-between text-[11px] font-mono text-emerald-900 relative z-10 mt-2 font-bold">
+          <div className="pt-2 border-t border-emerald-100 flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-emerald-900 relative z-10 mt-2 font-bold shrink-0">
             <span className="flex items-center gap-2">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
               <span>AgroTech Chile • Región del Maule, Chile</span>
@@ -388,10 +388,10 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
       </div>
 
       {/* Bottom Controls Bar & Thumbnails (Luminous Clean Design) */}
-      <div className="bg-white/95 border-t border-emerald-200 rounded-2xl p-3 max-w-6xl mx-auto w-full space-y-3 shadow-sm">
+      <div className="bg-white/95 border-t border-emerald-200 rounded-2xl p-2 sm:p-2.5 max-w-6xl mx-auto w-full space-y-2 shadow-sm shrink-0">
         
         {/* Progress Bar */}
-        <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden border border-slate-300">
+        <div className="w-full h-1.5 sm:h-2 bg-slate-200 rounded-full overflow-hidden border border-slate-300">
           <div 
             className="h-full bg-gradient-to-r from-emerald-600 via-teal-500 to-amber-500 transition-all duration-300 shadow-sm"
             style={{ width: `${((currentSlideIndex + 1) / activeDeck.length) * 100}%` }}
@@ -404,20 +404,20 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
           <button
             onClick={handlePrev}
             disabled={currentSlideIndex === 0}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 border border-slate-300 text-slate-800 text-xs font-mono font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-200 transition-all shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-slate-100 border border-slate-300 text-slate-800 text-xs font-mono font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-200 transition-all shadow-sm shrink-0"
           >
             <ChevronLeft className="w-4 h-4" />
             <span className="hidden sm:inline">Anterior</span>
           </button>
 
           {/* Slide Thumbnails Quick Jump Bar */}
-          <div className="flex items-center gap-1.5 overflow-x-auto max-w-lg px-2 py-1">
+          <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto max-w-lg px-1 sm:px-2 py-0.5">
             {activeDeck.map((slide, idx) => (
               <button
                 key={slide.id}
                 onClick={() => setCurrentSlideIndex(idx)}
                 title={`Ir a Slide ${slide.id}: ${slide.title}`}
-                className={`w-8 h-8 rounded-xl text-xs font-mono font-bold transition-all shrink-0 ${
+                className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-mono font-bold transition-all shrink-0 ${
                   idx === currentSlideIndex
                     ? 'bg-amber-500 text-[#0B2519] ring-2 ring-amber-400 shadow-md scale-105'
                     : 'bg-emerald-50 text-emerald-900 border border-emerald-200 hover:border-emerald-400 hover:bg-emerald-100'
@@ -431,7 +431,7 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose,
           <button
             onClick={handleNext}
             disabled={currentSlideIndex === activeDeck.length - 1}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-[#0B2519] font-extrabold text-xs font-mono disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110 transition-all shadow-md"
+            className="flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-[#0B2519] font-extrabold text-xs font-mono disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110 transition-all shadow-md shrink-0"
           >
             <span className="hidden sm:inline">Siguiente</span>
             <ChevronRight className="w-4 h-4" />

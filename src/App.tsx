@@ -10,6 +10,9 @@ import { BlogPage } from './components/BlogPage';
 import { SomosPage } from './components/SomosPage';
 import { InternalPartnerPage } from './components/InternalPartnerPage';
 import { EcosystemAppsHub } from './components/EcosystemAppsHub';
+import { EdulabPage } from './components/EdulabPage';
+import { InteractiveDocsHub } from './components/InteractiveDocsHub';
+import { CuadernoOperadorHub } from './components/CuadernoOperadorHub';
 import { BrandIdentitySection } from './components/BrandIdentitySection';
 import { Footer } from './components/Footer';
 import { PitchDeckModal } from './components/PitchDeckModal';
@@ -18,8 +21,7 @@ export function App() {
   const [currentView, setCurrentView] = useState<string>(() => {
     try {
       const p = new URLSearchParams(window.location.search);
-      const v = p.get('view') || 'landing';
-      return v === 'docs' ? 'apps' : v;
+      return p.get('view') || 'landing';
     } catch {
       return 'landing';
     }
@@ -75,6 +77,28 @@ export function App() {
             initialApp="rewild"
             onNavigate={handleNavigate}
           />
+        )}
+
+        {currentView === 'permaculture' && (
+          <EcosystemAppsHub 
+            initialApp="permaculture"
+            onNavigate={handleNavigate}
+          />
+        )}
+
+        {currentView === 'cuaderno' && (
+          <CuadernoOperadorHub 
+            onNavigate={handleNavigate}
+          />
+        )}
+
+        {currentView === 'docs' && (
+          <div className="max-w-7xl mx-auto px-4 lg:px-8 py-8 animate-fadeIn">
+            <InteractiveDocsHub 
+              initialTab="permaculture"
+              onNavigate={handleNavigate}
+            />
+          </div>
         )}
 
         {(currentView === 'satellites' || currentView === 'satellites-visor') && (
@@ -148,7 +172,7 @@ export function App() {
         )}
 
         {currentView === 'edulab' && (
-          <CommunityPage 
+          <EdulabPage 
             onNavigate={handleNavigate}
           />
         )}
