@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShieldCheck, Scale, Clock, Users, ArrowUpRight, CheckCircle2, AlertCircle, FileText, ChevronRight, Layers, Sparkles } from 'lucide-react';
+import { ShieldCheck, Scale, Clock, Users, ArrowUpRight, CheckCircle2, AlertCircle, FileText, ChevronRight, Layers, Sparkles, BatteryCharging, Flame, MapPin, GitBranch, Cpu, Briefcase } from 'lucide-react';
 
 interface Bulletin {
   id: string;
@@ -23,16 +23,16 @@ export const ExecutiveBulletinsSection: React.FC = () => {
       subtitle: 'Hacia la Formalización Operativa, Reparto Mixto de Valor y Blindaje Tecnológico',
       date: 'Octubre 2026',
       status: 'published',
-      author: 'Daniel (Fundador / Custodia IP)'
+      author: 'Daniel Santander (Fundador / Custodia IP)'
     },
     {
       id: 'boletin-2',
       number: 2,
-      title: 'Tracción de Campo y Acuerdos CNR',
-      subtitle: 'Resultados del Mes 1 en Parral y Catastro de Subsidios Ley 18.450',
-      date: 'Próximamente (Nov 2026)',
-      status: 'draft',
-      author: 'Dirección AgroTech'
+      title: 'Despliegue Living Lab Parral & Alianzas Off-Grid',
+      subtitle: 'Validación en Predio Rudi, Baterías Recicladas, Defensa Anti-Incendios y Red Expatriados',
+      date: 'Noviembre 2026',
+      status: 'published',
+      author: 'Dirección AgroTech & Asesores Off-Grid'
     }
   ];
 
@@ -53,7 +53,7 @@ export const ExecutiveBulletinsSection: React.FC = () => {
               Boletines Ejecutivos <span className="text-amber-400">AgroTech</span>
             </h2>
             <p className="text-sm sm:text-base text-emerald-100/80 font-serif max-w-2xl mt-1">
-              Documentos de trabajo interno, acuerdos de gobernanza corporativa, modelos de compensación y estrategia fundacional compartida con el equipo.
+              Documentos de trabajo interno, acuerdos de gobernanza corporativa, modelos de compensación y estrategia fundacional compartida con el equipo y asesores.
             </p>
           </div>
 
@@ -64,19 +64,16 @@ export const ExecutiveBulletinsSection: React.FC = () => {
               {bulletins.map((b) => (
                 <button
                   key={b.id}
-                  onClick={() => b.status === 'published' && setSelectedBulletinId(b.id)}
-                  disabled={b.status === 'draft'}
+                  onClick={() => setSelectedBulletinId(b.id)}
                   className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
                     selectedBulletinId === b.id
                       ? 'bg-amber-400 text-slate-950 shadow-md font-black ring-2 ring-amber-300/50'
-                      : b.status === 'draft'
-                      ? 'bg-emerald-950/40 border border-emerald-900/40 text-emerald-600 cursor-not-allowed'
                       : 'bg-[#071A11] border border-emerald-500/30 text-emerald-200 hover:bg-emerald-900/60'
                   }`}
                 >
                   <FileText className="w-3.5 h-3.5" />
                   <span>Boletín N.° {b.number}</span>
-                  {b.status === 'draft' && <span className="text-[10px] opacity-60 font-mono">(Borrador)</span>}
+                  {b.id === 'boletin-2' && <span className="text-[10px] text-amber-900 bg-amber-300/80 px-1 rounded font-mono">Nuevo</span>}
                 </button>
               ))}
             </div>
@@ -87,11 +84,15 @@ export const ExecutiveBulletinsSection: React.FC = () => {
         <div className="mt-6 flex flex-wrap items-center justify-between gap-4 text-xs">
           <div className="flex items-center gap-3">
             <span className="px-2.5 py-1 rounded bg-amber-400 text-slate-950 font-bold font-mono">
-              N.° 1 — VIGENTE
+              {selectedBulletinId === 'boletin-1' ? 'N.° 1 — VIGENTE' : 'N.° 2 — EN DESPLIEGUE'}
             </span>
-            <span className="text-emerald-300 font-semibold">Octubre 2026</span>
+            <span className="text-emerald-300 font-semibold">
+              {selectedBulletinId === 'boletin-1' ? 'Octubre 2026' : 'Noviembre 2026'}
+            </span>
             <span className="text-emerald-500">•</span>
-            <span className="text-emerald-200">Autoría: {bulletins[0].author}</span>
+            <span className="text-emerald-200">
+              Autoría: {selectedBulletinId === 'boletin-1' ? bulletins[0].author : bulletins[1].author}
+            </span>
           </div>
 
           <div className="flex items-center gap-2 font-mono text-[11px] text-amber-300 bg-black/40 px-3 py-1.5 rounded-lg border border-amber-500/30">
@@ -101,7 +102,9 @@ export const ExecutiveBulletinsSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Cuerpo del Boletín N.° 1 */}
+      {/* ========================================================
+          CUERPO DEL BOLETÍN N.° 1
+          ======================================================== */}
       {selectedBulletinId === 'boletin-1' && (
         <div className="bg-[#071A11] border border-emerald-500/20 rounded-2xl p-6 lg:p-8 space-y-8 shadow-xl text-slate-100">
           
@@ -138,7 +141,7 @@ export const ExecutiveBulletinsSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Subpestañas del Boletín */}
+          {/* Subpestañas del Boletín N.° 1 */}
           <div className="border-b border-emerald-900/60 pb-3">
             <div className="flex flex-wrap gap-2 text-xs font-bold font-sans">
               <button
@@ -159,7 +162,7 @@ export const ExecutiveBulletinsSection: React.FC = () => {
                     : 'bg-[#0B2519] text-amber-300 hover:bg-emerald-900 border border-emerald-800'
                 }`}
               >
-                2. Encuadre para el Equipo & Preguntas
+                2. Encuadre para el Equipo & Asesores
               </button>
               <button
                 onClick={() => setActiveSubTab('vesting')}
@@ -184,7 +187,7 @@ export const ExecutiveBulletinsSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Contenido Subpestaña 1: Gobierno */}
+          {/* Subpestaña 1: Gobierno */}
           {activeSubTab === 'gobierno' && (
             <div className="space-y-6">
               <div className="bg-[#0B2519]/80 border border-emerald-500/20 rounded-xl p-6">
@@ -201,7 +204,7 @@ export const ExecutiveBulletinsSection: React.FC = () => {
                     <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-400 font-bold block">
                       Nivel 1 • Activo Intangible Soberano
                     </span>
-                    <h5 className="font-extrabold text-white text-base">Daniel (Fundador / Custodia IP)</h5>
+                    <h5 className="font-extrabold text-white text-base">Daniel Santander (Fundador / Custodia IP)</h5>
                     <p className="text-xs text-slate-300 leading-relaxed">
                       Titular moral y patrimonial absoluto de la plataforma AgriTwin, el motor biofísico 3D, algoritmos FAO-56, pipelines satelitales Sentinel-2 y marcas comerciales.
                     </p>
@@ -227,86 +230,107 @@ export const ExecutiveBulletinsSection: React.FC = () => {
             </div>
           )}
 
-          {/* Contenido Subpestaña 2: Roles */}
+          {/* Subpestaña 2: Roles y Asesores Actualizados */}
           {activeSubTab === 'roles' && (
             <div className="space-y-4">
               <p className="text-xs text-emerald-200/80 font-serif">
-                Propuestas de encuadre constructivo y preguntas de alineación preparadas para la reunión de equipo:
+                Estructura de compensación y encuadre operativo con nombres completos y apodos para la alineación del equipo:
               </p>
 
-              {/* Pablo, Pancho, Wladimir */}
-              <div className="p-5 rounded-xl bg-[#0B2519] border border-emerald-500/30 space-y-3">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="flex items-center gap-3">
-                    <span className="text-xl">💼</span>
-                    <div>
-                      <h4 className="font-bold text-white text-sm">Pablo, Pancho & Wladimir</h4>
-                      <p className="text-xs text-emerald-400">Canal Comercial, Redes Agrícolas e Institucionales</p>
-                    </div>
-                  </div>
-                  <span className="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold border border-emerald-500/30">
-                    Comisiones + Pool Accionario
-                  </span>
-                </div>
-                <div className="pt-2 text-xs text-slate-300 space-y-1.5 border-t border-emerald-900/50">
-                  <p>• <b>Caja Inmediata:</b> 25% del Setup Fee inicial + 15% del MRR durante los primeros 12 meses de cada contrato.</p>
-                  <p>• <b>Venta Spot:</b> 30% del valor neto facturado por cada Informe de Riesgo Satelital para compradores de parcelas.</p>
-                  <p>• <b>Entrada al Equity:</b> Consolidación de acciones en la SpA operativa ligada a metas anuales de facturación.</p>
-                  <div className="bg-[#071A11] p-3 rounded-lg border-l-2 border-emerald-400 text-emerald-200 mt-2 font-sans italic">
-                    <b>Pregunta para la Reunión:</b> "¿Se sienten cómodos y motivados con una estructura donde sus ingresos crecen directamente con lo que cierren, respaldada por la opción de consolidar acciones operativas según su volumen de ventas?"
-                  </div>
-                </div>
-              </div>
-
-              {/* Luis */}
-              <div className="p-5 rounded-xl bg-[#0B2519] border border-amber-500/30 space-y-3">
+              {/* Luis González (Lápiz) & Rüdiger Kaatz (Rudi) */}
+              <div className="p-5 rounded-xl bg-[#0B2519] border border-amber-500/40 space-y-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-3">
                     <span className="text-xl">🚜</span>
                     <div>
-                      <h4 className="font-bold text-white text-sm">Luis (Parral & Retiro)</h4>
-                      <p className="text-xs text-amber-400">Infraestructura de Campo, Sensores y Conectividad</p>
+                      <h4 className="font-bold text-white text-sm">
+                        Luis González ("Lápiz") & Rüdiger Kaatz ("Rudi")
+                      </h4>
+                      <p className="text-xs text-amber-300">
+                        Asesores Técnicos Autónomos de Infraestructura Off-Grid & Terreno Parral
+                      </p>
                     </div>
                   </div>
                   <span className="px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 font-mono text-xs font-bold border border-amber-500/30">
-                    Doble Alternativa Abierta
+                    Asesoría Autónoma + Living Lab
                   </span>
                 </div>
-                <div className="pt-2 text-xs text-slate-300 space-y-1.5 border-t border-amber-900/50">
-                  <p>• <b>Opción A (Contratista Preferente):</b> 100% margen de mano de obra de montaje + margen por venta de hardware + 10% MRR recurrente por clientes que traiga al SaaS. Cero ataduras legales.</p>
-                  <p>• <b>Opción B (Socio Operativo Regional):</b> Mantiene su esquema de márgenes y asume la dirección técnica de campo en el Maule Sur con participación por vesting en la SpA.</p>
-                  <div className="bg-[#071A11] p-3 rounded-lg border-l-2 border-amber-400 text-amber-200 mt-2 font-sans italic">
-                    <b>Pregunta para la Reunión:</b> "¿Prefieres operar con liquidez directa como contratista preferente o te interesa asumir un rol de socio operativo regional con equity en la empresa comercial?"
-                  </div>
+                <div className="pt-2 text-xs text-slate-300 space-y-2 border-t border-amber-900/50">
+                  <p>• <b>Luis González ("Lápiz"):</b> 100% del margen de mano de obra en montaje físico + margen sobre venta de hardware fotovoltaico/cámaras + 10% MRR recurrente por clientes de su red que adopten el gemelo digital.</p>
+                  <p>• <b>Rüdiger Kaatz ("Rudi"):</b> Ingeniería en baterías recicladas (LiFePO4) y sistemas de aspersión perimetral anti-incendios + habilitación de su predio en Parral como <b>Living Lab Demostrativo</b> + canal comercial con inversionistas y residentes extranjeros.</p>
+                  <p>• <b>Autonomía:</b> Sin relación laboral dependiente; operan como socios y proveedores estratégicos preferentes.</p>
                 </div>
               </div>
 
-              {/* Cantuarias */}
+              {/* Pablo Perez (Pablito) */}
+              <div className="p-5 rounded-xl bg-[#0B2519] border border-emerald-500/40 space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl">⚡</span>
+                    <div>
+                      <h4 className="font-bold text-white text-sm">Pablo Perez ("Pablito")</h4>
+                      <p className="text-xs text-emerald-300">El Conector Operativo & Venta Directa B2C</p>
+                    </div>
+                  </div>
+                  <span className="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold border border-emerald-500/30">
+                    Comisiones Spot + Paquetización + Pool SpA
+                  </span>
+                </div>
+                <div className="pt-2 text-xs text-slate-300 space-y-1.5 border-t border-emerald-900/50">
+                  <p>• <b>Paquetización y Logística:</b> Recibe el hardware de Lápiz y Rudi, lo ensambla en kits KioT plug-and-play con código QR y lo moviliza en terreno.</p>
+                  <p>• <b>Venta Directa Parcelas:</b> Lidera la venta de Informes Prediales de Riesgo Satelital ($80k-$150k c/u) con 30% de comisión directa.</p>
+                  <p>• <b>Soporte Técnico:</b> Articula con Daniel en soporte informático de los pipelines de datos e ingesta predial.</p>
+                </div>
+              </div>
+
+              {/* Wladimir Gutierrez (Nene) & Francisco Ipinza (Pancho) */}
               <div className="p-5 rounded-xl bg-[#0B2519] border border-indigo-500/30 space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl">💼</span>
+                    <div>
+                      <h4 className="font-bold text-white text-sm">
+                        Wladimir Gutierrez ("Nene") & Francisco Ipinza ("Pancho")
+                      </h4>
+                      <p className="text-xs text-indigo-300">Fuerza Comercial B2B & Relacionamiento Agroindustrial</p>
+                    </div>
+                  </div>
+                  <span className="px-2.5 py-1 rounded bg-indigo-500/20 text-indigo-300 font-mono text-xs font-bold border border-indigo-500/30">
+                    Comisiones B2B + Vesting Accionario
+                  </span>
+                </div>
+                <div className="pt-2 text-xs text-slate-300 space-y-1.5 border-t border-indigo-900/50">
+                  <p>• <b>Cuentas B2B Medianas:</b> 25% del Setup Fee + 15% del MRR durante los primeros 12 meses en viñas, frigoríficos, packings y frutícolas.</p>
+                  <p>• <b>Convenios Inmobiliarios (Pancho):</b> Alianzas con corredoras de propiedades y desarrolladores de loteos para venta masiva de informes.</p>
+                  <p>• <b>Pool de Vesting:</b> Consolidación de acciones en la SpA operativa a 4 años con 1 año de cliff por metas de facturación anual.</p>
+                </div>
+              </div>
+
+              {/* Cristian Cantuarias (Cantuarias) */}
+              <div className="p-5 rounded-xl bg-[#0B2519] border border-cyan-500/40 space-y-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-3">
                     <span className="text-xl">🎨</span>
                     <div>
-                      <h4 className="font-bold text-white text-sm">Cantuarias</h4>
-                      <p className="text-xs text-indigo-400">Diseño de Interacción, UX/UI y Gamificación 3D</p>
+                      <h4 className="font-bold text-white text-sm">Cristian Cantuarias ("Cantuarias")</h4>
+                      <p className="text-xs text-cyan-300">Lead Game Designer & Co-Diseñador UI/UX Front-End 3D</p>
                     </div>
                   </div>
-                  <span className="px-2.5 py-1 rounded bg-indigo-500/20 text-indigo-300 font-mono text-xs font-bold border border-indigo-500/30">
-                    Hitos vs. Vesting
+                  <span className="px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 font-mono text-xs font-bold border border-cyan-500/30">
+                    IP Assignment + Git Flow + Vesting
                   </span>
                 </div>
-                <div className="pt-2 text-xs text-slate-300 space-y-1.5 border-t border-indigo-900/50">
-                  <p>• <b>Opción A (Consultor por Hitos):</b> Honorarios cerrados por entregables validados de interfaz en Figma y componentes de gamificación.</p>
-                  <p>• <b>Opción B (Socio de Producto):</b> Acciones de la SpA operativa con vesting a 4 años, comprometiendo dedicación continua al frontend.</p>
-                  <div className="bg-[#071A11] p-3 rounded-lg border-l-2 border-indigo-400 text-indigo-200 mt-2 font-sans italic">
-                    <b>Pregunta para la Reunión:</b> "Dada tu disponibilidad actual: ¿prefieres honorarios contra entregables específicos o tienes el interés de vincularte como socio de producto mediante vesting a largo plazo?"
-                  </div>
+                <div className="pt-2 text-xs text-slate-300 space-y-1.5 border-t border-cyan-900/50">
+                  <p>• <b>Visor 3D Diegético:</b> Co-diseño del gemelo digital estilo simulación estratégica (Civilization / Farming Simulator / Taller Agrícola).</p>
+                  <p>• <b>Gobernanza de Código:</b> Trabajo en ramas protegidas (<code>feature/ui</code>, <code>feature/gamification</code>) con Pull Requests aprobados por Daniel.</p>
+                  <p>• <b>Cesión de IP:</b> Acuerdo formal de cesión de derechos de autor de sus desarrollos (IP Assignment) a cambio de participación en el pool de vesting accionario de la SpA.</p>
                 </div>
               </div>
+
             </div>
           )}
 
-          {/* Contenido Subpestaña 3: Vesting */}
+          {/* Subpestaña 3: Vesting */}
           {activeSubTab === 'vesting' && (
             <div className="bg-[#0B2519]/80 border border-emerald-500/20 rounded-xl p-6 space-y-6">
               <h4 className="text-base font-bold text-white flex items-center gap-2">
@@ -345,7 +369,7 @@ export const ExecutiveBulletinsSection: React.FC = () => {
             </div>
           )}
 
-          {/* Contenido Subpestaña 4: Mes 1 */}
+          {/* Subpestaña 4: Mes 1 */}
           {activeSubTab === 'mes1' && (
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -355,7 +379,7 @@ export const ExecutiveBulletinsSection: React.FC = () => {
                   </span>
                   <h4 className="font-extrabold text-white text-base">Informes Prediales de Riesgo Satelital</h4>
                   <p className="text-xs text-slate-300 leading-relaxed font-serif">
-                    Validación satelital y legal de derechos de agua DGA, napas freáticas y riesgo de heladas/incendios para compradores de parcelas de agrado (5.000 m²).
+                    Validación satelital y legal de derechos de agua DGA, napas freáticas y riesgo de heladas/incendios para compradores de parcelas de agrado (5.000 m²). Liderado por Pablito, Pancho y Nene.
                   </p>
                   <div className="pt-3 border-t border-emerald-900/50 flex justify-between items-center text-xs">
                     <span className="text-emerald-300">Meta: 10 a 15 informes</span>
@@ -365,11 +389,11 @@ export const ExecutiveBulletinsSection: React.FC = () => {
 
                 <div className="p-5 rounded-xl bg-[#0B2519] border border-amber-500/30 space-y-2">
                   <span className="text-[11px] font-mono uppercase tracking-wider text-amber-400 font-bold">
-                    Brazo 2 • Recurrencia (MRR)
+                    Brazo 2 • Recurrencia & Living Lab
                   </span>
-                  <h4 className="font-extrabold text-white text-base">Upgrade Digital a Clientes de Luis en Parral</h4>
+                  <h4 className="font-extrabold text-white text-base">Upgrade Clientes de Lápiz & Living Lab de Rudi</h4>
                   <p className="text-xs text-slate-300 leading-relaxed font-serif">
-                    Conectar al gemelo digital y alertas climáticas a agricultores y fundos que ya compraron sistemas solares o cámaras 4G a Luis en Parral.
+                    Conectar al gemelo digital y alertas climáticas a agricultores de Lápiz en Parral, complementado con las visitas técnicas al predio demostrativo de Rudi.
                   </p>
                   <div className="pt-3 border-t border-amber-900/50 flex justify-between items-center text-xs">
                     <span className="text-amber-300">Meta: 3 a 5 fundos</span>
@@ -380,6 +404,66 @@ export const ExecutiveBulletinsSection: React.FC = () => {
             </div>
           )}
 
+        </div>
+      )}
+
+      {/* ========================================================
+          CUERPO DEL BOLETÍN N.° 2: LIVING LAB PARRAL
+          ======================================================== */}
+      {selectedBulletinId === 'boletin-2' && (
+        <div className="bg-[#071A11] border border-amber-500/30 rounded-2xl p-6 lg:p-8 space-y-6 shadow-xl text-slate-100 animate-fadeIn">
+          <div className="border-b border-emerald-900/60 pb-4">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-xs font-mono font-bold mb-2 border border-amber-400/30">
+              <MapPin className="w-3.5 h-3.5" />
+              Living Lab Parral • Precordillera Maule Sur
+            </span>
+            <h3 className="text-xl sm:text-3xl font-extrabold text-white">
+              Despliegue del Centro Demostrativo y Alianzas Off-Grid
+            </h3>
+            <p className="text-xs sm:text-sm text-emerald-200/70 font-serif mt-1">
+              Validación en terreno real con Rüdiger Kaatz ("Rudi") y Luis González ("Lápiz").
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="p-5 rounded-xl bg-[#0B2519] border border-emerald-500/30 space-y-2">
+              <div className="w-9 h-9 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 mb-2">
+                <BatteryCharging className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-sm text-white">1. Baterías Recicladas LiFePO4</h4>
+              <p className="text-xs text-slate-300 leading-relaxed font-serif">
+                Ingeniería desarrollada por Rudi para almacenamiento off-grid a una fracción del costo de baterías comerciales, permitiendo autonomía total sin red de CGE.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-[#0B2519] border border-amber-500/30 space-y-2">
+              <div className="w-9 h-9 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400 mb-2">
+                <Flame className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-sm text-white">2. Defensa Activa Anti-Incendios</h4>
+              <p className="text-xs text-slate-300 leading-relaxed font-serif">
+                Sistema perimetral de aspersión de alta presión con bombeo solar y disparo automático por detección térmica del gemelo digital ante focos de fuego.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-[#0B2519] border border-indigo-500/30 space-y-2">
+              <div className="w-9 h-9 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400 mb-2">
+                <Users className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-sm text-white">3. Canal Expatriados & Parceleros</h4>
+              <p className="text-xs text-slate-300 leading-relaxed font-serif">
+                Showroom en terreno para recibir a compradores europeos y de alto poder adquisitivo que buscan parcelas autosustentables y seguras en la precordillera.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-4 rounded-xl bg-slate-950 border border-emerald-500/30 flex flex-wrap items-center justify-between gap-4 text-xs">
+            <div className="flex items-center gap-3">
+              <span className="text-emerald-400 font-bold font-mono">Articulación Logística:</span>
+              <span className="text-slate-300">Pablo Perez ("Pablito") coordina el empaque y entrega de los kits demostrativos validados en el Living Lab.</span>
+            </div>
+            <span className="px-3 py-1 rounded bg-emerald-500/20 text-emerald-300 font-mono font-bold">Estado: En Implementación</span>
+          </div>
         </div>
       )}
 
