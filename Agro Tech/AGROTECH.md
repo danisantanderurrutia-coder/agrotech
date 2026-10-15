@@ -1,9 +1,23 @@
 ---
-aliases: [AgroTech, AgroTech Chile, AgroTech Core, StartUp AgroTech]
-tags: [Startup, AgTech, Permacultura, Agroecologia, IoE, DigitalTwin, ESG, EconomiaDeLosHombros, Maule, Bioeconomia]
+aliases:
+  - AgroTech
+  - AgroTech Chile
+  - AgroTech Core
+  - StartUp AgroTech
+tags:
+  - Startup
+  - AgTech
+  - Permacultura
+  - Agroecologia
+  - IoE
+  - DigitalTwin
+  - ESG
+  - EconomiaDeLosHombros
+  - Maule
+  - Bioeconomia
 created: 2026-09-25
 status: activo
-version: 2.5
+version: 0.5
 ---
 # 🌿 [[AGROTECH]] • Ecosistema Tecnológico & Regenerativo Integral
 
@@ -102,6 +116,13 @@ Herramienta dentro de AgriTwin que evalúa el predio actual y genera un plan de 
 
 #### 🗺️ Extensión a Escala Macro: [[AgroTwin Regional Parral y Retiro]]
 Permite visualizar la cuenca completa de 122.000 ha a menor resolución (10-30m) con clasificación multiclase de uso de suelo (LULC): bosque nativo, monocultivo forestal de pino, arrozal agrícola, ríos/embalses, cordillera y poblados rurales, usando los predios locales con AgriTwin como **red centinela in situ (*Ground-Truth Mesh*)** para calibrar alertas comunales de incendios y desbordes.
+
+#### 🚁 Módulo Ciberfísico: [[AGRITWIN_VISION_Y_DRONES_AUTONOMOS]] (Sentinel & DJI Dock 2)
+Vertical de visión computacional y robótica aérea autónoma conectada bidireccionalmente con el gemelo 3D:
+* **Cámaras Solares 4G con Edge AI**: Inferencia local con YOLOv8 en postes perimetrales (intrusiones), aforadores de canal DGA (caída de caudales) y potreros PRV.
+* **Orquestación Reactiva Inmediata**: Cualquier alerta detectada en tierra despacha automáticamente el dron desde su hangar DJI Dock 2 en menos de 90s para verificación visual e intercepción.
+* **Fotogrametría Aérea en Caliente**: Actualización dinámica de ortomosaicos NDVI sobre la malla del terreno 3D sin recargar la sesión web.
+* **Representación Diegética**: Conos frustum 3D interactivos, ventana flotante PiP dual con controles PTZ y widget táctico anclado a la barra superior con `sprite_cerro_drone.png`.
 
 ### 🛡️ Producto Estratégico 1: [[Pasaporte verde]] de Exportación
 
