@@ -10412,6 +10412,15 @@ def execute_quadratic_vote(available_credits: int, votes_cast: int, proposal_id:
                     <span id="badgeDockVecinos" class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 text-slate-400 border border-white/5">OFF</span>
                 </button>
 
+                <!-- Módulo 1: Estándar Vecino Informado - LULC Biofísico Puro -->
+                <button onclick="toggleBiofisicoLulcLayer();" id="btnDockLulcBio" class="w-full text-left p-2 rounded-xl bg-white/5 hover:bg-emerald-500/15 border border-white/5 hover:border-emerald-500/30 flex items-center justify-between text-xs text-emerald-200 transition-all cursor-pointer" title="Cobertura Biofísica Pura Sentinel-2 L2A (LOD 5km / Macro >50ha)">
+                    <span class="flex items-center gap-2">
+                        <span>🌱</span>
+                        <span>LULC Biofísico (Módulo 1)</span>
+                    </span>
+                    <span id="badgeDockLulcBio" class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 text-slate-400 border border-white/5">OFF</span>
+                </button>
+
                 <button onclick="toggleCuencaTacticalLegend();" id="btnDockTacticalLegend" class="w-full text-left p-2 rounded-xl bg-white/5 hover:bg-purple-500/15 border border-white/5 hover:border-purple-500/30 flex items-center justify-between text-xs text-purple-200 transition-all cursor-pointer">
                     <span class="flex items-center gap-2">
                         <span>🗺️</span>
@@ -11486,6 +11495,15 @@ def execute_quadratic_vote(available_credits: int, votes_cast: int, proposal_id:
                             <div class="text-sm font-bold text-emerald-400">2026-09-21</div>
                         </div>
                     </div>
+
+                    <!-- Módulo 1: Botón Accionador LULC Biofísico Dual LOD -->
+                    <button onclick="toggleBiofisicoLulcLayer()" id="btnSidebarLulcBio" class="w-full py-2 px-3 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/35 border border-emerald-400/50 text-emerald-200 hover:text-white font-mono text-[10.5px] font-bold flex items-center justify-between transition-all cursor-pointer">
+                        <span class="flex items-center gap-1.5">
+                            <span>🌱</span>
+                            <span>Mosaico Biofísico (LOD 5km)</span>
+                        </span>
+                        <span id="badgeSidebarLulcBio" class="text-[8.5px] px-1.5 py-0.5 rounded bg-black/60 text-slate-300 border border-white/10 font-mono">ACTIVAR</span>
+                    </button>
                 </div>
 
                 <!-- CONTENEDOR REACTIVO DE BLOQUES COLAPSABLES SIG (POBLADO POR GEO-LAYERS.JS) -->
