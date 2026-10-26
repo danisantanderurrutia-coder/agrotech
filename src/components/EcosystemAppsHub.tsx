@@ -4,7 +4,7 @@ import {
   AlertCircle, Play, RefreshCw, Sparkles, Trees, ShieldCheck, 
   Activity, ArrowRight, Compass, Info, Maximize2, MonitorPlay,
   Zap, Database, Radio, Server, Check, Flame, ChevronRight,
-  MapPin, Shield, Mountain, Droplets, Wind
+  MapPin, Shield, Mountain, Droplets, Wind, Camera
 } from 'lucide-react';
 import { PermacultureSection } from './PermacultureSection';
 
@@ -729,6 +729,74 @@ export const EcosystemAppsHub: React.FC<EcosystemAppsHubProps> = ({
                   <h4 className="text-sm font-bold text-slate-900">Mesa Vecinal & Gobernanza DAO</h4>
                   <p className="text-xs text-slate-600 font-serif">
                     Pactos colaborativos con parceleros colindantes, asambleas y economía de los hombros.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* NUEVA VERTICAL: AgriTwin Vision & Drones Autónomos */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#071810] via-[#0B2519] to-[#0d3322] border-2 border-emerald-500/60 text-white space-y-6 shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+              
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-emerald-500/30 pb-4 relative z-10">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/40 uppercase">
+                      NUEVO MÓDULO • CIBERFÍSICO 2026
+                    </span>
+                    <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40 uppercase">
+                      HARDWARE + AI EDGE
+                    </span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-white flex items-center gap-2.5 pt-1">
+                    <Camera className="w-6 h-6 text-emerald-400" />
+                    AgriTwin Vision & Drones Autónomos
+                  </h3>
+                  <p className="text-xs text-emerald-200/80 font-serif">
+                    Convergencia táctica entre cámaras físicas solares 4G y estaciones Drone-in-a-Box (DJI Dock 2) coordinadas por el gemelo 3D.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    onClick={() => openAppTab('http://localhost:7773')}
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-sans text-xs font-extrabold transition-all shadow-md active:scale-95"
+                  >
+                    <Play className="w-3.5 h-3.5" />
+                    <span>Ver Demo en Gemelo 3D</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* 3 Pillars Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 relative z-10 font-sans text-xs">
+                <div className="p-4 rounded-2xl bg-white/5 border border-emerald-500/30 space-y-2">
+                  <div className="flex items-center gap-2 text-emerald-300 font-bold">
+                    <Radio className="w-4 h-4 text-emerald-400" />
+                    <span>1. Frustums 3D & Streaming PiP</span>
+                  </div>
+                  <p className="text-slate-300 font-serif leading-relaxed text-[11px]">
+                    Visualización volumétrica del campo de visión de cada poste solar en Three.js. Cono pulsante que cambia de cian a rojo ante intrusiones o anomalías, con streaming WebRTC sub-segundo y control PTZ bidireccional.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-white/5 border border-emerald-500/30 space-y-2">
+                  <div className="flex items-center gap-2 text-amber-300 font-bold">
+                    <Zap className="w-4 h-4 text-amber-400" />
+                    <span>2. Orquestación Reactiva Inmediata</span>
+                  </div>
+                  <p className="text-slate-300 font-serif leading-relaxed text-[11px]">
+                    Si una cámara perimetral detecta una alarma (fuga de agua en compuerta DGA, corte de cerco PRV o fauna), el dron despega autónomamente del hangar en 90 segundos y realiza una órbita de verificación al punto exacto.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-white/5 border border-emerald-500/30 space-y-2">
+                  <div className="flex items-center gap-2 text-emerald-300 font-bold">
+                    <Sparkles className="w-4 h-4 text-emerald-400" />
+                    <span>3. Mosaicos NDVI sin Recargas</span>
+                  </div>
+                  <p className="text-slate-300 font-serif leading-relaxed text-[11px]">
+                    Misiones de vuelo programadas de fotogrametría aérea. Los ortomosaicos multiespectrales se proyectan directamente sobre la malla del terreno 3D en caliente, actualizando el vigor del huerto sin interrumpir la sesión.
                   </p>
                 </div>
               </div>

@@ -654,6 +654,86 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
         wikilinks: ['Permacultura']
       }
     ]
+  },
+
+  // 6. AGRITWIN VISION & DRONES
+  {
+    id: 'agritwin-vision',
+    name: 'AgriTwin Vision & Drones',
+    tagline: 'Vigilancia Ciberfísica 3D, Edge AI & Drone-in-a-Box',
+    version: '1.0.0',
+    port: 7773,
+    status: 'operational',
+    category: 'digital-twin',
+    logoUrl: '/logo-agritwin.png',
+    architectureRole: 'Módulo Edge IoT',
+    techStack: ['Three.js', 'WebRTC WHEP', 'MediaMTX', 'YOLOv11 Edge AI', 'MegaDetector v5a', 'DJI Cloud API', 'WebODM'],
+    description: 'Convergencia ciberfísica entre cámaras físicas solares PTZ 4G, cámaras trampa de biodiversidad y drones autónomos DJI Dock 2, integrados bidireccionalmente al gemelo digital 3D con Frustums volumétricos, streaming de video de baja latencia (<300ms) y actualización en caliente de ortomosaicos.',
+    highlights: [
+      'Visualización interactiva de conos de cobertura (Frustums 3D) proyectados sobre la topografía en Three.js',
+      'Streaming PiP de baja latencia rural con protocolo WebRTC / WHEP adaptable a enlaces 4G Cat-M1 y Starlink',
+      'Controles PTZ bidireccionales: manipular el joystick virtual en el visor rota la cámara física y su frustum en tiempo real',
+      'Alertas Edge AI con YOLOv11 en el nodo: intrusión perimetral, aforo de compuertas DGA, fauna nativa y condición corporal PRV',
+      'Integración Drone-in-a-Box (DJI Dock 2) con misiones de vuelo autónomas y actualización dinámica de ortomosaicos (NDVI/RGB) sin recargar la web'
+    ],
+    dataSources: [
+      {
+        id: 'ds-vision-webrtc',
+        name: 'Streaming WebRTC WHEP de Baja Latencia',
+        type: 'sensor-iot',
+        provider: 'MediaMTX Gateway Rural',
+        frequency: 'Streaming On-Demand (<300ms)',
+        format: 'Modbus/MQTT',
+        description: 'Transmisión de video optimizada para redes celulares agrícolas y Starlink.'
+      },
+      {
+        id: 'ds-vision-ai-events',
+        name: 'Eventos de Inferencia Edge AI (YOLO)',
+        type: 'sensor-iot',
+        provider: 'NPU Hailo-8 Embebida en Cámara',
+        frequency: 'Por evento (Push MQTT)',
+        format: 'JSON',
+        description: 'Metadata vectorial de detección: personas, motobombas en canales DGA, fauna protegida y cabezas de ganado.'
+      },
+      {
+        id: 'ds-drone-ortho',
+        name: 'Ortomosaico Multiespectral Aéreo',
+        type: 'satellite',
+        provider: 'DJI Dock 2 + WebODM Pipeline',
+        frequency: 'Por campaña de vuelo',
+        format: 'GeoTIFF',
+        description: 'Capas RGB y NDVI de alta resolución (GSD 1.8 cm/px) aplicadas en caliente sobre la malla del terreno.'
+      }
+    ],
+    scripts: [
+      {
+        id: 'scr-vision-mediamtx',
+        name: 'Gateway MediaMTX WebRTC',
+        language: 'bash',
+        purpose: 'Iniciar el servidor de streaming de ultra baja latencia rural en Docker.',
+        command: 'docker run --rm -it -p 8554:8554 -p 8889:8889 bluenviron/mediamtx'
+      },
+      {
+        id: 'scr-drone-mission',
+        name: 'Simulador de Misión DJI Dock 2',
+        language: 'node',
+        purpose: 'Disparar vuelo de fotogrametría autónomo y aplicar textura NDVI al terreno 3D.',
+        command: 'window.droneMissionManager.startMission()'
+      }
+    ],
+    rawDatasets: [],
+    graphicAssets: [
+      {
+        id: 'ga-vision-demo',
+        name: 'Demo Visor 3D Vision & Drones',
+        type: 'live-app',
+        url: 'http://localhost:7773/?mode=3d',
+        port: 7773,
+        embeddable: true,
+        description: 'Visor interactivo con cámaras solares PTZ y dron autónomo DJI.'
+      }
+    ],
+    documentationNotes: []
   }
 ];
 

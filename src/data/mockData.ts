@@ -280,6 +280,32 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
     impactMetric: '+1.200 copias digitales y físicas distribuidas en el centro de Chile',
     iconName: 'BookOpen',
     highlightColor: 'from-amber-600 to-orange-400'
+  },
+  {
+    id: 'agritwin-vision-drones',
+    number: 8,
+    title: 'AgriTwin Vision & Drones Autónomos',
+    tagline: 'Cámaras solares PTZ 4G, Frustums 3D y vuelos DJI Dock 2 conectados al gemelo digital',
+    category: 'Automation & AI',
+    businessModel: 'SaaS Add-on ($25.000 - $38.000 CLP/mes por cámara) + HaaS / Vuelos On-Demand',
+    priceRange: '$25.000 - $38.000 CLP / mes por cámara',
+    targetAudience: ['Dueños ausentes de predios', 'Inversionistas agrícolas y family offices', 'Fruticultores y viñedos comerciales', 'Ganaderos regenerativos (PRV)'],
+    description: 'La convergencia ciberfísica definitiva: cámaras solares PTZ 4G y estaciones Drone-in-a-Box conectadas bidireccionalmente al gemelo digital 3D. Incluye proyección de conos de cobertura en Three.js, streaming WebRTC de ultra baja latencia (<300ms), alertas Edge AI (intrusos, compuertas DGA, ganado, fauna nativa) y actualización dinámica de ortomosaicos sin recargar la aplicación.',
+    keyFeatures: [
+      'Proyección de conos de cobertura (Frustums 3D) interactivos sobre la topografía real en Three.js',
+      'Streaming de video de baja latencia con protocolo WebRTC / WHEP adaptable a enlaces rurales 4G y Starlink',
+      'Alertas Edge AI con YOLOv11 en el nodo: intrusión perimetral, aforo de compuertas DGA y conteo de ganado PRV',
+      'Integración desatendida con DJI Dock 2 y actualización en caliente de ortofotos multiespectrales (NDVI/RGB)'
+    ],
+    specs: {
+      'Streaming Video': 'WebRTC / WHEP sub-300ms sobre 4G LTE-M y Starlink',
+      'Edge AI en Nodo': 'YOLOv11-Edge (Intrusos, Caudal DGA, BCS Ganado) y MegaDetector (Fauna ESG)',
+      'Estación Dron': 'Integración DJI Dock 2 / MAVLink con ortomosaicos automatizados',
+      'Motor 3D': 'Three.js Frustum volumétrico interactivo + PiP HUD + cambio dinámico de texturas'
+    },
+    impactMetric: 'Monitoreo 100% autónomo para dueños ausentes: 0 viajes innecesarios y respuesta ante incidentes en < 3 minutos',
+    iconName: 'Camera',
+    highlightColor: 'from-cyan-500 to-emerald-400'
   }
 ];
 

@@ -7,8 +7,8 @@ Servicios:
   7770: AgroTech HQ (Cockpit Central)
   7771: AgroTech Web Comercial
   7772: Rewild Suite
-  7773: AgriTwin 1 Predial (3D)
-  7774: AgroTwin 2 Territorial (GIS)
+  7773: AgriTwin Predio (3D)
+  7777: AgriTwin Hub Master (Single-Pane-of-Glass)
 
 Garantías:
   1. Cero Servidores Fantasma: Detecta y elimina procesos zombis en el puerto.
@@ -50,9 +50,9 @@ SERVICES = {
         'type': 'node',
         'script': 'server.cjs'
     },
-    7774: {
-        'name': 'AgroTwin 2 Territorial',
-        'subdir': 'agritwin-regional',
+    7777: {
+        'name': 'AgriTwin Hub Master',
+        'subdir': 'agritwin-hub',
         'type': 'node',
         'script': 'server.cjs'
     }
@@ -195,7 +195,7 @@ end tell
 
 def main():
     if len(sys.argv) < 2:
-        print("Uso: launch.py <puerto: 7770..7774>")
+        print("Uso: launch.py <puerto: 7770..7773 | 7777>")
         sys.exit(1)
 
     port = int(sys.argv[1])

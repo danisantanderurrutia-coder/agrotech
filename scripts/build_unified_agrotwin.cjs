@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const regionalDir = path.join(__dirname, '..', 'agritwin-regional');
-const masterDir = path.join(__dirname, '..', 'agrotwin-master');
+const masterDir = path.join(__dirname, '..', 'agritwin-hub');
 const backupPath = path.join(regionalDir, 'index.html.backup');
 const targetPath = path.join(masterDir, 'index.html');
 

@@ -5,7 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "sync:docs": "node scripts/sync-obsidian-docs.cjs",
+    "dev:all": "node scripts/orchestrator.cjs start all",
+    "dev:stop": "node scripts/orchestrator.cjs stop all",
+    "dev:status": "node scripts/orchestrator.cjs status",
+    "prebuild": "node scripts/sync-obsidian-docs.cjs",
+    "build": "node scripts/sync-obsidian-docs.cjs && tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },

@@ -35,3 +35,6 @@ agritwin/set_icon
 
 # MS Office / Keynote temp files
 ~$*
+
+# Orchestrator
+.orchestrator_pids.json

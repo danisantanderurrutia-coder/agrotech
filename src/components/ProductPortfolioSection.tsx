@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PRODUCT_PORTFOLIO } from '../data/mockData';
 import { ProductLine } from '../types';
 import { 
-  FileText, Cpu, Activity, Globe, Leaf, GraduationCap, BookOpen, 
+  FileText, Cpu, Activity, Globe, Leaf, GraduationCap, BookOpen, Camera,
   Layers, CheckCircle, ArrowUpRight, DollarSign, Target, Info, Download, X 
 } from 'lucide-react';
 
@@ -19,6 +19,7 @@ export const ProductPortfolioSection: React.FC = () => {
       case 'Leaf': return Leaf;
       case 'GraduationCap': return GraduationCap;
       case 'BookOpen': return BookOpen;
+      case 'Camera': return Camera;
       default: return Layers;
     }
   };
@@ -37,11 +38,11 @@ export const ProductPortfolioSection: React.FC = () => {
           <div className="space-y-3 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 text-xs font-sans font-bold">
               <Layers className="w-3.5 h-3.5 text-emerald-700" />
-              <span>Portafolio de 7 Líneas de Precisión Agronómica</span>
+              <span>Portafolio de 8 Líneas de Precisión Agronómica</span>
             </div>
             
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B2519]">
-              Una Plataforma, <span className="text-amber-600">Siete Líneas de Ingreso</span>
+              Una Plataforma, <span className="text-amber-600">Ocho Líneas de Ingreso</span>
             </h2>
             
             <p className="text-slate-600 text-base font-serif">

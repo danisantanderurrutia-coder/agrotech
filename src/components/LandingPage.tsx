@@ -51,23 +51,23 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenPitchDeck, onNav
           {/* Card 1: AgriTwin 3D (Flagship Hero) */}
           <div className="glass-panel p-6 rounded-2xl border-2 border-emerald-500/80 hover:border-emerald-400 transition-all space-y-4 flex flex-col justify-between group shadow-lg bg-gradient-to-b from-white to-emerald-50/30 relative overflow-hidden">
             <div className="absolute top-0 right-0 bg-emerald-600 text-white text-[9px] font-mono font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
-              FLAGSHIP • 6 RAMAS
+              FLAGSHIP • 3D & VISIÓN
             </div>
 
             <div className="space-y-3 pt-2">
               <div className="flex items-center justify-between font-mono text-xs">
                 <span className="px-2.5 py-1 rounded bg-emerald-100 text-emerald-900 font-bold border border-emerald-300">
-                  GEMELO DIGITAL 3D
+                  GEMELO DIGITAL 3D & VISIÓN
                 </span>
                 <span className="text-emerald-700 font-bold">Desde $45.000 / mes</span>
               </div>
 
               <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors">
-                AgriTwin 3D: Tronco & 6 Ramas
+                AgriTwin 3D & Vision Drones
               </h3>
 
               <p className="text-xs text-slate-600 font-serif leading-relaxed">
-                El corazón de AgroTech. Simulación biofísica 3D en tiempo real: heladas katabáticas con 72h de anticipación, balance hídrico FAO-56 y gestión de cuarteles.
+                El corazón ciberfísico de AgroTech. Simulación biofísica 3D en tiempo real (heladas y agua) integrada con cámaras solares PTZ 4G, Frustums de visión, alertas Edge AI y vuelos autónomos DJI Dock 2.
               </p>
             </div>
 
