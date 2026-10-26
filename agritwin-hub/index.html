@@ -7120,6 +7120,10 @@
                 <button onclick="openDossierInHub()" id="docsTabBtn-dossier" class="docs-subtab-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer bg-emerald-50 text-emerald-950 border border-emerald-300 shadow-sm">
                     <span>🛰️</span> <span>Dossier Satelital & Software (18 Láminas)</span>
                 </button>
+                <button onclick="switchDocsTab('docs-vecino')" id="docsTabBtn-vecino" class="docs-subtab-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer bg-sky-50 text-sky-950 border border-sky-300 shadow-sm">
+                    <span>🛡️</span> <span>Estándar Vecino Informado</span>
+                    <span class="px-1.5 py-0.2 rounded bg-sky-600 text-white text-[9px] font-mono">MÓDULO 1</span>
+                </button>
                 <button onclick="switchDocsTab('docs-arch')" id="docsTabBtn-arch" class="docs-subtab-btn active px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm">
                     <span>🏛️</span> <span>Arquitectura del Sistema</span>
                 </button>
@@ -7169,6 +7173,215 @@
                 <!-- Visor Interactivo Embebido Directo en el Hub -->
                 <div class="rounded-2xl border border-[#E7DAC6] overflow-hidden shadow-sm bg-white" style="height: 860px;">
                     <iframe id="iframeDossier" src="dossier.html?v=3.5" class="w-full h-full border-0" allow="clipboard-write"></iframe>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════════
+                 SUBTAB 0B: ESTÁNDAR VECINO INFORMADO (DOCUMENTACIÓN TÉCNICA Y AUDITABLE)
+                 ═══════════════════════════════════════════════════════════════════ -->
+            <div id="docs-vecino" class="docs-subcontent hidden space-y-6">
+                <!-- Header Banner Vecino Informado -->
+                <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-sky-50 via-white to-emerald-50 border border-sky-200/90 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div class="flex items-start sm:items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-sky-600 text-white flex items-center justify-center text-2xl shadow-md shrink-0">
+                            🛡️
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-sky-100 text-sky-800 border border-sky-300">ESTÁNDAR OPERATIVO C2</span>
+                                <span class="text-xs text-stone-400">•</span>
+                                <span class="text-xs font-mono text-emerald-700 font-semibold">Módulo 1: Autosegmentación Biofísica Activo</span>
+                                <span class="text-xs text-stone-400">•</span>
+                                <span class="text-xs font-mono text-stone-500">Radio Táctico 5 km</span>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-stone-900 font-serif">Estándar «Vecino Informado» de Agrotech</h3>
+                            <p class="text-xs sm:text-sm text-stone-600 mt-1 max-w-3xl leading-relaxed">
+                                Marco de inteligencia territorial compartida que resuelve la brecha entre la tenencia legal (Catastro SII) y la física del suelo (Teledetección Sentinel-2 L2A). Permite al agricultor comprender cómo las dinámicas externas de su cuenca (biomasa combustible, reservas hídricas y rastrojos secos) impactan su predio.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 font-mono text-xs shrink-0 w-full md:w-auto">
+                        <button onclick="switchMasterView('territory'); setTimeout(() => { window.toggleBiofisicoLulcLayer(true); }, 300);" class="w-full md:w-auto px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold flex items-center justify-center gap-2 transition-all shadow-sm cursor-pointer">
+                            <span>🗺️ Ver Capa en el Mapa</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Desglose de Módulo 1: Cómo procesamos los datos -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Tarjeta 1: La Regla Fundamental -->
+                    <div class="p-5 rounded-2xl bg-white border border-[#E7DAC6] shadow-sm space-y-3">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm">1</span>
+                            <h4 class="font-bold text-sm text-stone-900 font-serif">LULC Biofísico ≠ Catastro Legal</h4>
+                        </div>
+                        <p class="text-xs text-stone-600 leading-relaxed">
+                            Al usuario no le interesa de quién es legalmente el predio vecino para evaluar si corre peligro de incendio o sequía. Separamos el procesamiento espectral puro del mosaico de roles del SII para delimitar <strong>unidades biofísicas homogéneas</strong> independientes del cerco de alambre.
+                        </p>
+                        <div class="p-2.5 rounded-lg bg-stone-50 border border-stone-200 text-[11px] font-mono text-stone-700">
+                            <strong>Principio:</strong> El fuego, la sequía y la escorrentía no respetan deslindes notariales.
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 2: Zonificación Dual LOD -->
+                    <div class="p-5 rounded-2xl bg-white border border-[#E7DAC6] shadow-sm space-y-3">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-sm">2</span>
+                            <h4 class="font-bold text-sm text-stone-900 font-serif">Filtro Antirruido (LOD Dual)</h4>
+                        </div>
+                        <p class="text-xs text-stone-600 leading-relaxed">
+                            Para evitar el efecto <em>"sal y pimienta"</em> (150.000 micro-polígonos pixelados de 10m), aplicamos un esquema de Nivel de Detalle Espacial:
+                        </p>
+                        <ul class="text-[11px] font-mono text-stone-700 space-y-1.5 list-disc pl-4">
+                            <li><strong>Macro-Cuenca (>5 km):</strong> Polígonos con Unidad Mínima Cartográfica <strong>MMU ≥ 50 ha</strong> suavizados con Douglas-Peucker.</li>
+                            <li><strong>Radio Táctico Local (5 km Meniel):</strong> Resolución fina <strong>MMU ≥ 1.5 ha</strong> aislando tranques y cuarteles agrícolas.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tarjeta 3: Estrategia de Biomasa Forestal -->
+                    <div class="p-5 rounded-2xl bg-white border border-[#E7DAC6] shadow-sm space-y-3">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-800 flex items-center justify-center font-bold text-sm">3</span>
+                            <h4 class="font-bold text-sm text-stone-900 font-serif">Estrategia de Biomasa Unificada</h4>
+                        </div>
+                        <p class="text-xs text-stone-600 leading-relaxed">
+                            En verano, Sentinel-2 puede arrojar firmas idénticas entre monocultivo de pino maduro y bosque esclerófilo denso. Para garantizar >94% de certeza, se unificaron provisionalmente bajo <strong>«Biomasa Forestal Continua»</strong>.
+                        </p>
+                        <div class="p-2.5 rounded-lg bg-rose-50 border border-rose-200 text-[11px] text-rose-950">
+                            <strong>Roadmap de Discriminación:</strong> En los pasos siguientes incorporamos pendiente DEM (>18° = nativo de quebrada) y análisis de textura Canny (ortogonalidad de plantación comercial).
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla de Capas del Módulo 1 Implementadas -->
+                <div class="p-5 rounded-2xl bg-white border border-[#E7DAC6] shadow-sm space-y-4">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-stone-200 pb-3">
+                        <div>
+                            <h4 class="font-bold text-sm text-stone-900 font-serif">Catálogo de Polígonos Biofísicos Activos (Módulo 1)</h4>
+                            <p class="text-xs text-stone-500">Capas vectoriales integradas en el motor cartográfico de AgriTwin</p>
+                        </div>
+                        <span class="text-[11px] font-mono px-2.5 py-1 rounded bg-stone-100 text-stone-700 border border-stone-300 font-bold">
+                            13 POLÍGONOS CALIBRADOS
+                        </span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left font-mono text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-stone-50 border-b border-stone-200 text-stone-600 text-[10.5px]">
+                                    <th class="p-2.5">Clase Biofísica</th>
+                                    <th class="p-2.5">Polígono Representativo</th>
+                                    <th class="p-2.5">Superficie</th>
+                                    <th class="p-2.5">Resolución LOD</th>
+                                    <th class="p-2.5">Certeza Espectral</th>
+                                    <th class="p-2.5">Vínculo Táctico / Riesgo</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-stone-100 text-[11px] text-stone-800">
+                                <tr class="hover:bg-cyan-50/50 transition-colors">
+                                    <td class="p-2.5 font-bold text-cyan-700 flex items-center gap-1.5">
+                                        <span>💧</span> Espejo de Agua
+                                    </td>
+                                    <td class="p-2.5 font-semibold">Tranque Acumulador Meniel</td>
+                                    <td class="p-2.5 font-bold text-cyan-900">1.8 ha (18.500 m³)</td>
+                                    <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px]">Local 5 km (MMU 1.5 ha)</span></td>
+                                    <td class="p-2.5 font-bold text-emerald-700">98% (MNDWI)</td>
+                                    <td class="p-2.5 text-stone-600">Punto de abastecimiento aéreo para brigadas y cortafuego vivo</td>
+                                </tr>
+                                <tr class="hover:bg-cyan-50/50 transition-colors">
+                                    <td class="p-2.5 font-bold text-cyan-700 flex items-center gap-1.5">
+                                        <span>💧</span> Espejo de Agua
+                                    </td>
+                                    <td class="p-2.5 font-semibold">Tranque Vecinal Los Cristales</td>
+                                    <td class="p-2.5 font-bold text-cyan-900">2.4 ha (24.800 m³)</td>
+                                    <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px]">Local 5 km (MMU 1.5 ha)</span></td>
+                                    <td class="p-2.5 font-bold text-emerald-700">97% (MNDWI)</td>
+                                    <td class="p-2.5 text-stone-600">Respaldo hídrico colaborativo en red vecinal</td>
+                                </tr>
+                                <tr class="hover:bg-rose-50/50 transition-colors">
+                                    <td class="p-2.5 font-bold text-rose-700 flex items-center gap-1.5">
+                                        <span>🌲</span> Biomasa Forestal
+                                    </td>
+                                    <td class="p-2.5 font-semibold">Rodal Forestal Flanco Norte</td>
+                                    <td class="p-2.5 font-bold text-rose-900">14.2 ha</td>
+                                    <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px]">Local 5 km (MMU 1.5 ha)</span></td>
+                                    <td class="p-2.5 font-bold text-emerald-700">94% (S2 BOA)</td>
+                                    <td class="p-2.5 text-stone-600">Vulnerabilidad de interfaz WUI sobre el flanco norte de Meniel</td>
+                                </tr>
+                                <tr class="hover:bg-rose-50/50 transition-colors">
+                                    <td class="p-2.5 font-bold text-rose-700 flex items-center gap-1.5">
+                                        <span>🌲</span> Biomasa Forestal
+                                    </td>
+                                    <td class="p-2.5 font-semibold">Remanente Nativo Quebrada El Guindo</td>
+                                    <td class="p-2.5 font-bold text-rose-900">8.5 ha</td>
+                                    <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px]">Local 5 km (MMU 1.5 ha)</span></td>
+                                    <td class="p-2.5 font-bold text-emerald-700">92% (S2 BOA)</td>
+                                    <td class="p-2.5 text-stone-600">Amortiguador biológico de erosión y cortafuego natural en vaguada</td>
+                                </tr>
+                                <tr class="hover:bg-emerald-50/50 transition-colors">
+                                    <td class="p-2.5 font-bold text-emerald-700 flex items-center gap-1.5">
+                                        <span>🌾</span> Matriz Agrícola
+                                    </td>
+                                    <td class="p-2.5 font-semibold">Cuarteles Cerezos & Avellanos Meniel</td>
+                                    <td class="p-2.5 font-bold text-emerald-900">22.0 ha (12 ha + 10 ha)</td>
+                                    <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px]">Local 5 km (MMU 1.5 ha)</span></td>
+                                    <td class="p-2.5 font-bold text-emerald-700">96% (S2 BOA)</td>
+                                    <td class="p-2.5 text-stone-600">Canopia densa activa; barrera verde hidratada contra fuego</td>
+                                </tr>
+                                <tr class="hover:bg-rose-50/50 transition-colors">
+                                    <td class="p-2.5 font-bold text-rose-700 flex items-center gap-1.5">
+                                        <span>🌲</span> Biomasa Forestal
+                                    </td>
+                                    <td class="p-2.5 font-semibold">Cinturón Biomasa Precordillera Andina</td>
+                                    <td class="p-2.5 font-bold text-rose-900">12.300 ha</td>
+                                    <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px]">Macro-Cuenca (MMU ≥50 ha)</span></td>
+                                    <td class="p-2.5 font-bold text-emerald-700">94% (S2 BOA)</td>
+                                    <td class="p-2.5 text-stone-600">Combustible masivo continuo en corredor de viento Puelche</td>
+                                </tr>
+                                <tr class="hover:bg-emerald-50/50 transition-colors">
+                                    <td class="p-2.5 font-bold text-emerald-700 flex items-center gap-1.5">
+                                        <span>🌾</span> Matriz Agrícola
+                                    </td>
+                                    <td class="p-2.5 font-semibold">Matriz Agrícola Irrigada Cuenca Media</td>
+                                    <td class="p-2.5 font-bold text-emerald-900">18.600 ha</td>
+                                    <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px]">Macro-Cuenca (MMU ≥50 ha)</span></td>
+                                    <td class="p-2.5 font-bold text-emerald-700">96% (S2 BOA)</td>
+                                    <td class="p-2.5 text-stone-600">Amortiguador térmico de baja inflamabilidad estival</td>
+                                </tr>
+                                <tr class="hover:bg-cyan-50/50 transition-colors">
+                                    <td class="p-2.5 font-bold text-cyan-700 flex items-center gap-1.5">
+                                        <span>💧</span> Espejo de Agua
+                                    </td>
+                                    <td class="p-2.5 font-semibold">Espejo Mayor Embalse Bullileo</td>
+                                    <td class="p-2.5 font-bold text-cyan-900">3.200 ha</td>
+                                    <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px]">Macro-Cuenca (MMU ≥50 ha)</span></td>
+                                    <td class="p-2.5 font-bold text-emerald-700">99% (MNDWI)</td>
+                                    <td class="p-2.5 text-stone-600">Reserva hídrica estratégica regional (84.2 Hm³)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Benchmarking y Transferencia del Dossier -->
+                <div class="p-5 rounded-2xl bg-stone-50 border border-[#E7DAC6] shadow-sm space-y-3 font-sans">
+                    <h4 class="font-bold text-sm text-stone-900 font-serif flex items-center gap-2">
+                        <span>🛰️</span> Transferencia Tecnológica desde el Dossier de Teledetección
+                    </h4>
+                    <p class="text-xs text-stone-600 leading-relaxed">
+                        Este Módulo 1 incorpora directamente las metodologías de segmentación y detección automática analizadas en nuestro <strong>Dossier Estratégico</strong>:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                        <div class="p-3 bg-white rounded-xl border border-stone-200">
+                            <strong class="text-emerald-800 block mb-1">Descartes Labs (Slide 2):</strong>
+                            <span class="text-stone-600">Algoritmo de detección de bordes espectrales homogéneos para evitar el trazado manual de polígonos.</span>
+                        </div>
+                        <div class="p-3 bg-white rounded-xl border border-stone-200">
+                            <strong class="text-sky-800 block mb-1">Planet Labs (Slide 1):</strong>
+                            <span class="text-stone-600">Índice MNDWI de alta fidelidad para aislar espejos de agua sin distorsión por sombra de laderas.</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
