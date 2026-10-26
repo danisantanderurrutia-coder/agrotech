@@ -4,7 +4,7 @@ set -e
 
 AGROTECH_DIR="/Users/danielsantander/Documents/Agrotech"
 HUB_DIR="$AGROTECH_DIR/agritwin-hub"
-PREDIO_DIR="$AGROTECH_DIR/agritwin"
+PREDIO_DIR="$AGROTECH_DIR/agritwin-predio"
 TARGET_DIR="/Users/danielsantander/Documents/agritwin-app"
 
 echo "🧹 Limpiando árbol objetivo manteniendo .git..."
