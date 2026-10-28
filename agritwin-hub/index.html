@@ -7119,29 +7119,20 @@
                 </div>
             </div>
 
-            <!-- Subnavegación de Pestañas del Vault (Galpón Luminoso) -->
+            <!-- Subnavegación de 4 Secciones Maestras del Vault (Galpón Luminoso) -->
             <div class="flex items-center gap-2 border-b border-[#E7DAC6] pb-3 overflow-x-auto select-none">
-                <button onclick="openDossierInHub()" id="docsTabBtn-dossier" class="docs-subtab-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer bg-emerald-50 text-emerald-950 border border-emerald-300 shadow-sm">
-                    <span>🛰️</span> <span>Dossier Competencia (18 Láminas)</span>
+                <button onclick="switchDocsTab('docs-vecino')" id="docsTabBtn-vecino" class="docs-subtab-btn active px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer bg-sky-50 text-sky-950 border border-sky-300 shadow-sm">
+                    <span>📐</span> <span>1. Marco Teórico & Metodología</span>
+                    <span class="px-1.5 py-0.2 rounded bg-sky-600 text-white text-[9px] font-mono">MÓDULOS 1-5</span>
                 </button>
-                <button onclick="switchDocsTab('docs-vecino')" id="docsTabBtn-vecino" class="docs-subtab-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer bg-sky-50 text-sky-950 border border-sky-300 shadow-sm">
-                    <span>🛡️</span> <span>Estándar Vecino Informado & Protegido</span>
-                    <span class="px-1.5 py-0.2 rounded bg-sky-600 text-white text-[9px] font-mono">MÓDULOS 1-4</span>
-                </button>
-                <button onclick="switchDocsTab('docs-arch')" id="docsTabBtn-arch" class="docs-subtab-btn active px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm">
-                    <span>🏛️</span> <span>Arquitectura del Sistema</span>
-                </button>
-                <button onclick="switchDocsTab('docs-scripts')" id="docsTabBtn-scripts" class="docs-subtab-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer">
-                    <span>⚙️</span> <span>Scripts Biofísicos & Datasets</span>
-                </button>
-                <button onclick="switchDocsTab('docs-reporter')" id="docsTabBtn-reporter" class="docs-subtab-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer">
-                    <span>📑</span> <span>Generador de Informes (PDF/MD)</span>
+                <button onclick="switchDocsTab('docs-arch')" id="docsTabBtn-arch" class="docs-subtab-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm">
+                    <span>⚡</span> <span>2. Arquitectura de Software & Hardware</span>
                 </button>
                 <button onclick="switchDocsTab('docs-tables')" id="docsTabBtn-tables" class="docs-subtab-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer">
-                    <span>📋</span> <span>Mosaico Catastral & Benchmarks</span>
+                    <span>🏡</span> <span>3. Expediente Meniel & Gobernanza</span>
                 </button>
-                <button onclick="switchDocsTab('docs-biomes')" id="docsTabBtn-biomes" class="docs-subtab-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer">
-                    <span>🎨</span> <span>Galería de Biomas</span>
+                <button onclick="switchDocsTab('docs-dossier')" id="docsTabBtn-dossier" class="docs-subtab-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer bg-amber-50 text-amber-950 border border-amber-300 shadow-sm">
+                    <span>📦</span> <span>4. Recursos, Informes & Dossiers</span>
                 </button>
             </div>
 
