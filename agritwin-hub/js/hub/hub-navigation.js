@@ -2686,6 +2686,8 @@ window.scrollCuencaDoctrina = function(moduleKey) {
         targetEl = allEls.find(el => el.innerText && (el.innerText.includes('Módulo 3: Formulación') || el.innerText.includes('MNDWI')));
     } else if (moduleKey === 'm4-heladas' || moduleKey === 'heladas') {
         targetEl = allEls.find(el => el.innerText && (el.innerText.includes('Módulo 4: Topoclimatología') || el.innerText.includes('Drenaje por Gravedad')));
+    } else if (moduleKey === 'm5-tornados-cape' || moduleKey === 'tornados') {
+        targetEl = allEls.find(el => el.innerText && (el.innerText.includes('Módulo 5: Termodinámica Convectiva') || el.innerText.includes('Integral de Flotabilidad')));
     } else if (moduleKey === 'm1-lulc' || moduleKey === 'lulc') {
         targetEl = allEls.find(el => el.innerText && (el.innerText.includes('LULC Biofísico') || el.innerText.includes('Módulo 1')));
     }
