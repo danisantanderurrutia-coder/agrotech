@@ -43,24 +43,8 @@ const SERVICES = {
     args: ['server.py'],
     checkUrl: 'http://127.0.0.1:7772/'
   },
-  predio: {
-    name: 'AgriTwin Predio 3D',
-    port: 7773,
-    dir: 'agritwin',
-    cmd: 'node',
-    args: ['server.cjs'],
-    checkUrl: 'http://127.0.0.1:7773/'
-  },
-  cuenca: {
-    name: 'AgriTwin Cuenca (GIS)',
-    port: 7774,
-    dir: 'agritwin-regional',
-    cmd: 'node',
-    args: ['server.cjs'],
-    checkUrl: 'http://127.0.0.1:7774/'
-  },
   hub: {
-    name: 'AgriTwin Hub Master',
+    name: 'AgriTwin General (Tronco Hub + Predio + Cuenca Unificados)',
     port: 7777,
     dir: 'agritwin-hub',
     cmd: 'node',

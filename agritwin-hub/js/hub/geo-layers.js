@@ -106,7 +106,7 @@
                     "properties": {
                         "id": "MENIEL",
                         "name": "Fundo Meniel (Predio Piloto)",
-                        "rol": "418-24 Parral",
+                        "rol": "142-88 Retiro",
                         "comuna": "Parral",
                         "area_ha": 24.8,
                         "crop": "Cerezos Lapins (12 ha) & Avellano Tonda (10 ha)",
@@ -3568,7 +3568,7 @@
                         "id": "TR_MENIEL_01",
                         "name": "Tranque Keyline Fundo Meniel (Piloto)",
                         "sector": "Parral / Fundo Meniel",
-                        "rol": "418-24 Parral",
+                        "rol": "142-88 Retiro",
                         "dist_km": 0.0,
                         "bearing": "Centro",
                         "center": [-36.2105, -71.6045],

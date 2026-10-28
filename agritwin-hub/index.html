@@ -3786,7 +3786,7 @@
                                 </div>
                             </div>
                             <span id="farmerBadgeRol" class="text-[9px] font-mono text-amber-400 font-bold bg-amber-950/60 px-2 py-0.5 rounded border border-amber-500/30">
-                                Rol 418-24 Parral
+                                Rol 142-88 Retiro
                             </span>
                         </div>
 
@@ -15833,83 +15833,6 @@ def execute_quadratic_vote(available_credits: int, votes_cast: int, proposal_id:
 
 <script src="js/hub/hub-diegetic-modals.js"></script>
 <script src="js/hub/hub-report-generator.js"></script>
-
-
-
 <script src="js/hub/farm-profile-manager.js"></script>
-
-    <script>
-        // Controlador del Portal de Acceso Alquímico & Multi-Predio del Hub
-        (function() {
-            let splashDismissed = false;
-            const splashEl = document.getElementById('alchemicalAppSplash');
-
-            if (!splashEl) return;
-
-            // Renderizar la consola de selección/creación de predios inmediatamente
-            if (window.farmProfileManager) {
-                window.farmProfileManager.renderSplashConsole();
-                window.farmProfileManager.updateHeaderUI(window.farmProfileManager.getActiveProfile());
-            }
-
-            function dismissSplash() {
-                if (splashDismissed) return;
-                splashDismissed = true;
-                if (splashEl) {
-                    splashEl.style.opacity = '0';
-                    splashEl.style.pointerEvents = 'none';
-                    setTimeout(() => {
-                        splashEl.style.display = 'none';
-                    }, 800);
-                }
-            }
-
-            window.dismissAlchemicalSplash = dismissSplash;
-
-            // Soporte de deep-linking directo por URL (ej. ?mode=cerro o ?view=cuenca)
-            const urlParams = new URLSearchParams(window.location.search);
-            const targetMode = urlParams.get('mode') || urlParams.get('view');
-            if (targetMode) {
-                dismissSplash();
-                setTimeout(() => {
-                    if (targetMode === 'map' || targetMode === 'cuenca_map' || targetMode === 'territory') {
-                        if (typeof openCerroMap === 'function') openCerroMap();
-                    } else if (targetMode === 'cerro' || targetMode === 'cuenca') {
-                        if (typeof openCerroModeDirect === 'function') openCerroModeDirect();
-                        else if (typeof switchMasterView === 'function') switchMasterView('cerro');
-                    } else if (typeof switchMasterView === 'function') {
-                        switchMasterView(targetMode);
-                    }
-                }, 350);
-            }
-
-            // Permitir entrar directamente con tecla Esc o Espacio (carga Meniel por defecto)
-            window.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' || e.key === ' ' || e.code === 'Space') {
-                    if (splashEl && splashEl.style.display !== 'none' && !splashDismissed) {
-                        dismissSplash();
-                    }
-                }
-            });
-        })();
-    
-    function openComparativeStatusModal() {
-        // Ensure Docs master view and subtab 'docs-dossier' are active
-        if (typeof switchMasterView === 'function') switchMasterView('docs');
-        if (typeof switchDocsTab === 'function') switchDocsTab('docs-dossier');
-        // Scroll smoothly to dossier iframe if needed
-        setTimeout(() => {
-            const iframe = document.getElementById('iframeDossier');
-            if (iframe && iframe.contentWindow) {
-                iframe.contentWindow.postMessage({ action: 'openComparativeModal' }, '*');
-            }
-            const modalIframe = document.getElementById('iframeDossierModal');
-            if (modalIframe && modalIframe.contentWindow) {
-                modalIframe.contentWindow.postMessage({ action: 'openComparativeModal' }, '*');
-            }
-        }, 150);
-    }
-
-</script>
 </body>
 </html>
