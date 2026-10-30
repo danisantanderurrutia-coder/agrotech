@@ -1476,10 +1476,10 @@
                     }
                 }, 50);
             }
-            if (moduleId === 'atmosferica') {
+            if (moduleId === 'atmosferica' || moduleId === 'destine') {
                 setTimeout(() => {
                     if (typeof window.renderLatexInContainer === 'function') {
-                        window.renderLatexInContainer('arch-detail-atmosferica');
+                        window.renderLatexInContainer('arch-detail-' + moduleId);
                     } else if (typeof renderMathInElement === 'function' && targetDetail) {
                         try {
                             renderMathInElement(targetDetail, {
