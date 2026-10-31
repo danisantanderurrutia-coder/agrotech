@@ -1357,9 +1357,13 @@
           <span>📚</span> <span class="hidden sm:inline">Vault</span>
         </button>
 
-        <!-- 8. Dossier Territorial -->
-        <button onclick="openModal()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white transition-all flex items-center gap-1.5 shadow-sm cursor-pointer" title="Expediente Territorial Completo">
-          <span>📜</span> <span class="hidden sm:inline">Dossier</span>
+        <!-- 8. Expediente del Cliente y su Predio -->
+        <button id="navBtn-expediente" onclick="openModal()" class="px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white transition-all flex items-center gap-1.5 shadow-sm cursor-pointer" title="Expediente del cliente y su predio">
+          <span>📁</span>
+          <div class="text-left leading-tight">
+            <span class="block text-xs font-bold">Expediente</span>
+            <span class="block text-[8px] text-amber-200/90 font-mono hidden md:block">del cliente y su predio</span>
+          </div>
         </button>
       </nav>
     </header>
@@ -7221,8 +7225,8 @@
                     <span class="px-1.5 py-0.5 rounded bg-amber-600 text-white text-[9px] font-mono font-bold">7 MÓDULOS CORE</span>
                 </button>
                 <button onclick="switchDocsTab('docs-tables')" id="docsTabBtn-tables" class="docs-subtab-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm">
-                    <span>🏡</span> <span>3. Expediente Meniel &amp; Gobernanza</span>
-                    <span class="px-1.5 py-0.5 rounded bg-purple-100 text-purple-900 border border-purple-300 text-[9px] font-mono font-bold">CATASTRO + DAO</span>
+                    <span>🤝</span> <span>3. Marco de Gobernanza &amp; Bienes Comunes</span>
+                    <span class="px-1.5 py-0.5 rounded bg-purple-100 text-purple-900 border border-purple-300 text-[9px] font-mono font-bold">DAO CUADRÁTICA OSTROM</span>
                 </button>
                 <button onclick="switchDocsTab('docs-dossier')" id="docsTabBtn-dossier" class="docs-subtab-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm">
                     <span>📦</span> <span>4. Recursos, Informes &amp; Dossiers</span>
@@ -11088,15 +11092,15 @@ def execute_quadratic_vote(available_credits: int, votes_cast: int, proposal_id:
             </div>
 
             <!-- ═══════════════════════════════════════════════════════════════════
-                 SUBTAB 3: TABLAS CATASTRALES & BENCHMARKS DE IMPACTO
+                 SUBTAB 3: MARCO INSTITUCIONAL DE GOBERNANZA & BIENES COMUNES
                  ═══════════════════════════════════════════════════════════════════ -->
             <div id="docs-tables" class="docs-subcontent hidden space-y-6">
-                <!-- Mosaico Catastral -->
+                <!-- Mosaico Catastral General -->
                 <div class="p-6 rounded-2xl bg-white border border-[#E7DAC6] shadow-sm space-y-4">
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#E7DAC6] pb-3">
                         <div>
-                            <h3 class="text-sm font-bold text-stone-900 font-serif uppercase tracking-wider">Mosaico Catastral de los 10 Predios Rurales</h3>
-                            <p class="text-xs text-stone-500">Catastro consolidado de 508 ha en el Valle Central y Secano de Maule Sur.</p>
+                            <h3 class="text-sm font-bold text-stone-900 font-serif uppercase tracking-wider">Matriz Catastral y Acuerdos de Cuenca Rural</h3>
+                            <p class="text-xs text-stone-500">Marco de interoperabilidad catastral y derechos DGA para cuencas agroclimáticas.</p>
                         </div>
                         <button onclick="exportParcelsToCSV()" class="px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-mono font-bold border border-stone-300 cursor-pointer">
                             📥 Exportar CSV
@@ -11129,7 +11133,7 @@ def execute_quadratic_vote(available_credits: int, votes_cast: int, proposal_id:
                                 <span class="text-2xl">🤝</span>
                                 <h3 class="text-base sm:text-lg font-bold text-stone-900 font-serif">Gobernanza Vecinal &amp; DAO Cuadrática (Voice Credits &bull; Elinor Ostrom)</h3>
                             </div>
-                            <p class="text-xs text-stone-500 mt-0.5">Mecanismo matemático y criptográfico que equilibra la intensidad de preferencia comunitaria sobre los predios colindantes de Fundo Meniel.</p>
+                            <p class="text-xs text-stone-500 mt-0.5">Mecanismo matemático y criptográfico que equilibra la intensidad de preferencia comunitaria sobre los predios colindantes en la cuenca rural.</p>
                         </div>
                         <span class="px-2.5 py-1 rounded-lg bg-purple-50 text-purple-800 border border-purple-300 font-mono text-[10px] font-bold self-start">
                             $$\text{Costo} = V^2 \text{ Créditos}$$
@@ -13997,19 +14001,69 @@ def execute_quadratic_vote(available_credits: int, votes_cast: int, proposal_id:
         </div>
     </div>
 
-    <!-- EXECUTIVE MODAL -->
+    <!-- EXPEDIENTE DEL CLIENTE Y SU PREDIO (EXECUTIVE MODAL) -->
     <div id="exec-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 lg:p-10">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
-        <div class="relative w-full max-w-5xl bg-obsidian-900 border border-white/20 rounded-xl shadow-2xl flex flex-col max-h-full overflow-hidden">
+        <div class="relative w-full max-w-5xl bg-obsidian-900 border border-white/20 rounded-2xl shadow-2xl flex flex-col max-h-full overflow-hidden">
             
-            <div class="p-4 border-b border-white/10 flex justify-between items-center bg-obsidian-800">
-                <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                    <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    Dossier Ejecutivo: Proyecto Meniel (Cuenca Maule Sur)
-                </h2>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <!-- Header: Expediente del Cliente y su Predio -->
+            <div class="p-4 sm:p-5 border-b border-white/10 flex justify-between items-center bg-obsidian-800">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center text-xl shadow-inner">
+                        📁
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-lg font-black text-white tracking-tight flex items-center gap-2">
+                                Expediente
+                            </h2>
+                            <span class="text-xs text-amber-300 font-mono font-medium hidden sm:inline">• del cliente y su predio</span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-900/60 text-emerald-300 border border-emerald-700/50">
+                                Semilla Activa
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-300 mt-0.5 font-sans">
+                            Ficha técnica digital, parámetros territoriales e informe ejecutivo de <strong class="text-amber-300">Fundo Meniel</strong> (Parral, Maule Sur).
+                        </p>
+                    </div>
+                </div>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
+            </div>
+
+            <!-- Ficha Técnica Digital Resumen (La Semilla del Predio) -->
+            <div class="px-6 py-4 bg-black/40 border-b border-white/5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs font-mono">
+                <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                    <div class="text-[10px] text-slate-400 uppercase">Rol SII / Titular</div>
+                    <div class="font-bold text-slate-200 mt-0.5 truncate" title="76.842.119-K • Familia Santander">Rol 123-45</div>
+                    <div class="text-[9px] text-slate-500 truncate">Meniels SpA</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                    <div class="text-[10px] text-slate-400 uppercase">Superficie Total</div>
+                    <div class="font-bold text-amber-300 mt-0.5">24.8 ha</div>
+                    <div class="text-[9px] text-slate-500">8 Cuarteles Activos</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                    <div class="text-[10px] text-slate-400 uppercase">Coordenadas WGS84</div>
+                    <div class="font-bold text-sky-300 mt-0.5">-36.2115°S</div>
+                    <div class="text-[9px] text-slate-500">-71.6053°O</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                    <div class="text-[10px] text-slate-400 uppercase">Derechos Agua DGA</div>
+                    <div class="font-bold text-cyan-300 mt-0.5">45.0 L/s</div>
+                    <div class="text-[9px] text-slate-500">Canal + Pozo</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                    <div class="text-[10px] text-slate-400 uppercase">Tranque Keyline</div>
+                    <div class="font-bold text-emerald-300 mt-0.5">18,500 m³</div>
+                    <div class="text-[9px] text-slate-500">42 Días Autonomía</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                    <div class="text-[10px] text-slate-400 uppercase">Textura Suelo</div>
+                    <div class="font-bold text-emerald-400 mt-0.5">Franco Arcilloso</div>
+                    <div class="text-[9px] text-slate-500">FAO-56 Calibrado</div>
+                </div>
             </div>
 
             <div class="p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6 bg-obsidian-900">
@@ -14076,12 +14130,15 @@ def execute_quadratic_vote(available_credits: int, votes_cast: int, proposal_id:
                 <div class="text-xs text-slate-400 font-mono">
                     MRV Hash: <span class="text-slate-300">0x9f8b...3a2c</span> <span class="text-amber-400 text-[10px] ml-1">(Simulación Testnet / Prototipo)</span>
                 </div>
-                <div class="flex gap-3">
-                    <button onclick="downloadFormalReport()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-4 py-2 rounded font-semibold transition-colors">
-                        Descargar Reporte (.txt)
+                <div class="flex flex-wrap gap-2 sm:gap-3">
+                    <button onclick="exportActiveSeedJSON()" class="bg-amber-600 hover:bg-amber-500 text-white text-xs px-3.5 py-2 rounded-xl font-semibold transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer" title="Exportar Ficha Técnica Semilla del Predio en formato JSON">
+                        <span>🌱</span> <span>Exportar Ficha Semilla (.json)</span>
                     </button>
-                    <button onclick="switchMasterView('galpon')" class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-4 py-2 rounded font-semibold transition-colors cursor-pointer">
-                        Ver Galpón Predial 3D
+                    <button onclick="downloadFormalReport()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-3.5 py-2 rounded-xl font-semibold transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer">
+                        <span>📄</span> <span>Descargar Reporte (.txt)</span>
+                    </button>
+                    <button onclick="switchMasterView('galpon'); closeModal();" class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-3.5 py-2 rounded-xl font-semibold transition-colors cursor-pointer flex items-center gap-1.5 shadow-sm">
+                        <span>🚜</span> <span>Ver Galpón 3D</span>
                     </button>
                 </div>
             </div>
