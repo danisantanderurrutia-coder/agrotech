@@ -1386,11 +1386,8 @@
             <span class="block text-[8px] text-amber-700 font-mono hidden md:block">del cliente y su predio</span>
           </div>
         </button>
-
-        <!-- 9. Dossier Territorial -->
-        <button onclick="openModal()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white transition-all flex items-center gap-1.5 shadow-sm cursor-pointer" title="Expediente Territorial Completo">
-          <span>📜</span> <span class="hidden sm:inline">Dossier</span>
-        </button>
+      </nav>
+    </header>
       </nav>
     </header>
 
@@ -11609,7 +11606,7 @@ def execute_quadratic_vote(available_credits: int, votes_cast: int, proposal_id:
                     </div>
                 </div>
 
-                <!-- Dominio 4: Incursión a Campo, Vecinos & Expediente Legal -->
+                <!-- Dominio 4: Incursión a Campo, Vecinos & Red Territorial -->
                 <div class="p-6 rounded-2xl bg-white border border-[#E7DAC6] shadow-sm space-y-3">
                     <div class="flex items-center justify-between border-b border-[#E7DAC6] pb-3">
                         <div class="flex items-center gap-2">
@@ -11640,6 +11637,53 @@ def execute_quadratic_vote(available_credits: int, votes_cast: int, proposal_id:
                     </div>
                 </div>
 
+            </div>
+
+            <!-- Dominio 5: Carpeta Técnica Financiera & Subsidios Estatales (CNR Ley 18.450 / Bancos) -->
+            <div class="p-6 rounded-2xl bg-gradient-to-br from-white via-[#FAF7F2] to-amber-50/40 border border-[#E7DAC6] shadow-sm space-y-4">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#E7DAC6] pb-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center text-xl shadow-md shrink-0">
+                            💼
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 text-amber-900 border border-amber-300">RETORNO &amp; FINANCIAMIENTO PREDIAL</span>
+                                <span class="text-xs text-stone-400">•</span>
+                                <span class="text-xs font-mono text-stone-500 font-semibold">Subsidios CNR Ley 18.450 &bull; Bancos</span>
+                            </div>
+                            <h3 class="text-base font-bold text-stone-900 font-serif">Carpeta de Subsidios Estatales &amp; Eficiencia OPEX del Fundo</h3>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="downloadFormalReport()" class="px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-sm flex items-center gap-1.5 transition-all cursor-pointer">
+                            <span>📄</span> <span>Descargar Carpeta Técnica CNR (.txt)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs font-mono">
+                    <div class="p-4 rounded-xl bg-white border border-[#E7DAC6] shadow-xs">
+                        <span class="text-[10px] text-stone-500 block uppercase">Bonificación Postulable CNR</span>
+                        <span class="text-lg font-black text-emerald-700">50% a 80%</span>
+                        <p class="text-[10px] text-stone-500 font-sans mt-1">Fondo estatal no reembolsable ($30M - $80M CLP) para tecnificación de riego y telemetría.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-white border border-[#E7DAC6] shadow-xs">
+                        <span class="text-[10px] text-stone-500 block uppercase">Ahorro OPEX Eléctrico</span>
+                        <span class="text-lg font-black text-sky-700">-35% Tarifa</span>
+                        <p class="text-[10px] text-stone-500 font-sans mt-1">~$8.2M CLP/año mediante programación automática de bombeo nocturno con tarifa valle.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-white border border-[#E7DAC6] shadow-xs">
+                        <span class="text-[10px] text-stone-500 block uppercase">Payback Proyectado</span>
+                        <span class="text-lg font-black text-stone-900">3.8 Años</span>
+                        <p class="text-[10px] text-stone-500 font-sans mt-1">Retorno de inversión considerando bono estatal de riego y generación solar off-grid.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-white border border-[#E7DAC6] shadow-xs">
+                        <span class="text-[10px] text-stone-500 block uppercase">Activo Forestal Protegido</span>
+                        <span class="text-lg font-black text-amber-800">$140M CLP</span>
+                        <p class="text-[10px] text-stone-500 font-sans mt-1">Pérdida evitada mediante fajas cortafuegos vivas y monitoreo temprano FWI.</p>
+                    </div>
+                </div>
             </div>
 
         </div>
