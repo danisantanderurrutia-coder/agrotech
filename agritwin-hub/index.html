@@ -1373,18 +1373,23 @@
           </div>
         </div>
 
-        <!-- 7. Vault Docs -->
-        <button id="navBtn-docs" onclick="switchMasterView('docs')" class="master-nav-btn px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold hover:bg-stone-200/60 transition-all flex items-center gap-1.5 cursor-pointer" title="Bóveda de Arquitectura, Scripts & Datasets">
+        <!-- 7. Vault Docs (General) -->
+        <button id="navBtn-docs" onclick="switchMasterView('docs')" class="master-nav-btn px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold hover:bg-stone-200/60 transition-all flex items-center gap-1.5 cursor-pointer" title="Bóveda de Arquitectura, Metodología & Datasets Generales">
           <span>📚</span> <span class="hidden sm:inline">Vault</span>
         </button>
 
-        <!-- 8. Expediente del Cliente y su Predio -->
-        <button id="navBtn-expediente" onclick="openModal()" class="px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white transition-all flex items-center gap-1.5 shadow-sm cursor-pointer" title="Expediente del cliente y su predio">
+        <!-- 8. Expediente del Cliente y su Predio (Sección Maestra) -->
+        <button id="navBtn-expediente" onclick="switchMasterView('expediente')" class="master-nav-btn px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold hover:bg-stone-200/60 transition-all flex items-center gap-1.5 cursor-pointer" title="Expediente del cliente y su predio">
           <span>📁</span>
           <div class="text-left leading-tight">
-            <span class="block text-xs font-bold">Expediente</span>
-            <span class="block text-[8px] text-amber-200/90 font-mono hidden md:block">del cliente y su predio</span>
+            <span class="block text-xs font-bold text-stone-800">Expediente</span>
+            <span class="block text-[8px] text-amber-700 font-mono hidden md:block">del cliente y su predio</span>
           </div>
+        </button>
+
+        <!-- 9. Dossier Territorial -->
+        <button onclick="openModal()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white transition-all flex items-center gap-1.5 shadow-sm cursor-pointer" title="Expediente Territorial Completo">
+          <span>📜</span> <span class="hidden sm:inline">Dossier</span>
         </button>
       </nav>
     </header>
@@ -11399,6 +11404,248 @@ def execute_quadratic_vote(available_credits: int, votes_cast: int, proposal_id:
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
+         VISTA: EXPEDIENTE • DEL CLIENTE Y SU PREDIO (DESACOPLADO & SEMILLA)
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="view-expediente" class="master-view p-4 sm:p-8" style="background: #FAF7F2; color: #1C1917;">
+        <div class="max-w-7xl mx-auto space-y-6">
+            
+            <!-- Encabezado Principal de la Vista Expediente -->
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-[#E7DAC6] pb-5">
+                <div class="flex items-start sm:items-center gap-3.5">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-900 border border-amber-400/60 flex items-center justify-center text-2xl shadow-sm shrink-0">
+                        📁
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                                SECCIÓN MODULAR DEL CLIENTE
+                            </span>
+                            <span class="text-xs text-stone-400">•</span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-100 text-emerald-900 border border-emerald-300">
+                                Semilla Predial Activa
+                            </span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-black text-stone-900 tracking-tight flex items-center gap-2 font-serif mt-1">
+                            <span>Expediente</span>
+                            <span class="text-base sm:text-lg font-medium text-amber-800 font-sans">del cliente y su predio</span>
+                        </h2>
+                        <p class="text-xs text-stone-600 mt-0.5 max-w-2xl">
+                            Parámetros biológicos, hídricos, infraestructura y expediente exclusivo del predio activo: <strong class="text-stone-900">Fundo Meniel</strong> (Parral, Maule Sur).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción de la Semilla -->
+                <div class="flex items-center gap-2 flex-wrap shrink-0">
+                    <button onclick="exportActiveSeedJSON()" class="px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-sm flex items-center gap-1.5 transition-all cursor-pointer" title="Exportar Ficha Técnica Semilla del Predio en JSON">
+                        <span>🌱</span> <span>Exportar Semilla (.json)</span>
+                    </button>
+                    <button onclick="switchMasterView('galpon')" class="px-3.5 py-2 rounded-xl bg-white hover:bg-stone-50 text-stone-800 border border-[#E7DAC6] text-xs font-bold shadow-sm flex items-center gap-1.5 transition-all cursor-pointer" title="Ir al Gemelo 3D de este predio">
+                        <span>🚜</span> <span>Ver Galpón 3D</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Ficha Técnica Resumen: La Partida de Nacimiento del Predio -->
+            <div class="p-6 rounded-2xl bg-white border border-[#E7DAC6] shadow-sm space-y-4">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#E7DAC6] pb-3">
+                    <div class="flex items-center gap-2.5">
+                        <span class="text-xl">🌾</span>
+                        <div>
+                            <h3 class="text-sm font-bold text-stone-900 font-serif uppercase tracking-wider">Ficha Técnica Digital (La Semilla)</h3>
+                            <p class="text-xs text-stone-500">Parámetros que configuran proceduralmente el modelo 3D y el motor biofísico FAO-56.</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-stone-100 text-stone-700 border border-stone-300 font-bold">
+                        ONBOARDING 4 PREGUNTAS
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs font-mono">
+                    <div class="p-3 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6]">
+                        <div class="text-[10px] text-stone-500 uppercase">Rol SII / Propietario</div>
+                        <div class="font-bold text-stone-900 mt-1 truncate">Rol 123-45</div>
+                        <div class="text-[9px] text-stone-600 truncate">Meniels SpA</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6]">
+                        <div class="text-[10px] text-stone-500 uppercase">Superficie Total</div>
+                        <div class="font-bold text-amber-800 mt-1 text-sm">24.8 ha</div>
+                        <div class="text-[9px] text-stone-600">8 Cuarteles / Potreros</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6]">
+                        <div class="text-[10px] text-stone-500 uppercase">Coordenadas Base</div>
+                        <div class="font-bold text-sky-800 mt-1">-36.2115°S</div>
+                        <div class="text-[9px] text-stone-600">-71.6053°O</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6]">
+                        <div class="text-[10px] text-stone-500 uppercase">Derechos DGA (L/s)</div>
+                        <div class="font-bold text-cyan-800 mt-1 text-sm">45.0 L/s</div>
+                        <div class="text-[9px] text-stone-600">Canal + Pozo Profundo</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6]">
+                        <div class="text-[10px] text-stone-500 uppercase">Tranque Keyline</div>
+                        <div class="font-bold text-emerald-800 mt-1 text-sm">18.500 m³</div>
+                        <div class="text-[9px] text-stone-600">42 Días Autonomía</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6]">
+                        <div class="text-[10px] text-stone-500 uppercase">Textura del Suelo</div>
+                        <div class="font-bold text-emerald-700 mt-1">Franco Arcilloso</div>
+                        <div class="text-[9px] text-stone-600">Kc FAO-56 Calibrado</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cuadrícula Modular de los 4 Dominios Particulares del Predio -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- Dominio 1: Cuarteles & Plantas (Topping Agrícola) -->
+                <div class="p-6 rounded-2xl bg-white border border-[#E7DAC6] shadow-sm space-y-3">
+                    <div class="flex items-center justify-between border-b border-[#E7DAC6] pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl">🌱</span>
+                            <div>
+                                <h3 class="text-sm font-bold text-stone-900 font-serif">Cuarteles, Suelos &amp; Especies</h3>
+                                <p class="text-xs text-stone-500">Vegetación y cultivos particulares de este fundo</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold">8 CUARTELES</span>
+                    </div>
+
+                    <div class="space-y-2 text-xs font-mono">
+                        <div class="p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6] flex items-center justify-between">
+                            <div>
+                                <strong class="text-stone-900">Cuartel 1 • Trébol Blanco &amp; Festuca</strong>
+                                <div class="text-[10px] text-stone-500 font-sans">Pradera polifítica perenne • 3.8 ha • Riego por aspersión</div>
+                            </div>
+                            <span class="text-emerald-700 font-bold">Óptimo</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6] flex items-center justify-between">
+                            <div>
+                                <strong class="text-stone-900">Cuartel 4 • Silvopastoreo Borde Cerezos</strong>
+                                <div class="text-[10px] text-stone-500 font-sans">Cerezo Lapins &amp; forraje sombrío • 2.8 ha • Microaspersión</div>
+                            </div>
+                            <span class="text-emerald-700 font-bold">Óptimo</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6] flex items-center justify-between">
+                            <div>
+                                <strong class="text-stone-900">Cuartel 6 • Viñedo Patrimonial de Secano</strong>
+                                <div class="text-[10px] text-stone-500 font-sans">Uva País (80 años) • 3.4 ha • Secano de rulo estricto</div>
+                            </div>
+                            <span class="text-amber-700 font-bold">Vigilancia</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6] flex items-center justify-between">
+                            <div>
+                                <strong class="text-stone-900">Cuartel 7 • Corredor Biológico Nativo</strong>
+                                <div class="text-[10px] text-stone-500 font-sans">Peumo, Quillay, Boldo &amp; Litre • 2.5 ha • Infiltración natural</div>
+                            </div>
+                            <span class="text-sky-700 font-bold">Protegido</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dominio 2: Ganadería PRV & Establo Particular (Topping Pecuario) -->
+                <div class="p-6 rounded-2xl bg-white border border-[#E7DAC6] shadow-sm space-y-3">
+                    <div class="flex items-center justify-between border-b border-[#E7DAC6] pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl">🐂</span>
+                            <div>
+                                <h3 class="text-sm font-bold text-stone-900 font-serif">Establo Particular &amp; Manejo PRV</h3>
+                                <p class="text-xs text-stone-500">Dotación animal y rotación Voisin del predio</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 font-bold">CARGA 1.8 UGM/HA</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 text-xs font-mono">
+                        <div class="p-3 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6]">
+                            <span class="text-[10px] text-stone-500 block uppercase">Lote Bovino Activo</span>
+                            <span class="text-base font-bold text-stone-900">18 Cabezas</span>
+                            <span class="text-[9px] text-stone-600 block">Clavel Alemán / Angus</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6]">
+                            <span class="text-[10px] text-stone-500 block uppercase">Lote Ovino Silvopastoril</span>
+                            <span class="text-base font-bold text-stone-900">24 Ovejas</span>
+                            <span class="text-[9px] text-stone-600 block">Suffolk Down (Desbroce)</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6]">
+                            <span class="text-[10px] text-stone-500 block uppercase">Potreros en Reposo</span>
+                            <span class="text-base font-bold text-emerald-800">5 de 8</span>
+                            <span class="text-[9px] text-stone-600 block">Promedio: 41 días</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6]">
+                            <span class="text-[10px] text-stone-500 block uppercase">Potrero Ocupado Hoy</span>
+                            <span class="text-base font-bold text-amber-800">Potrero 3</span>
+                            <span class="text-[9px] text-stone-600 block">Cambio mañana 08:00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dominio 3: Invernadero & Camas Biointensivas -->
+                <div class="p-6 rounded-2xl bg-white border border-[#E7DAC6] shadow-sm space-y-3">
+                    <div class="flex items-center justify-between border-b border-[#E7DAC6] pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl">🏡</span>
+                            <div>
+                                <h3 class="text-sm font-bold text-stone-900 font-serif">Invernadero &amp; Infraestructura</h3>
+                                <p class="text-xs text-stone-500">Instalaciones físicas declaradas en este fundo</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200 font-bold">OFF-GRID SOLAR</span>
+                    </div>
+
+                    <div class="space-y-2 text-xs font-mono">
+                        <div class="p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6] flex justify-between items-center">
+                            <span>Túnel Invernadero 1 (Tomates &amp; Albahaca)</span>
+                            <span class="font-bold text-stone-900">Temp: 24.5°C • HR: 68%</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6] flex justify-between items-center">
+                            <span>Parque Solar Fotovoltaico (Casa Meniel)</span>
+                            <span class="font-bold text-stone-900">12 paneles • 6.6 kWp</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6] flex justify-between items-center">
+                            <span>Sondas de Suelo FDR Multinivel</span>
+                            <span class="font-bold text-emerald-800">3 Nodos LoRaWAN en vivo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dominio 4: Incursión a Campo, Vecinos & Expediente Legal -->
+                <div class="p-6 rounded-2xl bg-white border border-[#E7DAC6] shadow-sm space-y-3">
+                    <div class="flex items-center justify-between border-b border-[#E7DAC6] pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl">🥾</span>
+                            <div>
+                                <h3 class="text-sm font-bold text-stone-900 font-serif">Incursión a Campo &amp; Red Vecinal</h3>
+                                <p class="text-xs text-stone-500">Bitácora de terreno y colindantes de la micro-cuenca</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-200 font-bold">ESTERO COLLIGUAY</span>
+                    </div>
+
+                    <div class="space-y-2 text-xs font-mono">
+                        <div class="p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6]">
+                            <div class="flex justify-between items-center font-bold text-stone-900">
+                                <span>Cámara Trampa Quebrada Sur</span>
+                                <span class="text-emerald-700">Avistamiento Zorro Chilla</span>
+                            </div>
+                            <div class="text-[10px] text-stone-500 font-sans mt-0.5">Registro fotográfico nocturno • Indicio de rewilding exitoso</div>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E7DAC6]">
+                            <div class="flex justify-between items-center font-bold text-stone-900">
+                                <span>Colindante Este: Viña Santa Elena</span>
+                                <span class="text-stone-700">Faja Cortafuego 25m Consensuada</span>
+                            </div>
+                            <div class="text-[10px] text-stone-500 font-sans mt-0.5">Acuerdo de servidumbre de agua firmado digitalmente</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
          VISTA 4: CUADERNO DE CAMPO DEL OPERADOR (6 RAMAS AOE • DESACOPLADO)
          ═══════════════════════════════════════════════════════════════════════ -->
     <div id="view-cuaderno" class="master-view p-4 sm:p-8" style="background: #FAF7F2; color: #1C1917;">
@@ -14170,69 +14417,19 @@ def execute_quadratic_vote(available_credits: int, votes_cast: int, proposal_id:
         </div>
     </div>
 
-    <!-- EXPEDIENTE DEL CLIENTE Y SU PREDIO (EXECUTIVE MODAL) -->
+    <!-- EXECUTIVE MODAL -->
     <div id="exec-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 lg:p-10">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
-        <div class="relative w-full max-w-5xl bg-obsidian-900 border border-white/20 rounded-2xl shadow-2xl flex flex-col max-h-full overflow-hidden">
+        <div class="relative w-full max-w-5xl bg-obsidian-900 border border-white/20 rounded-xl shadow-2xl flex flex-col max-h-full overflow-hidden">
             
-            <!-- Header: Expediente del Cliente y su Predio -->
-            <div class="p-4 sm:p-5 border-b border-white/10 flex justify-between items-center bg-obsidian-800">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center text-xl shadow-inner">
-                        📁
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h2 class="text-lg font-black text-white tracking-tight flex items-center gap-2">
-                                Expediente
-                            </h2>
-                            <span class="text-xs text-amber-300 font-mono font-medium hidden sm:inline">• del cliente y su predio</span>
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-900/60 text-emerald-300 border border-emerald-700/50">
-                                Semilla Activa
-                            </span>
-                        </div>
-                        <p class="text-xs text-slate-300 mt-0.5 font-sans">
-                            Ficha técnica digital, parámetros territoriales e informe ejecutivo de <strong class="text-amber-300">Fundo Meniel</strong> (Parral, Maule Sur).
-                        </p>
-                    </div>
-                </div>
-                <button onclick="closeModal()" class="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <div class="p-4 border-b border-white/10 flex justify-between items-center bg-obsidian-800">
+                <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                    <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Dossier Ejecutivo: Proyecto Meniel (Cuenca Maule Sur)
+                </h2>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
-            </div>
-
-            <!-- Ficha Técnica Digital Resumen (La Semilla del Predio) -->
-            <div class="px-6 py-4 bg-black/40 border-b border-white/5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs font-mono">
-                <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
-                    <div class="text-[10px] text-slate-400 uppercase">Rol SII / Titular</div>
-                    <div class="font-bold text-slate-200 mt-0.5 truncate" title="76.842.119-K • Familia Santander">Rol 123-45</div>
-                    <div class="text-[9px] text-slate-500 truncate">Meniels SpA</div>
-                </div>
-                <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
-                    <div class="text-[10px] text-slate-400 uppercase">Superficie Total</div>
-                    <div class="font-bold text-amber-300 mt-0.5">24.8 ha</div>
-                    <div class="text-[9px] text-slate-500">8 Cuarteles Activos</div>
-                </div>
-                <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
-                    <div class="text-[10px] text-slate-400 uppercase">Coordenadas WGS84</div>
-                    <div class="font-bold text-sky-300 mt-0.5">-36.2115°S</div>
-                    <div class="text-[9px] text-slate-500">-71.6053°O</div>
-                </div>
-                <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
-                    <div class="text-[10px] text-slate-400 uppercase">Derechos Agua DGA</div>
-                    <div class="font-bold text-cyan-300 mt-0.5">45.0 L/s</div>
-                    <div class="text-[9px] text-slate-500">Canal + Pozo</div>
-                </div>
-                <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
-                    <div class="text-[10px] text-slate-400 uppercase">Tranque Keyline</div>
-                    <div class="font-bold text-emerald-300 mt-0.5">18,500 m³</div>
-                    <div class="text-[9px] text-slate-500">42 Días Autonomía</div>
-                </div>
-                <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
-                    <div class="text-[10px] text-slate-400 uppercase">Textura Suelo</div>
-                    <div class="font-bold text-emerald-400 mt-0.5">Franco Arcilloso</div>
-                    <div class="text-[9px] text-slate-500">FAO-56 Calibrado</div>
-                </div>
             </div>
 
             <div class="p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6 bg-obsidian-900">
