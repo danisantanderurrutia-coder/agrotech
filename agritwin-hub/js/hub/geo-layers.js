@@ -8821,3 +8821,21 @@ window.renderLatexInContainer = function(target) {
             printWindow.document.close();
         };
 
+        // --- SUB-NAVEGACIÓN DEL EXPEDIENTE DEL CLIENTE Y SU PREDIO ---
+        function switchExpedienteTab(tabId) {
+            if (!tabId) tabId = 'exp-catastro';
+            document.querySelectorAll('.exp-subcontent').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.exp-subtab-btn').forEach(b => {
+                b.classList.remove('active', 'bg-amber-600', 'text-white', 'shadow-xs');
+                b.classList.add('bg-white', 'text-stone-700', 'border-[#E7DAC6]');
+            });
+            const target = document.getElementById(tabId);
+            if (target) target.classList.remove('hidden');
+            const btn = document.getElementById('expTabBtn-' + tabId.replace('exp-', ''));
+            if (btn) {
+                btn.classList.add('active', 'bg-amber-600', 'text-white', 'shadow-xs');
+                btn.classList.remove('bg-white', 'text-stone-700', 'border-[#E7DAC6]');
+            }
+        }
+        window.switchExpedienteTab = switchExpedienteTab;
+
