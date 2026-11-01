@@ -9159,22 +9159,38 @@
                         </div>
                     </div>
 
-                    <!-- Fila Adicional: MRV Carbono Alométrico y Gobernanza Cuadrática Ostrom -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                    <!-- Fila Adicional: MRV Carbono Aéreo, Carbono Edáfico SoilGrids y Gobernanza Cuadrática Ostrom -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
                         <!-- Tarjeta KaTeX 4: MRV Carbono & Alometría -->
                         <div class="p-3.5 rounded-xl bg-white border border-[#E7DAC6] shadow-sm space-y-2">
                             <span class="text-xs font-mono font-bold text-stone-800 block flex items-center gap-1.5">
-                                <span>🌲</span> Alometría Forestal & MRV de Carbono (IPCC Tier 2)
+                                <span>🌲</span> Alometría Forestal AGB (IPCC Tier 2)
                             </span>
                             <div class="text-xs font-serif text-stone-900 py-1 overflow-x-auto">
-                                $$AGB = a \cdot \text{DBH}^b \cdot H^c, \quad C_{\text{stock}} = AGB \cdot CF \cdot \frac{44}{12} \quad [\text{tCO}_2\text{e}]$$
+                                $$AGB = a \cdot \text{DBH}^b \cdot H^c, \quad C_{\text{stock}} = AGB \cdot CF \cdot \frac{44}{12}$$
                             </div>
                             <p class="text-[10.5px] text-stone-600 font-sans leading-relaxed">
-                                Modela la biomasa aérea seca ($AGB$) a partir del diámetro a la altura del pecho ($DBH$) y altura ($H$). Con factor de carbono $CF = 0.47$ y ratio molecular $44/12$, audita el secuestro anual de $384\text{ tCO}_2\text{e}$ en los rodales de Quillay y Maitén contiguos a las zanjas.
+                                Modela la biomasa aérea seca ($AGB$) de Quillay y Maitén a partir del diámetro ($DBH$) y altura ($H$), auditando el secuestro anual con ratio estequiométrico $44/12$ ($384\text{ tCO}_2\text{e}$).
                             </p>
                         </div>
 
-                        <!-- Tarjeta KaTeX 5: Gobernanza Cuadrática Ostrom -->
+                        <!-- Tarjeta KaTeX 5: ISRIC SoilGrids 2.0 (250m) & Carbono en Suelo (SOC) -->
+                        <div class="p-3.5 rounded-xl bg-gradient-to-br from-white to-emerald-50/50 border border-emerald-300 shadow-sm space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-mono font-bold text-emerald-950 block flex items-center gap-1.5">
+                                    <span>🌱</span> SoilGrids SOC (250m) &amp; R geodata
+                                </span>
+                                <span class="text-[8.5px] font-mono font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded border border-emerald-300">MACRO-CUENCA</span>
+                            </div>
+                            <div class="text-xs font-serif text-emerald-950 py-1 overflow-x-auto">
+                                $$\text{SOCS} = \text{SOC} \cdot \text{BDOD} \cdot \left(1 - \frac{\text{CRF}}{100}\right) \cdot \text{depth} \cdot 0.1$$
+                            </div>
+                            <p class="text-[10.5px] text-stone-600 font-sans leading-relaxed">
+                                Ingesta de <b>ISRIC SoilGrids 2.0 (250m)</b> vía REST API y <code>geodata::soil_world(var="soc", depth=5)</code>. Línea base regional en Longaví ($38.5\text{ g/kg}$, $24.2\text{ t C/ha}$ en $0-5\text{ cm}$), acoplada al proxy Sentinel-2 ($10\text{ m}$).
+                            </p>
+                        </div>
+
+                        <!-- Tarjeta KaTeX 6: Gobernanza Cuadrática Ostrom -->
                         <div class="p-3.5 rounded-xl bg-white border border-[#E7DAC6] shadow-sm space-y-2">
                             <span class="text-xs font-mono font-bold text-stone-800 block flex items-center gap-1.5">
                                 <span>🏛️</span> Votación Cuadrática & Gobernanza de Comunes (Elinor Ostrom)
