@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #F4F6F4;
+    color: #1E292B;
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #EBF0ED;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #84A98C;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #123826;
+}
+
+/* Clean Agricultural Engineering Panel Styles */
+.glass-panel {
+  background: #FFFFFF;
+  border: 1px solid #D8E2DC;
+  box-shadow: 0 4px 20px -2px rgba(11, 37, 25, 0.06);
+  color: #1E292B;
+}
+
+.glass-panel-gold {
+  background: #FFFFFF;
+  border: 1px solid rgba(217, 155, 38, 0.4);
+  box-shadow: 0 4px 20px -2px rgba(217, 155, 38, 0.12);
+  color: #1E292B;
+}
+
+.glass-panel-green {
+  background: #0B2519;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 8px 30px rgba(11, 37, 25, 0.25);
+  color: #F4F1EA;
+}
+
+/* Modern clean agricultural grid overlay */
+.bg-tech-grid {
+  background-color: #F4F6F4;
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, rgba(18, 56, 38, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(18, 56, 38, 0.04) 1px, transparent 1px);
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s infinite ease-in-out;
+}

@@ -1,38 +1,10 @@
 {
-  "name": "agrotech",
+  "name": "agrotech-workspace",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "sync:docs": "node scripts/sync-obsidian-docs.cjs",
-    "dev:all": "node scripts/orchestrator.cjs start all",
-    "dev:stop": "node scripts/orchestrator.cjs stop all",
-    "dev:status": "node scripts/orchestrator.cjs status",
-    "prebuild": "node scripts/sync-obsidian-docs.cjs",
-    "build": "node scripts/sync-obsidian-docs.cjs && tsc -b && vite build",
-    "lint": "oxlint",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@types/canvas-confetti": "^1.9.0",
-    "canvas-confetti": "^1.9.4",
-    "clsx": "^2.1.1",
-    "lucide-react": "^1.32.0",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "tailwind-merge": "^3.6.0"
-  },
-  "devDependencies": {
-    "@types/node": "^24.13.3",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.4",
-    "autoprefixer": "^10.5.4",
-    "oxlint": "^1.75.0",
-    "postcss": "^8.5.26",
-    "tailwindcss": "^3.4.19",
-    "typescript": "~6.0.2",
-    "vite": "^8.2.0"
+    "dev": "npm --prefix webAgrotech run dev",
+    "build": "npm --prefix webAgrotech run build",
+    "preview": "npm --prefix webAgrotech run preview",
+    "lint": "npm --prefix webAgrotech run lint"
   }
 }

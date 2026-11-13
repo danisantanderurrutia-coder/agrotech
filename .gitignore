@@ -29,6 +29,29 @@ __pycache__/
 *.sln
 *.sw?
 
+# Proprietary & Confidential IP (Lives in danisantanderurrutia-coder/agritwin-app)
+agritwin
+agritwin/
+agritwin-hub
+agritwin-hub/
+agritwin-predio
+agritwin-predio/
+agritwin-cuenca
+agritwin-general
+agrotwin-master
+agrotwin-master/
+
+# Internal Operations & Governance (AgroTech HQ)
+agrotech-hq
+agrotech-hq/
+
+# Local research & external reference code
+referencias/
+
+# Web build & dependencies
+webAgrotech/node_modules/
+webAgrotech/dist/
+
 # macOS app bundles & binaries
 *.app
 agritwin/set_icon
