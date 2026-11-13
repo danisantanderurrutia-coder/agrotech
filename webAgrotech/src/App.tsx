@@ -22,7 +22,13 @@ export function App() {
   const [currentView, setCurrentView] = useState<string>(() => {
     try {
       const p = new URLSearchParams(window.location.search);
-      return p.get('view') || 'landing';
+      if (p.get('view')) return p.get('view')!;
+      // Si la URL es agritwin-app o contiene agritwin en path o host, abrir directamente el showcase
+      if (window.location.pathname.toLowerCase().includes('agritwin') || 
+          window.location.hostname.toLowerCase().includes('agritwin')) {
+        return 'agritwin';
+      }
+      return 'landing';
     } catch {
       return 'landing';
     }
