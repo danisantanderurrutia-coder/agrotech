@@ -32,12 +32,20 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+          cache-dependency-path: 'webAgrotech/package-lock.json'
 
       - name: Install dependencies
+        working-directory: ./webAgrotech
         run: npm ci
 
       - name: Build project
-        run: npm run build
+        working-directory: ./webAgrotech
+        run: |
+          npm run build
+          if [ -d "../rewild" ]; then
+            echo "Packaging rewild suite into public dist..."
+            cp -r ../rewild dist/rewild
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -45,7 +53,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: './webAgrotech/dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
