@@ -95,23 +95,44 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             {productsDropdownOpen && (
               <div className="absolute top-full left-0 mt-2 w-92 bg-[#0B2519] rounded-2xl border border-emerald-500/40 p-2.5 space-y-1.5 shadow-2xl animate-fadeIn z-50">
                 {/* 1. AgriTwin 3D Flagship */}
-                <button
-                  onClick={() => handleNavClick('agritwin')}
-                  className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors ${
-                    currentView === 'agritwin' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
-                  }`}
-                >
-                  <div className="w-6 h-6 rounded-lg bg-emerald-500/20 border border-emerald-400 flex items-center justify-center shrink-0 mt-0.5 text-amber-400">
-                    <Cpu className="w-3.5 h-3.5" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-bold text-xs text-white">AgriTwin 3D (Gemelo Digital)</span>
-                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-emerald-400/20 text-emerald-300 font-bold">FLAGSHIP • 6 RAMAS</span>
+                <div className={`p-2.5 rounded-xl transition-colors ${
+                  currentView === 'agritwin' ? 'bg-[#071A11] border border-emerald-500/30' : 'hover:bg-[#071A11]'
+                }`}>
+                  <button
+                    onClick={() => handleNavClick('agritwin')}
+                    className="w-full flex items-start gap-3 text-left"
+                  >
+                    <div className="w-6 h-6 rounded-lg bg-emerald-500/20 border border-emerald-400 flex items-center justify-center shrink-0 mt-0.5 text-amber-400">
+                      <Cpu className="w-3.5 h-3.5" />
                     </div>
-                    <span className="text-[10px] text-emerald-200/70 font-sans block">Simulación biofísica, heladas katabáticas y FAO-56.</span>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="font-bold text-xs text-white">AgriTwin 3D (Gemelo Digital)</span>
+                        <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 font-bold">FLAGSHIP B2B</span>
+                      </div>
+                      <span className="text-[10px] text-emerald-200/70 font-sans block">Simulación biofísica, heladas catabáticas y FAO-56.</span>
+                    </div>
+                  </button>
+                  <div className="mt-2 pt-2 border-t border-emerald-900/60 flex items-center justify-between text-[10px] font-mono">
+                    <button 
+                      onClick={() => handleNavClick('agritwin')}
+                      className="text-emerald-300 hover:text-white font-bold flex items-center gap-1"
+                    >
+                      <span>Ver Showcase Web</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </button>
+                    <a
+                      href="https://danisantanderurrutia-coder.github.io/agritwin-app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-amber-300 hover:text-amber-200 font-bold flex items-center gap-1 px-2 py-0.5 rounded bg-amber-400/10 border border-amber-400/30"
+                      title="Abrir Carta de Presentación B2B Ejecutiva"
+                    >
+                      <span>Carta Ejecutiva B2B</span>
+                      <Globe className="w-3 h-3" />
+                    </a>
                   </div>
-                </button>
+                </div>
 
                 {/* 2. Kits KioT Hardware */}
                 <button
@@ -323,10 +344,30 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
           </button>
 
           {/* 1. AgriTwin 3D Flagship */}
-          <button onClick={() => handleNavClick('agritwin')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-amber-300 font-bold bg-emerald-950/60 border border-emerald-500/40">
-            <Cpu className="w-4 h-4 text-amber-400" />
-            <span>AgriTwin 3D (Tronco & 6 Ramas)</span>
-          </button>
+          <div className="p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 space-y-2">
+            <button onClick={() => handleNavClick('agritwin')} className="w-full flex items-center justify-between text-left text-amber-300 font-bold">
+              <div className="flex items-center gap-2">
+                <Cpu className="w-4 h-4 text-amber-400" />
+                <span>AgriTwin 3D (Showcase)</span>
+              </div>
+              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300">B2B</span>
+            </button>
+            <div className="flex items-center justify-between pt-1 border-t border-emerald-900/60 text-[10px] font-mono">
+              <button onClick={() => handleNavClick('agritwin')} className="text-emerald-300 hover:text-white flex items-center gap-1">
+                <span>Ver Showcase</span>
+                <ArrowRight className="w-3 h-3" />
+              </button>
+              <a 
+                href="https://danisantanderurrutia-coder.github.io/agritwin-app/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-amber-300 hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-amber-400/10 border border-amber-400/30"
+              >
+                <span>Carta Ejecutiva B2B</span>
+                <Globe className="w-3 h-3" />
+              </a>
+            </div>
+          </div>
 
           {/* 2. Kits KioT Hardware */}
           <button onClick={() => handleNavClick('hardware')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">

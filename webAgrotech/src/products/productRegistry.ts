@@ -591,17 +591,17 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
 * **Núcleo**: En lo **Económico** y en la **Naturaleza** (Bioeconomía regenerativa).
 * **3 Pilares (Áreas Asociadas a Productos)**:
   1. **🌿 Pilar Social (Líder: Wladimir)**: Producto principal = [[Pasaporte verde]]. Establece economías locales, infraestructura para la venta justa, y conexión con la sociedad mediante cursos, seminarios, foros, congresos y comités de agua potable rural ([[APRs]]).
-  2. **💻 Pilar Digital (Líderes: Daniel con Pablo y Paulina)**: Producto principal = [[Agritwin]] / [[DigitalTwin]] 3D. Modelación biofísica, telemetría y software.
-  3. **⚙️ Pilar Técnico (Líderes: Paulina con Pablo)**: Producto principal = **Implementación de Kits de Cultivo y Ganado**. Sensórica KioT, calibración en campo y redes LoRaWAN.
+  2. **💻 Pilar Digital (Líderes: Daniel con Cristian Cantuarias y Paulina)**: Producto principal = [[Agritwin]] / [[DigitalTwin]] 3D. Modelación biofísica, telemetría y software.
+  3. **⚙️ Pilar Técnico (Líderes: Paulina con Rüdiger Kaatz y Luis González)**: Producto principal = **Implementación de Kits de Cultivo y Ganado**. Sensórica KioT, calibración en campo y redes LoRaWAN.
 * **Áreas Transversales**:
-  * **Finanzas**: Wladimir & Pablo.
-  * **Comunicaciones**: Daniel & Wladimir.
+  * **Finanzas & B2B**: Wladimir & Francisco Ipinza.
+  * **Comunicaciones & Terreno**: Daniel, Wladimir & Rüdiger Kaatz.
 
 ## 👥 Socios SpA (Sistema Mixto Capital + Sweat Equity)
 * **Daniel Santander**: Fundador • Dirección General & Arquitectura AgriTwin. Autoría moral protegida con usufructo comercial exclusivo licenciado a la SpA.
 * **Paulina (Prima)**: Técnico & Digital • Manufactura local en Talca y pruebas de terreno.
 * **Wladimir**: Finanzas & Social • Modelo económico, Pasaporte Verde y vinculación comunitaria.
-* **Pablo**: Finanzas, Técnico & Digital • Modelación financiera, desarrollo de software y kits.
+* **Rüdiger Kaatz ("Rudi")**: Conector Operativo & Off-Grid • Living Lab Parral, baterías recicladas y despliegue de kits en terreno.
 
 ## 🐝 Cooperativa de Trabajo (Red de Asociados)
 * **Luis González**: Empresa de Drones, Fotogrametría Aérea, Sensores Multiespectrales y Cámaras Térmicas.
@@ -628,7 +628,7 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
 1. **Daniel Santander**: Dirección General, autoría moral de AgriTwin.
 2. **Paulina**: Pilar Técnico y Digital (Laboratorio en Talca).
 3. **Wladimir**: Finanzas y Pilar Social (Estructuración y Alianzas).
-4. **Pablo**: Finanzas, Técnico y Digital (Algoritmos y Hardware).
+4. **Rüdiger Kaatz ("Rudi")**: Conector Operativo & Off-Grid (Living Lab Parral y Kits).
 
 ## 🐝 3. Cooperativa de Trabajo (Miembros Asociados)
 * **Luis González**: Titular de empresa de drones, fotogrametría aérea, cámaras térmicas y sensores multiespectrales.

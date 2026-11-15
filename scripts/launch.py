@@ -1,21 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-AgroTech Universal Service Launcher Engine
-Compatible con: macOS, Node.js, Python, Opera Browser
-Servicios:
-  7770: AgroTech HQ (Cockpit Central)
-  7771: AgroTech Web Comercial
-  7772: Rewild Suite
-  7773: AgriTwin Predio (3D)
-  7777: AgriTwin Hub Master (Single-Pane-of-Glass)
+AgriTwin Universal Service Launcher Engine (Puerto Único 7777)
+Compatible con: macOS, Node.js, Opera / Chrome / Safari
+Servicio Único:
+  7777: AgriTwin Completo (Predio 3D + Cuenca + Hub + Motores Biofísicos + OGC)
 
-Garantías:
-  1. Cero Servidores Fantasma: Detecta y elimina procesos zombis en el puerto.
-  2. Desacoplamiento Total (setsid): El servidor se ejecuta como daemon permanente.
-  3. Health Check: Verifica respuesta HTTP 200 activa.
-  4. Fuerza Recarga en Opera: Activa Opera, localiza la pestaña o crea una nueva,
-     inyecta parámetro anti-caché ?_t=timestamp y fuerza la recarga.
+Nota:
+  - AgroTech Web y HQ se despliegan en GitHub / Coder.
+  - Rewild Suite es un proyecto independiente.
+  - AgriTwin corre consolidado exclusivamente en el puerto 7777.
 """
 
 import os
@@ -26,33 +20,9 @@ import urllib.request
 import urllib.error
 
 SERVICES = {
-    7770: {
-        'name': 'AgroTech HQ',
-        'subdir': 'agrotech-hq',
-        'type': 'node',
-        'script': 'server.cjs'
-    },
-    7771: {
-        'name': 'AgroTech Web',
-        'subdir': '.',
-        'type': 'node',
-        'script': 'server.cjs'
-    },
-    7772: {
-        'name': 'Rewild Suite',
-        'subdir': 'rewild',
-        'type': 'python',
-        'script': 'server.py'
-    },
-    7773: {
-        'name': 'AgriTwin 3D',
-        'subdir': 'agritwin',
-        'type': 'node',
-        'script': 'server.cjs'
-    },
     7777: {
-        'name': 'AgriTwin Hub Master',
-        'subdir': 'agritwin-hub',
+        'name': 'AgriTwin Unificado (Predio 3D + Cuenca + Hub)',
+        'subdir': 'agritwin',
         'type': 'node',
         'script': 'server.cjs'
     }

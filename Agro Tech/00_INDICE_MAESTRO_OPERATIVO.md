@@ -24,10 +24,10 @@ graph TD
 
     ROOT["🌿 AGROTECH / AGRITWIN"]:::branch
 
-    R1["📶 1. ACCESO & HARDWARE DE CAMPO<br/><b>Luis González (Lápiz) & Rüdiger Kaatz (Rudi)</b><br/><i>Articulados con Pablo Perez (Pablito)</i>"]:::branch
-    R2["👥 2. CLIENTES & VENTAS (TRACCIÓN)<br/><b>Pablo Perez (Pablito)</b> [B2C / Parcelas]<br/><b>Wladimir Gutierrez (Nene) & Francisco Ipinza (Pancho)</b> [B2B]"]:::branch
+    R1["📶 1. ACCESO & HARDWARE DE CAMPO<br/><b>Luis González (Lápiz) & Rüdiger Kaatz (Rudi)</b><br/><i>Infraestructura Off-Grid & Kits de Campo</i>"]:::branch
+    R2["👥 2. CLIENTES & VENTAS (TRACCIÓN)<br/><b>Rüdiger Kaatz (Rudi)</b> [B2C / Parcelas & Living Lab]<br/><b>Wladimir Gutierrez (Nene) & Francisco Ipinza (Pancho)</b> [B2B]"]:::branch
     R3["🎨 3. PRODUCTO & EXPERIENCIA (UX)<br/><b>Daniel Santander & Cristian Cantuarias</b><br/><i>Visor 3D Diegético & Gamificación</i>"]:::branch
-    R4["🧠 4. SOLUCIONES & MOTOR DE DATOS (CORE IP)<br/><b>Daniel Santander (Custodio IP)</b><br/><i>Soporte Pipelines: Pablo Perez (Pablito)</i>"]:::branch
+    R4["🧠 4. SOLUCIONES & MOTOR DE DATOS (CORE IP)<br/><b>Daniel Santander (Custodio IP)</b><br/><i>Pipelines Biofísicos & Nube</i>"]:::branch
 
     ROOT --> R1
     ROOT --> R2
@@ -35,13 +35,13 @@ graph TD
     ROOT --> R4
 
     %% Rama 1
-    R1 --> H1["Infraestructura Resiliente & Baterías Recicladas"]:::advisor
+    R1 --> H1["Infraestructura Resiliente & Baterías Recicladas (Rudi)"]:::advisor
     R1 --> H2["Living Lab / Centro Demostrativo Parral (Predio Rudi)"]:::advisor
     R1 --> H3["Cámaras Solares 4G, Drones & Montaje (Lápiz)"]:::advisor
-    R1 --> H4["Paquetización & Logística de Kits IoT (Pablito)"]:::node
+    R1 --> H4["Paquetización & Logística de Kits IoT (Rudi & Lápiz)"]:::node
 
     %% Rama 2
-    R2 --> C1["Mes 1 Spot: Informes de Parcelas a $0 Inventario (Pablito/Pancho)"]:::node
+    R2 --> C1["Mes 1 Spot: Informes de Parcelas a $0 Inventario (Rudi/Pancho)"]:::node
     R2 --> C2["Meses 2-3 B2B: Viñas, Frutícolas, Packings (Nene/Pancho)"]:::node
     R2 --> C3["Upgrade Digital: Clientes de Lápiz y Expatriados de Rudi"]:::advisor
     R2 --> C4["B2G: Convenios CNR (Ley 18.450) e INDAP"]:::node
@@ -71,10 +71,10 @@ Para consultar los contratos, acuerdos de IP y esquemas de comisiones/vesting, d
 ---
 
 ## 📶 RAMA 1: ACCESO & HARDWARE DE CAMPO
-* **Responsables & Asesores**: Luis González ("Lápiz") & Rüdiger Kaatz ("Rudi") *(Asesores Autónomos)* articulados operativamente con Pablo Perez ("Pablito").
+* **Responsables & Asesores**: Luis González ("Lápiz") & Rüdiger Kaatz ("Rudi") *(Asesores Autónomos e Infraestructura Off-Grid)*.
 * **Entregables Clave**:
-  * Despliegue del Living Lab Demostrativo en el predio de Rudi en Parral (showroom de baterías, aspersión anti-incendios y telemetría).
-  * Kits KioT precableados y probados con aprovisionamiento por código QR.
+  * Despliegue del Living Lab Demostrativo en el predio de Rudi en Parral (showroom de baterías LiFePO4 recicladas, aspersión perimetral anti-incendios y telemetría).
+  * Kits KioT precableados, empaquetados y probados con aprovisionamiento por código QR liderados por Rudi y Lápiz.
   * Montaje físico en postes y galpones sin requerir la presencia de Daniel en terreno.
 * **Notas Relacionadas**:
   * [[Sensores y Hardware KioT]]
@@ -85,7 +85,7 @@ Para consultar los contratos, acuerdos de IP y esquemas de comisiones/vesting, d
 
 ## 👥 RAMA 2: CLIENTES & VENTAS (TRACCIÓN COMERCIAL)
 * **Responsables**:
-  * **Pablo Perez ("Pablito")**: Venta directa B2C de Informes de Parcelas en Parral, Linares y Cauquenes + paquetización de kits.
+  * **Rüdiger Kaatz ("Rudi")**: Venta directa B2C de Informes de Parcelas en Parral, Linares y Cauquenes + canal con inversionistas y residentes extranjeros + demostraciones en Living Lab.
   * **Francisco Ipinza ("Pancho")**: Convenios con corredoras de propiedades, loteos y prospección B2B.
   * **Wladimir Gutierrez ("Nene")**: Relacionamiento institucional, agroindustrias medianas (viñas, packings, frigoríficos).
 * **Entregables Clave**:
@@ -113,7 +113,7 @@ Para consultar los contratos, acuerdos de IP y esquemas de comisiones/vesting, d
 ---
 
 ## 🧠 RAMA 4: SOLUCIONES & MOTOR DE DATOS (CORE IP)
-* **Responsables**: Daniel Santander Urrutia (Custodio de IP y Arquitecto) con soporte informático de Pablo Perez ("Pablito").
+* **Responsables**: Daniel Santander Urrutia (Custodio de IP y Arquitecto de Sistemas).
 * **Entregables Clave**:
   * Ingesta automatizada de Sentinel-2 L2A (NDVI, NDRE, NDWI con filtro de nubes SCL).
   * Procesamiento DEM ALOS PALSAR 12.5m (pendientes, sombras orográficas, acumulación de aire frío para heladas).

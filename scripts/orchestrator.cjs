@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
- * 🌾 AgroTech Chile — Orquestador Maestro de Servicios y Puertos
+ * 🌾 AgriTwin — Lanzador Maestro Unificado (Puerto Único 7777)
  * 
- * Gestiona el ciclo de vida del ecosistema distribuido según el Principio Árbol:
- *  - 7770: AgroTech HQ (Cockpit Fundador & Vault API)
- *  - 7771: AgroTech Web Portal (Vite React Comercial)
- *  - 7772: Rewild Suite (Python PWA Offline)
- *  - 7773: AgriTwin Predio 3D (Three.js Micro-fundo)
- *  - 7774: AgriTwin Cuenca / Regional (Leaflet Macro-territorio)
- *  - 7777: AgriTwin Hub / Master Unificado (Single-Pane-of-Glass)
+ * Plataforma Consolidada Single-Pane-of-Glass:
+ *  - 7777: AgriTwin Completo (Predio 3D + Cuenca + Hub + Motores Biofísicos + OGC)
+ * 
+ * Nota Arquitectónica:
+ *  - AgroTech Web y HQ se despliegan en GitHub / Coder (infraestructura remota).
+ *  - Rewild Suite es un proyecto independiente.
+ *  - Cero microservicios locales: Todo AgriTwin corre exclusivamente en el puerto 7777.
  */
 
 const { spawn, execSync } = require('child_process');
@@ -19,34 +19,10 @@ const fs = require('fs');
 const BASE_DIR = path.resolve(__dirname, '..');
 
 const SERVICES = {
-  hq: {
-    name: 'AgroTech HQ (Vault API)',
-    port: 7770,
-    dir: 'agrotech-hq',
-    cmd: 'node',
-    args: ['server.cjs'],
-    checkUrl: 'http://127.0.0.1:7770/'
-  },
-  web: {
-    name: 'AgroTech Web Portal',
-    port: 7771,
-    dir: '.',
-    cmd: 'npm',
-    args: ['run', 'dev'],
-    checkUrl: 'http://127.0.0.1:7771/'
-  },
-  rewild: {
-    name: 'Rewild Suite PWA',
-    port: 7772,
-    dir: 'rewild',
-    cmd: 'python3',
-    args: ['server.py'],
-    checkUrl: 'http://127.0.0.1:7772/'
-  },
-  hub: {
-    name: 'AgriTwin General (Tronco Hub + Predio + Cuenca Unificados)',
+  agritwin: {
+    name: 'AgriTwin Unificado (Predio 3D + Cuenca + Motores Biofísicos)',
     port: 7777,
-    dir: 'agritwin-hub',
+    dir: 'agritwin',
     cmd: 'node',
     args: ['server.cjs'],
     checkUrl: 'http://127.0.0.1:7777/'

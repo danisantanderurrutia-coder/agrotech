@@ -136,7 +136,7 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
           </h2>
 
           <p className="text-slate-600 text-sm sm:text-base font-serif">
-            Hoja de ruta comercial ejecutiva para el equipo fundador (Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Pablo Pérez). Catálogo de precios, simulador de ingresos en vivo, calculadora de ROI para clientes y embudo de terreno.
+            Hoja de ruta comercial ejecutiva para el equipo fundador (Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Rüdiger Kaatz, Francisco Ipinza). Catálogo de precios, simulador de ingresos en vivo, calculadora de ROI para clientes y embudo de terreno.
           </p>
         </div>
 
@@ -905,7 +905,7 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
               <span>Matriz de Responsabilidades Comerciales del Equipo</span>
             </h3>
             <p className="text-xs text-slate-600 font-serif">
-              Distribución de tareas comerciales claras para Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Pablo Pérez y la red cooperativa.
+              Distribución de tareas comerciales claras para Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Rüdiger Kaatz, Francisco Ipinza y la red cooperativa.
             </p>
           </div>
 
@@ -965,21 +965,21 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
               </ul>
             </div>
 
-            {/* Pablo */}
-            <div className="rounded-2xl border border-slate-200 p-5 space-y-3 bg-purple-50/30">
+            {/* Rudi */}
+            <div className="rounded-2xl border border-slate-200 p-5 space-y-3 bg-amber-50/30">
               <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-full bg-purple-700 text-white font-bold flex items-center justify-center text-sm font-sans">
-                  PP
+                <div className="w-10 h-10 rounded-full bg-amber-700 text-white font-bold flex items-center justify-center text-sm font-sans">
+                  RK
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-sm text-slate-900">Pablo Pérez</h4>
-                  <span className="text-[10px] text-purple-700 font-bold block uppercase">Inteligencia Comercial & Software</span>
+                  <h4 className="font-extrabold text-sm text-slate-900">Rüdiger Kaatz ("Rudi")</h4>
+                  <span className="text-[10px] text-amber-700 font-bold block uppercase">Conector Operativo & Living Lab</span>
                 </div>
               </div>
               <ul className="text-xs text-slate-600 space-y-1.5 pt-2 border-t border-slate-200">
-                <li>• Mantenimiento del simulador de precios y CRM.</li>
-                <li>• Análisis de métricas de embudo, CAC y churn.</li>
-                <li>• Soporte en optimización de algoritmos biofísicos.</li>
+                <li>• Paquetización modular y distribución de kits KioT en terreno.</li>
+                <li>• Demostraciones en vivo en el Living Lab Parral para inversionistas.</li>
+                <li>• Venta directa de informes prediales y sistemas off-grid.</li>
               </ul>
             </div>
 

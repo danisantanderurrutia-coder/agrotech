@@ -12,11 +12,10 @@ version: 2.0
 
 > **Objetivo Estratégico**: Establecer una estructura societaria y contractual sólida en Chile que **proteja al 100% la Propiedad Intelectual (IP) del software y gemelo digital AgriTwin en favor del Fundador (Daniel Santander Urrutia)**, permitiendo al mismo tiempo una compensación altamente motivante, meritocrática y basada en tracción de caja para los colaboradores y asesores:
 > - **Wladimir Gutierrez ("Nene")**
-> - **Pablo Perez ("Pablito")**
 > - **Francisco Ipinza ("Pancho")**
 > - **Cristian Cantuarias ("Cantuarias")**
 > - **Luis González ("Lápiz")**
-> - **Rüdiger Kaatz ("Rudi")**
+> - **Rüdiger Kaatz ("Rudi")** (Asume además el rol operativo y venta directa B2C)
 
 ---
 
@@ -36,9 +35,9 @@ graph TD
 
     AGROTECH_SPA["🏢 CHILE AGROTECH SpA<br/>(Vehículo Operativo y Comercial en Chile)"]:::op
 
-    EQUIPO["👥 FUERZA COMERCIAL & PRODUCTO<br/>• Wladimir Gutierrez ('Nene')<br/>• Francisco Ipinza ('Pancho')<br/>• Pablo Perez ('Pablito')<br/>• Cristian Cantuarias ('Cantuarias')"]:::team
+    EQUIPO["👥 FUERZA COMERCIAL & OPERATIVA<br/>• Wladimir Gutierrez ('Nene')<br/>• Francisco Ipinza ('Pancho')<br/>• Rüdiger Kaatz ('Rudi')<br/>• Cristian Cantuarias ('Cantuarias')"]:::team
 
-    ASESORES["🚜 ASESORES TÉCNICOS OFF-GRID<br/>• Luis González ('Lápiz')<br/>• Rüdiger Kaatz ('Rudi')"]:::advisor
+    ASESORES["🚜 ASESORES TÉCNICOS & RED LOCAL<br/>• Luis González ('Lápiz')"]:::advisor
 
     FUNDADOR -->|Dueño Absoluto 100%| CODEBASE
     FUNDADOR -->|Otorga Licencia Temporal| AGROTECH_SPA
@@ -55,11 +54,11 @@ graph TD
 
 ## 💰 2. Esquema de Comisiones y Reparto por Roles
 
-### A. Venta Directa B2C y Articulación de Kits: Pablo Perez ("Pablito")
+### A. Venta Directa B2C, Articulación de Kits & Living Lab: Rüdiger Kaatz ("Rudi")
 - **30% de Comisión Directa** sobre cada Informe de Riesgo Satelital para compradores de parcelas ($80.000 a $150.000 CLP).
 - **25% del Setup Fee + 15% del MRR** durante 12 meses por suscripciones agrícolas que cierre directamente.
-- **Margen Comercial de Hardware**: Margen convenido por la paquetización, programación de códigos QR y entrega de kits KioT a clientes finales.
-- **Participación Accionaria**: Elegible para el Pool de Vesting accionario SpA por soporte informático a los pipelines de datos y cumplimiento de metas de ventas.
+- **Margen Comercial de Hardware & Baterías**: Margen convenido por la paquetización de kits KioT con QR, bancos de baterías recicladas LiFePO4 y sistemas anti-incendios.
+- **Participación Accionaria**: Elegible para el Pool de Vesting accionario SpA por rol de conector operativo y habilitación del Living Lab Parral.
 
 ### B. Cuentas B2B Agroindustriales: Wladimir Gutierrez ("Nene") y Francisco Ipinza ("Pancho")
 - **25% del Setup Fee** en clientes agroindustriales (viñas, packings, frigoríficos, frutícolas).
@@ -91,7 +90,7 @@ graph TD
 En Parral / Talca, República de Chile, a [Día] de [Mes] de 2026, entre:
 
 1. **DANIEL EDUARDO SANTANDER URRUTIA**, chileno, cédula de identidad N° [RUT], domiciliado en [Domicilio], en adelante el **"FUNDADOR Y TITULAR DE IP"**; y
-2. **[NOMBRE DEL INTEGRANTE: Wladimir Gutierrez / Pablo Perez / Francisco Ipinza / Cristian Cantuarias / Luis González / Rüdiger Kaatz]**, cédula de identidad N° [RUT], domiciliado en [Domicilio], en adelante el **"COLABORADOR / ASESOR"**;
+2. **[NOMBRE DEL INTEGRANTE: Wladimir Gutierrez / Francisco Ipinza / Cristian Cantuarias / Luis González / Rüdiger Kaatz]**, cédula de identidad N° [RUT], domiciliado en [Domicilio], en adelante el **"COLABORADOR / ASESOR"**;
 
 Conjuntamente denominados las **"Partes"**, han convenido en celebrar el siguiente Memorandum de Entendimiento:
 

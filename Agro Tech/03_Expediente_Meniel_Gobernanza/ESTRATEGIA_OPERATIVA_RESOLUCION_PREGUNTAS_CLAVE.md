@@ -23,7 +23,7 @@ version: 1.0
 | **Costo de Inventario** | **$0 CLP Absoluto**. 100% digital y software. | **$0 CLP para el Fundador**. El hardware ya fue vendido o lo gestiona Luis. |
 | **Ticket Promedio** | **\$80.000 a \$180.000 CLP pago único** por informe predial. | **\$35.000 a \$50.000 CLP/mes recurrente (MRR)** por suscripción predial. |
 | **Ciclo de Venta** | **Muy Corto (2 a 4 días)**. Dolor urgente: miedo a ser estafado con el agua o comprar una quebrada inundable antes de escriturar. | **Inmediato (1 a 5 días)**. La relación de confianza ya existe a través de Luis. |
-| **Fuerza de Ventas** | **Pancho y Wladimir** (alianzas con corredores de propiedades, notarías y portales inmobiliarios) + **Pablo**. | **Luis** (visita de postventa o llamada a su cartera actual de clientes). |
+| **Fuerza de Ventas** | **Pancho y Wladimir** (alianzas con corredores de propiedades, notarías y portales inmobiliarios) + **Rudi** (Living Lab y venta directa). | **Luis** (visita de postventa o llamada a su cartera actual de clientes). |
 | **Margen Bruto** | **~95%** (solo costo de cómputo del servidor). | **~85%** (descontando 10% de comisión recurrente de Luis). |
 
 ### 🎯 Veredicto y Táctica Ganadora: El "Doble Caballo de Troya" (Sincronización Mes 1)
@@ -31,7 +31,7 @@ version: 1.0
 No se debe elegir una en desmedro de la otra porque **no compiten, apuntan a dos segmentos distintos y se ejecutan por brazos comerciales diferentes**:
 
 1. **Inyección Inmediata de Caja Líquida (Spot): Reportes de Parcela "AgriCheck"**
-   - **Responsables**: Pancho, Wladimir y Pablo.
+   - **Responsables**: Pancho, Wladimir y Rudi.
    - **Oferta**: *Dossier de Factibilidad Hídrica, Topográfica y Riesgo Climático de Parcela*.
    - **Entrega**: PDF de 8 páginas generado en menos de 30 minutos a partir del pipeline público (Sentinel-2, DEM ALOS PALSAR, DGA, Sernageomin).
    - **Meta Mes 1**: Cerrar 10 a 15 reportes en loteos de Parral, Retiro, Linares y Cauquenes.
@@ -140,7 +140,7 @@ gantt
     Publicación Landing "AgriCheck Parcelas"   :active, s1_2, 2026-10-16, 4d
     section Semana 2: Disparo Comercial Spot
     Pancho/Wladimir: Contacto Inmobiliarias   :s2_1, 2026-10-19, 5d
-    Pablo: Venta Directa Parceleros           :s2_2, 2026-10-20, 5d
+    Rudi: Venta Directa Parceleros            :s2_2, 2026-10-20, 5d
     Generación Primeros 5 Reportes Spot       :s2_3, 2026-10-22, 4d
     section Semana 3: Canal Luis & Upgrade
     Reunión con Luis: Cartera Cámaras Parral  :s3_1, 2026-10-26, 3d

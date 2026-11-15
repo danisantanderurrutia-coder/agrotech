@@ -237,49 +237,54 @@ export const ExecutiveBulletinsSection: React.FC = () => {
                 Estructura de compensación y encuadre operativo con nombres completos y apodos para la alineación del equipo:
               </p>
 
-              {/* Luis González (Lápiz) & Rüdiger Kaatz (Rudi) */}
-              <div className="p-5 rounded-xl bg-[#0B2519] border border-amber-500/40 space-y-3">
+              {/* Rüdiger Kaatz (Rudi) - Conector Operativo y Living Lab */}
+              <div className="p-5 rounded-xl bg-[#0B2519] border border-amber-500/50 space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl">🔋</span>
+                    <div>
+                      <h4 className="font-bold text-white text-sm">
+                        Rüdiger Kaatz ("Rudi")
+                      </h4>
+                      <p className="text-xs text-amber-300">
+                        El Conector Operativo, Infraestructura Off-Grid & Living Lab Parral (Suple y asume rol operativo)
+                      </p>
+                    </div>
+                  </div>
+                  <span className="px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 font-mono text-xs font-bold border border-amber-500/30">
+                    Operación de Campo + Living Lab + Pool SpA
+                  </span>
+                </div>
+                <div className="pt-2 text-xs text-slate-300 space-y-1.5 border-t border-amber-900/50">
+                  <p>• <b>Paquetización y Logística en Terreno:</b> Centraliza y ensambla los kits KioT plug-and-play con códigos QR, coordinando la movilidad y entrega directa en el Maule Sur.</p>
+                  <p>• <b>Venta Directa B2C (Parcelas):</b> Lidera la comercialización directa de Informes Prediales de Riesgo Satelital ($80k-$150k c/u) con 30% de comisión directa.</p>
+                  <p>• <b>Ingeniería Off-Grid & Baterías:</b> Almacenamiento con bancos LiFePO4 recicladas de alta densidad y sistemas de aspersión perimetral anti-incendios.</p>
+                  <p>• <b>Living Lab Demostrativo Parral:</b> Showroom en su predio para validación técnica en vivo y canal de prospección con inversionistas y clientes extranjeros.</p>
+                </div>
+              </div>
+
+              {/* Luis González (Lápiz) */}
+              <div className="p-5 rounded-xl bg-[#0B2519] border border-emerald-500/30 space-y-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-3">
                     <span className="text-xl">🚜</span>
                     <div>
                       <h4 className="font-bold text-white text-sm">
-                        Luis González ("Lápiz") & Rüdiger Kaatz ("Rudi")
+                        Luis González ("Lápiz")
                       </h4>
-                      <p className="text-xs text-amber-300">
-                        Asesores Técnicos Autónomos de Infraestructura Off-Grid & Terreno Parral
+                      <p className="text-xs text-emerald-300">
+                        Asesor Técnico Autónomo de Infraestructura Off-Grid & Terreno Parral
                       </p>
                     </div>
                   </div>
-                  <span className="px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 font-mono text-xs font-bold border border-amber-500/30">
-                    Asesoría Autónoma + Living Lab
-                  </span>
-                </div>
-                <div className="pt-2 text-xs text-slate-300 space-y-2 border-t border-amber-900/50">
-                  <p>• <b>Luis González ("Lápiz"):</b> 100% del margen de mano de obra en montaje físico + margen sobre venta de hardware fotovoltaico/cámaras + 10% MRR recurrente por clientes de su red que adopten el gemelo digital.</p>
-                  <p>• <b>Rüdiger Kaatz ("Rudi"):</b> Ingeniería en baterías recicladas (LiFePO4) y sistemas de aspersión perimetral anti-incendios + habilitación de su predio en Parral como <b>Living Lab Demostrativo</b> + canal comercial con inversionistas y residentes extranjeros.</p>
-                  <p>• <b>Autonomía:</b> Sin relación laboral dependiente; operan como socios y proveedores estratégicos preferentes.</p>
-                </div>
-              </div>
-
-              {/* Pablo Perez (Pablito) */}
-              <div className="p-5 rounded-xl bg-[#0B2519] border border-emerald-500/40 space-y-3">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="flex items-center gap-3">
-                    <span className="text-xl">⚡</span>
-                    <div>
-                      <h4 className="font-bold text-white text-sm">Pablo Perez ("Pablito")</h4>
-                      <p className="text-xs text-emerald-300">El Conector Operativo & Venta Directa B2C</p>
-                    </div>
-                  </div>
                   <span className="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold border border-emerald-500/30">
-                    Comisiones Spot + Paquetización + Pool SpA
+                    Asesoría Autónoma & Montaje
                   </span>
                 </div>
                 <div className="pt-2 text-xs text-slate-300 space-y-1.5 border-t border-emerald-900/50">
-                  <p>• <b>Paquetización y Logística:</b> Recibe el hardware de Lápiz y Rudi, lo ensambla en kits KioT plug-and-play con código QR y lo moviliza en terreno.</p>
-                  <p>• <b>Venta Directa Parcelas:</b> Lidera la venta de Informes Prediales de Riesgo Satelital ($80k-$150k c/u) con 30% de comisión directa.</p>
-                  <p>• <b>Soporte Técnico:</b> Articula con Daniel en soporte informático de los pipelines de datos e ingesta predial.</p>
+                  <p>• <b>Montaje e Instalación Física:</b> 100% del margen de mano de obra en montaje físico de postes, cámaras 4G solares, sensores y cableados.</p>
+                  <p>• <b>Hardware Fotovoltaico y Seguridad:</b> Margen sobre venta de equipos fotovoltaicos y módulos de biovisión perimetral.</p>
+                  <p>• <b>Canal de Clientes y Royalty:</b> 10% de MRR recurrente por clientes de su red en Parral/Retiro que adopten el gemelo digital AgriTwin.</p>
                 </div>
               </div>
 
@@ -379,7 +384,7 @@ export const ExecutiveBulletinsSection: React.FC = () => {
                   </span>
                   <h4 className="font-extrabold text-white text-base">Informes Prediales de Riesgo Satelital</h4>
                   <p className="text-xs text-slate-300 leading-relaxed font-serif">
-                    Validación satelital y legal de derechos de agua DGA, napas freáticas y riesgo de heladas/incendios para compradores de parcelas de agrado (5.000 m²). Liderado por Pablito, Pancho y Nene.
+                    Validación satelital y legal de derechos de agua DGA, napas freáticas y riesgo de heladas/incendios para compradores de parcelas de agrado (5.000 m²). Liderado por Rudi, Pancho y Nene.
                   </p>
                   <div className="pt-3 border-t border-emerald-900/50 flex justify-between items-center text-xs">
                     <span className="text-emerald-300">Meta: 10 a 15 informes</span>
@@ -460,7 +465,7 @@ export const ExecutiveBulletinsSection: React.FC = () => {
           <div className="p-4 rounded-xl bg-slate-950 border border-emerald-500/30 flex flex-wrap items-center justify-between gap-4 text-xs">
             <div className="flex items-center gap-3">
               <span className="text-emerald-400 font-bold font-mono">Articulación Logística:</span>
-              <span className="text-slate-300">Pablo Perez ("Pablito") coordina el empaque y entrega de los kits demostrativos validados en el Living Lab.</span>
+              <span className="text-slate-300">Rüdiger Kaatz ("Rudi") coordina el empaque, integración y entrega de los kits demostrativos validados en el Living Lab.</span>
             </div>
             <span className="px-3 py-1 rounded bg-emerald-500/20 text-emerald-300 font-mono font-bold">Estado: En Implementación</span>
           </div>

@@ -129,25 +129,25 @@ const SPA_PARTNERS: PartnerProfile[] = [
     avatarGradient: 'from-indigo-600 via-purple-700 to-slate-900'
   },
   {
-    id: 'pablo',
-    name: 'Pablo Pérez',
-    relation: 'Socio SpA • Finanzas, Software & Hardware',
-    role: 'Socio SpA • Finanzas Cuantitativas, Código & Despliegue Técnico',
-    location: 'Maule & Santiago, Chile 🇨🇱',
+    id: 'rudiger',
+    name: 'Rüdiger Kaatz ("Rudi")',
+    relation: 'Socio Operativo SpA • Infraestructura Off-Grid & Conector de Terreno',
+    role: 'Socio Operativo SpA • Ingeniería Off-Grid, Baterías & Operación Living Lab',
+    location: 'Parral (Precordillera), Región del Maule, Chile 🇨🇱 / Alemania 🇩🇪',
     flag: '🇨🇱',
-    animalTotem: '🦊 Zorro Culpeo',
-    animalDescription: 'Astucia algorítmica, adaptación rápida al terreno y optimización de recursos escasos.',
-    pillars: ['finanzas', 'tecnico', 'digital'],
-    modality: 'Mixto (Sweat Equity de Desarrollo + Aporte de Capital Inicial)',
-    description: 'Ingeniero con perfil híbrido en finanzas cuantitativas, arquitectura de software y despliegue de hardware. Conecta los modelos económicos de precios con la optimización de algoritmos en AgriTwin y apoya el control mecatrónico en la implementación de kits.',
+    animalTotem: '🦅 Cóndor Andino / Halcón Peregrino',
+    animalDescription: 'Visión estratégica de altura, autonomía radical y resiliencia en ecosistemas extremos.',
+    pillars: ['tecnico', 'digital', 'finanzas'],
+    modality: 'Mixto (Infraestructura de Campo + Living Lab + Aporte Técnico)',
+    description: 'Especialista en energía solar aislada, bancos de baterías LiFePO4 recicladas y sistemas de defensa perimetral anti-incendios. Asume el rol de conector de terreno y logística de kits mecatrónicos en el Maule Sur, además de liderar el Living Lab / Centro Demostrativo en Parral y el canal con inversionistas extranjeros.',
     responsibilities: [
-      'Optimización de algoritmos en WebGL/Three.js y backend',
-      'Simulación económica de amortización de kits solares y telemetría',
-      'Control de pruebas de estrés en hardware y protocolos de calibración',
-      'Arquitectura de microservicios y sincronización de datos IoT'
+      'Gestión y validación del Living Lab / Centro Demostrativo en Parral',
+      'Ingeniería de almacenamiento energético off-grid con baterías recicladas',
+      'Paquetización, calibración y despliegue logístico de kits KioT en terreno',
+      'Enlace comercial y técnico con inversionistas y compradores de parcelas'
     ],
-    badgeColor: 'border-teal-500 bg-teal-50 text-teal-900',
-    avatarGradient: 'from-teal-600 via-cyan-700 to-slate-900'
+    badgeColor: 'border-amber-500 bg-amber-50 text-amber-900',
+    avatarGradient: 'from-amber-600 via-orange-700 to-slate-900'
   },
   {
     id: 'cristian',
@@ -542,7 +542,7 @@ export const SomosPage: React.FC = () => {
                 </div>
                 <div>
                   <div className="text-xs font-bold text-white uppercase font-sans">Área Transversal Finanzas</div>
-                  <div className="text-xs text-slate-300 font-serif">A cargo de <strong>Wladimir Gutiérrez & Pablo Pérez</strong> (Costos, precios y presupuestos).</div>
+                  <div className="text-xs text-slate-300 font-serif">A cargo de <strong>Wladimir Gutiérrez & Francisco Ipinza</strong> (Costos, precios y presupuestos).</div>
                 </div>
               </div>
 
@@ -956,7 +956,7 @@ export const SomosPage: React.FC = () => {
                 </h3>
               </div>
               <p className="text-xs sm:text-sm text-slate-600 font-serif leading-relaxed">
-                El inicio basado en confianza y trabajo no remunerado (<strong>Sweat Equity</strong>) debe formalizarse mediante un <strong>Pacto de Accionistas (*Shareholders Agreement*)</strong> con calendario de <em>Vesting</em> a 24 o 36 meses con un <em>Cliff</em> de 6 meses para Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Pablo Pérez y Cristian Cantuarias.
+                El inicio basado en confianza y trabajo no remunerado (<strong>Sweat Equity</strong>) debe formalizarse mediante un <strong>Pacto de Accionistas (*Shareholders Agreement*)</strong> con calendario de <em>Vesting</em> a 24 o 36 meses con un <em>Cliff</em> de 6 meses para Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Rüdiger Kaatz y Cristian Cantuarias.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-sans">
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
@@ -999,7 +999,7 @@ export const SomosPage: React.FC = () => {
                   <div>
                     <strong className="text-emerald-950 font-sans">Licencia Exclusiva de Explotación & Usufructo para AgroTech SpA:</strong>
                     <span className="text-emerald-900 font-serif block">
-                      Daniel otorga una licencia de usufructo comercial exclusivo a la SpA. Los ingresos por suscripciones SaaS y servicios se integran al balance social de la empresa y se distribuyen en dividendos entre todos los socios (Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Pablo Pérez, Cristian Cantuarias) según su porcentaje accionario.
+                      Daniel otorga una licencia de usufructo comercial exclusivo a la SpA. Los ingresos por suscripciones SaaS y servicios se integran al balance social de la empresa y se distribuyen en dividendos entre todos los socios (Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Rüdiger Kaatz, Cristian Cantuarias) según su porcentaje accionario.
                     </span>
                   </div>
                 </div>

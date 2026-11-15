@@ -19,11 +19,11 @@ version: 2.0
 | :--- | :--- | :--- | :--- |
 | **Daniel Santander Urrutia** | **Daniel** | **Fundador, Director Técnico & Arquitecto de Sistemas** | Titularidad exclusiva del 100% de la IP Matriz ("Black Box", algoritmos, pipelines). Licenciamiento comercial a la SpA. |
 | **Cristian Cantuarias** | **Cantuarias** | **Lead Game Designer, Co-Diseñador UI/UX & Front-End 3D** | Acuerdo de Cesión de IP (*IP Assignment*) + Pool de Vesting por entregables validados de interfaz/simulación. |
-| **Pablo Perez** | **Pablito** | **El Conector Operativo & Venta Directa B2C** | 30% por venta de Informes Spot + 25% Setup / 15% MRR + margen por paquetización y venta de kits IoT + soporte informático de pipelines. |
+| **Rüdiger Kaatz** | **Rudi** | **Conector Operativo, Infraestructura Off-Grid & Living Lab Parral** | 30% por venta de Informes Spot + 25% Setup / 15% MRR + margen por paquetización y venta de kits IoT + Living Lab Parral + Pool de Vesting SpA. (Suple y asume rol operativo tras la salida de Pablo Perez). |
 | **Luis González** | **Lápiz** | **Asesor Técnico Autónomo de Infraestructura Off-Grid** | Proveedor y asesor técnico autónomo: 100% margen mano de obra de montaje + margen sobre hardware + 10% MRR de clientes que sume al SaaS. |
-| **Rüdiger Kaatz** | **Rudi** | **Asesor Técnico Autónomo Off-Grid & Living Lab Parral** | Asesor autónomo de ingeniería energética (baterías recicladas / LiFePO4 / anti-incendios) + comisión por captación de clientes e inversionistas extranjeros. |
 | **Francisco Ipinza** | **Pancho** | **Fuerza Comercial B2B & Convenios Inmobiliarios** | Comisiones por cierre B2B (25% Setup + 15% MRR) + 30% por convenios de informes de parcelas + acceso al pool de vesting accionario SpA. |
 | **Wladimir Gutierrez** | **Nene** | **Fuerza Comercial B2B & Estrategia Agroindustrial** | Comisiones por prospección de cuentas medianas/grandes (viñas, frutícolas, packings) + acceso al pool de vesting accionario SpA. |
+| *Pablo Perez (Salida)* | *Pablito* | *Desvinculado del proyecto* | *0% participación societaria (salida antes del cliff). Sus funciones operativas fueron asumidas por Rüdiger Kaatz.* |
 
 ---
 
@@ -40,16 +40,16 @@ graph TD
     R3["🎨 RAMA 3: Producto & Experiencia de Usuario"]:::branch
     R4["🧠 RAMA 4: Soluciones & Motor de Datos (Core IP)"]:::branch
 
-    R1 --> A1["Luis González (Lápiz) & Rüdiger Kaatz (Rudi)<br/><i>articulados con Pablo Perez (Pablito)</i>"]:::resp
+    R1 --> A1["Luis González (Lápiz) & Rüdiger Kaatz (Rudi)"]:::resp
     A1 --> O1["• Infraestructura resiliente off-grid<br/>• Living Lab en predio de Rudi (Parral)<br/>• Nodos KioT empaquetados y en terreno"]:::output
 
-    R2 --> A2["Pablo Perez (Pablito) [B2C]<br/>Wladimir Gutierrez (Nene) & Francisco Ipinza (Pancho) [B2B]"]:::resp
-    A2 --> O2["• Mes 1: Informes satelitales a parceleros ($0 inventario)<br/>• Meses 2-3: Diagnósticos de estrés y heladas en viñas<br/>• Upgrade clientes de cámaras de Lápiz y Rudi"]:::output
+    R2 --> A2["Rüdiger Kaatz (Rudi) [B2C / Parcelas]<br/>Wladimir Gutierrez (Nene) & Francisco Ipinza (Pancho) [B2B]"]:::resp
+    A2 --> O2["• Mes 1: Informes satelitales a parceleros ($0 inventario)<br/>• Meses 2-3: Diagnósticos de estrés y heladas en viñas<br/>• Upgrade clientes de cámaras de Lápiz y Living Lab"]:::output
 
     R3 --> A3["Daniel Santander & Cristian Cantuarias"]:::resp
     A3 --> O3["• Visor 3D predial diegético (WebGL/Three.js)<br/>• Gamificación estilo simulación estratégica<br/>• UX adaptada para terreno y WhatsApp"]:::output
 
-    R4 --> A4["Daniel Santander (Custodio IP)<br/><i>con soporte informático de Pablo Perez (Pablito)</i>"]:::resp
+    R4 --> A4["Daniel Santander (Custodio IP)"]:::resp
     A4 --> O4["• Ingesta automatizada Sentinel-2 / DEM / DGA / AGROMET<br/>• Algoritmos de balance hídrico FAO-56<br/>• Motor de alertas tempranas desatendidas"]:::output
 ```
 

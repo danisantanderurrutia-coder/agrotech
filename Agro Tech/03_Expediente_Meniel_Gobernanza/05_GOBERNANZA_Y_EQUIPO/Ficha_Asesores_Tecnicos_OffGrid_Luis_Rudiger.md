@@ -9,7 +9,7 @@ version: 1.0
 
 # 🚜 [[Ficha_Asesores_Tecnicos_OffGrid_Luis_Rudiger|Ficha Estratégica: Asesores Técnicos Off-Grid y Living Lab Parral]]
 
-> **Marco de Alianza**: Definición de la alianza estratégica con **Luis González ("Lápiz")** y **Rüdiger Kaatz ("Rudi")**, profesionales autónomos y consolidados en la precordillera y valle de Parral, junto con la articulación operativa de **Pablo Perez ("Pablito")** para el empaque y despliegue de kits mecatrónicos.
+> **Marco de Alianza**: Definición de la alianza estratégica con **Luis González ("Lápiz")** y **Rüdiger Kaatz ("Rudi")**, profesionales autónomos y consolidados en la precordillera y valle de Parral. Tras la salida de Pablo Perez, **Rüdiger Kaatz ("Rudi")** asume formalmente el rol de **Conector Operativo**, centralizando el empaque, logística y despliegue de kits mecatrónicos y venta directa B2C.
 
 ---
 
@@ -19,20 +19,17 @@ version: 1.0
 graph LR
     classDef luis fill:#064E3B,stroke:#10B981,stroke-width:2px,color:#ECFDF5;
     classDef rudi fill:#78350F,stroke:#F59E0B,stroke-width:2px,color:#FEF3C7;
-    classDef pablo fill:#1E1B4B,stroke:#818CF8,stroke-width:2px,color:#E0E7FF;
     classDef lab fill:#0F172A,stroke:#38BDF8,stroke-width:2px,color:#F0F9FF;
 
     LUIS["🔧 LUIS GONZÁLEZ ('Lápiz')<br/>• Montaje físico de cámaras solares 4G PTZ<br/>• Instalación fotovoltaica y tableros<br/>• Operación de drones y red local Parral"]:::luis
 
-    RUDI["🔋 RÜDIGER KAATZ ('Rudi')<br/>• Ingeniería de baterías recicladas / LiFePO4<br/>• Sistemas autónomos anti-incendios forestales<br/>• Enlace con inversionistas y clientes extranjeros"]:::rudi
-
-    PABLO["📦 PABLO PEREZ ('Pablito')<br/>• Paquetización modular de kits KioT<br/>• Logística y distribución en terreno<br/>• Venta directa B2C a parceleros"]:::pablo
+    RUDI["🔋 RÜDIGER KAATZ ('Rudi')<br/>• Conector Operativo & Venta Directa B2C<br/>• Ingeniería de baterías recicladas / LiFePO4<br/>• Sistemas autónomos anti-incendios forestales<br/>• Paquetización modular de kits KioT QR<br/>• Enlace con inversionistas y clientes extranjeros"]:::rudi
 
     LAB["🏡 LIVING LAB DEMOSTRATIVO PARRAL<br/>(Predio de Rudi • Showroom en Terreno)"]:::lab
 
     LUIS --> LAB
     RUDI --> LAB
-    LAB --> PABLO
+    LAB --> CLIENTES["👥 Clientes B2C / Parcelas & Inversionistas"]
 ```
 
 ### A. Luis González ("Lápiz")
@@ -64,11 +61,10 @@ Para que los agricultores e inversionistas no compren "humo", el predio de Rüdi
 
 ---
 
-## ⚡ 3. El Rol de Pablo Perez ("Pablito"): El Conector Operativo
+## ⚡ 3. El Rol de Rüdiger Kaatz ("Rudi") como Conector Operativo
 
-Para que Luis y Rudi no se desgasten en labores administrativas o venta menuda:
-- **Pablo Perez ("Pablito")** centraliza la logística:
-  1. Recibe el hardware calibrado de Luis y los módulos de Rudi.
-  2. Los empaqueta en cajas estancas IP66 con el código QR de vinculación instantánea de AgriTwin.
-  3. Ejecuta la venta directa persona a persona en Parral, Linares y Cauquenes.
-  4. Coordina la entrega técnica y ofrece el upgrade digital inmediatamente.
+Tras la salida de Pablo Perez, **Rüdiger Kaatz ("Rudi")** suple y centraliza la logística de terreno:
+1. Ensambla y paquetiza el hardware calibrado de Luis y sus propios módulos de baterías LiFePO4.
+2. Integra los kits en cajas estancas IP66 con el código QR de vinculación instantánea de AgriTwin.
+3. Ejecuta la venta directa persona a persona de Informes de Riesgo Satelital en Parral, Linares, Cauquenes y la precordillera.
+4. Coordina la entrega técnica en terreno y ofrece el upgrade digital inmediatamente desde el Living Lab.
