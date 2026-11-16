@@ -40,15 +40,19 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const isAgriTwin = currentView === 'agritwin' || currentView === 'agritwin-showcase';
+
   return (
-    <div className="min-h-screen bg-agri-bg text-agri-text flex flex-col font-sans selection:bg-emerald-600 selection:text-white">
+    <div className={`min-h-screen flex flex-col font-sans ${isAgriTwin ? 'bg-[#07111B] text-slate-100 selection:bg-orange-500 selection:text-white' : 'bg-agri-bg text-agri-text selection:bg-emerald-600 selection:text-white'}`}>
       
-      {/* Sticky Header Navigation */}
-      <Navbar 
-        currentView={currentView}
-        onNavigate={handleNavigate}
-        onOpenPitchDeck={() => setIsPitchDeckOpen(true)}
-      />
+      {/* Sticky Header Navigation (Solo fuera de AgriTwin, que cuenta con su propia consola ejecutiva) */}
+      {!isAgriTwin && (
+        <Navbar 
+          currentView={currentView}
+          onNavigate={handleNavigate}
+          onOpenPitchDeck={() => setIsPitchDeckOpen(true)}
+        />
+      )}
 
       {/* Main Content View Switcher */}
       <main className="flex-1">
@@ -197,10 +201,12 @@ export function App() {
         )}
       </main>
 
-      {/* Footer */}
-      <Footer 
-        onOpenPitchDeck={() => setIsPitchDeckOpen(true)}
-      />
+      {/* Footer (Solo fuera de AgriTwin, que cuenta con su propio pie institucional) */}
+      {!isAgriTwin && (
+        <Footer 
+          onOpenPitchDeck={() => setIsPitchDeckOpen(true)}
+        />
+      )}
 
       {/* Fullscreen Interactive Pitch Deck Modal */}
       <PitchDeckModal 
