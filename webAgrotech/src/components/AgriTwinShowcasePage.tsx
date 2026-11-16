@@ -341,10 +341,10 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                     }
                   </p>
                 </div>
-                <button className="px-3 py-1.5 rounded-lg bg-black/70 border border-emerald-500/40 text-emerald-300 text-xs font-mono flex items-center gap-1.5 backdrop-blur-md">
+                <span className="pointer-events-none px-3 py-1.5 rounded-lg bg-black/70 border border-emerald-500/40 text-emerald-300 text-xs font-mono flex items-center gap-1.5 backdrop-blur-md">
                   <ZoomIn className="w-3.5 h-3.5" />
                   <span>{lang === 'en' ? 'Enlarge' : 'Ampliar'}</span>
-                </button>
+                </span>
               </div>
             </div>
 
@@ -366,58 +366,6 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
 
           </div>
 
-          {/* Screenshot 2: Territorial GIS & Water Network */}
-          <div className="rounded-3xl bg-[#081B11] border-2 border-emerald-500/40 p-4 sm:p-6 shadow-2xl space-y-4">
-            
-            <div className="flex items-center justify-between border-b border-emerald-900/60 pb-3 font-mono text-[11px]">
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
-                </div>
-                <span className="text-slate-400 ml-2">agritwin://basin/gis-122k-ha-telemetry</span>
-              </div>
-              <span className="text-emerald-400 font-bold flex items-center gap-1">
-                <Waves className="w-3.5 h-3.5 text-emerald-400" />
-                {lang === 'en' ? 'BASIN MONITORING: 5 APR WELLS & DGA' : 'RED DE AGUA: 5 POZOS APR & DGA'}
-              </span>
-            </div>
-
-            <div 
-              onClick={() => setLightboxImage({
-                src: './assets/app_screens/cuenca_regional_gis.jpg',
-                title: lang === 'en' ? '122,000 ha Basin Observatory' : 'Observatorio Territorial 122.000 ha',
-                desc: lang === 'en' ? 'Interactive hexagonal grid with static/dynamic water levels and river flow monitoring.' : 'Cuadrícula hexagonal interactiva con niveles estáticos/dinámicos y caudales de ríos.'
-              })}
-              className="rounded-2xl overflow-hidden border border-emerald-500/30 relative h-[360px] sm:h-[440px] bg-black cursor-pointer group"
-            >
-              <img 
-                src="./assets/app_screens/cuenca_regional_gis.jpg" 
-                alt="AgriTwin Basin Regional GIS" 
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-between p-4 sm:p-6">
-                <div className="space-y-1">
-                  <span className="text-xs font-mono text-emerald-300 font-bold block">
-                    {lang === 'en' ? '● Maule South Hydrogeological Map' : '● Mapa Hidrogeológico Maule Sur'}
-                  </span>
-                  <p className="text-xs text-slate-300 font-serif max-w-xl">
-                    {lang === 'en' 
-                      ? 'Live territorial dashboard integrating Retiro, Parral, and Longaví aquifers with river gauge curves for T=10, 50, and 100 years.'
-                      : 'Dashboard territorial en vivo que integra acuíferos de Retiro, Parral y Longaví con curvas de retorno fluvial para T=10, 50 y 100 años.'
-                    }
-                  </p>
-                </div>
-                <button className="px-3 py-1.5 rounded-lg bg-black/70 border border-emerald-500/40 text-emerald-300 text-xs font-mono flex items-center gap-1.5 backdrop-blur-md">
-                  <ZoomIn className="w-3.5 h-3.5" />
-                  <span>{lang === 'en' ? 'Enlarge' : 'Ampliar'}</span>
-                </button>
-              </div>
-            </div>
-
-          </div>
-
         </div>
       </section>
 
@@ -432,17 +380,17 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
               <span>{lang === 'en' ? 'Micro Scale • 24.8-Hectare Plot' : 'Escala Micro • Parcela de 24.8 Hectáreas'}</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
-              {lang === 'en' ? '2. 3D Digital Twin with Open Diagnostic Panels' : '2. Gemelo Digital 3D con Paneles de Diagnóstico Abiertos'}
+              {lang === 'en' ? '2. 3D Digital Twin with Live Telemetry Panels' : '2. Gemelo Digital 3D con Paneles de Telemetría en Vivo'}
             </h2>
             <p className="text-slate-400 text-sm font-serif max-w-3xl">
               {lang === 'en' 
-                ? 'High-resolution Three.js twin of Fundo Meniel with open telemetry panels: parcel-level LiDAR meshes, tri-horizon soil moisture sensors, and nocturnal cold air drainage modeling.'
-                : 'Gemelo Three.js en alta resolución de Fundo Meniel con paneles de telemetría abiertos: mallas LiDAR por cuartel, sensores de suelo tri-estrato y drenaje nocturno de heladas.'
+                ? 'High-resolution Three.js twin of Fundo Meniel running real-time microclimate diagnostics, 7-day agro-meteorological forecasting, and parcel-by-parcel FDR soil sensor telemetry.'
+                : 'Gemelo Three.js en alta resolución de Fundo Meniel con diagnóstico microclimático en tiempo real, pronóstico agrometeorológico a 7 días y telemetría edáfica FDR por cuartel.'
               }
             </p>
           </div>
 
-          {/* Screenshot 3: Twin with Open Panels & Features */}
+          {/* Screenshot 1: House on Left + Weather & Forecast Panel on Right */}
           <div className="rounded-3xl bg-[#081B11] border-2 border-emerald-500/40 p-4 sm:p-6 shadow-2xl space-y-4">
             
             <div className="flex items-center justify-between border-b border-emerald-900/60 pb-3 font-mono text-[11px]">
@@ -452,127 +400,128 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                   <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
                   <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
                 </div>
-                <span className="text-slate-400 ml-2">agritwin://twin3d/fundo-meniel/open-inspector</span>
+                <span className="text-slate-400 ml-2">agritwin://twin3d/fundo-meniel/house-weather-telemetry</span>
               </div>
               <span className="text-emerald-400 font-bold flex items-center gap-1">
-                <Eye className="w-3.5 h-3.5 text-emerald-400" />
-                {lang === 'en' ? '3D TWIN ENGINE: OPEN PANELS' : 'MOTOR 3D: PANELES ABIERTOS'}
+                <Compass className="w-3.5 h-3.5 text-emerald-400" />
+                {lang === 'en' ? 'MICROCLIMATE & 7-DAY FORECAST' : 'MICROCLIMA & PRONÓSTICO 7 DÍAS'}
               </span>
             </div>
 
             <div 
               onClick={() => setLightboxImage({
-                src: './assets/app_screens/predio_twin_screen_4.jpg',
-                title: lang === 'en' ? '3D Twin Inspector with Open Panels' : 'Inspector 3D con Paneles Abiertos',
-                desc: lang === 'en' ? 'Working interface displaying parcel boundaries, canopy stress indexes, and LoRaWAN FDR sensor telemetry.' : 'Interfaz operativa mostrando límites de cuartel, índices de estrés de canopia y sensores LoRaWAN FDR.'
+                src: './assets/app_screens/predio_house_timeline.jpg',
+                title: lang === 'en' ? 'Farmhouse Architecture & 7-Day Weather Panel' : 'Casa Principal y Panel Agrometeorológico 7 Días',
+                desc: lang === 'en' ? 'Three.js 3D view of the central farmhouse on the left, with the live diagnostic drawer open on the right displaying 7-day weather forecast, wind regimes, and nocturnal frost risk.' : 'Vista Three.js 3D de la casa principal a la izquierda, con el panel de diagnóstico lateral abierto a la derecha mostrando el pronóstico meteorológico a 7 días, regímenes de viento y riesgo de heladas.'
               })}
-              className="rounded-2xl overflow-hidden border border-emerald-500/30 relative h-[380px] sm:h-[480px] bg-black cursor-pointer group"
+              className="rounded-2xl overflow-hidden border border-emerald-500/30 relative h-[380px] sm:h-[500px] bg-black cursor-pointer group"
             >
               <img 
-                src="./assets/app_screens/predio_twin_screen_4.jpg" 
-                alt="AgriTwin 3D Inspector with open panels" 
+                src="./assets/app_screens/predio_house_timeline.jpg" 
+                alt="AgriTwin Farmhouse and Live Weather Panel" 
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-between p-4 sm:p-6">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent flex items-end justify-between p-4 sm:p-6">
                 <div className="space-y-1">
-                  <span className="text-xs font-mono text-emerald-300 font-bold block">
-                    {lang === 'en' ? '● Real-Time Three.js WebGL Inspector' : '● Inspector WebGL Three.js en Tiempo Real'}
+                  <span className="text-xs font-mono text-cyan-300 font-bold block">
+                    {lang === 'en' ? '● Farmhouse & Lateral Agrometeorological Drawer' : '● Casa Principal & Cajón Lateral Agrometeorológico'}
                   </span>
                   <p className="text-xs text-slate-300 font-serif max-w-xl">
                     {lang === 'en' 
-                      ? 'Screen capture of working app: real-time parcel telemetry, tree inventory, and sub-surface irrigation prescription.'
-                      : 'Captura de pantalla de la app en funcionamiento: telemetría de cuarteles en tiempo real, inventario arbóreo y prescripción de riego.'
+                      ? 'Live screenshot of AgriTwin 3D: central farmhouse on the left, and the operational weather drawer on the right showing thermal wind dynamics and 7-day rainfall projections.'
+                      : 'Captura en vivo de AgriTwin 3D: casa principal a la izquierda, y el panel operativo del tiempo a la derecha mostrando vientos térmicos y proyecciones de lluvia a 7 días.'
                     }
                   </p>
                 </div>
-                <button className="px-3 py-1.5 rounded-lg bg-black/70 border border-emerald-500/40 text-emerald-300 text-xs font-mono flex items-center gap-1.5 backdrop-blur-md">
+                <span className="pointer-events-none px-3 py-1.5 rounded-lg bg-black/70 border border-emerald-500/40 text-emerald-300 text-xs font-mono flex items-center gap-1.5 backdrop-blur-md">
                   <ZoomIn className="w-3.5 h-3.5" />
                   <span>{lang === 'en' ? 'Enlarge' : 'Ampliar'}</span>
-                </button>
+                </span>
+              </div>
+            </div>
+
+            {/* Metrics Ribbon */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs pt-1">
+              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+                <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Local Station (Meniel)' : 'Estación Local (Meniel)'}</span>
+                <span className="text-cyan-300 font-bold text-sm">Lat -36.14°S, Lon -71.60°W</span>
+              </div>
+              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+                <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Coastal Thermal Wind (SSW)' : 'Viento Térmico Costero (SSW)'}</span>
+                <span className="text-amber-400 font-bold text-sm">16.5 km/h Pelluhue</span>
+              </div>
+              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+                <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Nocturnal Thermal Inversion' : 'Inversión Térmica Nocturna'}</span>
+                <span className="text-emerald-400 font-bold text-sm">Superficial Katabatic Drain</span>
               </div>
             </div>
 
           </div>
 
-          {/* Screenshot 4 & 5 Grid: 3D Soil Tensor + Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Screenshot 2: Crops & Live Sensor Telemetry */}
+          <div className="rounded-3xl bg-[#081B11] border-2 border-emerald-500/40 p-4 sm:p-6 shadow-2xl space-y-4">
             
-            {/* Soil Tensor */}
-            <div className="rounded-3xl bg-[#081B11] border border-emerald-500/30 p-5 space-y-3">
-              <div className="flex items-center justify-between font-mono text-xs">
-                <span className="text-teal-300 font-bold flex items-center gap-1.5">
-                  <Droplets className="w-3.5 h-3.5 text-teal-400" />
-                  {lang === 'en' ? 'Tri-Horizon Soil Dynamics' : 'Dinámica de Suelo a 3 Estratos'}
-                </span>
-                <span className="text-slate-400 text-[10px]">0-20, 20-60, 60-100cm</span>
-              </div>
-
-              <div 
-                onClick={() => setLightboxImage({
-                  src: './assets/app_screens/twin_3d_soil_tensor.png',
-                  title: lang === 'en' ? '3D Subsurface Soil & Hypoxia Tensor' : 'Tensor 3D de Suelo e Hipoxia Radicular',
-                  desc: lang === 'en' ? 'Continuous root zone moisture tracking and hydraulic flux modeling.' : 'Seguimiento continuo de humedad radicular y modelación de flujo hidráulico.'
-                })}
-                className="rounded-xl overflow-hidden border border-emerald-900/60 h-64 bg-black relative cursor-pointer group"
-              >
-                <img 
-                  src="./assets/app_screens/twin_3d_soil_tensor.png" 
-                  alt="3D Soil Tensor" 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                  <button className="px-3 py-1 rounded bg-black/70 border border-emerald-500/50 text-emerald-300 text-[10px] font-mono flex items-center gap-1 backdrop-blur-sm">
-                    <Maximize2 className="w-3 h-3" />
-                    <span>{lang === 'en' ? 'View Tensor' : 'Ver Tensor'}</span>
-                  </button>
+            <div className="flex items-center justify-between border-b border-emerald-900/60 pb-3 font-mono text-[11px]">
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
                 </div>
+                <span className="text-slate-400 ml-2">agritwin://twin3d/fundo-meniel/orchard-sensors-telemetry</span>
               </div>
-
-              <p className="text-xs text-slate-300 font-serif leading-relaxed">
-                {lang === 'en'
-                  ? 'Prevents over-irrigation in deeper clay strata, cutting pump electricity costs by 32.4% while avoiding root asphyxia (Phytophthora).'
-                  : 'Evita el sobre-riego en estratos arcillosos profundos, reduciendo el gasto de bombeo en 32.4% y previniendo la asfixia radicular.'
-                }
-              </p>
+              <span className="text-emerald-400 font-bold flex items-center gap-1">
+                <Layers className="w-3.5 h-3.5 text-emerald-400" />
+                {lang === 'en' ? 'ORCHARD CROPS & SENSOR NETWORK' : 'CULTIVOS & RED DE SENSORES IOT'}
+              </span>
             </div>
 
-            {/* Farm 3D Structure */}
-            <div className="rounded-3xl bg-[#081B11] border border-emerald-500/30 p-5 space-y-3">
-              <div className="flex items-center justify-between font-mono text-xs">
-                <span className="text-amber-300 font-bold flex items-center gap-1.5">
-                  <Cpu className="w-3.5 h-3.5 text-amber-400" />
-                  {lang === 'en' ? 'Cyber-Physical Farm Overview' : 'Vista General del Huerto'}
-                </span>
-                <span className="text-slate-400 text-[10px]">Fundo Meniel</span>
-              </div>
-
-              <div 
-                onClick={() => setLightboxImage({
-                  src: './assets/app_screens/predio_3d_overview.jpg',
-                  title: lang === 'en' ? '3D Farm Overview' : 'Vista 3D del Huerto',
-                  desc: lang === 'en' ? 'Six productive branches: fruit trees, Voisin pasture, reservoir, and native corridors.' : 'Seis ramas productivas: frutales, pastoreo Voisin, tranque y corredores nativos.'
-                })}
-                className="rounded-xl overflow-hidden border border-emerald-900/60 h-64 bg-black relative cursor-pointer group"
-              >
-                <img 
-                  src="./assets/app_screens/predio_3d_overview.jpg" 
-                  alt="Farm Overview" 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                  <button className="px-3 py-1 rounded bg-black/70 border border-emerald-500/50 text-emerald-300 text-[10px] font-mono flex items-center gap-1 backdrop-blur-sm">
-                    <Maximize2 className="w-3 h-3" />
-                    <span>{lang === 'en' ? 'View Model' : 'Ver Modelo'}</span>
-                  </button>
+            <div 
+              onClick={() => setLightboxImage({
+                src: './assets/app_screens/predio_crops_sensors.jpg',
+                title: lang === 'en' ? 'Orchard Parcels & In-Field Sensor Network' : 'Cuarteles de Frutales y Red de Sensores en Campo',
+                desc: lang === 'en' ? 'Three.js 3D view of hazelnut and cherry crop parcels with in-field 3D HUD billboard telemetry, and the live sensor drawer displaying multi-depth FDR soil moisture, temperature, and battery health.' : 'Vista Three.js 3D de cuarteles de avellanos y cerezos con tarjetas HUD flotantes en escena y panel lateral desplegando telemetría de humedad FDR a 3 profundidades, temperatura y batería.'
+              })}
+              className="rounded-2xl overflow-hidden border border-emerald-500/30 relative h-[380px] sm:h-[500px] bg-black cursor-pointer group"
+            >
+              <img 
+                src="./assets/app_screens/predio_crops_sensors.jpg" 
+                alt="AgriTwin Crops and Live Sensor Telemetry" 
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent flex items-end justify-between p-4 sm:p-6">
+                <div className="space-y-1">
+                  <span className="text-xs font-mono text-emerald-300 font-bold block">
+                    {lang === 'en' ? '● Fruit Canopy & Multi-Horizon FDR Probes' : '● Canopia Frutal & Sondas FDR Tri-Estrato'}
+                  </span>
+                  <p className="text-xs text-slate-300 font-serif max-w-xl">
+                    {lang === 'en' 
+                      ? 'Live screenshot of crop parcels with active in-field telemetry billboards and lateral drawer tracking continuous root zone hydration (0-20, 20-60, 60-100cm).'
+                      : 'Captura en vivo de cuarteles agrícolas con tarjetas de telemetría flotantes y cajón lateral con seguimiento continuo de hidratación radicular (0-20, 20-60, 60-100cm).'
+                    }
+                  </p>
                 </div>
+                <span className="pointer-events-none px-3 py-1.5 rounded-lg bg-black/70 border border-emerald-500/40 text-emerald-300 text-xs font-mono flex items-center gap-1.5 backdrop-blur-md">
+                  <ZoomIn className="w-3.5 h-3.5" />
+                  <span>{lang === 'en' ? 'Enlarge' : 'Ampliar'}</span>
+                </span>
               </div>
+            </div>
 
-              <p className="text-xs text-slate-300 font-serif leading-relaxed">
-                {lang === 'en'
-                  ? 'Connects the 18,500 m³ reservoir with solar compuertas, 8 Voisin rotational paddocks, and EUDR zero-deforestation certification.'
-                  : 'Conecta el tranque de 18.500 m³ con compuertas solares, 8 potreros rotacionales Voisin y certificación de libre deforestación EUDR.'
-                }
-              </p>
+            {/* Metrics Ribbon */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs pt-1">
+              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+                <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'FDR Sensor Mesh' : 'Red de Sondas FDR'}</span>
+                <span className="text-emerald-400 font-bold text-sm">19 Active Stations</span>
+              </div>
+              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+                <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Root Zone Moisture (20-60cm)' : 'Humedad Radicular (20-60cm)'}</span>
+                <span className="text-teal-300 font-bold text-sm">36.2% vol (Optimal)</span>
+              </div>
+              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+                <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Deep Hypoxia Prevention' : 'Prevención de Asfixia Radicular'}</span>
+                <span className="text-sky-300 font-bold text-sm">-32.4% Energy Waste</span>
+              </div>
             </div>
 
           </div>
