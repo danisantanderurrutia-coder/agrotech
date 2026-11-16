@@ -587,14 +587,14 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
 
             <div 
               onClick={() => setLightboxImage({
-                src: './assets/app_screens/predio_house_timeline.jpg',
+                src: './assets/app_screens/predio_house_timeline.jpg?v=clean-20261116',
                 title: lang === 'en' ? 'Farmhouse Architecture & 7-Day Weather Panel' : 'Casa Principal y Panel Agrometeorológico 7 Días',
                 desc: lang === 'en' ? 'Three.js 3D view of the central farmhouse on the left, with the live diagnostic drawer open on the right displaying 7-day weather forecast, wind regimes, and nocturnal frost risk.' : 'Vista Three.js 3D de la casa principal a la izquierda, con el panel de diagnóstico lateral abierto a la derecha mostrando el pronóstico meteorológico a 7 días, regímenes de viento y riesgo de heladas.'
               })}
               className="rounded-2xl overflow-hidden border border-[#FB7185]/40 relative h-[380px] sm:h-[500px] bg-black cursor-pointer group"
             >
               <img 
-                src="./assets/app_screens/predio_house_timeline.jpg" 
+                src="./assets/app_screens/predio_house_timeline.jpg?v=clean-20261116" 
                 alt="AgriTwin Farmhouse and Live Weather Panel" 
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
               />
@@ -729,14 +729,14 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
 
             <div 
               onClick={() => setLightboxImage({
-                src: './assets/app_screens/predio_crops_sensors.jpg',
+                src: './assets/app_screens/predio_crops_sensors.jpg?v=clean-20261116',
                 title: lang === 'en' ? 'Orchard Parcels & In-Field Sensor Network' : 'Cuarteles de Frutales y Red de Sensores en Campo',
                 desc: lang === 'en' ? 'Three.js 3D view of hazelnut and cherry crop parcels with in-field 3D HUD billboard telemetry, and the live sensor drawer displaying multi-depth FDR soil moisture, temperature, and battery health.' : 'Vista Three.js 3D de cuarteles de avellanos y cerezos con tarjetas HUD flotantes en escena y panel lateral desplegando telemetría de humedad FDR a 3 profundidades, temperatura y batería.'
               })}
               className="rounded-2xl overflow-hidden border border-[#2DD4BF]/40 relative h-[380px] sm:h-[500px] bg-black cursor-pointer group"
             >
               <img 
-                src="./assets/app_screens/predio_crops_sensors.jpg" 
+                src="./assets/app_screens/predio_crops_sensors.jpg?v=clean-20261116" 
                 alt="AgriTwin Crops and Live Sensor Telemetry" 
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
               />
