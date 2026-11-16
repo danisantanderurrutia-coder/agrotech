@@ -163,24 +163,24 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
   };
 
   return (
-    <div className="min-h-screen bg-[#050F0A] text-slate-100 selection:bg-amber-400 selection:text-slate-950 font-sans relative">
+    <div className="min-h-screen bg-[#07111B] text-slate-100 selection:bg-orange-500 selection:text-white font-sans relative">
       
-      {/* Retícula de fondo milimétrica */}
+      {/* Retícula de fondo milimétrica Twilight */}
       <div 
-        className="fixed inset-0 pointer-events-none z-0 opacity-[0.035]"
+        className="fixed inset-0 pointer-events-none z-0 opacity-[0.04]"
         style={{
-          backgroundImage: `linear-gradient(to right, #10B981 1px, transparent 1px), linear-gradient(to bottom, #10B981 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(to right, #0EA5E9 1px, transparent 1px), linear-gradient(to bottom, #0EA5E9 1px, transparent 1px)`,
           backgroundSize: '32px 32px'
         }}
       />
 
       {/* ─── 0. SUB-HEADER STICKY: IDIOMA & TELEMETRÍA ─────────────────────── */}
-      <div className="sticky top-16 z-30 bg-[#06140D]/90 backdrop-blur-md border-b border-emerald-900/50 py-2.5 px-4">
+      <div className="sticky top-16 z-30 bg-[#091422]/90 backdrop-blur-md border-b border-sky-950/60 py-2.5 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 overflow-x-auto text-[11px] font-mono">
           
           <div className="flex items-center gap-3 shrink-0">
-            <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/40 text-emerald-300 font-bold">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#0F1D30] border border-cyan-500/40 text-cyan-300 font-bold">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
               AGRITWIN OS
             </span>
             <span className="text-slate-400 hidden sm:inline">
@@ -190,16 +190,16 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
 
           <div className="flex items-center gap-2.5 shrink-0">
             {/* Language Switcher */}
-            <div className="flex items-center bg-black/60 rounded-lg border border-emerald-500/40 p-0.5 font-bold">
+            <div className="flex items-center bg-black/60 rounded-lg border border-orange-500/40 p-0.5 font-bold">
               <button
                 onClick={() => setLang('en')}
-                className={`px-2.5 py-1 rounded transition-all cursor-pointer ${lang === 'en' ? 'bg-amber-400 text-slate-950 shadow-sm' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded transition-all cursor-pointer ${lang === 'en' ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-slate-950 shadow-sm' : 'text-slate-400 hover:text-white'}`}
               >
                 EN
               </button>
               <button
                 onClick={() => setLang('es')}
-                className={`px-2.5 py-1 rounded transition-all cursor-pointer ${lang === 'es' ? 'bg-amber-400 text-slate-950 shadow-sm' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded transition-all cursor-pointer ${lang === 'es' ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-slate-950 shadow-sm' : 'text-slate-400 hover:text-white'}`}
               >
                 ES
               </button>
@@ -209,15 +209,15 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
               href="https://danisantanderurrutia-coder.github.io/agritwin-app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1 rounded-lg bg-amber-400/15 hover:bg-amber-400/25 border border-amber-400/40 text-amber-300 font-bold flex items-center gap-1.5 transition-all"
+              className="px-3 py-1 rounded-lg bg-orange-500/15 hover:bg-orange-500/25 border border-orange-500/40 text-orange-300 font-bold flex items-center gap-1.5 transition-all"
             >
               <span>{lang === 'en' ? 'Live Showcase App' : 'App en Vivo'}</span>
-              <ExternalLink className="w-3 h-3 text-amber-400" />
+              <ExternalLink className="w-3 h-3 text-orange-400" />
             </a>
 
             <button
               onClick={() => setIsDemoModalOpen(true)}
-              className="px-3.5 py-1 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold transition-all cursor-pointer"
+              className="px-3.5 py-1 rounded-lg bg-gradient-to-r from-[#FF5A36] to-[#E11D48] hover:from-[#FF6B4A] hover:to-[#F43F5E] text-white font-bold transition-all shadow-[0_0_15px_rgba(255,90,54,0.3)] cursor-pointer"
             >
               {lang === 'en' ? 'Request Access' : 'Solicitar Acceso'}
             </button>
@@ -227,14 +227,14 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
       </div>
 
       {/* ─── 1. HERO CONTEXTUAL CONCISO ─────────────────────────────────────── */}
-      <section className="relative pt-12 pb-16 border-b border-emerald-950/80 overflow-hidden">
+      <section className="relative pt-12 pb-16 border-b border-blue-950/80 overflow-hidden bg-gradient-to-b from-[#07111B] via-[#091420] to-[#060D15]">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 relative z-10 space-y-6">
           
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-bold uppercase">
+            <span className="px-2.5 py-0.5 rounded bg-[#0F1D30]/80 border border-teal-500/40 text-teal-300 text-xs font-mono font-bold uppercase">
               {lang === 'en' ? 'Cyber-Physical Digital Twin' : 'Gemelo Digital Ciberfísico'}
             </span>
-            <span className="px-2.5 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-300 text-xs font-mono">
+            <span className="px-2.5 py-0.5 rounded bg-black/40 border border-blue-900 text-slate-300 text-xs font-mono">
               Sentinel-2 L2A • LoRaWAN 915MHz • DGA Network
             </span>
           </div>
@@ -242,9 +242,9 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
           <div className="space-y-4 max-w-4xl">
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
               {lang === 'en' ? (
-                <>From Watershed Hydrology to <span className="bg-gradient-to-r from-emerald-300 to-amber-300 bg-clip-text text-transparent">3D Root Zone</span> Physics.</>
+                <>From Watershed Hydrology to <span className="bg-gradient-to-r from-teal-300 via-orange-300 to-rose-400 bg-clip-text text-transparent">3D Root Zone</span> Physics.</>
               ) : (
-                <>De la Hidrología de Cuenca a la <span className="bg-gradient-to-r from-emerald-300 to-amber-300 bg-clip-text text-transparent">Física Radicular 3D</span>.</>
+                <>De la Hidrología de Cuenca a la <span className="bg-gradient-to-r from-teal-300 via-orange-300 to-rose-400 bg-clip-text text-transparent">Física Radicular 3D</span>.</>
               )}
             </h1>
             <p className="text-base sm:text-lg text-slate-300 font-serif leading-relaxed">
@@ -259,14 +259,14 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
           <div className="flex flex-wrap items-center gap-4 pt-2 font-mono text-xs">
             <button
               onClick={() => setIsDemoModalOpen(true)}
-              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold transition-all shadow-md cursor-pointer"
+              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#FF5A36] to-[#E11D48] hover:from-[#FF6B4A] hover:to-[#F43F5E] text-white font-bold transition-all shadow-lg cursor-pointer"
             >
               <span>{lang === 'en' ? 'Request Interactive Demo' : 'Solicitar Demostración'}</span>
-              <ArrowRight className="w-4 h-4 text-slate-950" />
+              <ArrowRight className="w-4 h-4 text-white" />
             </button>
             <a
               href="#cuenca"
-              className="flex items-center gap-2 px-5 py-3 rounded-xl bg-black/40 hover:bg-black/60 border border-emerald-500/30 text-emerald-300 font-semibold transition-all"
+              className="flex items-center gap-2 px-5 py-3 rounded-xl bg-[#0A1626]/80 hover:bg-[#0F1F35] border border-teal-500/40 text-teal-300 font-semibold transition-all"
             >
               <span>{lang === 'en' ? 'Explore Working Modules &darr;' : 'Explorar Módulos en Vivo &darr;'}</span>
             </a>
@@ -276,13 +276,13 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
       </section>
 
       {/* ─── 2. SECCIÓN A: ESCALA MACRO (CUENCA 122.000 HA) ─────────────────── */}
-      <section id="cuenca" className="py-16 border-b border-emerald-950/80 bg-[#06140D]">
+      <section id="cuenca" className="py-16 border-b border-blue-950/80 bg-[#060D15]">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-10">
           
           {/* Header */}
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-xs font-mono font-bold text-amber-400 uppercase">
-              <Compass className="w-4 h-4 text-amber-400" />
+            <div className="flex items-center gap-2 text-xs font-mono font-bold text-orange-400 uppercase tracking-wider">
+              <Compass className="w-4 h-4 text-orange-400" />
               <span>{lang === 'en' ? 'Macro Scale • 122,000 Hectares' : 'Escala Macro • 122.000 Hectáreas'}</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
@@ -297,20 +297,20 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
           </div>
 
           {/* Screenshot 1: Wildfire Spread Simulation (HERRAMIENTA REAL DE INCENDIOS) */}
-          <div className="rounded-3xl bg-[#081B11] border-2 border-amber-500/40 p-4 sm:p-6 shadow-2xl space-y-4">
+          <div className="rounded-3xl bg-[#0F1A2A] border-2 border-orange-500/40 p-4 sm:p-6 shadow-[0_15px_40px_rgba(7,17,27,0.8)] space-y-4">
             
             {/* Window Chrome Header */}
-            <div className="flex items-center justify-between border-b border-emerald-900/60 pb-3 font-mono text-[11px]">
+            <div className="flex items-center justify-between border-b border-orange-950/60 pb-3 font-mono text-[11px]">
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-orange-500/80 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-teal-500/80 inline-block" />
                 </div>
                 <span className="text-slate-400 ml-2">agritwin://basin/wildfire-fwi-spread</span>
               </div>
-              <span className="text-amber-400 font-bold flex items-center gap-1">
-                <Flame className="w-3.5 h-3.5 text-amber-400" />
+              <span className="text-orange-400 font-bold flex items-center gap-1">
+                <Flame className="w-3.5 h-3.5 text-orange-400" />
                 {lang === 'en' ? 'LIVE TOOL: WILDFIRE HINDCAST' : 'HERRAMIENTA EN VIVO: INCENDIO FORESTAL'}
               </span>
             </div>
@@ -322,16 +322,16 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                 title: lang === 'en' ? 'Wildfire Spread & Plume Prediction' : 'Predicción y Propagación de Incendio Forestal',
                 desc: lang === 'en' ? 'Real simulation of fire perimeter, smoke plume, wind vectors, and Keyline slowdown barriers.' : 'Simulación real de perímetro de fuego, pluma de humo, vectores de viento y desaceleración en Keyline.'
               })}
-              className="rounded-2xl overflow-hidden border border-emerald-500/30 relative h-[380px] sm:h-[480px] bg-black cursor-pointer group"
+              className="rounded-2xl overflow-hidden border border-orange-500/35 relative h-[380px] sm:h-[480px] bg-black cursor-pointer group"
             >
               <img 
                 src="./assets/app_screens/cuenca_wildfire_simulation.jpg" 
                 alt="AgriTwin Wildfire Spread Tool" 
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-between p-4 sm:p-6">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#060D15]/90 via-transparent to-transparent flex items-end justify-between p-4 sm:p-6">
                 <div className="space-y-1">
-                  <span className="text-xs font-mono text-amber-300 font-bold block">
+                  <span className="text-xs font-mono text-orange-300 font-bold block">
                     {lang === 'en' ? '● FWI Fire Propagation Engine' : '● Motor de Propagación de Incendios FWI'}
                   </span>
                   <p className="text-xs text-slate-300 font-serif max-w-xl">
@@ -341,7 +341,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                     }
                   </p>
                 </div>
-                <span className="pointer-events-none px-3 py-1.5 rounded-lg bg-black/70 border border-emerald-500/40 text-emerald-300 text-xs font-mono flex items-center gap-1.5 backdrop-blur-md">
+                <span className="pointer-events-none px-3 py-1.5 rounded-lg bg-black/70 border border-orange-500/40 text-orange-300 text-xs font-mono flex items-center gap-1.5 backdrop-blur-md">
                   <ZoomIn className="w-3.5 h-3.5" />
                   <span>{lang === 'en' ? 'Enlarge' : 'Ampliar'}</span>
                 </span>
@@ -350,17 +350,17 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
 
             {/* Metrics Ribbon */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs pt-1">
-              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+              <div className="p-3 rounded-xl bg-[#080E18] border border-orange-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Fire Weather Index (FWI)' : 'Índice FWI Meteorológico'}</span>
-                <span className="text-amber-400 font-bold text-sm">Extreme (FWI &gt; 38)</span>
+                <span className="text-orange-400 font-bold text-sm">Extreme (FWI &gt; 38)</span>
               </div>
-              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+              <div className="p-3 rounded-xl bg-[#080E18] border border-orange-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Puelche Wind Acceleration' : 'Viento Puelche Acelerado'}</span>
-                <span className="text-sky-300 font-bold text-sm">24.5 km/h E-SE</span>
+                <span className="text-amber-300 font-bold text-sm">24.5 km/h E-SE</span>
               </div>
-              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+              <div className="p-3 rounded-xl bg-[#080E18] border border-teal-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Buffer Slowdown Ratio' : 'Ralentización por Cortafuegos'}</span>
-                <span className="text-emerald-400 font-bold text-sm">-58% Spread Rate</span>
+                <span className="text-teal-300 font-bold text-sm">-58% Spread Rate</span>
               </div>
             </div>
 
@@ -370,13 +370,13 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
       </section>
 
       {/* ─── 3. SECCIÓN B: ESCALA MICRO (PREDIO EXPERIMENTAL 24.8 HA) ────────── */}
-      <section id="predio" className="py-16 border-b border-emerald-950/80 bg-[#05110A]">
+      <section id="predio" className="py-16 border-b border-blue-950/80 bg-[#07111B]">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-10">
           
           {/* Header */}
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400 uppercase">
-              <Cpu className="w-4 h-4 text-emerald-400" />
+            <div className="flex items-center gap-2 text-xs font-mono font-bold text-teal-400 uppercase tracking-wider">
+              <Cpu className="w-4 h-4 text-teal-400" />
               <span>{lang === 'en' ? 'Micro Scale • 24.8-Hectare Plot' : 'Escala Micro • Parcela de 24.8 Hectáreas'}</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
@@ -391,19 +391,19 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
           </div>
 
           {/* Screenshot 1: House on Left + Weather & Forecast Panel on Right */}
-          <div className="rounded-3xl bg-[#081B11] border-2 border-emerald-500/40 p-4 sm:p-6 shadow-2xl space-y-4">
+          <div className="rounded-3xl bg-[#0F1A2A] border-2 border-rose-500/35 p-4 sm:p-6 shadow-[0_15px_40px_rgba(7,17,27,0.8)] space-y-4">
             
-            <div className="flex items-center justify-between border-b border-emerald-900/60 pb-3 font-mono text-[11px]">
+            <div className="flex items-center justify-between border-b border-rose-950/60 pb-3 font-mono text-[11px]">
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-orange-500/80 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-teal-500/80 inline-block" />
                 </div>
                 <span className="text-slate-400 ml-2">agritwin://twin3d/fundo-meniel/house-weather-telemetry</span>
               </div>
-              <span className="text-emerald-400 font-bold flex items-center gap-1">
-                <Compass className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="text-rose-400 font-bold flex items-center gap-1">
+                <Compass className="w-3.5 h-3.5 text-rose-400" />
                 {lang === 'en' ? 'MICROCLIMATE & 7-DAY FORECAST' : 'MICROCLIMA & PRONÓSTICO 7 DÍAS'}
               </span>
             </div>
@@ -414,16 +414,16 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                 title: lang === 'en' ? 'Farmhouse Architecture & 7-Day Weather Panel' : 'Casa Principal y Panel Agrometeorológico 7 Días',
                 desc: lang === 'en' ? 'Three.js 3D view of the central farmhouse on the left, with the live diagnostic drawer open on the right displaying 7-day weather forecast, wind regimes, and nocturnal frost risk.' : 'Vista Three.js 3D de la casa principal a la izquierda, con el panel de diagnóstico lateral abierto a la derecha mostrando el pronóstico meteorológico a 7 días, regímenes de viento y riesgo de heladas.'
               })}
-              className="rounded-2xl overflow-hidden border border-emerald-500/30 relative h-[380px] sm:h-[500px] bg-black cursor-pointer group"
+              className="rounded-2xl overflow-hidden border border-rose-500/35 relative h-[380px] sm:h-[500px] bg-black cursor-pointer group"
             >
               <img 
                 src="./assets/app_screens/predio_house_timeline.jpg" 
                 alt="AgriTwin Farmhouse and Live Weather Panel" 
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent flex items-end justify-between p-4 sm:p-6">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#060D15]/90 via-transparent to-transparent flex items-end justify-between p-4 sm:p-6">
                 <div className="space-y-1">
-                  <span className="text-xs font-mono text-cyan-300 font-bold block">
+                  <span className="text-xs font-mono text-rose-300 font-bold block">
                     {lang === 'en' ? '● Farmhouse & Lateral Agrometeorological Drawer' : '● Casa Principal & Cajón Lateral Agrometeorológico'}
                   </span>
                   <p className="text-xs text-slate-300 font-serif max-w-xl">
@@ -433,7 +433,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                     }
                   </p>
                 </div>
-                <span className="pointer-events-none px-3 py-1.5 rounded-lg bg-black/70 border border-emerald-500/40 text-emerald-300 text-xs font-mono flex items-center gap-1.5 backdrop-blur-md">
+                <span className="pointer-events-none px-3 py-1.5 rounded-lg bg-black/70 border border-rose-500/40 text-rose-300 text-xs font-mono flex items-center gap-1.5 backdrop-blur-md">
                   <ZoomIn className="w-3.5 h-3.5" />
                   <span>{lang === 'en' ? 'Enlarge' : 'Ampliar'}</span>
                 </span>
@@ -442,36 +442,36 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
 
             {/* Metrics Ribbon */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs pt-1">
-              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+              <div className="p-3 rounded-xl bg-[#080E18] border border-blue-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Local Station (Meniel)' : 'Estación Local (Meniel)'}</span>
                 <span className="text-cyan-300 font-bold text-sm">Lat -36.14°S, Lon -71.60°W</span>
               </div>
-              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+              <div className="p-3 rounded-xl bg-[#080E18] border border-orange-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Coastal Thermal Wind (SSW)' : 'Viento Térmico Costero (SSW)'}</span>
-                <span className="text-amber-400 font-bold text-sm">16.5 km/h Pelluhue</span>
+                <span className="text-orange-400 font-bold text-sm">16.5 km/h Pelluhue</span>
               </div>
-              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+              <div className="p-3 rounded-xl bg-[#080E18] border border-rose-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Nocturnal Thermal Inversion' : 'Inversión Térmica Nocturna'}</span>
-                <span className="text-emerald-400 font-bold text-sm">Superficial Katabatic Drain</span>
+                <span className="text-rose-300 font-bold text-sm">Superficial Katabatic Drain</span>
               </div>
             </div>
 
           </div>
 
           {/* Screenshot 2: Crops & Live Sensor Telemetry */}
-          <div className="rounded-3xl bg-[#081B11] border-2 border-emerald-500/40 p-4 sm:p-6 shadow-2xl space-y-4">
+          <div className="rounded-3xl bg-[#0F1A2A] border-2 border-teal-500/35 p-4 sm:p-6 shadow-[0_15px_40px_rgba(7,17,27,0.8)] space-y-4">
             
-            <div className="flex items-center justify-between border-b border-emerald-900/60 pb-3 font-mono text-[11px]">
+            <div className="flex items-center justify-between border-b border-teal-900/60 pb-3 font-mono text-[11px]">
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-orange-500/80 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-teal-500/80 inline-block" />
                 </div>
                 <span className="text-slate-400 ml-2">agritwin://twin3d/fundo-meniel/orchard-sensors-telemetry</span>
               </div>
-              <span className="text-emerald-400 font-bold flex items-center gap-1">
-                <Layers className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="text-teal-400 font-bold flex items-center gap-1">
+                <Layers className="w-3.5 h-3.5 text-teal-400" />
                 {lang === 'en' ? 'ORCHARD CROPS & SENSOR NETWORK' : 'CULTIVOS & RED DE SENSORES IOT'}
               </span>
             </div>
@@ -482,16 +482,16 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                 title: lang === 'en' ? 'Orchard Parcels & In-Field Sensor Network' : 'Cuarteles de Frutales y Red de Sensores en Campo',
                 desc: lang === 'en' ? 'Three.js 3D view of hazelnut and cherry crop parcels with in-field 3D HUD billboard telemetry, and the live sensor drawer displaying multi-depth FDR soil moisture, temperature, and battery health.' : 'Vista Three.js 3D de cuarteles de avellanos y cerezos con tarjetas HUD flotantes en escena y panel lateral desplegando telemetría de humedad FDR a 3 profundidades, temperatura y batería.'
               })}
-              className="rounded-2xl overflow-hidden border border-emerald-500/30 relative h-[380px] sm:h-[500px] bg-black cursor-pointer group"
+              className="rounded-2xl overflow-hidden border border-teal-500/35 relative h-[380px] sm:h-[500px] bg-black cursor-pointer group"
             >
               <img 
                 src="./assets/app_screens/predio_crops_sensors.jpg" 
                 alt="AgriTwin Crops and Live Sensor Telemetry" 
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent flex items-end justify-between p-4 sm:p-6">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#060D15]/90 via-transparent to-transparent flex items-end justify-between p-4 sm:p-6">
                 <div className="space-y-1">
-                  <span className="text-xs font-mono text-emerald-300 font-bold block">
+                  <span className="text-xs font-mono text-teal-300 font-bold block">
                     {lang === 'en' ? '● Fruit Canopy & Multi-Horizon FDR Probes' : '● Canopia Frutal & Sondas FDR Tri-Estrato'}
                   </span>
                   <p className="text-xs text-slate-300 font-serif max-w-xl">
@@ -501,7 +501,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                     }
                   </p>
                 </div>
-                <span className="pointer-events-none px-3 py-1.5 rounded-lg bg-black/70 border border-emerald-500/40 text-emerald-300 text-xs font-mono flex items-center gap-1.5 backdrop-blur-md">
+                <span className="pointer-events-none px-3 py-1.5 rounded-lg bg-black/70 border border-teal-500/40 text-teal-300 text-xs font-mono flex items-center gap-1.5 backdrop-blur-md">
                   <ZoomIn className="w-3.5 h-3.5" />
                   <span>{lang === 'en' ? 'Enlarge' : 'Ampliar'}</span>
                 </span>
@@ -510,17 +510,17 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
 
             {/* Metrics Ribbon */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs pt-1">
-              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+              <div className="p-3 rounded-xl bg-[#080E18] border border-teal-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'FDR Sensor Mesh' : 'Red de Sondas FDR'}</span>
-                <span className="text-emerald-400 font-bold text-sm">19 Active Stations</span>
+                <span className="text-teal-300 font-bold text-sm">19 Active Stations</span>
               </div>
-              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+              <div className="p-3 rounded-xl bg-[#080E18] border border-teal-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Root Zone Moisture (20-60cm)' : 'Humedad Radicular (20-60cm)'}</span>
-                <span className="text-teal-300 font-bold text-sm">36.2% vol (Optimal)</span>
+                <span className="text-cyan-300 font-bold text-sm">36.2% vol (Optimal)</span>
               </div>
-              <div className="p-3 rounded-xl bg-black/40 border border-emerald-950">
+              <div className="p-3 rounded-xl bg-[#080E18] border border-orange-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Deep Hypoxia Prevention' : 'Prevención de Asfixia Radicular'}</span>
-                <span className="text-sky-300 font-bold text-sm">-32.4% Energy Waste</span>
+                <span className="text-orange-300 font-bold text-sm">-32.4% Energy Waste</span>
               </div>
             </div>
 
@@ -530,17 +530,17 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
       </section>
 
       {/* ─── 4. SIMULADOR BIOFÍSICO EN VIVO (SANDBOX PARAMÉTRICO) ─────────────── */}
-      <section className="py-16 border-b border-emerald-950/80 bg-[#06140D]">
+      <section className="py-16 border-b border-blue-950/80 bg-[#060D15]">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-10">
           
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">
+            <span className="text-xs font-mono font-bold text-teal-300 uppercase tracking-widest">
               {lang === 'en' ? 'Interactive Physics Sandbox' : 'Sandbox de Física Interactiva'}
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
               {lang === 'en' ? 'Calibrate the Deterministic Engine' : 'Calibra el Motor Determinista'}
             </h2>
-            <p className="text-slate-400 text-xs sm:text-sm font-serif">
+            <p className="text-slate-300 text-xs sm:text-sm font-serif">
               {lang === 'en'
                 ? 'Adjust air temperature, soil moisture, and wind regime to test real-time FAO-56 Penman-Monteith and katabatic frost diagnostics.'
                 : 'Ajusta la temperatura, humedad edáfica y viento para evaluar la respuesta en tiempo real de la ecuación FAO-56 y detección de heladas.'
@@ -553,40 +553,40 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
             <span className="text-slate-400 text-[11px] uppercase mr-2">{lang === 'en' ? 'Quick Test Scenarios:' : 'Escenarios Rápidos:'}</span>
             <button
               onClick={() => applyPreset('frost')}
-              className="px-3 py-1.5 rounded-lg bg-sky-950/70 hover:bg-sky-900 border border-sky-500/40 text-sky-200 transition-all cursor-pointer"
+              className="px-3 py-1.5 rounded-lg bg-rose-950/60 hover:bg-rose-900/70 border border-rose-500/40 text-rose-200 transition-all cursor-pointer"
             >
               ❄️ {lang === 'en' ? 'Radiation Frost (-1.8°C)' : 'Helada Radiativa (-1.8°C)'}
             </button>
             <button
               onClick={() => applyPreset('heatwave')}
-              className="px-3 py-1.5 rounded-lg bg-amber-950/70 hover:bg-amber-900 border border-amber-500/40 text-amber-200 transition-all cursor-pointer"
+              className="px-3 py-1.5 rounded-lg bg-orange-950/60 hover:bg-orange-900/70 border border-orange-500/50 text-orange-200 transition-all cursor-pointer"
             >
               🔥 {lang === 'en' ? 'Heatwave & Foehn (35.2°C)' : 'Ola de Calor & Puelche (35.2°C)'}
             </button>
             <button
               onClick={() => applyPreset('saturation')}
-              className="px-3 py-1.5 rounded-lg bg-teal-950/70 hover:bg-teal-900 border border-teal-500/40 text-teal-200 transition-all cursor-pointer"
+              className="px-3 py-1.5 rounded-lg bg-teal-950/60 hover:bg-teal-900/70 border border-teal-500/50 text-teal-200 transition-all cursor-pointer"
             >
               💧 {lang === 'en' ? 'Soil Anoxia / Saturation (44%)' : 'Anoxia / Saturación (44%)'}
             </button>
           </div>
 
           {/* Sandbox Grid */}
-          <div className="bg-[#08180F] border-2 border-emerald-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 font-mono text-xs">
+          <div className="bg-[#0B1524] border-2 border-teal-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 font-mono text-xs">
             
             {/* Sliders (Left) */}
             <div className="lg:col-span-5 space-y-4">
               
-              <div className="flex justify-between items-center border-b border-emerald-900 pb-2">
-                <span className="font-bold text-amber-400 uppercase">{lang === 'en' ? 'Input Parameters' : 'Parámetros de Entrada'}</span>
-                <span className="text-[10px] text-slate-400">FAO-56 PM</span>
+              <div className="flex justify-between items-center border-b border-blue-900/60 pb-2">
+                <span className="font-bold text-[#FF5A36] uppercase">{lang === 'en' ? 'Input Parameters' : 'Parámetros de Entrada'}</span>
+                <span className="text-[10px] text-teal-300">FAO-56 PM</span>
               </div>
 
               {/* Slider Ta */}
               <div className="space-y-1">
                 <div className="flex justify-between items-center font-sans">
                   <span className="text-slate-300 text-xs">{lang === 'en' ? 'Air Temperature (Ta):' : 'Temperatura Aire (Ta):'}</span>
-                  <span className="font-mono font-bold text-amber-300 text-sm">{simTemp} °C</span>
+                  <span className="font-mono font-bold text-orange-400 text-sm">{simTemp} °C</span>
                 </div>
                 <input
                   type="range"
@@ -595,7 +595,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                   step="0.2"
                   value={simTemp}
                   onChange={(e) => setSimTemp(parseFloat(e.target.value))}
-                  className="w-full h-2 bg-black/60 rounded-lg appearance-none cursor-pointer accent-amber-400"
+                  className="w-full h-2 bg-black/60 rounded-lg appearance-none cursor-pointer accent-[#FF5A36]"
                 />
               </div>
 
@@ -622,19 +622,19 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                 <div className="grid grid-cols-3 gap-2">
                   <button
                     onClick={() => setSimWindSpeed('calm')}
-                    className={`py-1.5 px-2 rounded-lg text-center font-sans text-xs font-bold transition-all ${simWindSpeed === 'calm' ? 'bg-amber-400 text-slate-950' : 'bg-black/40 text-slate-400'}`}
+                    className={`py-1.5 px-2 rounded-lg text-center font-sans text-xs font-bold transition-all ${simWindSpeed === 'calm' ? 'bg-[#FF5A36] text-white shadow-lg' : 'bg-black/50 text-slate-400 border border-slate-800'}`}
                   >
                     {lang === 'en' ? 'Calm (<1m/s)' : 'Calma (<1m/s)'}
                   </button>
                   <button
                     onClick={() => setSimWindSpeed('breeze')}
-                    className={`py-1.5 px-2 rounded-lg text-center font-sans text-xs font-bold transition-all ${simWindSpeed === 'breeze' ? 'bg-amber-400 text-slate-950' : 'bg-black/40 text-slate-400'}`}
+                    className={`py-1.5 px-2 rounded-lg text-center font-sans text-xs font-bold transition-all ${simWindSpeed === 'breeze' ? 'bg-[#FF5A36] text-white shadow-lg' : 'bg-black/50 text-slate-400 border border-slate-800'}`}
                   >
                     {lang === 'en' ? 'Breeze (2.4m/s)' : 'Brisa (2.4m/s)'}
                   </button>
                   <button
                     onClick={() => setSimWindSpeed('puelche')}
-                    className={`py-1.5 px-2 rounded-lg text-center font-sans text-xs font-bold transition-all ${simWindSpeed === 'puelche' ? 'bg-amber-400 text-slate-950' : 'bg-black/40 text-slate-400'}`}
+                    className={`py-1.5 px-2 rounded-lg text-center font-sans text-xs font-bold transition-all ${simWindSpeed === 'puelche' ? 'bg-gradient-to-r from-[#FF5A36] to-[#E11D48] text-white shadow-lg' : 'bg-black/50 text-slate-400 border border-slate-800'}`}
                   >
                     {lang === 'en' ? 'Foehn (6.8m/s)' : 'Puelche (6.8m/s)'}
                   </button>
@@ -648,7 +648,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                   <select
                     value={simCrop}
                     onChange={(e) => setSimCrop(e.target.value as any)}
-                    className="w-full p-1.5 rounded-lg bg-black/60 border border-emerald-900 text-white font-mono text-[11px]"
+                    className="w-full p-1.5 rounded-lg bg-black/60 border border-blue-900/60 text-white font-mono text-[11px]"
                   >
                     <option value="avellano">Corylus (Kc 0.85)</option>
                     <option value="vid">Vitis (Kc 0.65)</option>
@@ -661,7 +661,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                   <select
                     value={simSoilType}
                     onChange={(e) => setSimSoilType(e.target.value as any)}
-                    className="w-full p-1.5 rounded-lg bg-black/60 border border-emerald-900 text-white font-mono text-[11px]"
+                    className="w-full p-1.5 rounded-lg bg-black/60 border border-blue-900/60 text-white font-mono text-[11px]"
                   >
                     <option value="arcilloso">Clay-Loam</option>
                     <option value="limoso">Silt-Loam</option>
@@ -673,20 +673,20 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
             </div>
 
             {/* Output (Right) */}
-            <div className="lg:col-span-7 space-y-4 bg-[#06150D] p-5 rounded-2xl border border-emerald-500/30 flex flex-col justify-between">
+            <div className="lg:col-span-7 space-y-4 bg-[#08101C] p-5 rounded-2xl border border-teal-500/30 flex flex-col justify-between">
               
               <div className="space-y-3">
-                <div className="flex justify-between items-center border-b border-emerald-900 pb-2">
-                  <span className="font-bold text-emerald-400 uppercase">{lang === 'en' ? 'Deterministic Diagnostic' : 'Diagnóstico Determinista'}</span>
-                  <span className="text-[10px] text-slate-400">VPD: {sim.vpd} kPa</span>
+                <div className="flex justify-between items-center border-b border-blue-900/60 pb-2">
+                  <span className="font-bold text-teal-300 uppercase">{lang === 'en' ? 'Deterministic Diagnostic' : 'Diagnóstico Determinista'}</span>
+                  <span className="text-[10px] text-slate-400">VPD: <strong className="text-orange-400">{sim.vpd} kPa</strong></span>
                 </div>
 
                 {/* Frost status card */}
                 <div className={`p-3.5 rounded-xl border ${
-                  sim.frostStatus === 'critical' ? 'bg-red-950/60 border-red-500/80 text-red-200' :
-                  sim.frostStatus === 'warning' ? 'bg-amber-950/60 border-amber-500/80 text-amber-200' :
-                  sim.frostStatus === 'heat_stress' ? 'bg-orange-950/60 border-orange-500/80 text-orange-200' :
-                  'bg-emerald-950/40 border-emerald-500/30 text-emerald-300'
+                  sim.frostStatus === 'critical' ? 'bg-rose-950/60 border-rose-500/80 text-rose-200' :
+                  sim.frostStatus === 'warning' ? 'bg-orange-950/60 border-orange-500/80 text-orange-200' :
+                  sim.frostStatus === 'heat_stress' ? 'bg-orange-950/70 border-[#FF5A36]/80 text-orange-200' :
+                  'bg-teal-950/40 border-teal-500/40 text-teal-300'
                 }`}>
                   <div className="flex justify-between items-center font-bold text-xs uppercase mb-1">
                     <span>{lang === 'en' ? 'Boundary Layer & Microclimate' : 'Capa Límite & Microclima'}</span>
@@ -697,13 +697,13 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
 
                 {/* Water status card */}
                 <div className={`p-3.5 rounded-xl border ${
-                  sim.waterStatus === 'deficit' ? 'bg-amber-950/50 border-amber-500/60 text-amber-200' :
-                  sim.waterStatus === 'saturation' ? 'bg-blue-950/50 border-blue-500/60 text-blue-200' :
-                  'bg-emerald-950/40 border-emerald-500/40 text-emerald-200'
+                  sim.waterStatus === 'deficit' ? 'bg-orange-950/50 border-orange-500/60 text-orange-200' :
+                  sim.waterStatus === 'saturation' ? 'bg-cyan-950/50 border-cyan-500/60 text-cyan-200' :
+                  'bg-teal-950/40 border-teal-500/40 text-teal-200'
                 }`}>
                   <div className="flex justify-between items-center font-bold text-xs mb-1">
                     <span>{lang === 'en' ? 'FAO-56 Water Balance' : 'Balance Hídrico FAO-56'}</span>
-                    <span className="text-amber-300">ETc = {sim.etc} mm/day</span>
+                    <span className="text-[#FF5A36] font-bold">ETc = {sim.etc} mm/day</span>
                   </div>
                   <p className="text-xs font-serif leading-relaxed">{sim.waterMsg}</p>
                 </div>
@@ -711,25 +711,25 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                 {/* 3 soil layers display */}
                 <div className="space-y-1.5 pt-1 text-[11px]">
                   <div className="flex justify-between">
-                    <span>Horizon A (0-20cm):</span>
+                    <span className="text-slate-300">Horizon A (0-20cm):</span>
                     <span className="text-teal-300 font-bold">{sim.layer1}% vol</span>
                   </div>
                   <div className="w-full h-1.5 bg-black/60 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-teal-500 to-emerald-400" style={{ width: `${(sim.layer1 / 50) * 100}%` }} />
+                    <div className="h-full bg-gradient-to-r from-teal-500 to-cyan-400" style={{ width: `${(sim.layer1 / 50) * 100}%` }} />
                   </div>
 
                   <div className="flex justify-between pt-1">
-                    <span>Horizon B (20-60cm root zone):</span>
+                    <span className="text-slate-300">Horizon B (20-60cm root zone):</span>
                     <span className="text-teal-300 font-bold">{sim.layer2}% vol</span>
                   </div>
                   <div className="w-full h-1.5 bg-black/60 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-teal-600 to-emerald-500" style={{ width: `${(sim.layer2 / 50) * 100}%` }} />
+                    <div className="h-full bg-gradient-to-r from-teal-600 to-teal-400" style={{ width: `${(sim.layer2 / 50) * 100}%` }} />
                   </div>
                 </div>
               </div>
 
               {/* Action */}
-              <div className="pt-3 border-t border-emerald-900/60 flex flex-wrap justify-between items-center gap-2">
+              <div className="pt-3 border-t border-blue-900/60 flex flex-wrap justify-between items-center gap-2">
                 <button
                   onClick={() => {
                     const data = {
@@ -749,15 +749,15 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                     a.download = `agritwin_simulation_${Date.now()}.json`;
                     a.click();
                   }}
-                  className="px-3 py-1.5 rounded-lg bg-black/50 hover:bg-black/80 border border-emerald-500/40 text-emerald-300 text-xs flex items-center gap-1.5 cursor-pointer"
+                  className="px-3 py-1.5 rounded-lg bg-black/50 hover:bg-black/80 border border-teal-500/40 text-teal-300 text-xs flex items-center gap-1.5 cursor-pointer"
                 >
-                  <Download className="w-3.5 h-3.5" />
+                  <Download className="w-3.5 h-3.5 text-teal-300" />
                   <span>{lang === 'en' ? 'Download JSON Data' : 'Descargar Datos JSON'}</span>
                 </button>
 
                 <button
                   onClick={() => setIsDemoModalOpen(true)}
-                  className="px-4 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs cursor-pointer shadow-md"
+                  className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-[#FF5A36] to-[#E11D48] hover:from-[#FF6B4A] hover:to-[#F43F5E] text-white font-bold text-xs cursor-pointer shadow-md"
                 >
                   {lang === 'en' ? 'Request Calibration with Your Farm' : 'Solicitar Calibración con tu Predio'}
                 </button>
@@ -771,7 +771,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
       </section>
 
       {/* ─── 5. FINAL CALL TO ACTION ────────────────────────────────────────── */}
-      <section className="py-16 bg-gradient-to-t from-black to-[#07170E] text-center border-t border-emerald-950/80">
+      <section className="py-16 bg-gradient-to-t from-[#04090F] to-[#0A1624] text-center border-t border-blue-950/80">
         <div className="max-w-3xl mx-auto px-4 space-y-6">
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
             {lang === 'en' 
@@ -788,15 +788,15 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2 font-mono text-xs">
             <button
               onClick={() => setIsDemoModalOpen(true)}
-              className="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold transition-all shadow-lg cursor-pointer"
+              className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#FF5A36] to-[#E11D48] hover:from-[#FF6B4A] hover:to-[#F43F5E] text-white font-bold transition-all shadow-lg shadow-orange-950/50 cursor-pointer"
             >
               {lang === 'en' ? 'Request Private Demonstration' : 'Solicitar Demostración Privada'}
             </button>
             <a
               href="mailto:contacto@agrotechchile.cl?subject=AgriTwin%20Inquiry"
-              className="px-5 py-3 rounded-xl bg-[#091F13] hover:bg-[#10301F] text-emerald-300 border border-emerald-500/40 font-bold transition-all flex items-center gap-2"
+              className="px-5 py-3 rounded-xl bg-[#0F1A2A] hover:bg-[#16253C] text-teal-300 border border-teal-500/40 font-bold transition-all flex items-center gap-2"
             >
-              <Mail className="w-4 h-4 text-emerald-400" />
+              <Mail className="w-4 h-4 text-[#FF5A36]" />
               <span>contacto@agrotechchile.cl</span>
             </a>
           </div>
@@ -806,7 +806,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
       {/* ─── MODAL DE DEMOSTRACIÓN & CONTACTO ───────────────────────────────── */}
       {isDemoModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
-          <div className="bg-[#081A10] border border-emerald-500/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl text-white relative max-h-[90vh] overflow-y-auto">
+          <div className="bg-[#0A1422] border-2 border-orange-500/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl text-white relative max-h-[90vh] overflow-y-auto">
             
             <button
               onClick={() => { setIsDemoModalOpen(false); setIsSubmitted(false); }}
@@ -818,7 +818,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
             {!isSubmitted ? (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-mono uppercase text-amber-400 font-bold">
+                  <span className="text-[10px] font-mono uppercase text-[#FF5A36] font-bold">
                     {lang === 'en' ? 'DIRECT TECHNICAL ACCESS' : 'ACCESO TÉCNICO DIRECTO'}
                   </span>
                   <h3 className="text-xl font-bold text-white">
@@ -841,7 +841,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Dr(a). Andrés Ovalle"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-emerald-800 text-white focus:outline-none focus:border-amber-400 font-mono"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-slate-700 text-white focus:outline-none focus:border-[#FF5A36] font-mono"
                     />
                   </div>
 
@@ -853,7 +853,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                       value={formData.institution}
                       onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
                       placeholder="Ej. Agrícola San Pedro / INIA / Junta de Vigilancia"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-emerald-800 text-white focus:outline-none focus:border-amber-400 font-mono"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-slate-700 text-white focus:outline-none focus:border-[#FF5A36] font-mono"
                     />
                   </div>
 
@@ -865,7 +865,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="investigador@agricola.cl"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-emerald-800 text-white focus:outline-none focus:border-amber-400 font-mono"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-slate-700 text-white focus:outline-none focus:border-[#FF5A36] font-mono"
                     />
                   </div>
 
@@ -874,7 +874,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                     <select
                       value={formData.interest}
                       onChange={(e) => setFormData({ ...formData, interest: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-emerald-800 text-white focus:outline-none focus:border-amber-400 font-mono text-xs"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-slate-700 text-white focus:outline-none focus:border-[#FF5A36] font-mono text-xs"
                     >
                       <option value="Territorial Basin GIS & Wildfire Model">{lang === 'en' ? 'Territorial Basin GIS & Wildfire Model' : 'GIS de Cuenca & Modelo de Incendios'}</option>
                       <option value="3D Farm Twin & FAO-56 Irrigation">{lang === 'en' ? '3D Farm Twin & FAO-56 Irrigation' : 'Gemelo 3D de Predio & Riego FAO-56'}</option>
@@ -887,9 +887,9 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                 <div className="pt-2 space-y-2">
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold text-sm shadow-xl flex items-center justify-center gap-2 cursor-pointer transition-all"
+                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#FF5A36] to-[#E11D48] hover:from-[#FF6B4A] hover:to-[#F43F5E] text-white font-bold text-sm shadow-xl flex items-center justify-center gap-2 cursor-pointer transition-all"
                   >
-                    <Send className="w-4 h-4 text-slate-950" />
+                    <Send className="w-4 h-4 text-white" />
                     <span>{lang === 'en' ? 'Submit and Connect via WhatsApp' : 'Enviar y Conectar por WhatsApp'}</span>
                   </button>
                   <div className="flex justify-between items-center text-[10px] text-slate-400 pt-1 font-mono">
@@ -900,7 +900,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
               </form>
             ) : (
               <div className="py-6 text-center space-y-4">
-                <div className="w-14 h-14 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 flex items-center justify-center mx-auto">
+                <div className="w-14 h-14 rounded-full bg-teal-500/20 border border-teal-400/50 text-teal-300 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-7 h-7" />
                 </div>
                 <h3 className="text-xl font-bold text-white">
@@ -915,7 +915,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                 <div className="pt-2 flex justify-center">
                   <button
                     onClick={() => { setIsDemoModalOpen(false); setIsSubmitted(false); }}
-                    className="px-5 py-2 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white font-mono text-xs font-bold"
+                    className="px-5 py-2 rounded-xl bg-teal-800 hover:bg-teal-700 text-white font-mono text-xs font-bold"
                   >
                     {lang === 'en' ? 'Close' : 'Cerrar'}
                   </button>
@@ -935,10 +935,10 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
         >
           <div 
             onClick={(e) => e.stopPropagation()}
-            className="max-w-5xl w-full bg-[#081B11] border border-emerald-500/40 rounded-2xl overflow-hidden shadow-2xl space-y-3 p-4"
+            className="max-w-5xl w-full bg-[#0A1422] border border-orange-500/40 rounded-2xl overflow-hidden shadow-2xl space-y-3 p-4"
           >
-            <div className="flex items-center justify-between pb-2 border-b border-emerald-900/60 font-mono text-xs">
-              <span className="text-amber-300 font-bold">{lightboxImage.title}</span>
+            <div className="flex items-center justify-between pb-2 border-b border-blue-900/60 font-mono text-xs">
+              <span className="text-orange-400 font-bold">{lightboxImage.title}</span>
               <button 
                 onClick={() => setLightboxImage(null)}
                 className="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white"
