@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Cpu, Layers, Satellite, ShieldCheck, Droplets, Flame, Wind, 
   ArrowRight, ExternalLink, Calendar, Sparkles, Compass, 
@@ -16,6 +16,13 @@ interface AgriTwinShowcasePageProps {
 export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNavigate }) => {
   // Idioma activo: 'en' (default) | 'es'
   const [lang, setLang] = useState<'en' | 'es'>('en');
+
+  // Actualizar el título del documento según el idioma
+  useEffect(() => {
+    document.title = lang === 'en'
+      ? 'AgriTwin OS | Cyber-Physical Digital Twin for Agriculture & Basin Intelligence'
+      : 'AgriTwin OS | Gemelo Digital Ciberfísico para Agricultura y Cuencas';
+  }, [lang]);
 
   // Modal de demostración / contacto
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
@@ -156,7 +163,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
     institution: '',
     email: '',
     phone: '',
-    interest: 'Territorial Basin GIS & Wildfire Model'
+    interest: 'Commercial Fruit Orchard Digital Twin'
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -325,7 +332,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
               <span className="text-slate-400 text-[10px] uppercase block tracking-wider">
                 {lang === 'en' ? 'Microclimate Early Warning' : 'Alerta Microclimática'}
               </span>
-              <div className="text-2xl font-bold text-rose-400">4 Hours Ahead</div>
+              <div className="text-2xl font-bold text-rose-400">{lang === 'en' ? '4 Hours Ahead' : '4 Horas Anticipadas'}</div>
               <p className="text-xs text-slate-300 font-sans">
                 {lang === 'en' ? 'Katabatic Frost Inversion Forecast' : 'Pre-Alerta de Helada Catabática Nocturna'}
               </p>
@@ -335,7 +342,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
               <span className="text-slate-400 text-[10px] uppercase block tracking-wider">
                 {lang === 'en' ? 'Irrigation Efficiency' : 'Eficiencia de Riego'}
               </span>
-              <div className="text-2xl font-bold text-[#FF5A36]">-32.4% Energy</div>
+              <div className="text-2xl font-bold text-[#FF5A36]">{lang === 'en' ? '-32.4% Energy' : '-32.4% Energía'}</div>
               <p className="text-xs text-slate-300 font-sans">
                 {lang === 'en' ? 'Zero-anoxia pumping optimization' : 'Ahorro eléctrico al eliminar sobreriego'}
               </p>
@@ -515,7 +522,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs pt-1">
               <div className="p-3.5 rounded-xl bg-[#080E18] border border-orange-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Fire Weather Index (FWI)' : 'Índice FWI Meteorológico'}</span>
-                <span className="text-orange-400 font-bold text-sm">Extreme (FWI &gt; 38)</span>
+                <span className="text-orange-400 font-bold text-sm">{lang === 'en' ? 'Extreme (FWI > 38)' : 'Extremo (FWI > 38)'}</span>
               </div>
               <div className="p-3.5 rounded-xl bg-[#080E18] border border-orange-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Puelche Wind Acceleration' : 'Viento Puelche Acelerado'}</span>
@@ -523,7 +530,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
               </div>
               <div className="p-3.5 rounded-xl bg-[#080E18] border border-teal-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Buffer Slowdown Ratio' : 'Ralentización por Cortafuegos'}</span>
-                <span className="text-teal-300 font-bold text-sm">-58% Spread Rate</span>
+                <span className="text-teal-300 font-bold text-sm">{lang === 'en' ? '-58% Spread Rate' : '-58% Tasa de Avance'}</span>
               </div>
             </div>
 
@@ -645,7 +652,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
               </div>
               <div className="p-3.5 rounded-xl bg-[#080E18] border border-rose-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Nocturnal Thermal Inversion' : 'Inversión Térmica Nocturna'}</span>
-                <span className="text-rose-300 font-bold text-sm">Superficial Katabatic Drain</span>
+                <span className="text-rose-300 font-bold text-sm">{lang === 'en' ? 'Superficial Katabatic Drain' : 'Drenaje Catabático Superficial'}</span>
               </div>
             </div>
 
@@ -759,15 +766,15 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs pt-1">
               <div className="p-3.5 rounded-xl bg-[#080E18] border border-teal-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'FDR Sensor Mesh' : 'Red de Sondas FDR'}</span>
-                <span className="text-teal-300 font-bold text-sm">19 Active Stations</span>
+                <span className="text-teal-300 font-bold text-sm">{lang === 'en' ? '19 Active Stations' : '19 Nodos Activos'}</span>
               </div>
               <div className="p-3.5 rounded-xl bg-[#080E18] border border-teal-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Root Zone Moisture (20-60cm)' : 'Humedad Radicular (20-60cm)'}</span>
-                <span className="text-cyan-300 font-bold text-sm">36.2% vol (Optimal)</span>
+                <span className="text-cyan-300 font-bold text-sm">{lang === 'en' ? '36.2% vol (Optimal)' : '36.2% vol (Óptimo)'}</span>
               </div>
               <div className="p-3.5 rounded-xl bg-[#080E18] border border-orange-900/50">
                 <span className="text-slate-400 text-[10px] block">{lang === 'en' ? 'Deep Hypoxia Prevention' : 'Prevención de Asfixia Radicular'}</span>
-                <span className="text-orange-300 font-bold text-sm">-32.4% Energy Waste</span>
+                <span className="text-orange-300 font-bold text-sm">{lang === 'en' ? '-32.4% Energy Waste' : '-32.4% Gasto en Bombas'}</span>
               </div>
             </div>
 
@@ -920,9 +927,9 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                     onChange={(e) => setSimCrop(e.target.value as any)}
                     className="w-full p-1.5 rounded-lg bg-black/60 border border-blue-900/60 text-white font-mono text-[11px]"
                   >
-                    <option value="avellano">Corylus (Kc 0.85)</option>
-                    <option value="vid">Vitis (Kc 0.65)</option>
-                    <option value="pradera">Pasture (Kc 0.95)</option>
+                    <option value="avellano">{lang === 'en' ? 'Hazelnut (Kc 0.85)' : 'Avellano (Kc 0.85)'}</option>
+                    <option value="vid">{lang === 'en' ? 'Grapevine (Kc 0.65)' : 'Vid (Kc 0.65)'}</option>
+                    <option value="pradera">{lang === 'en' ? 'Pasture (Kc 0.95)' : 'Pradera (Kc 0.95)'}</option>
                   </select>
                 </div>
 
@@ -933,9 +940,9 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                     onChange={(e) => setSimSoilType(e.target.value as any)}
                     className="w-full p-1.5 rounded-lg bg-black/60 border border-blue-900/60 text-white font-mono text-[11px]"
                   >
-                    <option value="arcilloso">Clay-Loam</option>
-                    <option value="limoso">Silt-Loam</option>
-                    <option value="arenoso">Sandy-Loam</option>
+                    <option value="arcilloso">{lang === 'en' ? 'Clay-Loam' : 'Franco-Arcilloso'}</option>
+                    <option value="limoso">{lang === 'en' ? 'Silt-Loam' : 'Franco-Limoso'}</option>
+                    <option value="arenoso">{lang === 'en' ? 'Sandy-Loam' : 'Franco-Arenoso'}</option>
                   </select>
                 </div>
               </div>
@@ -981,7 +988,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                 {/* 3 soil layers display */}
                 <div className="space-y-1.5 pt-1 text-[11px]">
                   <div className="flex justify-between">
-                    <span className="text-slate-300">Horizon A (0-20cm):</span>
+                    <span className="text-slate-300">{lang === 'en' ? 'Horizon A (0-20cm):' : 'Horizonte A (0-20cm):'}</span>
                     <span className="text-teal-300 font-bold">{sim.layer1}% vol</span>
                   </div>
                   <div className="w-full h-1.5 bg-black/60 rounded-full overflow-hidden">
@@ -989,7 +996,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                   </div>
 
                   <div className="flex justify-between pt-1">
-                    <span className="text-slate-300">Horizon B (20-60cm root zone):</span>
+                    <span className="text-slate-300">{lang === 'en' ? 'Horizon B (20-60cm root zone):' : 'Horizonte B (20-60cm zona radicular):'}</span>
                     <span className="text-teal-300 font-bold">{sim.layer2}% vol</span>
                   </div>
                   <div className="w-full h-1.5 bg-black/60 rounded-full overflow-hidden">
@@ -1070,9 +1077,9 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
               <h3 className="font-bold text-sm text-white font-sans">{lang === 'en' ? 'Remote Sensing & Sensors' : 'Teledetección & Sensores'}</h3>
               <ul className="text-slate-300 space-y-1.5 font-serif text-[11px]">
                 <li>• Sentinel-2 L2A (10m NDVI, NDWI, NBR)</li>
-                <li>• LoRaWAN 915 MHz Nodes (FDR 3 depths)</li>
-                <li>• Davis & Campbell Weather Stations</li>
-                <li>• DGA Fluvial & Piezometric Gauges</li>
+                <li>• {lang === 'en' ? 'LoRaWAN 915 MHz Nodes (FDR 3 depths)' : 'Nodos LoRaWAN 915 MHz (FDR 3 profundidades)'}</li>
+                <li>• {lang === 'en' ? 'Davis & Campbell Weather Stations' : 'Estaciones Meteorológicas Davis & Campbell'}</li>
+                <li>• {lang === 'en' ? 'DGA Fluvial & Piezometric Gauges' : 'Estaciones Fluviométricas y Piezométricas DGA'}</li>
               </ul>
             </div>
 
@@ -1084,10 +1091,10 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
               </div>
               <h3 className="font-bold text-sm text-white font-sans">{lang === 'en' ? 'Edge Ingestion & QA/QC' : 'Ingestión Edge & Control QA'}</h3>
               <ul className="text-slate-300 space-y-1.5 font-serif text-[11px]">
-                <li>• MQTT & WebSocket Real-Time Ingest</li>
-                <li>• Automated Outlier & Drift Detection</li>
-                <li>• GeoTIFF & DEM Mesh Reprojection (EPSG:32719)</li>
-                <li>• Battery & Signal Health Tracking</li>
+                <li>• {lang === 'en' ? 'MQTT & WebSocket Real-Time Ingest' : 'Ingesta en Tiempo Real MQTT & WebSocket'}</li>
+                <li>• {lang === 'en' ? 'Automated Outlier & Drift Detection' : 'Detección Automática de Ruido y Deriva'}</li>
+                <li>• {lang === 'en' ? 'GeoTIFF & DEM Mesh Reprojection (EPSG:32719)' : 'Reproyección GeoTIFF & Malla DEM (EPSG:32719)'}</li>
+                <li>• {lang === 'en' ? 'Battery & Signal Health Tracking' : 'Monitoreo de Batería y Calidad de Señal'}</li>
               </ul>
             </div>
 
@@ -1099,10 +1106,10 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
               </div>
               <h3 className="font-bold text-sm text-white font-sans">{lang === 'en' ? 'Deterministic Physics Core' : 'Núcleo Físico Determinista'}</h3>
               <ul className="text-slate-300 space-y-1.5 font-serif text-[11px]">
-                <li>• FAO-56 Penman-Monteith Dual Kc Engine</li>
-                <li>• van Genuchten Unsaturated Flow Modeling</li>
-                <li>• Katabatic Nocturnal Drainage Algorithm</li>
-                <li>• Canadian FWI Wildfire Propagation Grid</li>
+                <li>• {lang === 'en' ? 'FAO-56 Penman-Monteith Dual Kc Engine' : 'Motor FAO-56 Penman-Monteith con Kc Dual'}</li>
+                <li>• {lang === 'en' ? 'van Genuchten Unsaturated Flow Modeling' : 'Modelación de Flujo No Saturado van Genuchten'}</li>
+                <li>• {lang === 'en' ? 'Katabatic Nocturnal Drainage Algorithm' : 'Algoritmo de Drenaje Catabático Nocturno'}</li>
+                <li>• {lang === 'en' ? 'Canadian FWI Wildfire Propagation Grid' : 'Malla Canadiense FWI de Propagación de Fuego'}</li>
               </ul>
             </div>
 
@@ -1114,10 +1121,10 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
               </div>
               <h3 className="font-bold text-sm text-white font-sans">{lang === 'en' ? 'WebGL 3D & Open API' : 'WebGL 3D & API Abierta'}</h3>
               <ul className="text-slate-300 space-y-1.5 font-serif text-[11px]">
-                <li>• Three.js Interactive WebGL Scene (Zero plugins)</li>
-                <li>• Python SDK (`geopandas`, `xarray`) & R Client</li>
-                <li>• GeoJSON / Cloud-Optimized GeoTIFF (COG)</li>
-                <li>• Automated WhatsApp & Email Alert Webhooks</li>
+                <li>• {lang === 'en' ? 'Three.js Interactive WebGL Scene (Zero plugins)' : 'Escena Interactiva WebGL Three.js (Sin plugins)'}</li>
+                <li>• {lang === 'en' ? 'Python SDK (geopandas, xarray) & R Client' : 'SDK Python (geopandas, xarray) y Cliente R'}</li>
+                <li>• {lang === 'en' ? 'GeoJSON / Cloud-Optimized GeoTIFF (COG)' : 'GeoJSON y GeoTIFF Optimizado para la Nube (COG)'}</li>
+                <li>• {lang === 'en' ? 'Automated WhatsApp & Email Alert Webhooks' : 'Webhooks de Alerta Automática a WhatsApp y Correo'}</li>
               </ul>
             </div>
 
@@ -1164,7 +1171,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
             <div className="p-6 rounded-2xl bg-[#0B1524] border border-orange-500/30 space-y-3">
               <div className="flex justify-between items-center text-orange-400">
                 <span className="font-bold">{lang === 'en' ? 'MICROCLIMATE' : 'MICROCLIMA'}</span>
-                <span className="px-2 py-0.5 rounded bg-orange-950 border border-orange-500/50 text-orange-300 font-bold">4h Lead Time</span>
+                <span className="px-2 py-0.5 rounded bg-orange-950 border border-orange-500/50 text-orange-300 font-bold">{lang === 'en' ? '4h Lead Time' : '4h de Anticipación'}</span>
               </div>
               <h3 className="font-bold text-base text-white font-sans">{lang === 'en' ? 'Katabatic Frost Inversion Warning' : 'Pre-Alerta de Helada Catabática'}</h3>
               <p className="text-slate-300 font-serif text-xs leading-relaxed">
@@ -1287,7 +1294,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
             
             <div className="p-6 rounded-2xl bg-[#0B1524] border border-blue-900/60 space-y-3">
-              <span className="text-orange-400 font-bold text-sm block">DAYS 1 - 2</span>
+              <span className="text-orange-400 font-bold text-sm block">{lang === 'en' ? 'DAYS 1 - 2' : 'DÍAS 1 - 2'}</span>
               <h3 className="font-bold text-base text-white font-sans">{lang === 'en' ? '1. Cadastral & DEM Ingestion' : '1. Ingesta Catastral & DEM 3D'}</h3>
               <p className="text-slate-300 font-serif text-xs leading-relaxed">
                 {lang === 'en'
@@ -1298,7 +1305,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
             </div>
 
             <div className="p-6 rounded-2xl bg-[#0B1524] border border-blue-900/60 space-y-3">
-              <span className="text-teal-300 font-bold text-sm block">DAYS 3 - 4</span>
+              <span className="text-teal-300 font-bold text-sm block">{lang === 'en' ? 'DAYS 3 - 4' : 'DÍAS 3 - 4'}</span>
               <h3 className="font-bold text-base text-white font-sans">{lang === 'en' ? '2. Telemetry & Sensor Bridge' : '2. Conexión de Telemetría & Sensores'}</h3>
               <p className="text-slate-300 font-serif text-xs leading-relaxed">
                 {lang === 'en'
@@ -1309,7 +1316,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
             </div>
 
             <div className="p-6 rounded-2xl bg-[#0B1524] border border-blue-900/60 space-y-3">
-              <span className="text-rose-400 font-bold text-sm block">DAYS 5 - 7</span>
+              <span className="text-rose-400 font-bold text-sm block">{lang === 'en' ? 'DAYS 5 - 7' : 'DÍAS 5 - 7'}</span>
               <h3 className="font-bold text-base text-white font-sans">{lang === 'en' ? '3. Physics Calibration & Live Go' : '3. Calibración Biofísica & Activación'}</h3>
               <p className="text-slate-300 font-serif text-xs leading-relaxed">
                 {lang === 'en'
@@ -1397,7 +1404,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Dr(a). Andrés Ovalle"
+                      placeholder={lang === 'en' ? 'Dr. Andrew Walker' : 'Dr(a). Andrés Ovalle'}
                       className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-slate-700 text-white focus:outline-none focus:border-[#FF5A36] font-mono"
                     />
                   </div>
@@ -1409,7 +1416,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                       required
                       value={formData.institution}
                       onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
-                      placeholder="Ej. Agrícola San Pedro / INIA / Junta de Vigilancia"
+                      placeholder={lang === 'en' ? 'e.g. San Pedro Agribusiness / INIA / Water Board' : 'Ej. Agrícola San Pedro / INIA / Junta de Vigilancia'}
                       className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-slate-700 text-white focus:outline-none focus:border-[#FF5A36] font-mono"
                     />
                   </div>
@@ -1421,7 +1428,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="investigador@agricola.cl"
+                      placeholder={lang === 'en' ? 'investigator@company.com' : 'investigador@agricola.cl'}
                       className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-slate-700 text-white focus:outline-none focus:border-[#FF5A36] font-mono"
                     />
                   </div>
