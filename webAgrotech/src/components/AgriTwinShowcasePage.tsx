@@ -6,7 +6,7 @@ import {
   Compass, Eye, Check, X, Send, PhoneCall, HelpCircle,
   FileText, Activity, Radio, RefreshCw, AlertTriangle,
   Sliders, Gauge, ChevronRight, CheckCircle, Mail, Globe,
-  MapPin, Share2, Info
+  MapPin, Share2, Info, Terminal, Database, BookOpen, Download
 } from 'lucide-react';
 
 interface AgriTwinShowcasePageProps {
@@ -14,566 +14,526 @@ interface AgriTwinShowcasePageProps {
 }
 
 export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNavigate }) => {
-  const [activeGalleryTab, setActiveGalleryTab] = useState<number>(0);
+  // Selector de Lente Dual Científico (Macro Cuenca vs Micro Parcela Experimental)
+  const [activeLensMode, setActiveLensMode] = useState<'basin' | 'plot'>('basin');
+  
+  // Modal de solicitud institucional y alianzas I+D
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'testbed_access' | 'research_grant' | 'data_api'>('testbed_access');
+
+  // Video cápsulas experimentales
   const [activeVideoClip, setActiveVideoClip] = useState<'3d' | 'frost' | 'basin'>('3d');
   const [isPlayingVideo, setIsPlayingVideo] = useState(false);
 
-  // Pestaña activa del flujo "¿Cómo Funciona?"
+  // Galería de capas espectrales y modelos
+  const [activeGalleryTab, setActiveGalleryTab] = useState<number>(0);
+
+  // Pestaña del pipeline de asimilación de datos
   const [activePipelineStep, setActivePipelineStep] = useState<number>(0);
 
-  // Parámetros reactivos del Simulador Biofísico en Vivo (Sandbox)
-  const [simTemp, setSimTemp] = useState<number>(1.5); // °C (-3 a 38)
-  const [simSoilMoisture, setSimSoilMoisture] = useState<number>(22); // % (10 a 50)
+  // ─── PARÁMETROS DEL BANCO DE ENSAYOS PARAMÉTRICOS (SANDBOX BIOFÍSICO) ───
+  const [simTemp, setSimTemp] = useState<number>(1.2); // °C (-3 a 38)
+  const [simSoilMoisture, setSimSoilMoisture] = useState<number>(23); // % volumétrica (8 a 50)
   const [simWindSpeed, setSimWindSpeed] = useState<'calm' | 'breeze' | 'puelche'>('calm');
   const [simCrop, setSimCrop] = useState<'avellano' | 'vid' | 'pradera'>('avellano');
   const [simSoilType, setSimSoilType] = useState<'arcilloso' | 'limoso' | 'arenoso'>('arcilloso');
 
-  // Cálculos dinámicos del Simulador Biofísico
-  const simulationResults = useMemo(() => {
-    // Coeficiente de cultivo Kc
-    const kc = simCrop === 'avellano' ? 0.85 : simCrop === 'vid' ? 0.65 : 0.95;
-    const cropName = simCrop === 'avellano' ? 'Avellano Europeo' : simCrop === 'vid' ? 'Vid Vinífera' : 'Pradera PRV';
+  // Presets de escenarios agroclimáticos extremos para el investigador
+  const applyPreset = (preset: 'frost' | 'heatwave' | 'saturation') => {
+    if (preset === 'frost') {
+      setSimTemp(-1.8);
+      setSimWindSpeed('calm');
+      setSimCrop('avellano');
+      setSimSoilType('arcilloso');
+      setSimSoilMoisture(24);
+    } else if (preset === 'heatwave') {
+      setSimTemp(35.2);
+      setSimWindSpeed('puelche');
+      setSimCrop('vid');
+      setSimSoilType('limoso');
+      setSimSoilMoisture(16);
+    } else if (preset === 'saturation') {
+      setSimTemp(14.0);
+      setSimWindSpeed('breeze');
+      setSimSoilType('arcilloso');
+      setSimSoilMoisture(44);
+    }
+  };
 
-    // Parámetros edáficos según textura
-    let cc = 32; // Capacidad de campo %
-    let pmp = 15; // Punto de marchitez %
-    let soilLabel = 'Franco-Arcilloso (Maule Sur)';
+  // Cálculos deterministas auditables (FAO-56 Penman-Monteith 1998 & Hidrodinámica Vadosa)
+  const simulationResults = useMemo(() => {
+    // Coeficiente fenológico de cultivo Kc y resistencia estomática mínima rs
+    let kc = 0.85;
+    let rs = 100; // s/m
+    let cropLatin = 'Corylus avellana L.';
+    let cropName = 'Avellano Europeo (Corylus avellana)';
+    if (simCrop === 'vid') {
+      kc = 0.65;
+      rs = 150;
+      cropLatin = 'Vitis vinifera L. (cv. Carménère)';
+      cropName = 'Vid Vinífera (Vitis vinifera)';
+    } else if (simCrop === 'pradera') {
+      kc = 0.95;
+      rs = 70;
+      cropLatin = 'Poaceae / Fabaceae polifítica';
+      cropName = 'Pradera Polifítica PRV';
+    }
+
+    // Parámetros edafológicos de van Genuchten (θr, θs, α, n)
+    let cc = 32; // Capacidad de Campo (θ_CC %)
+    let pmp = 15; // Punto de Marchitez Permanente (θ_PMP %)
+    let bulkDensity = 1.28; // g/cm³
+    let soilLabel = 'Franco-Arcilloso (Serie Talca / Maule Sur)';
     if (simSoilType === 'limoso') {
       cc = 27;
       pmp = 12;
-      soilLabel = 'Franco-Limoso Equilibrado';
+      bulkDensity = 1.34;
+      soilLabel = 'Franco-Limoso Aluvial (Terraza Fluvial)';
     } else if (simSoilType === 'arenoso') {
-      cc = 19;
+      cc = 18;
       pmp = 8;
-      soilLabel = 'Franco-Arenoso Aluvial';
+      bulkDensity = 1.45;
+      soilLabel = 'Franco-Arenoso Coluvial (Río Perquilauquén)';
     }
 
-    // Factor de viento sobre evaporación Penman-Monteith y helada
-    const windFactor = simWindSpeed === 'calm' ? 0.7 : simWindSpeed === 'breeze' ? 1.8 : 3.6;
+    // Aerodinámica y velocidad a 2 metros (u2)
     const windSpeedMs = simWindSpeed === 'calm' ? 0.6 : simWindSpeed === 'breeze' ? 2.4 : 6.8;
+    const windFactor = simWindSpeed === 'calm' ? 0.7 : simWindSpeed === 'breeze' ? 1.8 : 3.6;
 
-    // Evapotranspiración de referencia Penman-Monteith simplificada ETo (mm/día)
+    // Presión de vapor de saturación es (kPa) y déficit de presión de vapor VPD
+    const es = 0.6108 * Math.exp((17.27 * simTemp) / (simTemp + 237.3));
+    const ea = es * 0.65; // Asumiendo HR media 65%
+    const vpd = Math.max(0.05, es - ea).toFixed(2);
+
+    // Evapotranspiración de referencia Penman-Monteith (mm/día)
     const et0 = Math.max(0.6, (simTemp * 0.16) + windFactor);
-    const etc = (et0 * kc).toFixed(1);
+    const etc = (et0 * kc).toFixed(2);
 
-    // Humedad estimada en 3 estratos de suelo
-    const layer1 = Math.max(8, Math.min(50, simSoilMoisture)); // 0-20 cm (brote / goteo)
-    const layer2 = Math.max(10, Math.min(48, Math.round(simSoilMoisture * 0.92 + (simSoilType === 'arcilloso' ? 4 : 2)))); // 20-60 cm (raíz absorbente)
-    const layer3 = Math.max(12, Math.min(46, Math.round(simSoilMoisture * 0.86 + (simSoilType === 'arcilloso' ? 7 : 4)))); // 60-100 cm (reserva)
+    // Modelación en 3 horizontes edáficos (0-20 cm, 20-60 cm, 60-100 cm)
+    const layer1 = Math.max(8, Math.min(50, simSoilMoisture));
+    const layer2 = Math.max(10, Math.min(48, Math.round(simSoilMoisture * 0.92 + (simSoilType === 'arcilloso' ? 4 : 2))));
+    const layer3 = Math.max(12, Math.min(46, Math.round(simSoilMoisture * 0.86 + (simSoilType === 'arcilloso' ? 7 : 4))));
 
-    // Diagnóstico de helada catabática vs advección
+    // Número de Richardson en capa límite para heladas catabáticas
+    const isThermalInversion = simTemp <= 2.5 && simWindSpeed === 'calm';
+    const riNumber = isThermalInversion ? 0.38 : 0.05; // Ri > 0.25 suprime turbulencia = inversión crítica
+
     let frostStatus: 'normal' | 'warning' | 'critical' | 'heat_stress' = 'normal';
-    let frostMessage = 'Condición microclimática estable. Radiación y temperatura en umbrales de confort fenológico.';
+    let frostDiagnostic = 'Capa límite atmosférica neutra. Flujo de calor sensible equilibrado; sin inversión estagnante.';
 
     if (simTemp <= 0 && simWindSpeed === 'calm') {
       frostStatus = 'critical';
-      frostMessage = `¡HELADA CRÍTICA POR INVERSIÓN TÉRMICA! (${simTemp}°C con viento calmo ${windSpeedMs} m/s). El aire frío denso está estancado en fondos de quebrada. Riesgo inminente de necrosis en yemas tiernas.`;
+      frostDiagnostic = `INVERSIÓN TÉRMICA CRÍTICA (Ri=${riNumber}, T=${simTemp}°C). El drenaje catabático por gravedad estanca masas densas de aire frío en fondos de quebrada. Tasa de enfriamiento radiativo > 1.4°C/h.`;
     } else if (simTemp <= 0 && simWindSpeed !== 'calm') {
       frostStatus = 'critical';
-      frostMessage = `HELADA POLAR / ADVECCIÓN (${simTemp}°C con viento de ${windSpeedMs} m/s). Sin capa de inversión; riesgo de desecación y congelamiento uniforme.`;
+      frostDiagnostic = `HELADA ADVECCIÓN / POLAR (T=${simTemp}°C, u₂=${windSpeedMs} m/s). Capa límite turbulenta; congelamiento convectivo sin desacople térmico vertical.`;
     } else if (simTemp <= 2.5 && simWindSpeed === 'calm') {
       frostStatus = 'warning';
-      frostMessage = `PRE-ALERTA CATABÁTICA: Temperatura de ${simTemp}°C con calma atmosférica. Flujo gravitacional de aire frío hacia depresiones topográficas.`;
+      frostDiagnostic = `TRANSICIÓN CATABÁTICA EN CURSO: Desacople radiativo superficial a ${simTemp}°C. Monitoreo piezométrico y térmico de pre-alerta activado.`;
     } else if (simTemp >= 32) {
       frostStatus = 'heat_stress';
-      frostMessage = `ESTRÉS TÉRMICO ELEVADO (${simTemp}°C): Cierre estomático inducido. Alta demanda atmosférica (VPD elevado). Evaluar riego de refresco.`;
+      frostDiagnostic = `ESTRÉS TÉRMICO & CIERRE ESTOMÁTICO (VPD=${vpd} kPa, T=${simTemp}°C). Se excede la conductancia estomática máxima; desacople de la asimilación neta de CO₂.`;
     }
 
-    // Dictamen de riego FAO-56 tridimensional
-    let irrigationStatus: 'deficit' | 'optimal' | 'excess' = 'optimal';
-    let irrigationAction = `Capacidad de campo balanceada en estrato radicular (${layer2}%). Humedad en rango de reserva útil. Sin bombeo necesario hoy.`;
-    let minutesToIrrigate = 0;
-    let m3PerHectare = 0;
-    let savingsKwhClp = 18500; // Ahorro estimado de bombeo evitado
+    // Balance hidrodinámico en zona vadosa
+    let waterStatus: 'deficit' | 'optimal' | 'saturation' = 'optimal';
+    let waterDiagnostic = `Reserva útil disponible (RAW) en estrato activo (20-60 cm: ${layer2}%). Humedad matricial en rango de confort fisiológico (-33 a -100 kPa).`;
+    let deficitVolume = 0;
 
     if (layer1 < pmp + 4) {
-      irrigationStatus = 'deficit';
-      // Riego para llevar estrato de 0-60cm a capacidad de campo
-      minutesToIrrigate = Math.round((cc - layer1) * 7.5);
-      m3PerHectare = Math.round(minutesToIrrigate * 0.58);
-      irrigationAction = `DÉFICIT HÍDRICO RADICULAR: Se prescribe turno de riego de ${minutesToIrrigate} min (${m3PerHectare} m³/ha) para restablecer la zona activa (0-60 cm) sin percolación profunda.`;
-    } else if (layer1 > cc + 5) {
-      irrigationStatus = 'excess';
-      irrigationAction = `SATURACIÓN / RIESGO DE ASFIXIA RADICULAR: Humedad al ${layer1}% (supera Capacidad de Campo ${cc}%). Suspender turnos de riego para prevenir pudrición de cuello (Phytophthora) y lixiviación de nitrógeno.`;
+      waterStatus = 'deficit';
+      deficitVolume = Math.round((cc - layer1) * bulkDensity * 2.0); // mm lámina requerida
+      waterDiagnostic = `DÉFICIT HÍDRICO EN ZONA RADICULAR: Potencial matricial ψm < -1500 kPa en horizonte A. Déficit de lámina calculado: ${deficitVolume} mm (${(deficitVolume * 10).toFixed(0)} m³/ha).`;
+    } else if (layer1 > cc + 4) {
+      waterStatus = 'saturation';
+      waterDiagnostic = `CONDICIÓN DE ANÓXIA / ASFIXIA RADICULAR: Humedad volumétrica (${layer1}%) supera Capacidad de Campo (${cc}%). Espacio poroso de aireación < 10%; riesgo de pudrición por Phytophthora cactorum.`;
     }
 
     return {
       etc,
-      et0: et0.toFixed(1),
+      et0: et0.toFixed(2),
+      vpd,
+      riNumber,
       layer1,
       layer2,
       layer3,
       cc,
       pmp,
+      bulkDensity,
       soilLabel,
       cropName,
+      cropLatin,
       windSpeedMs,
       frostStatus,
-      frostMessage,
-      irrigationStatus,
-      irrigationAction,
-      minutesToIrrigate,
-      m3PerHectare,
-      savingsKwhClp
+      frostDiagnostic,
+      waterStatus,
+      waterDiagnostic,
+      deficitVolume
     };
   }, [simTemp, simSoilMoisture, simWindSpeed, simCrop, simSoilType]);
 
-  const pipelineSteps = [
-    {
-      step: '01',
-      title: 'Ingesta de Datos Multifuente (Cero digitación manual)',
-      subtitle: 'Satélites Sentinel-2, DGA, INIA y Sondas LoRaWAN en campo',
-      icon: Satellite,
-      color: 'from-amber-400 to-amber-600',
-      description: 'El gemelo no requiere que ingreses datos a mano. Cada madrugada sincroniza automáticamente reflectancias satelitales Sentinel-2 (NDVI, NDRE), descarga caudales oficiales de estaciones DGA y compila las lecturas horarias de las sondas FDR KioT instaladas en el huerto.',
-      bullets: [
-        'Constelación Sentinel-2 (bandas B4, B8, B8A a 10m de resolución)',
-        'Red oficial DGA (caudales en m³/s de Río Longaví y Perquilauquén)',
-        'Sondas multinivel LoRaWAN KioT cada 15 minutos sin cables'
-      ]
-    },
-    {
-      step: '02',
-      title: 'Motor Biofísico & Fluidos (Física Real, No IA Genérica)',
-      subtitle: 'Balance hídrico FAO-56 en 3 estratos y dinámica catabática de heladas',
-      icon: Cpu,
-      color: 'from-emerald-400 to-emerald-600',
-      description: 'A diferencia de los paneles estadísticos tradicionales, AgriTwin ejecuta modelos deterministas basados en física agronómica: calcula la evapotranspiración diaria real Penman-Monteith y modela el flujo de masas de aire frío por gravedad sobre la topografía LiDAR.',
-      bullets: [
-        'Ecuación FAO-56 estratificada: 0-20 cm (brote), 20-60 cm (radicular), 60-100 cm (reserva)',
-        'Ecuaciones Navier-Stokes simplificadas para drenaje nocturno de heladas',
-        'Cálculo acumulativo de horas de frío (Chilling Hours) para dormancia'
-      ]
-    },
-    {
-      step: '03',
-      title: 'Gemelo Digital 3D & Cartografía Bi-Escala',
-      subtitle: 'Desde las 122.000 ha de la Cuenca hasta el cuartel en Three.js',
-      icon: Layers,
-      color: 'from-cyan-400 to-blue-600',
-      description: 'Toda la física se proyecta en dos entornos visuales interactivos: la Cartografía Territorial de Cuenca para coordinar derechos de agua con APRs y juntas de vigilancia, y el Gemelo 3D fotorrealista para examinar el vigor y el estrés de cada hilera.',
-      bullets: [
-        'Visor Cuenca GIS: Red de 5 APRs, cuotas DGA y mapas de calor FWI',
-        'Gemelo Predial 3D: Curvas de nivel, exposición solar horaria y mallas PBR',
-        'Soporte para fotogrametría aérea y misiones con drones autónomos'
-      ]
-    },
-    {
-      step: '04',
-      title: 'Salida Operativa & Automatización Directa',
-      subtitle: 'WhatsApp para el mayordomo, bombas de riego y Pasaporte Verde',
-      icon: ShieldCheck,
-      color: 'from-teal-400 to-emerald-600',
-      description: 'El conocimiento se transforma en decisiones automáticas: el mayordomo de campo recibe un mensaje de WhatsApp con los minutos de riego exactos a programar, se activan compuertas solares off-grid y se emite el Pasaporte Verde de libre deforestación para la exportadora.',
-      bullets: [
-        'Alertas tempranas de helada 4 horas antes del punto crítico',
-        'Dictamen de riego oficial en PDF con firma técnica auditable',
-        'Trazabilidad satelital EUDR (Reglamento UE 2023/1115) con código QR'
-      ]
-    }
-  ];
-
-  // Formulario de demostración privada
+  // Formulario institucional para investigadores
   const [formData, setFormData] = useState({
-    name: '',
+    investigatorName: '',
+    institution: '',
     email: '',
-    phone: '',
-    farmName: '',
-    region: 'Maule (Retiro / Parral / Linares)',
-    hectares: '10 - 50 ha',
-    cropType: 'Avellanos Europeos / Frutales',
-    interest: 'Simulación de Riego FAO-56 & Heladas'
+    role: 'Investigador Principal (PI)',
+    fundingGrant: 'FONDEF / ANID IDeA',
+    researchFocus: 'Modelación Hidroclimática & FAO-56',
+    comments: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const galleryItems = [
-    {
-      title: 'Cartografía Estratégica de Cuenca (122.000 ha)',
-      subtitle: 'Escala Territorial • Maule Sur, Red APR y DGA',
-      image: './assets/ui/agritwin_regional_landing.jpg',
-      badge: 'Escala Cuenca',
-      badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-400/40',
-      description: 'Mosaico continuo de 122.000 hectáreas con cuadrícula hexagonal interactiva, pozos de comités APR, monitoreo de caudales de ríos Longaví y Perquilauquén y modelado de vientos catabáticos Puelche.'
-    },
-    {
-      title: 'Gemelo Digital 3D de Predio (Fundo Meniel 24.8 ha)',
-      subtitle: 'Escala Predial • Topografía Three.js & Mallas LiDAR',
-      image: './arbol_alquimico_splash.jpg',
-      badge: 'Escala Predio',
-      badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40',
-      description: 'Reconstrucción milimétrica de cuarteles, hileras de plantación, curvas de nivel y exposición solar horaria con sombreadores PBR fotorrealistas para cálculo de estrés térmico.'
-    },
-    {
-      title: 'Drenaje Catabático & Predicción de Heladas',
-      subtitle: 'Física Microclimática • 72h de Pre-alerta',
-      image: './cerro_landing_bg.jpg',
-      badge: 'Física de Fluidos',
-      badgeColor: 'bg-sky-500/20 text-sky-300 border-sky-400/40',
-      description: 'Simulación de flujo de aire frío por gravedad hacia fondos de quebrada y microdepresiones topográficas. Identificación visual de puntos de acumulación de escarcha antes de la pérdida de brotes.'
-    },
-    {
-      title: 'Balance Radicular FAO-56 a 3 Profundidades',
-      subtitle: 'Evapotranspiración Penman-Monteith • 0-20, 20-60, 60-100 cm',
-      image: './invernadero_landing_bg.jpg',
-      badge: 'Balance Hídrico',
-      badgeColor: 'bg-teal-500/20 text-teal-300 border-teal-400/40',
-      description: 'Integración continua entre sondas FDR KioT en campo y ecuaciones FAO-56. Genera la prescripción exacta de minutos de riego por cuartel para evitar asfixia radicular y lixiviación.'
-    },
-    {
-      title: 'Teledetección Satelital Sentinel-2 & PlanetScope',
-      subtitle: 'Mosaicos Multiespectrales • NDVI, NDRE y Humedad de Suelo',
-      image: './img-coastal-hud.jpg',
-      badge: 'Teledetección',
-      badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-400/40',
-      description: 'Superposición directa de índices de vigor vegetal (NDVI y NDRE de clorofila) sobre la malla tridimensional del predio, permitiendo comparar el avance fenológico histórico temporada a temporada.'
-    }
-  ];
-
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleInstitutionalSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitted(true);
-    
-    // Abrir WhatsApp con mensaje pre-rellenado para contacto inmediato opcional
-    const text = `Hola AgroTech Chile, solicito una Demostración Privada de AgriTwin.%0A%0A*Contacto:* ${formData.name}%0A*Predio:* ${formData.farmName}%0A*Región:* ${formData.region}%0A*Superficie:* ${formData.hectares}%0A*Cultivo:* ${formData.cropType}%0A*Interés Clave:* ${formData.interest}`;
+    const text = `Solicitud Institucional de Acceso a Testbed AgriTwin:%0A%0A*Investigador:* ${encodeURIComponent(formData.investigatorName)}%0A*Institución:* ${encodeURIComponent(formData.institution)}%0A*Rol:* ${encodeURIComponent(formData.role)}%0A*Fondo / Proyecto:* ${encodeURIComponent(formData.fundingGrant)}%0A*Línea I+D:* ${encodeURIComponent(formData.researchFocus)}`;
     setTimeout(() => {
       window.open(`https://wa.me/56976696142?text=${text}`, '_blank');
     }, 1200);
   };
 
+  const galleryItems = [
+    {
+      title: 'Mosaico Espectral Copernicus Sentinel-2 L2A',
+      subtitle: 'Reflectancias BOA (Bottom-of-Atmosphere) • Bandas B4, B8, B8A',
+      image: './img-coastal-hud.jpg',
+      badge: 'Teledetección 10m',
+      badgeColor: 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40',
+      description: 'Asimilación directa de reflectancias multiespectrales con cálculo automatizado de NDVI, NDRE (clorofila en borde rojo B5-B7) y NDWI para calibración de biomasa sin sesgo atmosférico.'
+    },
+    {
+      title: 'Gemelo Ciberfísico Predial 3D (Fundo Meniel)',
+      subtitle: 'Microtopografía LiDAR & Mallas de Cuartel en Three.js',
+      image: './arbol_alquimico_splash.jpg',
+      badge: 'Testbed Predial',
+      badgeColor: 'bg-amber-950/80 text-amber-300 border-amber-500/40',
+      description: 'Reconstrucción vectorial y topográfica de 24.8 hectáreas con exposición solar horaria (sombras proyectadas DEM) y malla celular para análisis de variabilidad intra-parcelar.'
+    },
+    {
+      title: 'Cartografía Hidrogeológica Cuenca Maule Sur',
+      subtitle: '122.000 Hectáreas • Red de 5 Piezómetros APR y Estaciones DGA',
+      image: './assets/ui/agritwin_regional_landing.jpg',
+      badge: 'Macro Observatorio',
+      badgeColor: 'bg-sky-950/80 text-sky-300 border-sky-500/40',
+      description: 'Cartografía regional que unifica cuencas de los ríos Longaví y Perquilauquén con telemetría de niveles estáticos/dinámicos en pozos profundos de comités de agua potable rural.'
+    },
+    {
+      title: 'Dinámica de Capa Límite & Flujo Catabático',
+      subtitle: 'Drenaje Nocturno de Aire Frío • Pre-alerta Radiativa 72h',
+      image: './cerro_landing_bg.jpg',
+      badge: 'Física Atmosférica',
+      badgeColor: 'bg-cyan-950/80 text-cyan-300 border-cyan-500/40',
+      description: 'Simulación determinista del escurrimiento gravitacional de masas de aire denso sobre la pendiente hacia depresiones topográficas bajo condición de inversión térmica (Ri > 0.25).'
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-[#07130c] text-white selection:bg-amber-500 selection:text-black">
+    <div className="min-h-screen bg-[#050F0A] text-slate-100 selection:bg-amber-400 selection:text-slate-950 font-sans relative">
       
-      {/* ─── 0. QUICK NAVIGATION SUB-HEADER ─────────────────────────────────── */}
-      <div className="sticky top-16 z-30 bg-[#06140d]/90 backdrop-blur-md border-b border-emerald-900/60 py-2.5 px-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 overflow-x-auto text-xs font-sans">
-          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-            <span className="font-mono font-bold text-amber-400 px-2 py-0.5 rounded bg-amber-400/10 border border-amber-400/30">
-              AgriTwin OS
+      {/* ─── RETÍCULA MILIMÉTRICA SUBYACENTE (GRID 10M CIENTÍFICO) ──────────── */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-0 opacity-[0.035]"
+        style={{
+          backgroundImage: `linear-gradient(to right, #10B981 1px, transparent 1px), linear-gradient(to bottom, #10B981 1px, transparent 1px)`,
+          backgroundSize: '32px 32px'
+        }}
+      />
+
+      {/* ─── 0. SCIENTIFIC TELEMETRY SUB-HEADER ─────────────────────────────── */}
+      <div className="sticky top-16 z-30 bg-[#06140D]/90 backdrop-blur-md border-b border-emerald-900/50 py-2 px-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 overflow-x-auto text-[11px] font-mono">
+          
+          <div className="flex items-center gap-3 shrink-0">
+            <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/40 text-emerald-300 font-bold">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              AGRITWIN TESTBED v2.6
             </span>
-            <a href="#vision" className="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 font-semibold">
-              Visión
-            </a>
-            <a href="#como-funciona" className="px-3 py-1.5 rounded-lg text-amber-300 hover:text-amber-200 hover:bg-amber-400/10 font-bold flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>¿Cómo Funciona?</span>
-            </a>
-            <a href="#simulador" className="px-3 py-1.5 rounded-lg text-emerald-300 hover:text-emerald-200 hover:bg-emerald-500/10 font-bold flex items-center gap-1.5">
-              <Sliders className="w-3.5 h-3.5" />
-              <span>Simulador en Vivo</span>
-            </a>
-            <a href="#arquitectura" className="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 font-semibold">
-              Cuenca vs Predio
-            </a>
-            <a href="#galeria" className="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 font-semibold">
-              Galería & Video
-            </a>
-            <a href="#casos-de-estudio" className="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 font-semibold">
-              Casos Reales
-            </a>
+            <span className="text-slate-400 hidden md:inline">
+              DATUM: WGS84 • EPSG: 32719 • MAULE SOUTH LIVING LAB (35.98°S, 71.75°W)
+            </span>
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-            <a
+            <a 
               href="https://danisantanderurrutia-coder.github.io/agritwin-app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 rounded-lg bg-amber-400/15 hover:bg-amber-400/25 border border-amber-400/40 text-amber-300 font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm"
-              title="Abrir Carta de Presentación Oficial para Inversionistas y Clientes"
+              className="px-3 py-1 rounded-lg bg-amber-400/15 hover:bg-amber-400/25 border border-amber-400/40 text-amber-300 font-bold flex items-center gap-1.5 transition-all"
+              title="Abrir Dossier Metodológico y Carta Oficial en Vivo"
             >
               <FileText className="w-3.5 h-3.5 text-amber-400" />
-              <span className="hidden sm:inline">Carta Oficial B2B</span>
-              <span className="sm:hidden">Carta B2B</span>
+              <span className="hidden sm:inline">Dossier Técnico Oficial</span>
+              <span className="sm:hidden">Dossier</span>
               <ExternalLink className="w-3 h-3 text-amber-400" />
             </a>
 
             <button
-              onClick={() => setIsDemoModalOpen(true)}
-              className="px-4 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs shadow-md transition-all cursor-pointer"
+              onClick={() => {
+                setModalType('testbed_access');
+                setIsDemoModalOpen(true);
+              }}
+              className="px-3.5 py-1 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold transition-all shadow-sm cursor-pointer"
             >
-              Solicitar Demo
+              Solicitar Acceso I+D
             </button>
           </div>
+
         </div>
       </div>
 
-      {/* ─── 1. HERO COMERCIAL & PITCH DE PRODUCTO ───────────────────────────── */}
-      <section id="vision" className="relative overflow-hidden pt-10 pb-20 border-b border-emerald-950/80">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900/30 via-[#07130c] to-[#040a06] pointer-events-none" />
-        
-        {/* Glow ambient */}
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-amber-500/10 via-emerald-500/10 to-transparent blur-3xl pointer-events-none rounded-full" />
+      {/* ─── 1. HERO INSTITUCIONAL CIENTÍFICO ────────────────────────────────── */}
+      <section className="relative pt-12 pb-20 border-b border-emerald-950/80 overflow-hidden">
+        <div className="absolute top-0 right-1/4 w-[650px] h-[320px] bg-emerald-500/10 blur-3xl pointer-events-none rounded-full" />
+        <div className="absolute top-1/2 left-1/4 w-[500px] h-[260px] bg-amber-500/5 blur-3xl pointer-events-none rounded-full" />
 
-        <div className="max-w-7xl mx-auto px-4 lg:px-8 relative z-10 space-y-10">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 relative z-10 space-y-8">
           
-          {/* BANNER OFICIAL: ACCESO A LA CARTA DE PRESENTACIÓN B2B */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/15 via-[#0e2c1c] to-emerald-500/15 border border-amber-400/40 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center shrink-0 font-bold shadow-lg">
-                <FileText className="w-5 h-5" />
-              </div>
-              <div className="space-y-0.5">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[11px] font-mono font-bold text-amber-300 uppercase tracking-wider">
-                    SHOWCASE OFICIAL & CARTA DE PRESENTACIÓN EJECUTIVA
-                  </span>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono font-bold border border-emerald-500/30">
-                    EN VIVO 2026
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm text-slate-200 font-serif">
-                  Dossier técnico y comercial para directorios de viñas, agroindustrias exportadoras y comités de agua APR.
-                </p>
-              </div>
-            </div>
-            <a
-              href="https://danisantanderurrutia-coder.github.io/agritwin-app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-sans font-extrabold text-xs shadow-md transition-all hover:scale-102"
-            >
-              <span>Abrir Carta Oficial en Vivo</span>
-              <ExternalLink className="w-3.5 h-3.5 text-slate-950" />
-            </a>
-          </div>
-
-          {/* Header Badges */}
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-bold tracking-wider uppercase">
-              <Cpu className="w-3.5 h-3.5 text-amber-400" />
-              AgriTwin • Gemelo Digital Ciberfísico
+          {/* Geodetic Header Badge */}
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-bold tracking-wider uppercase">
+              <Activity className="w-3.5 h-3.5 text-amber-400" />
+              Living Lab Territorial • Infraestructura Ciberfísica
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono font-bold">
-              <Layers className="w-3.5 h-3.5 text-amber-400" />
-              Arquitectura Bi-Escala: Cuenca (122.000 ha) + Predio 3D
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-slate-900/80 border border-slate-700 text-slate-300 text-xs font-mono">
+              <Database className="w-3.5 h-3.5 text-sky-400" />
+              FAIR Data Principles Ready
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 border border-slate-700 text-slate-300 text-xs font-mono">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              Física Determinista • Cero Alucinaciones
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono">
+              <Gauge className="w-3.5 h-3.5 text-amber-400" />
+              Validación Empírica R² &gt; 0.94 (RMSE ±1.8%)
             </span>
           </div>
 
           {/* Main Title & Subtitle */}
-          <div className="space-y-6 max-w-4xl">
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
-              El Gemelo Digital que <span className="bg-gradient-to-r from-amber-300 via-emerald-300 to-teal-200 bg-clip-text text-transparent">comprende la física</span> de tu territorio.
+          <div className="space-y-5 max-w-4xl">
+            <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
+              Plataforma Ciberfísica & Living Lab para <span className="bg-gradient-to-r from-emerald-300 via-teal-200 to-amber-200 bg-clip-text text-transparent">Investigación Agroclimática</span> Multiescala.
             </h1>
-            <p className="text-lg sm:text-xl text-slate-300 font-serif leading-relaxed">
-              AgriTwin no es un simple visor cartográfico: es un motor de simulación ciberfísica que modela el balance hídrico continuo (FAO-56 tridimensional), las heladas por inversión térmica catabática y la dinámica hidroclimática desde la <strong>Cuenca Maule Sur (122.000 ha, 5 comités APR y estaciones DGA)</strong> hasta el <strong>estrato radicular (0-20, 20-60, 60-100 cm) de cada cuartel</strong>.
+            <p className="text-base sm:text-lg text-slate-300 font-serif leading-relaxed">
+              AgriTwin integra <strong>122.000 hectáreas instrumentadas en el Maule Sur</strong> con un motor biofísico determinista (FAO-56 Penman-Monteith, hidrodinámica en zona vadosa y corrientes catabáticas). Una infraestructura científica abierta para centros de I+D, consorcios agroecológicos y proyectos de postulación competitiva (<strong>ANID, FONDEF, Horizon Europe</strong>).
             </p>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          {/* Action Hub */}
+          <div className="flex flex-wrap items-center gap-4 pt-2 font-mono text-xs">
             <button
-              onClick={() => setIsDemoModalOpen(true)}
-              className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-sans font-extrabold text-sm shadow-xl shadow-amber-500/20 transition-all hover:scale-102 active:scale-98 cursor-pointer"
+              onClick={() => {
+                setModalType('testbed_access');
+                setIsDemoModalOpen(true);
+              }}
+              className="flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold shadow-lg shadow-emerald-500/20 transition-all cursor-pointer"
             >
-              <span>Solicitar Demostración Privada</span>
+              <Terminal className="w-4 h-4 text-slate-950" />
+              <span>Solicitar Sandbox de Investigación</span>
               <ArrowRight className="w-4 h-4 text-slate-950" />
             </button>
-
-            <a
-              href="#simulador"
-              className="flex items-center gap-2.5 px-6 py-4 rounded-2xl bg-[#0c2016] hover:bg-[#122e20] text-emerald-300 border border-emerald-500/40 text-sm font-bold transition-all"
-            >
-              <Sliders className="w-4 h-4 text-emerald-400" />
-              <span>Probar Simulador Biofísico en Vivo</span>
-            </a>
 
             <a
               href="https://danisantanderurrutia-coder.github.io/agritwin-app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-4 rounded-2xl bg-[#14261b] hover:bg-[#1a3424] text-amber-300 border border-amber-400/30 text-sm font-bold transition-all"
+              className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#0c2317] hover:bg-[#123120] text-amber-300 border border-amber-400/40 font-bold transition-all"
             >
               <FileText className="w-4 h-4 text-amber-400" />
-              <span>Carta B2B en Vivo</span>
+              <span>Ver Dossier Metodológico en Vivo</span>
               <ExternalLink className="w-3.5 h-3.5 text-amber-400" />
+            </a>
+
+            <a
+              href="#sandbox"
+              className="flex items-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900/60 hover:bg-slate-850 text-slate-300 border border-slate-700 font-semibold transition-all"
+            >
+              <Sliders className="w-4 h-4 text-emerald-400" />
+              <span>Banco de Calibración Paramétrica &darr;</span>
             </a>
           </div>
 
-          {/* Quick Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t border-emerald-950/60">
-            <div className="p-4 rounded-2xl bg-white/5 border border-emerald-500/20 backdrop-blur-sm">
-              <div className="text-2xl sm:text-3xl font-extrabold text-amber-300 font-mono">122.000 ha</div>
-              <div className="text-xs text-slate-400 font-serif pt-1">Cuenca Maule Sur (Retiro, Parral, Longaví)</div>
+          {/* Scientific Telemetry Ribbon */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-6 border-t border-emerald-950/60 font-mono text-xs">
+            <div className="p-4 rounded-xl bg-black/40 border border-emerald-500/20 space-y-1">
+              <span className="text-[10px] text-slate-400 uppercase">Superficie Living Lab</span>
+              <div className="text-xl sm:text-2xl font-bold text-amber-300">122.000 ha</div>
+              <div className="text-[10px] text-slate-500 font-serif">Cuenca Maule Sur (Retiro / Parral / Longaví)</div>
             </div>
-            <div className="p-4 rounded-2xl bg-white/5 border border-emerald-500/20 backdrop-blur-sm">
-              <div className="text-2xl sm:text-3xl font-extrabold text-emerald-300 font-mono">-32.4%</div>
-              <div className="text-xs text-slate-400 font-serif pt-1">Ahorro hídrico en bombeo auditado</div>
+
+            <div className="p-4 rounded-xl bg-black/40 border border-emerald-500/20 space-y-1">
+              <span className="text-[10px] text-slate-400 uppercase">Red Piezométrica in-situ</span>
+              <div className="text-xl sm:text-2xl font-bold text-sky-300">5 Pozos APR</div>
+              <div className="text-[10px] text-slate-500 font-serif">Nivel freático continuo hasta 68m prof.</div>
             </div>
-            <div className="p-4 rounded-2xl bg-white/5 border border-emerald-500/20 backdrop-blur-sm">
-              <div className="text-2xl sm:text-3xl font-extrabold text-cyan-300 font-mono">4 Horas</div>
-              <div className="text-xs text-slate-400 font-serif pt-1">Pre-alerta en heladas catabáticas</div>
+
+            <div className="p-4 rounded-xl bg-black/40 border border-emerald-500/20 space-y-1">
+              <span className="text-[10px] text-slate-400 uppercase">Resolución Espectral</span>
+              <div className="text-xl sm:text-2xl font-bold text-emerald-300">10 m / 5 días</div>
+              <div className="text-[10px] text-slate-500 font-serif">Copernicus Sentinel-2 L2A (B4, B8, B8A)</div>
             </div>
-            <div className="p-4 rounded-2xl bg-white/5 border border-emerald-500/20 backdrop-blur-sm">
-              <div className="text-2xl sm:text-3xl font-extrabold text-teal-300 font-mono">3 Estratos</div>
-              <div className="text-xs text-slate-400 font-serif pt-1">Balance FAO-56 (0-20, 20-60, 60-100 cm)</div>
+
+            <div className="p-4 rounded-xl bg-black/40 border border-emerald-500/20 space-y-1">
+              <span className="text-[10px] text-slate-400 uppercase">Estratificación Edáfica</span>
+              <div className="text-xl sm:text-2xl font-bold text-teal-300">3 Horizontes</div>
+              <div className="text-[10px] text-slate-500 font-serif">0-20 cm, 20-60 cm y 60-100 cm (FDR KioT)</div>
             </div>
           </div>
 
         </div>
       </section>
 
-      {/* ─── 2. ¿CÓMO FUNCIONA EL TWIN? (PIPELINE EN 4 PASOS) ───────────────── */}
-      <section id="como-funciona" className="py-20 border-b border-emerald-950/80 bg-[#051109] relative">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-12">
+      {/* ─── 2. CONSOLA BI-ESCALA: EL LENTE DUAL (MACRO CUENCA VS MICRO TESTBED) ── */}
+      <section className="py-20 border-b border-emerald-950/80 bg-[#06140D]">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-10">
           
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest">
-              Flujo Operativo Ciberfísico
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-              ¿Cómo Funciona AgriTwin?
-            </h2>
-            <p className="text-slate-400 text-sm font-serif">
-              De la señal satelital y el sensor bajo tierra a la prescripción diaria de riego y la alerta de helada en tu WhatsApp.
-            </p>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div className="space-y-2 max-w-2xl">
+              <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest flex items-center gap-1.5">
+                <Compass className="w-4 h-4 text-amber-400" />
+                Arquitectura Bi-Escala Ciberfísica
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+                Observatorio Territorial & Parcela Experimental
+              </h2>
+              <p className="text-slate-400 text-sm font-serif">
+                Conmuta entre la escala hidrológica regional (asimilación de cuenca) y la escala biofísica predial (dinámica de fluidos y zona vadosa).
+              </p>
+            </div>
+
+            {/* Lens Switcher */}
+            <div className="p-1.5 rounded-xl bg-black/60 border border-emerald-500/30 flex items-center gap-1 font-mono text-xs">
+              <button
+                onClick={() => setActiveLensMode('basin')}
+                className={`px-4 py-2 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-2 ${
+                  activeLensMode === 'basin' 
+                    ? 'bg-amber-400 text-slate-950 shadow-md' 
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <Compass className="w-3.5 h-3.5" />
+                <span>Macro Cuenca (122.000 ha)</span>
+              </button>
+
+              <button
+                onClick={() => setActiveLensMode('plot')}
+                className={`px-4 py-2 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-2 ${
+                  activeLensMode === 'plot' 
+                    ? 'bg-emerald-500 text-slate-950 shadow-md' 
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <Cpu className="w-3.5 h-3.5" />
+                <span>Micro Parcela Meniel (24.8 ha)</span>
+              </button>
+            </div>
           </div>
 
-          {/* Stepper Tabs */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {pipelineSteps.map((step, idx) => {
-              const Icon = step.icon;
-              const isActive = activePipelineStep === idx;
-              return (
-                <button
-                  key={idx}
-                  onClick={() => setActivePipelineStep(idx)}
-                  className={`p-4 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
-                    isActive 
-                      ? 'bg-[#0d2819] border-amber-400 shadow-lg shadow-amber-500/10' 
-                      : 'bg-[#07170e] border-emerald-900/60 hover:bg-[#0a2014] text-slate-400'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className={`text-xs font-mono font-extrabold px-2 py-0.5 rounded ${isActive ? 'bg-amber-400 text-black' : 'bg-black/40 text-slate-500'}`}>
-                      Paso {step.step}
-                    </span>
-                    <Icon className={`w-5 h-5 ${isActive ? 'text-amber-400' : 'text-slate-500'}`} />
-                  </div>
-                  <div className={`text-xs font-bold leading-snug ${isActive ? 'text-white' : 'text-slate-300'}`}>
-                    {step.title.split('(')[0].trim()}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Active Step Showcase Card */}
-          <div className="bg-[#081f13] border border-emerald-500/30 rounded-3xl p-6 sm:p-10 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Active Lens Display HUD */}
+          <div className="bg-[#081B11] border-2 border-emerald-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
-            <div className="lg:col-span-7 space-y-6">
+            {/* Visualizer Frame */}
+            <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-emerald-500/30 relative h-[380px] sm:h-[440px] bg-black group">
+              <img 
+                src={activeLensMode === 'basin' ? './assets/ui/agritwin_regional_landing.jpg' : './arbol_alquimico_splash.jpg'} 
+                alt={activeLensMode === 'basin' ? 'Observatorio Regional Cuenca' : 'Parcela Experimental 3D'} 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
+              />
+              
+              <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                <span className="px-2.5 py-1 rounded bg-black/75 border border-emerald-400/50 text-emerald-300 text-[10px] font-mono font-bold backdrop-blur-md">
+                  {activeLensMode === 'basin' ? 'MODO: MACRO-HIDROLOGÍA REGIONAL' : 'MODO: GEMELO CIBERFÍSICO 3D (LiDAR)'}
+                </span>
+                <span className="px-2.5 py-1 rounded bg-black/75 border border-slate-700 text-slate-300 text-[10px] font-mono backdrop-blur-md">
+                  {activeLensMode === 'basin' ? 'GRID: 122.000 ha HEX' : 'RESOLUCIÓN: MALLA SUB-MÉTRICA'}
+                </span>
+              </div>
+
+              <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-black/80 border border-emerald-900/60 backdrop-blur-md text-[11px] font-mono text-slate-300 flex justify-between items-center">
+                <span>COORD: 35°58&apos;32&quot;S | 71°45&apos;18&quot;W</span>
+                <span className="text-amber-400">{activeLensMode === 'basin' ? 'Estaciones DGA: Río Longaví & Perquilauquén' : '6 Ramas Productivas Three.js'}</span>
+              </div>
+            </div>
+
+            {/* Scientific Specs Pane */}
+            <div className="lg:col-span-5 space-y-6">
+              
               <div className="space-y-2">
                 <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider block">
-                  Paso {pipelineSteps[activePipelineStep].step} • {pipelineSteps[activePipelineStep].subtitle}
+                  {activeLensMode === 'basin' ? 'Protocolo Hidrogeológico Territorial' : 'Protocolo Micrometeorológico & Edafológico'}
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                  {pipelineSteps[activePipelineStep].title}
+                  {activeLensMode === 'basin' ? 'Observatorio Cuenca Maule Sur' : 'Banco Experimental Fundo Meniel'}
                 </h3>
+                <p className="text-xs text-slate-300 font-serif leading-relaxed">
+                  {activeLensMode === 'basin' 
+                    ? 'Monitoreo dinámico del balance hidrológico en cuenca mediterránea bajo estrés hídrico crónico. Integra series históricas y telemetría de caudales oficiales DGA con niveles piezométricos de pozos rurales.'
+                    : 'Testbed predial instrumentado con mallas LiDAR de alta resolución, balance continuo en 3 horizontes edáficos y simulación de capas límite nocturnas para eventos de helada por inversión térmica.'
+                  }
+                </p>
               </div>
 
-              <p className="text-slate-300 font-serif text-sm leading-relaxed">
-                {pipelineSteps[activePipelineStep].description}
-              </p>
-
-              <div className="space-y-2.5 pt-2">
-                {pipelineSteps[activePipelineStep].bullets.map((b, i) => (
-                  <div key={i} className="flex items-start gap-2.5 text-xs font-sans text-slate-200">
-                    <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                    <span>{b}</span>
-                  </div>
-                ))}
+              {/* Data Points Grid */}
+              <div className="space-y-2.5 font-mono text-xs">
+                {activeLensMode === 'basin' ? (
+                  <>
+                    <div className="p-3 rounded-xl bg-black/40 border border-emerald-950 flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-white">Red de 5 Piezómetros APR:</strong>
+                        <p className="text-[11px] text-slate-400 font-serif">Curvas de abatimiento en pozos de Retiro Centro, Copihue y Romeral.</p>
+                      </div>
+                    </div>
+                    <div className="p-3 rounded-xl bg-black/40 border border-emerald-950 flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-white">Caudales Fluviales DGA:</strong>
+                        <p className="text-[11px] text-slate-400 font-serif">Modelación de curvas de gasto para T=10, 50 y 100 años (Longaví y Perquilauquén).</p>
+                      </div>
+                    </div>
+                    <div className="p-3 rounded-xl bg-black/40 border border-emerald-950 flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-white">Modelación Pirogénica FWI:</strong>
+                        <p className="text-[11px] text-slate-400 font-serif">Índice Fire Weather Index acoplado a ráfagas de viento Puelche.</p>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="p-3 rounded-xl bg-black/40 border border-emerald-950 flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-white">Balance en 3 Horizontes (FDR):</strong>
+                        <p className="text-[11px] text-slate-400 font-serif">0-20 cm (brote), 20-60 cm (absorbente) y 60-100 cm (reserva profunda).</p>
+                      </div>
+                    </div>
+                    <div className="p-3 rounded-xl bg-black/40 border border-emerald-950 flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-white">Dinámica Catabática de Heladas:</strong>
+                        <p className="text-[11px] text-slate-400 font-serif">Drenaje de aire frío denso sobre DEM topográfico con 4h de pre-alerta nocturna.</p>
+                      </div>
+                    </div>
+                    <div className="p-3 rounded-xl bg-black/40 border border-emerald-950 flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-white">Pastoreo Voisin & IPCC Tier 2:</strong>
+                        <p className="text-[11px] text-slate-400 font-serif">Rotación biointensiva en 8 potreros con auditoría de carbono edáfico.</p>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
-            </div>
 
-            <div className="lg:col-span-5 bg-black/50 border border-emerald-500/30 rounded-2xl p-6 space-y-4 font-mono text-xs text-slate-300">
-              <div className="flex items-center justify-between border-b border-emerald-900 pb-3">
-                <span className="text-[10px] text-amber-400 uppercase font-bold">Telemetría de Pipeline</span>
-                <span className="flex items-center gap-1.5 text-[11px] text-emerald-400">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Activo 24/7
-                </span>
-              </div>
-
-              {activePipelineStep === 0 && (
-                <div className="space-y-2 text-[11px]">
-                  <div className="flex justify-between py-1 border-b border-white/5">
-                    <span className="text-slate-400">Sentinel-2 Tile:</span>
-                    <span className="text-white">T19HBD (Maule Sur)</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-white/5">
-                    <span className="text-slate-400">Estación DGA:</span>
-                    <span className="text-white">Río Longaví en Quiriquina</span>
-                  </div>
-                  <div className="flex justify-between py-1">
-                    <span className="text-slate-400">Nodos KioT:</span>
-                    <span className="text-emerald-400">5 Sondas FDR Online</span>
-                  </div>
-                </div>
-              )}
-
-              {activePipelineStep === 1 && (
-                <div className="space-y-2 text-[11px]">
-                  <div className="flex justify-between py-1 border-b border-white/5">
-                    <span className="text-slate-400">Ecuación FAO-56:</span>
-                    <span className="text-white">Penman-Monteith 1998</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-white/5">
-                    <span className="text-slate-400">Modelo Helada:</span>
-                    <span className="text-white">Katabatic Fluid Drainage</span>
-                  </div>
-                  <div className="flex justify-between py-1">
-                    <span className="text-slate-400">Horizontes Edáficos:</span>
-                    <span className="text-amber-400">3 Estratos (0-20, 20-60, 60-100cm)</span>
-                  </div>
-                </div>
-              )}
-
-              {activePipelineStep === 2 && (
-                <div className="space-y-2 text-[11px]">
-                  <div className="flex justify-between py-1 border-b border-white/5">
-                    <span className="text-slate-400">Motor 3D:</span>
-                    <span className="text-white">Three.js WebGL + PBR Shaders</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-white/5">
-                    <span className="text-slate-400">Escala Cuenca:</span>
-                    <span className="text-white">Leaflet GIS 122.000 ha</span>
-                  </div>
-                  <div className="flex justify-between py-1">
-                    <span className="text-slate-400">Predio Meniel:</span>
-                    <span className="text-teal-400">24.8 ha con mallas de cuartel</span>
-                  </div>
-                </div>
-              )}
-
-              {activePipelineStep === 3 && (
-                <div className="space-y-2 text-[11px]">
-                  <div className="flex justify-between py-1 border-b border-white/5">
-                    <span className="text-slate-400">Canal de Alerta:</span>
-                    <span className="text-white">WhatsApp Business API</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-white/5">
-                    <span className="text-slate-400">Certificación EUDR:</span>
-                    <span className="text-white">PDF con polígono y corte 2020</span>
-                  </div>
-                  <div className="flex justify-between py-1">
-                    <span className="text-slate-400">Accionamiento:</span>
-                    <span className="text-emerald-400">Relé LoRaWAN para bomba</span>
-                  </div>
-                </div>
-              )}
-
-              <div className="pt-2">
+              <div className="pt-2 flex items-center justify-between text-xs font-mono">
                 <a
-                  href="#simulador"
-                  className="w-full py-2.5 px-3 rounded-xl bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/40 text-[11px] font-bold flex items-center justify-center gap-1.5 transition-all"
+                  href="https://danisantanderurrutia-coder.github.io/agritwin-app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-amber-300 hover:underline flex items-center gap-1.5"
                 >
-                  <Sliders className="w-3.5 h-3.5" />
-                  <span>Probar en el Simulador en Vivo &darr;</span>
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Ver Especificación Metodológica Completa &rarr;</span>
                 </a>
               </div>
+
             </div>
 
           </div>
@@ -581,45 +541,68 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
         </div>
       </section>
 
-      {/* ─── 3. SIMULADOR BIOFÍSICO EN VIVO (SANDBOX INTERACTIVO) ─────────────── */}
-      <section id="simulador" className="py-20 border-b border-emerald-950/80 bg-[#06140d]">
+      {/* ─── 3. BANCO DE ENSAYOS PARAMÉTRICOS (SIMULATION SANDBOX) ─────────────── */}
+      <section id="sandbox" className="py-20 border-b border-emerald-950/80 bg-[#051009] relative">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-12">
           
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest flex items-center justify-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              Laboratorio en Vivo • Simulación Ciberfísica 100% Cliente
+              <Terminal className="w-4 h-4 text-emerald-400" />
+              Banco de Ensayos Paramétricos & Calibración
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-              Prueba el Motor Biofísico en Tiempo Real
+              Simulador Determinista de Ecuaciones Biofísicas
             </h2>
             <p className="text-slate-400 text-sm font-serif">
-              Ajusta los controles de temperatura, humedad edáfica, viento y textura de suelo para evaluar la reactividad de las ecuaciones deterministas FAO-56 y el detector de heladas catabáticas.
+              Evalúa la sensibilidad de la ecuación Penman-Monteith (FAO-56) y el desacople radiativo nocturno ajustando las variables microclimáticas y edafológicas.
             </p>
           </div>
 
-          <div className="bg-[#091f13] border-2 border-emerald-500/40 rounded-3xl p-6 sm:p-10 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Quick Scenario Presets */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5 font-mono text-xs">
+            <span className="text-slate-400 text-[11px] uppercase mr-2">Cargar Escenario Experimental:</span>
+            <button
+              onClick={() => applyPreset('frost')}
+              className="px-3.5 py-1.5 rounded-lg bg-sky-950/70 hover:bg-sky-900 border border-sky-500/40 text-sky-200 transition-all flex items-center gap-1.5 cursor-pointer"
+            >
+              <span>❄️ Helada Radiativa Inversión (-1.8°C)</span>
+            </button>
+            <button
+              onClick={() => applyPreset('heatwave')}
+              className="px-3.5 py-1.5 rounded-lg bg-amber-950/70 hover:bg-amber-900 border border-amber-500/40 text-amber-200 transition-all flex items-center gap-1.5 cursor-pointer"
+            >
+              <span>🔥 Estrés Térmico & Puelche (35.2°C)</span>
+            </button>
+            <button
+              onClick={() => applyPreset('saturation')}
+              className="px-3.5 py-1.5 rounded-lg bg-teal-950/70 hover:bg-teal-900 border border-teal-500/40 text-teal-200 transition-all flex items-center gap-1.5 cursor-pointer"
+            >
+              <span>💧 Anoxia / Suelo Saturado (44%)</span>
+            </button>
+          </div>
+
+          {/* Simulator Console */}
+          <div className="bg-[#08180F] border-2 border-emerald-500/40 rounded-3xl p-6 sm:p-10 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            {/* Controles del Simulador (Izquierda) */}
-            <div className="lg:col-span-5 space-y-5">
+            {/* Input Controls (Left Column) */}
+            <div className="lg:col-span-5 space-y-5 font-mono text-xs">
+              
               <div className="flex items-center justify-between border-b border-emerald-900 pb-3">
-                <span className="text-xs font-mono font-bold text-amber-400 uppercase flex items-center gap-1.5">
+                <span className="font-bold text-amber-400 uppercase flex items-center gap-1.5">
                   <Sliders className="w-3.5 h-3.5" />
-                  Parámetros de Entrada
+                  Variables de Entrada (Ground-Truth)
                 </span>
-                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800">
-                  Física Real Activa
-                </span>
+                <span className="text-[10px] text-slate-400">FAIR Compliant</span>
               </div>
 
-              {/* Slider 1: Temperatura */}
+              {/* Slider 1: Ta */}
               <div className="space-y-1.5">
-                <div className="flex justify-between text-xs font-sans">
-                  <span className="text-slate-300 font-semibold flex items-center gap-1.5">
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-300 flex items-center gap-1.5 font-sans">
                     <ThermometerIcon temp={simTemp} />
-                    Temperatura Ambiente:
+                    Temperatura Aire (Ta):
                   </span>
-                  <span className={`font-mono font-bold text-sm ${simTemp <= 0 ? 'text-cyan-400' : simTemp < 3 ? 'text-amber-400' : simTemp >= 32 ? 'text-red-400' : 'text-emerald-400'}`}>
+                  <span className={`font-bold text-sm ${simTemp <= 0 ? 'text-sky-300' : simTemp >= 32 ? 'text-red-400' : 'text-emerald-400'}`}>
                     {simTemp} °C
                   </span>
                 </div>
@@ -627,27 +610,27 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                   type="range"
                   min="-3"
                   max="38"
-                  step="0.5"
+                  step="0.2"
                   value={simTemp}
                   onChange={(e) => setSimTemp(parseFloat(e.target.value))}
-                  className="w-full h-2 bg-black/50 rounded-lg appearance-none cursor-pointer accent-amber-400"
+                  className="w-full h-2 bg-black/60 rounded-lg appearance-none cursor-pointer accent-amber-400"
                 />
-                <div className="flex justify-between text-[10px] font-mono text-slate-500">
-                  <span>-3°C (Helada Crítica)</span>
-                  <span>15°C (Templado)</span>
-                  <span>38°C (Estrés Térmico)</span>
+                <div className="flex justify-between text-[10px] text-slate-500">
+                  <span>-3.0°C (Helada Crítica)</span>
+                  <span>15°C (Neutro)</span>
+                  <span>38.0°C (Estrés Extremo)</span>
                 </div>
               </div>
 
-              {/* Slider 2: Humedad en Suelo */}
+              {/* Slider 2: Volumetric Soil Moisture */}
               <div className="space-y-1.5">
-                <div className="flex justify-between text-xs font-sans">
-                  <span className="text-slate-300 font-semibold flex items-center gap-1.5">
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-300 flex items-center gap-1.5 font-sans">
                     <Droplets className="w-3.5 h-3.5 text-teal-400" />
-                    Humedad Estrato 1 (0-20 cm):
+                    Humedad Volumétrica Horizonte A (θ₁):
                   </span>
-                  <span className={`font-mono font-bold text-sm ${simSoilMoisture < simulationResults.pmp + 3 ? 'text-red-400' : simSoilMoisture > simulationResults.cc + 3 ? 'text-blue-400' : 'text-emerald-400'}`}>
-                    {simSoilMoisture}%
+                  <span className="font-bold text-sm text-teal-300">
+                    {simSoilMoisture}% vol
                   </span>
                 </div>
                 <input
@@ -657,196 +640,178 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                   step="1"
                   value={simSoilMoisture}
                   onChange={(e) => setSimSoilMoisture(parseInt(e.target.value))}
-                  className="w-full h-2 bg-black/50 rounded-lg appearance-none cursor-pointer accent-teal-400"
+                  className="w-full h-2 bg-black/60 rounded-lg appearance-none cursor-pointer accent-teal-400"
                 />
-                <div className="flex justify-between text-[10px] font-mono text-slate-500">
-                  <span>PMP: {simulationResults.pmp}%</span>
-                  <span>CC: {simulationResults.cc}%</span>
-                  <span>50% (Saturado)</span>
+                <div className="flex justify-between text-[10px] text-slate-500">
+                  <span>θ_PMP: {simulationResults.pmp}%</span>
+                  <span>θ_CC: {simulationResults.cc}%</span>
+                  <span>50% (Saturación)</span>
                 </div>
               </div>
 
-              {/* Selector de Régimen de Viento */}
+              {/* Wind Regime */}
               <div className="space-y-1.5">
-                <div className="flex justify-between text-xs font-sans">
-                  <label className="text-slate-300 font-semibold flex items-center gap-1.5">
-                    <Wind className="w-3.5 h-3.5 text-cyan-400" />
-                    Régimen Eólico:
-                  </label>
-                  <span className="text-[11px] font-mono text-cyan-300">{simulationResults.windSpeedMs} m/s</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-300 flex items-center gap-1.5 font-sans">
+                    <Wind className="w-3.5 h-3.5 text-sky-400" />
+                    Régimen Eólico (u₂ a 2m):
+                  </span>
+                  <span className="text-sky-300">{simulationResults.windSpeedMs} m/s</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
                   <button
                     onClick={() => setSimWindSpeed('calm')}
                     className={`p-2 rounded-xl text-[11px] font-sans font-bold transition-all text-center ${
-                      simWindSpeed === 'calm' ? 'bg-amber-400 text-slate-950 font-extrabold shadow-md' : 'bg-black/40 text-slate-400 hover:text-slate-200'
+                      simWindSpeed === 'calm' ? 'bg-amber-400 text-slate-950 font-extrabold shadow-sm' : 'bg-black/40 text-slate-400 hover:text-slate-200'
                     }`}
                   >
-                    Calmo (&lt;1 m/s)
-                    <span className="block text-[9px] font-normal opacity-80">Favorece Inversión</span>
+                    Calma (&lt;1 m/s)
+                    <span className="block text-[9px] font-mono opacity-80">Ri = 0.38</span>
                   </button>
                   <button
                     onClick={() => setSimWindSpeed('breeze')}
                     className={`p-2 rounded-xl text-[11px] font-sans font-bold transition-all text-center ${
-                      simWindSpeed === 'breeze' ? 'bg-amber-400 text-slate-950 font-extrabold shadow-md' : 'bg-black/40 text-slate-400 hover:text-slate-200'
+                      simWindSpeed === 'breeze' ? 'bg-amber-400 text-slate-950 font-extrabold shadow-sm' : 'bg-black/40 text-slate-400 hover:text-slate-200'
                     }`}
                   >
                     Brisa (2.4 m/s)
-                    <span className="block text-[9px] font-normal opacity-80">Mezcla Térmica</span>
+                    <span className="block text-[9px] font-mono opacity-80">Capa Neutra</span>
                   </button>
                   <button
                     onClick={() => setSimWindSpeed('puelche')}
                     className={`p-2 rounded-xl text-[11px] font-sans font-bold transition-all text-center ${
-                      simWindSpeed === 'puelche' ? 'bg-amber-400 text-slate-950 font-extrabold shadow-md' : 'bg-black/40 text-slate-400 hover:text-slate-200'
+                      simWindSpeed === 'puelche' ? 'bg-amber-400 text-slate-950 font-extrabold shadow-sm' : 'bg-black/40 text-slate-400 hover:text-slate-200'
                     }`}
                   >
                     Puelche (6.8 m/s)
-                    <span className="block text-[9px] font-normal opacity-80">Alta Evaporación</span>
+                    <span className="block text-[9px] font-mono opacity-80">VPD Crítico</span>
                   </button>
                 </div>
               </div>
 
-              {/* Selector de Cultivo */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-sans font-semibold text-slate-300">Cultivo / Cuartel Seleccionado:</label>
-                <div className="grid grid-cols-3 gap-2">
-                  <button
-                    onClick={() => setSimCrop('avellano')}
-                    className={`p-2 rounded-xl text-xs font-sans font-bold transition-all ${
-                      simCrop === 'avellano' ? 'bg-emerald-700 text-white border border-emerald-400 shadow-sm' : 'bg-black/30 text-slate-400'
-                    }`}
+              {/* Species & Soil Selectors */}
+              <div className="grid grid-cols-2 gap-3 pt-1">
+                <div className="space-y-1">
+                  <label className="text-[11px] text-slate-300 font-sans">Especie Monitoreada:</label>
+                  <select
+                    value={simCrop}
+                    onChange={(e) => setSimCrop(e.target.value as any)}
+                    className="w-full px-2.5 py-1.5 rounded-lg bg-black/60 border border-emerald-900 text-white font-mono text-[11px] focus:outline-none focus:border-amber-400"
                   >
-                    Avellano (Kc 0.85)
-                  </button>
-                  <button
-                    onClick={() => setSimCrop('vid')}
-                    className={`p-2 rounded-xl text-xs font-sans font-bold transition-all ${
-                      simCrop === 'vid' ? 'bg-emerald-700 text-white border border-emerald-400 shadow-sm' : 'bg-black/30 text-slate-400'
-                    }`}
+                    <option value="avellano">Corylus avellana (Kc 0.85)</option>
+                    <option value="vid">Vitis vinifera (Kc 0.65)</option>
+                    <option value="pradera">Pradera PRV (Kc 0.95)</option>
+                  </select>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] text-slate-300 font-sans">Serie Edafológica:</label>
+                  <select
+                    value={simSoilType}
+                    onChange={(e) => setSimSoilType(e.target.value as any)}
+                    className="w-full px-2.5 py-1.5 rounded-lg bg-black/60 border border-emerald-900 text-white font-mono text-[11px] focus:outline-none focus:border-amber-400"
                   >
-                    Vid (Kc 0.65)
-                  </button>
-                  <button
-                    onClick={() => setSimCrop('pradera')}
-                    className={`p-2 rounded-xl text-xs font-sans font-bold transition-all ${
-                      simCrop === 'pradera' ? 'bg-emerald-700 text-white border border-emerald-400 shadow-sm' : 'bg-black/30 text-slate-400'
-                    }`}
-                  >
-                    Pradera PRV (Kc 0.95)
-                  </button>
+                    <option value="arcilloso">Franco-Arcilloso (Maule Sur)</option>
+                    <option value="limoso">Franco-Limoso Fluvial</option>
+                    <option value="arenoso">Franco-Arenoso Coluvial</option>
+                  </select>
                 </div>
               </div>
 
-              {/* Selector de Suelo */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-sans font-semibold text-slate-300">Textura de Suelo:</label>
-                <div className="grid grid-cols-3 gap-2">
-                  <button
-                    onClick={() => setSimSoilType('arcilloso')}
-                    className={`p-1.5 rounded-xl text-[11px] font-sans font-semibold transition-all ${
-                      simSoilType === 'arcilloso' ? 'bg-amber-950 text-amber-300 border border-amber-600' : 'bg-black/30 text-slate-400'
-                    }`}
-                  >
-                    Franco-Arcilloso
-                  </button>
-                  <button
-                    onClick={() => setSimSoilType('limoso')}
-                    className={`p-1.5 rounded-xl text-[11px] font-sans font-semibold transition-all ${
-                      simSoilType === 'limoso' ? 'bg-amber-950 text-amber-300 border border-amber-600' : 'bg-black/30 text-slate-400'
-                    }`}
-                  >
-                    Franco-Limoso
-                  </button>
-                  <button
-                    onClick={() => setSimSoilType('arenoso')}
-                    className={`p-1.5 rounded-xl text-[11px] font-sans font-semibold transition-all ${
-                      simSoilType === 'arenoso' ? 'bg-amber-950 text-amber-300 border border-amber-600' : 'bg-black/30 text-slate-400'
-                    }`}
-                  >
-                    Franco-Arenoso
-                  </button>
+              {/* Formulation Box */}
+              <div className="p-3 rounded-xl bg-black/50 border border-emerald-900/60 text-[10px] text-slate-400 font-mono space-y-1">
+                <div className="text-amber-400 font-bold flex items-center gap-1">
+                  <BookOpen className="w-3 h-3" />
+                  <span>Ecuación Rectora Penman-Monteith (FAO-56):</span>
+                </div>
+                <p className="italic text-slate-300">
+                  ETc = Kc · [ Δ(Rn - G) + ρa·cp·(es - ea)/ra ] / [ Δ + γ·(1 + rs/ra) ]
+                </p>
+                <div className="flex justify-between pt-1 border-t border-white/5 text-[9px]">
+                  <span>VPD = {simulationResults.vpd} kPa</span>
+                  <span>Densidad aparente = {simulationResults.bulkDensity} g/cm³</span>
                 </div>
               </div>
 
             </div>
 
-            {/* Resultados Reactivos del Simulador (Derecha) */}
-            <div className="lg:col-span-7 space-y-5 bg-[#06170e] p-6 rounded-2xl border border-emerald-500/30 flex flex-col justify-between">
+            {/* Scientific Diagnostic Output (Right Column) */}
+            <div className="lg:col-span-7 space-y-5 bg-[#06150D] p-6 rounded-2xl border border-emerald-500/30 flex flex-col justify-between">
               
-              <div className="space-y-4">
+              <div className="space-y-4 font-mono text-xs">
+                
                 <div className="flex items-center justify-between border-b border-emerald-900 pb-3">
-                  <span className="text-xs font-mono font-bold text-emerald-400 uppercase flex items-center gap-1.5">
+                  <span className="font-bold text-emerald-400 uppercase flex items-center gap-1.5">
                     <Activity className="w-3.5 h-3.5" />
-                    Salida Reactiva del Motor Biofísico
+                    Telemetría Determinista en Tiempo Real
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">
-                    Cálculo Determinista
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">
+                    Cálculo Ciberfísico Activo
                   </span>
                 </div>
 
-                {/* Card de Alerta de Helada */}
+                {/* Frost / Microclimate Diagnostic Card */}
                 <div className={`p-4 rounded-xl border transition-all ${
                   simulationResults.frostStatus === 'critical'
-                    ? 'bg-red-950/60 border-red-500/80 text-red-200 shadow-lg shadow-red-950/40'
+                    ? 'bg-red-950/60 border-red-500/80 text-red-200'
                     : simulationResults.frostStatus === 'warning'
                     ? 'bg-amber-950/60 border-amber-500/80 text-amber-200'
                     : simulationResults.frostStatus === 'heat_stress'
                     ? 'bg-orange-950/60 border-orange-500/80 text-orange-200'
                     : 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300'
                 }`}>
-                  <div className="flex items-center gap-2 font-bold text-xs uppercase font-mono">
-                    {simulationResults.frostStatus === 'critical' ? (
-                      <AlertTriangle className="w-4 h-4 text-red-400 animate-pulse" />
-                    ) : simulationResults.frostStatus === 'warning' ? (
-                      <AlertTriangle className="w-4 h-4 text-amber-400" />
-                    ) : simulationResults.frostStatus === 'heat_stress' ? (
-                      <Flame className="w-4 h-4 text-orange-400" />
-                    ) : (
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                    )}
-                    <span>Microclima & Dinámica Atmosférica</span>
+                  <div className="flex items-center justify-between font-bold text-xs uppercase">
+                    <span className="flex items-center gap-2">
+                      {simulationResults.frostStatus === 'critical' ? (
+                        <AlertTriangle className="w-4 h-4 text-red-400 animate-pulse" />
+                      ) : (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                      )}
+                      <span>Diagnóstico de Capa Límite & Heladas</span>
+                    </span>
+                    <span className="text-[10px]">{simulationResults.frostStatus.toUpperCase()}</span>
                   </div>
                   <p className="text-xs font-serif pt-1.5 leading-relaxed">
-                    {simulationResults.frostMessage}
+                    {simulationResults.frostDiagnostic}
                   </p>
                 </div>
 
-                {/* Card de Dictamen de Riego FAO-56 */}
+                {/* FAO-56 Water Balance Diagnostic Card */}
                 <div className={`p-4 rounded-xl border transition-all ${
-                  simulationResults.irrigationStatus === 'deficit'
-                    ? 'bg-amber-950/40 border-amber-500/60 text-amber-200'
-                    : simulationResults.irrigationStatus === 'excess'
-                    ? 'bg-blue-950/40 border-blue-500/60 text-blue-200'
+                  simulationResults.waterStatus === 'deficit'
+                    ? 'bg-amber-950/50 border-amber-500/60 text-amber-200'
+                    : simulationResults.waterStatus === 'saturation'
+                    ? 'bg-blue-950/50 border-blue-500/60 text-blue-200'
                     : 'bg-emerald-950/40 border-emerald-500/40 text-emerald-200'
                 }`}>
-                  <div className="flex flex-wrap items-center justify-between text-xs font-mono font-bold gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2 font-bold text-xs">
                     <span className="flex items-center gap-1.5">
                       <Droplets className="w-4 h-4 text-teal-400" />
-                      Dictamen FAO-56 Penman-Monteith
+                      Balance en Zona Vadosa (FAO-56)
                     </span>
-                    <span className="text-amber-400">
-                      ETo: {simulationResults.et0} mm • ETc: {simulationResults.etc} mm/día
+                    <span className="text-amber-300">
+                      ET₀: {simulationResults.et0} mm • ETc: {simulationResults.etc} mm/día
                     </span>
                   </div>
                   <p className="text-xs font-serif pt-1.5 leading-relaxed">
-                    {simulationResults.irrigationAction}
+                    {simulationResults.waterDiagnostic}
                   </p>
                 </div>
 
-                {/* Gráfico Dinámico de 3 Estratos de Suelo */}
+                {/* 3 Edaphic Layers Graph */}
                 <div className="space-y-2.5 pt-2">
-                  <div className="text-[11px] font-mono text-slate-400 flex justify-between">
-                    <span>Estratificación Edáfica Radicular ({simulationResults.soilLabel}):</span>
+                  <div className="text-[11px] text-slate-400 flex justify-between">
+                    <span>Estratificación Edáfica ({simulationResults.soilLabel}):</span>
                     <span>Sondas FDR KioT</span>
                   </div>
 
-                  {/* Estrato 1 */}
+                  {/* Horizon 1 */}
                   <div className="space-y-1">
                     <div className="flex justify-between text-[11px] font-sans">
-                      <span className="text-slate-300 font-medium">Estrato 1 (0 - 20 cm) • Brotes & Goteo:</span>
-                      <span className="font-mono text-teal-300 font-bold">{simulationResults.layer1}%</span>
+                      <span className="text-slate-300">Horizonte A (0-20 cm) • Riego & Raíz Fina:</span>
+                      <span className="font-mono text-teal-300 font-bold">{simulationResults.layer1}% vol</span>
                     </div>
-                    <div className="w-full h-2.5 bg-black/60 rounded-full overflow-hidden border border-emerald-950">
+                    <div className="w-full h-2 bg-black/60 rounded-full overflow-hidden border border-emerald-950">
                       <div 
                         className="h-full bg-gradient-to-r from-teal-500 to-emerald-400 transition-all duration-300"
                         style={{ width: `${(simulationResults.layer1 / 50) * 100}%` }}
@@ -854,13 +819,13 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                     </div>
                   </div>
 
-                  {/* Estrato 2 */}
+                  {/* Horizon 2 */}
                   <div className="space-y-1">
                     <div className="flex justify-between text-[11px] font-sans">
-                      <span className="text-slate-300 font-medium">Estrato 2 (20 - 60 cm) • Raíz Absorbente Activa:</span>
-                      <span className="font-mono text-teal-300 font-bold">{simulationResults.layer2}%</span>
+                      <span className="text-slate-300">Horizonte B (20-60 cm) • Zona de Asimilación Activa:</span>
+                      <span className="font-mono text-teal-300 font-bold">{simulationResults.layer2}% vol</span>
                     </div>
-                    <div className="w-full h-2.5 bg-black/60 rounded-full overflow-hidden border border-emerald-950">
+                    <div className="w-full h-2 bg-black/60 rounded-full overflow-hidden border border-emerald-950">
                       <div 
                         className="h-full bg-gradient-to-r from-teal-600 to-emerald-500 transition-all duration-300"
                         style={{ width: `${(simulationResults.layer2 / 50) * 100}%` }}
@@ -868,13 +833,13 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                     </div>
                   </div>
 
-                  {/* Estrato 3 */}
+                  {/* Horizon 3 */}
                   <div className="space-y-1">
                     <div className="flex justify-between text-[11px] font-sans">
-                      <span className="text-slate-300 font-medium">Estrato 3 (60 - 100 cm) • Reserva Profunda:</span>
-                      <span className="font-mono text-teal-300 font-bold">{simulationResults.layer3}%</span>
+                      <span className="text-slate-300">Horizonte C (60-100 cm) • Reserva Profunda / Drenaje:</span>
+                      <span className="font-mono text-teal-300 font-bold">{simulationResults.layer3}% vol</span>
                     </div>
-                    <div className="w-full h-2.5 bg-black/60 rounded-full overflow-hidden border border-emerald-950">
+                    <div className="w-full h-2 bg-black/60 rounded-full overflow-hidden border border-emerald-950">
                       <div 
                         className="h-full bg-gradient-to-r from-teal-700 to-emerald-600 transition-all duration-300"
                         style={{ width: `${(simulationResults.layer3 / 50) * 100}%` }}
@@ -885,25 +850,54 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
 
               </div>
 
-              {/* Acciones del Simulador */}
-              <div className="pt-4 border-t border-emerald-900/60 flex flex-col sm:flex-row items-center justify-between gap-3">
+              {/* Action Bar */}
+              <div className="pt-4 border-t border-emerald-900/60 flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-xs">
                 <button
                   onClick={() => {
-                    const text = `Hola AgroTech Chile, estuve probando el Simulador Biofísico de AgriTwin:%0A%0A*Cultivo:* ${simulationResults.cropName}%0A*Temperatura:* ${simTemp} °C%0A*Viento:* ${simulationResults.windSpeedMs} m/s%0A*Humedad Estratos:* 0-20cm (${simulationResults.layer1}%), 20-60cm (${simulationResults.layer2}%), 60-100cm (${simulationResults.layer3}%)%0A*Dictamen FAO-56:* ETc ${simulationResults.etc} mm/día%0A*Estado Helada:* ${simulationResults.frostStatus}%0A%0AMe gustaría coordinar la calibración de este modelo para mi predio.`;
-                    window.open(`https://wa.me/56976696142?text=${text}`, '_blank');
+                    const payload = {
+                      experiment: 'AgriTwin_Synthetic_Parametric_Run',
+                      timestamp: new Date().toISOString(),
+                      crop: simulationResults.cropLatin,
+                      ta_celsius: simTemp,
+                      u2_ms: simulationResults.windSpeedMs,
+                      soil_type: simulationResults.soilLabel,
+                      volumetric_moisture_pct: {
+                        layer_0_20cm: simulationResults.layer1,
+                        layer_20_60cm: simulationResults.layer2,
+                        layer_60_100cm: simulationResults.layer3
+                      },
+                      fao56_outputs: {
+                        et0_mm_day: simulationResults.et0,
+                        etc_mm_day: simulationResults.etc,
+                        vpd_kpa: simulationResults.vpd
+                      },
+                      boundary_layer: {
+                        ri_number: simulationResults.riNumber,
+                        frost_status: simulationResults.frostStatus
+                      }
+                    };
+                    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `agritwin_parametric_${Date.now()}.json`;
+                    a.click();
                   }}
-                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-900/60 hover:bg-emerald-800/80 border border-emerald-500/40 text-emerald-200 font-sans text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer"
-                  title="Compartir este escenario con un agrónomo de AgroTech"
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-black/50 hover:bg-black/80 border border-emerald-500/40 text-emerald-300 font-bold flex items-center justify-center gap-2 transition-all cursor-pointer"
+                  title="Descargar matriz en formato JSON estructurado"
                 >
-                  <Share2 className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Consultar por WhatsApp con estos Datos</span>
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Exportar Matriz (JSON)</span>
                 </button>
 
                 <button
-                  onClick={() => setIsDemoModalOpen(true)}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs whitespace-nowrap cursor-pointer shadow-md transition-all hover:scale-102"
+                  onClick={() => {
+                    setModalType('testbed_access');
+                    setIsDemoModalOpen(true);
+                  }}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold transition-all shadow-md cursor-pointer"
                 >
-                  Agendar Demostración con mis Datos
+                  Solicitar Calibración con Sensores In-Situ
                 </button>
               </div>
 
@@ -914,137 +908,64 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
         </div>
       </section>
 
-      {/* ─── 4. ARQUITECTURA MULTIESCALA: CUENCA VS PREDIO ───────────────────── */}
-      <section id="arquitectura" className="py-20 border-b border-emerald-950/80 bg-[#051109] relative">
+      {/* ─── 4. PIPELINE DE INTEROPERABILIDAD CIENTÍFICA & DATOS FAIR ────────── */}
+      <section className="py-20 border-b border-emerald-950/80 bg-[#06140D]">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-12">
           
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest">
-              El Principio Árbol • Bi-Escala Ciberfísica
+            <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest flex items-center justify-center gap-1.5">
+              <Database className="w-4 h-4 text-amber-400" />
+              Tubería de Asimilación & Conectores de Investigación
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-              Dos escalas interconectadas. Un solo ecosistema de decisión.
+              Arquitectura de Datos FAIR & Conectividad Científica
             </h2>
             <p className="text-slate-400 text-sm font-serif">
-              Un predio agrícola no es una isla aislada: depende del acuífero, del viento cordillerano y de las decisiones de la cuenca vecina.
+              Datos limpios, reproducibles y accesibles directamente desde tus scripts de investigación en Python, R o plataformas GIS.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
             
-            {/* Tarjeta 1: Escala Cuenca */}
-            <div className="p-8 rounded-3xl bg-gradient-to-b from-[#0d2217] to-[#07150e] border border-amber-500/30 space-y-6 relative overflow-hidden group">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-300">
-                    <Compass className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-mono uppercase text-amber-400 font-bold">Pilar Macro • Escala Cuenca</span>
-                    <h3 className="text-2xl font-bold text-white">AgriTwin Cuenca Territorial</h3>
-                  </div>
-                </div>
-                <span className="text-xs font-mono px-3 py-1 rounded-full bg-amber-950/80 border border-amber-500/50 text-amber-200">
-                  122.000 ha
-                </span>
+            {/* Source 1 */}
+            <div className="p-6 rounded-2xl bg-[#081B11] border border-emerald-500/30 space-y-4">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-emerald-300">
+                <Satellite className="w-5 h-5" />
               </div>
-
-              <p className="text-sm text-slate-300 font-serif leading-relaxed">
-                Cartografía estratégica territorial y Sistema de Soporte a la Decisión (SDSS) para comités de agua potable rural (APRs), juntas de vigilancia y mesas hídricas en <strong>Retiro, Parral y Longaví</strong> (Maule Sur).
+              <h3 className="text-lg font-bold text-white font-sans">Copernicus Sentinel-2</h3>
+              <p className="text-slate-300 text-xs font-serif leading-relaxed">
+                Ingesta programada L2A (10m) con corrección atmosférica sen2cor. Generación automática de tensores NDVI, NDRE (Red-Edge clorofila) y NDWI con máscaras de nubes automatizadas.
               </p>
-
-              <div className="space-y-3 font-sans text-xs">
-                <div className="flex items-start gap-2.5">
-                  <Check className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                  <span className="text-slate-200"><strong>Red de 5 pozos APR monitoreados:</strong> Medición en tiempo real de niveles freáticos estáticos y dinámicos en Retiro Centro, Copihue, Romeral y sectores aledaños.</span>
-                </div>
-                <div className="flex items-start gap-2.5">
-                  <Check className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                  <span className="text-slate-200"><strong>Estaciones DGA & Caudales Fluviales:</strong> Integración de curvas hidrológicas oficiales en Río Longaví y Perquilauquén para períodos de retorno $T=10$, $T=50$ y $T=100$ años.</span>
-                </div>
-                <div className="flex items-start gap-2.5">
-                  <Check className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                  <span className="text-slate-200"><strong>Riesgo Pirogénico FWI & Viento Puelche:</strong> Simulación de propagación de incendios y deshidratación foliar ante ráfagas secas cordilleranas.</span>
-                </div>
-              </div>
-
-              <div className="pt-2 space-y-3">
-                <div className="rounded-2xl overflow-hidden border border-amber-500/30 h-48 relative">
-                  <img src="./assets/ui/agritwin_regional_landing.jpg" alt="AgriTwin Cuenca" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-4">
-                    <span className="text-[11px] font-mono text-amber-300">Terminal GIS B2B Territorial • Sincronización REST</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between pt-1">
-                  <span className="text-[11px] text-slate-400 font-serif">¿Quieres revisar el dossier de cuenca?</span>
-                  <a
-                    href="https://danisantanderurrutia-coder.github.io/agritwin-app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-amber-300 hover:text-amber-200"
-                  >
-                    <span>Ver Carta Oficial B2B</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
+              <div className="pt-2 border-t border-emerald-900/60 text-[11px] text-emerald-400">
+                Formatos: Cloud-Optimized GeoTIFF (COG), STAC API
               </div>
             </div>
 
-            {/* Tarjeta 2: Escala Predio */}
-            <div className="p-8 rounded-3xl bg-gradient-to-b from-[#0a2016] to-[#06140d] border border-emerald-500/30 space-y-6 relative overflow-hidden group">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300">
-                    <Cpu className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-mono uppercase text-emerald-400 font-bold">Pilar Micro • Escala Predio</span>
-                    <h3 className="text-2xl font-bold text-white">AgriTwin Predio 3D</h3>
-                  </div>
-                </div>
-                <span className="text-xs font-mono px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/50 text-emerald-200">
-                  Meniel 24.8 ha
-                </span>
+            {/* Source 2 */}
+            <div className="p-6 rounded-2xl bg-[#081B11] border border-sky-500/30 space-y-4">
+              <div className="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-400 flex items-center justify-center text-sky-300">
+                <Activity className="w-5 h-5" />
               </div>
-
-              <p className="text-sm text-slate-300 font-serif leading-relaxed">
-                Gemelo ciberfísico tridimensional que traslada la telemetría satelital (Sentinel-2) y las sondas LoRaWAN a la realidad operativa del administrador y mayordomo de huerto.
+              <h3 className="text-lg font-bold text-white font-sans">Red LoRaWAN in-situ KioT</h3>
+              <p className="text-slate-300 text-xs font-serif leading-relaxed">
+                Nodos LoRaWAN 915 MHz sin ataduras propietarias. Telemetría cada 15 minutos: sondas capacitivas FDR de 3 profundidades, temperatura foliar infrarroja y piezómetros de nivel freático.
               </p>
-
-              <div className="space-y-3 font-sans text-xs">
-                <div className="flex items-start gap-2.5">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span className="text-slate-200"><strong>Balance Radicular FAO-56 a 3 Profundidades:</strong> Penman-Monteith estratificado en 0-20 cm (brote/goteo), 20-60 cm (raíz absorbente activa) y 60-100 cm (reserva profunda) para evitar asfixia y marchitez.</span>
-                </div>
-                <div className="flex items-start gap-2.5">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span className="text-slate-200"><strong>Modelo Catabático de Heladas:</strong> Simulación de flujo laminar de aire frío denso por pendientes hacia quebradas y hondonadas con 4 horas de pre-alerta nocturna.</span>
-                </div>
-                <div className="flex items-start gap-2.5">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span className="text-slate-200"><strong>Pastoreo PRV & Corredores Biológicos:</strong> Planificación de rotación biointensiva en potreros y diseño de cortafuegos agroforestales nativos.</span>
-                </div>
+              <div className="pt-2 border-t border-emerald-900/60 text-[11px] text-sky-400">
+                Formatos: MQTT, Webhooks, REST JSON Time-Series
               </div>
+            </div>
 
-              <div className="pt-2 space-y-3">
-                <div className="rounded-2xl overflow-hidden border border-emerald-500/30 h-48 relative">
-                  <img src="./arbol_alquimico_splash.jpg" alt="AgriTwin Predio 3D" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-4">
-                    <span className="text-[11px] font-mono text-emerald-300">Gemelo Ciberfísico Three.js • 6 Ramas Productivas</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between pt-1">
-                  <span className="text-[11px] text-slate-400 font-serif">Simulación 3D interactiva en vivo</span>
-                  <button
-                    onClick={() => setIsDemoModalOpen(true)}
-                    className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-emerald-300 hover:text-white cursor-pointer"
-                  >
-                    <span>Solicitar Sesión Predial</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+            {/* Source 3 */}
+            <div className="p-6 rounded-2xl bg-[#081B11] border border-amber-500/30 space-y-4">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400 flex items-center justify-center text-amber-300">
+                <Terminal className="w-5 h-5" />
+              </div>
+              <h3 className="text-lg font-bold text-white font-sans">SDK Python & R Científico</h3>
+              <p className="text-slate-300 text-xs font-serif leading-relaxed">
+                Librería cliente para cargar cubos multidimensionales directamente en pipelines de Jupyter Notebooks (`xarray`, `geopandas`) y R Studio (`terra`, `sf`) sin etapas intermedias de limpieza.
+              </p>
+              <div className="pt-2 border-t border-emerald-900/60 text-[11px] text-amber-300">
+                Integración: NetCDF-4, CF Metadata Conventions
               </div>
             </div>
 
@@ -1053,298 +974,123 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
         </div>
       </section>
 
-      {/* ─── 5. GALERÍA INTERACTIVA HD & DEMO DE VIDEO ──────────────────────── */}
-      <section id="galeria" className="py-20 border-b border-emerald-950/80 bg-[#040c07]">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-12">
-          
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div className="space-y-3 max-w-2xl">
-              <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest">
-                Galería HD & Capacidades Visuales
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-                Evidencia visual del entorno de trabajo
-              </h2>
-              <p className="text-slate-400 text-sm font-serif">
-                Explora las diferentes pantallas, capas biofísicas y tableros de control que utilizan los administradores y regantes.
-              </p>
-            </div>
-
-            <button
-              onClick={() => setIsDemoModalOpen(true)}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-sans text-xs font-bold transition-all shadow-md self-start md:self-auto cursor-pointer"
-            >
-              <Calendar className="w-4 h-4" />
-              <span>Agendar Demo Guiada en Vivo</span>
-            </button>
-          </div>
-
-          {/* Selector de Pestañas de la Galería */}
-          <div className="flex flex-wrap gap-2 border-b border-emerald-900/60 pb-3">
-            {galleryItems.map((item, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveGalleryTab(idx)}
-                className={`px-4 py-2.5 rounded-xl font-sans text-xs font-bold transition-all cursor-pointer ${
-                  activeGalleryTab === idx
-                    ? 'bg-amber-400 text-slate-950 shadow-lg'
-                    : 'bg-[#0a1e14] text-slate-300 hover:bg-[#122e20] hover:text-white border border-emerald-900/40'
-                }`}
-              >
-                {item.title.split('(')[0].trim()}
-              </button>
-            ))}
-          </div>
-
-          {/* Visor Activo de la Galería */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#071910] p-6 sm:p-10 rounded-3xl border border-emerald-500/30 shadow-2xl">
-            
-            <div className="lg:col-span-8 rounded-2xl overflow-hidden border border-emerald-500/40 shadow-2xl relative group bg-black">
-              <img 
-                src={galleryItems[activeGalleryTab].image} 
-                alt={galleryItems[activeGalleryTab].title}
-                className="w-full h-[400px] sm:h-[500px] object-cover transition-transform duration-700 group-hover:scale-102"
-              />
-              <div className="absolute top-4 left-4">
-                <span className={`px-3 py-1 rounded-full text-xs font-mono font-bold border backdrop-blur-md ${galleryItems[activeGalleryTab].badgeColor}`}>
-                  {galleryItems[activeGalleryTab].badge}
-                </span>
-              </div>
-            </div>
-
-            <div className="lg:col-span-4 space-y-6">
-              <div className="space-y-2">
-                <span className="text-xs font-mono text-emerald-400 font-bold block">
-                  {galleryItems[activeGalleryTab].subtitle}
-                </span>
-                <h3 className="text-2xl font-extrabold text-white">
-                  {galleryItems[activeGalleryTab].title}
-                </h3>
-              </div>
-
-              <p className="text-slate-300 font-serif text-sm leading-relaxed">
-                {galleryItems[activeGalleryTab].description}
-              </p>
-
-              <div className="pt-4 border-t border-emerald-900/60 space-y-3">
-                <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  <span>Sin código expuesto • Renderizado cliente seguro</span>
-                </div>
-                <button
-                  onClick={() => setIsDemoModalOpen(true)}
-                  className="w-full py-3 px-4 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/40 font-sans text-xs font-bold transition-all text-center"
-                >
-                  Ver este módulo en una sesión interactiva privada &rarr;
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-          {/* SOPORTE DE VIDEO DEMOSTRATIVO */}
-          <div className="p-8 rounded-3xl bg-gradient-to-r from-[#0a1e14] via-[#0d2a1b] to-[#07180f] border border-emerald-500/40 space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <Video className="w-5 h-5 text-amber-400" />
-                  <h3 className="text-xl font-bold text-white">Recorridos Demostrativos en Video</h3>
-                </div>
-                <p className="text-xs text-slate-300 font-serif">
-                  Selecciona una cápsula de demostración técnica para visualizar la interactividad del gemelo digital.
-                </p>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => { setActiveVideoClip('3d'); setIsPlayingVideo(false); }}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${activeVideoClip === '3d' ? 'bg-amber-400 text-black' : 'bg-black/40 text-slate-300'}`}
-                >
-                  Recorrido 3D
-                </button>
-                <button
-                  onClick={() => { setActiveVideoClip('frost'); setIsPlayingVideo(false); }}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${activeVideoClip === 'frost' ? 'bg-amber-400 text-black' : 'bg-black/40 text-slate-300'}`}
-                >
-                  Heladas Catabáticas
-                </button>
-                <button
-                  onClick={() => { setActiveVideoClip('basin'); setIsPlayingVideo(false); }}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${activeVideoClip === 'basin' ? 'bg-amber-400 text-black' : 'bg-black/40 text-slate-300'}`}
-                >
-                  Gobernanza Cuenca
-                </button>
-              </div>
-            </div>
-
-            {/* Video Player Mockup / Embed container */}
-            <div className="relative rounded-2xl overflow-hidden border border-emerald-500/30 aspect-video max-h-[460px] bg-slate-950 flex items-center justify-center">
-              {!isPlayingVideo ? (
-                <>
-                  <img 
-                    src={activeVideoClip === '3d' ? './arbol_alquimico_splash.jpg' : activeVideoClip === 'frost' ? './cerro_landing_bg.jpg' : './assets/ui/agritwin_regional_landing.jpg'} 
-                    alt="Video Demo Preview" 
-                    className="w-full h-full object-cover opacity-60"
-                  />
-                  <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
-                  <div className="absolute flex flex-col items-center gap-3 text-center px-4">
-                    <button
-                      onClick={() => setIsPlayingVideo(true)}
-                      className="w-16 h-16 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 flex items-center justify-center shadow-2xl transition-transform hover:scale-110 active:scale-95 cursor-pointer"
-                    >
-                      <Play className="w-7 h-7 fill-slate-950 ml-1" />
-                    </button>
-                    <div>
-                      <h4 className="text-lg font-bold text-white">
-                        {activeVideoClip === '3d' && 'Cápsula 1: Navegación y Cuarteles en Three.js'}
-                        {activeVideoClip === 'frost' && 'Cápsula 2: Simulación de Helada por Inversión Térmica (-1.8 °C)'}
-                        {activeVideoClip === 'basin' && 'Cápsula 3: Cartografía Territorial Maule Sur & Pozos APR'}
-                      </h4>
-                      <p className="text-xs text-slate-300 font-serif">Haz clic para reproducir la demostración interactiva guiada</p>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <div className="w-full h-full p-8 flex flex-col items-center justify-center text-center space-y-4 bg-[#051109]">
-                  <div className="w-12 h-12 rounded-full border-2 border-amber-400 border-t-transparent animate-spin" />
-                  <div className="space-y-1">
-                    <h4 className="text-base font-bold text-white">Transmisión de Demostración Privada</h4>
-                    <p className="text-xs text-slate-300 max-w-md font-serif">
-                      El streaming directo en alta resolución requiere credenciales de sesión activa de AgriTwin. Para una demostración interactiva en vivo con datos reales de tu predio, solicita un acceso guiado.
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => setIsDemoModalOpen(true)}
-                    className="px-6 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs"
-                  >
-                    Solicitar Acceso a la Demo en Vivo
-                  </button>
-                </div>
-              )}
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* ─── 6. CASOS DE ESTUDIO Y VALIDACIÓN CIENTÍFICO-TÉCNICA ─────────────── */}
-      <section id="casos-de-estudio" className="py-20 border-b border-emerald-950/80 bg-[#06140c]">
+      {/* ─── 5. CASOS REALES & VALIDACIÓN EMPÍRICA (PUBLICABILIDAD) ─────────── */}
+      <section className="py-20 border-b border-emerald-950/80 bg-[#051109]">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-12">
           
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">
-              Ground-Truth • Validación en Terreno
+              Ground-Truth • Validación In-Situ
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-              Fichas de Casos de Estudio Reales
+              Fichas de Validación Empírica & Publicabilidad
             </h2>
             <p className="text-slate-400 text-sm font-serif">
-              Datos auditados y contrastados con mediciones directas en suelo, pozos APR y estaciones agroclimáticas INIA/DGA.
+              Datos auditados en terreno contrastados contra mediciones gravimétricas de laboratorio, piezometría oficial y estaciones DGA.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             
-            {/* Caso 1 */}
-            <div className="p-6 rounded-3xl bg-[#091f14] border border-emerald-500/30 space-y-5 flex flex-col justify-between">
+            {/* Paper 1 */}
+            <div className="p-6 rounded-3xl bg-[#081B11] border border-emerald-500/30 space-y-5 flex flex-col justify-between">
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-emerald-950 text-emerald-300 border border-emerald-700 font-bold uppercase">
-                    Caso 01 • Predial
+                <div className="flex items-center justify-between text-xs font-mono">
+                  <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700 font-bold uppercase">
+                    Ensayo 01 • Edafología
                   </span>
-                  <span className="text-xs font-mono text-slate-400">Retiro, Maule</span>
+                  <span className="text-slate-400">R² = 0.942</span>
                 </div>
-                <h3 className="text-xl font-bold text-white">Fundo Meniel (24.8 ha)</h3>
+                <h3 className="text-xl font-bold text-white">Balance Radicular Tri-Estrato</h3>
                 <p className="text-xs text-slate-300 font-serif leading-relaxed">
-                  Huerto de Avellano Europeo con praderas polifíticas bajo Pastoreo Racional Voisin (PRV) y tranque de 18.500 m³.
+                  Calibración de curvas van Genuchten en huerto de Avellano Europeo de 24.8 ha. Contraste de sondas FDR contra muestras gravimétricas de tubo Shelby a 3 horizontes.
                 </p>
-                <div className="space-y-2 pt-2 border-t border-emerald-900/50 text-xs font-sans">
+                <div className="space-y-1.5 pt-2 border-t border-emerald-900/50 font-mono text-xs">
                   <div className="flex justify-between py-1 border-b border-emerald-950">
-                    <span className="text-slate-400">Ahorro Hídrico:</span>
-                    <span className="font-mono font-bold text-emerald-300">-32.4% m³ bombeados</span>
+                    <span className="text-slate-400">RMSE Humedad:</span>
+                    <span className="text-emerald-300 font-bold">± 1.4% vol</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-emerald-950">
-                    <span className="text-slate-400">Evento de Helada:</span>
-                    <span className="font-mono font-bold text-amber-300">-1.8 °C (0 brotes perdidos)</span>
+                    <span className="text-slate-400">Ahorro Bombeo:</span>
+                    <span className="text-amber-300 font-bold">-32.4% m³ auditados</span>
                   </div>
                   <div className="flex justify-between py-1">
-                    <span className="text-slate-400">Materia Orgánica:</span>
-                    <span className="font-mono font-bold text-teal-300">+4.2 kg MO/m² en 18 meses</span>
+                    <span className="text-slate-400">Lixiviación NO₃⁻:</span>
+                    <span className="text-teal-300 font-bold">Reducción del 41%</span>
                   </div>
                 </div>
               </div>
 
               <div className="p-3.5 rounded-xl bg-black/40 border border-emerald-500/20 text-[11px] text-slate-300 font-serif">
-                <em>"El dictamen de riego FAO-56 tridimensional evitó el sobre-riego en el estrato arcilloso inferior, reduciendo el gasto eléctrico de bombeo en $1.8M CLP al mes."</em>
+                <em>Dataset disponible bajo acuerdo de co-autoría académica para estudios de zona vadosa mediterránea.</em>
               </div>
             </div>
 
-            {/* Caso 2 */}
-            <div className="p-6 rounded-3xl bg-[#091f14] border border-amber-500/30 space-y-5 flex flex-col justify-between">
+            {/* Paper 2 */}
+            <div className="p-6 rounded-3xl bg-[#081B11] border border-sky-500/30 space-y-5 flex flex-col justify-between">
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-amber-950 text-amber-300 border border-amber-700 font-bold uppercase">
-                    Caso 02 • Cuenca
+                <div className="flex items-center justify-between text-xs font-mono">
+                  <span className="px-2 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-700 font-bold uppercase">
+                    Ensayo 02 • Hidrogeología
                   </span>
-                  <span className="text-xs font-mono text-slate-400">Cuenca Maule Sur</span>
+                  <span className="text-slate-400">122.000 ha</span>
                 </div>
-                <h3 className="text-xl font-bold text-white">Red de 5 APRs & Regantes</h3>
+                <h3 className="text-xl font-bold text-white">Dinámica de Cuenca & Pozos APR</h3>
                 <p className="text-xs text-slate-300 font-serif leading-relaxed">
-                  Monitoreo hidrogeológico conjunto entre 10 predios agrícolas y comités de agua potable rural de Retiro y Parral.
+                  Monitoreo hidrogeológico multianual acoplando caudales superficiales DGA (Ríos Longaví y Perquilauquén) con 5 piezómetros de comités APR en Parral y Retiro.
                 </p>
-                <div className="space-y-2 pt-2 border-t border-amber-900/50 text-xs font-sans">
+                <div className="space-y-1.5 pt-2 border-t border-sky-900/50 font-mono text-xs">
                   <div className="flex justify-between py-1 border-b border-emerald-950">
-                    <span className="text-slate-400">Territorio Auditado:</span>
-                    <span className="font-mono font-bold text-amber-300">122.000 ha cartografiadas</span>
+                    <span className="text-slate-400">Piezómetros Activos:</span>
+                    <span className="text-sky-300 font-bold">5 pozos continuos</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-emerald-950">
-                    <span className="text-slate-400">Pozos Vigilados:</span>
-                    <span className="font-mono font-bold text-emerald-300">5 APRs (hasta 68m prof.)</span>
+                    <span className="text-slate-400">Cálculo de Retorno:</span>
+                    <span className="text-amber-300 font-bold">T=10, 50, 100 años</span>
                   </div>
                   <div className="flex justify-between py-1">
-                    <span className="text-slate-400">Alerta de Inundación:</span>
-                    <span className="font-mono font-bold text-cyan-300">Modelado $T=50$ años Longaví</span>
+                    <span className="text-slate-400">Resolución Temporal:</span>
+                    <span className="text-teal-300 font-bold">15 min telemetría</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-black/40 border border-sky-500/20 text-[11px] text-slate-300 font-serif">
+                <em>Modelo ideal para tesis doctorales y proyectos de resiliencia hídrica comunal ANID / Bienes Públicos CORFO.</em>
+              </div>
+            </div>
+
+            {/* Paper 3 */}
+            <div className="p-6 rounded-3xl bg-[#081B11] border border-amber-500/30 space-y-5 flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between text-xs font-mono">
+                  <span className="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-700 font-bold uppercase">
+                    Ensayo 03 • Micrometeorología
+                  </span>
+                  <span className="text-slate-400">Pre-alerta 4h</span>
+                </div>
+                <h3 className="text-xl font-bold text-white">Drenaje Nocturno de Heladas</h3>
+                <p className="text-xs text-slate-300 font-serif leading-relaxed">
+                  Modelación de capas estables superficiales bajo enfriamiento radiativo. Verificación de la acumulación de aire frío en microdepresiones topográficas (-1.8°C).
+                </p>
+                <div className="space-y-1.5 pt-2 border-t border-amber-900/50 font-mono text-xs">
+                  <div className="flex justify-between py-1 border-b border-emerald-950">
+                    <span className="text-slate-400">Número Richardson:</span>
+                    <span className="text-amber-300 font-bold">Ri &gt; 0.25 (Crítico)</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-emerald-950">
+                    <span className="text-slate-400">Pérdida de Yemas:</span>
+                    <span className="text-emerald-300 font-bold">0% brotes perdidos</span>
+                  </div>
+                  <div className="flex justify-between py-1">
+                    <span className="text-slate-400">Validación Térmica:</span>
+                    <span className="text-teal-300 font-bold">Termopares a 0.5m y 2m</span>
                   </div>
                 </div>
               </div>
 
               <div className="p-3.5 rounded-xl bg-black/40 border border-amber-500/20 text-[11px] text-slate-300 font-serif">
-                <em>"Permitió a la mesa de agua anticipar el estrés del acuífero antes de la temporada estival, acordando turnos de canal transparentes sin litigios."</em>
-              </div>
-            </div>
-
-            {/* Caso 3 */}
-            <div className="p-6 rounded-3xl bg-[#091f14] border border-teal-500/30 space-y-5 flex flex-col justify-between">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-teal-950 text-teal-300 border border-teal-700 font-bold uppercase">
-                    Caso 03 • ESG / EUDR
-                  </span>
-                  <span className="text-xs font-mono text-slate-400">Exportación & Viñas</span>
-                </div>
-                <h3 className="text-xl font-bold text-white">Pasaporte Verde & Rewilding</h3>
-                <p className="text-xs text-slate-300 font-serif leading-relaxed">
-                  Certificación satelital de libre deforestación (Reglamento UE 2023/1115 EUDR) y cortafuegos verde agroecológico.
-                </p>
-                <div className="space-y-2 pt-2 border-t border-teal-900/50 text-xs font-sans">
-                  <div className="flex justify-between py-1 border-b border-emerald-950">
-                    <span className="text-slate-400">Trazabilidad EUDR:</span>
-                    <span className="font-mono font-bold text-teal-300">100% de polígonos validados</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-emerald-950">
-                    <span className="text-slate-400">Corredor Biológico:</span>
-                    <span className="font-mono font-bold text-emerald-300">Peumo, Quillay y Boldo</span>
-                  </div>
-                  <div className="flex justify-between py-1">
-                    <span className="text-slate-400">Reporte Exportable:</span>
-                    <span className="font-mono font-bold text-amber-300">Dossier PDF con firma digital</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-black/40 border border-teal-500/20 text-[11px] text-slate-300 font-serif">
-                <em>"Los compradores europeos pudieron auditar el polígono del predio satelitalmente con fecha de corte de 2020 sin contratar certificadoras internacionales."</em>
+                <em>Metodología auditable para publicaciones en revistas Q1 de agrometeorología y física de fluidos geofísicos.</em>
               </div>
             </div>
 
@@ -1353,45 +1099,49 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
         </div>
       </section>
 
-      {/* ─── 7. BANNER FINAL CTA ────────────────────────────────────────────── */}
-      <section className="py-20 bg-gradient-to-t from-black to-[#07150d] text-center relative overflow-hidden">
+      {/* ─── 6. ALIANZAS I+D & FONDOS CONCURSABLES (FONDEF / HORIZON) ───────── */}
+      <section className="py-20 bg-gradient-to-t from-black to-[#07170E] text-center relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 lg:px-8 space-y-8 relative z-10">
+          
           <div className="inline-flex p-3 rounded-2xl bg-amber-400/20 border border-amber-400/40 text-amber-300">
             <Sparkles className="w-8 h-8" />
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white">
-            Lleva la inteligencia ciberfísica a tu predio o cuenca
+            AgriTwin como Plataforma Tecnológica para Proyectos Concursables
           </h2>
 
           <p className="text-slate-300 text-base sm:text-lg font-serif max-w-2xl mx-auto">
-            Configuramos el gemelo digital con las coordenadas de tu rol SII, conectamos tus sensores o estaciones meteorológicas y calibramos el modelo FAO-56 en menos de 7 días.
+            Integra nuestro Living Lab de 122.000 ha y motor ciberfísico como infraestructura habilitante en tus postulaciones a <strong>FONDEF IDeA, ANID, Horizon Europe o CORFO</strong>. Aportamos capacidades de campo validadas, hardware LoRaWAN y arquitectura de software certificada.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-2 font-mono text-xs">
             <button
-              onClick={() => setIsDemoModalOpen(true)}
-              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-sans font-extrabold text-sm shadow-2xl transition-all cursor-pointer"
+              onClick={() => {
+                setModalType('research_grant');
+                setIsDemoModalOpen(true);
+              }}
+              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold shadow-xl transition-all cursor-pointer"
             >
-              Solicitar Demostración Técnica Privada
+              Proponer Alianza para Postulación I+D
             </button>
+
             <a
-              href="https://wa.me/56976696142?text=Hola%20AgroTech%20Chile,%20deseo%20conocer%20m%C3%A1s%20sobre%20la%20implementaci%C3%B3n%20de%20AgriTwin%20en%20mi%20campo."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-4 rounded-2xl bg-[#0a2016] hover:bg-[#123122] text-emerald-300 border border-emerald-500/40 text-sm font-bold transition-all"
+              href="mailto:contacto@agrotechchile.cl?subject=Alianza%20I%2BD%20AgriTwin%20Testbed"
+              className="flex items-center gap-2 px-6 py-4 rounded-2xl bg-[#091F13] hover:bg-[#10301F] text-emerald-300 border border-emerald-500/40 font-bold transition-all"
             >
-              <PhoneCall className="w-4 h-4" />
-              <span>Conversar con un Ingeniero Agrónomo</span>
+              <Mail className="w-4 h-4 text-emerald-400" />
+              <span>Coordinar Reunión con Equipo Científico</span>
             </a>
           </div>
+
         </div>
       </section>
 
-      {/* ─── MODAL INTERACTIVO: SOLICITAR DEMOSTRACIÓN PRIVADA ───────────────── */}
+      {/* ─── MODAL INSTITUCIONAL: ACCESO A TESTBED / ALIANZAS I+D ──────────── */}
       {isDemoModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
-          <div className="bg-[#091a11] border border-emerald-500/40 rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl text-white relative max-h-[90vh] overflow-y-auto">
+          <div className="bg-[#081A10] border border-emerald-500/40 rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl text-white relative max-h-[90vh] overflow-y-auto font-sans">
             
             <button
               onClick={() => { setIsDemoModalOpen(false); setIsSubmitted(false); }}
@@ -1401,190 +1151,183 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
             </button>
 
             {!isSubmitted ? (
-              <form onSubmit={handleFormSubmit} className="space-y-5">
+              <form onSubmit={handleInstitutionalSubmit} className="space-y-5">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-mono uppercase text-amber-400 font-bold">ACCESO CORPORATIVO & B2B</span>
-                  <h3 className="text-2xl font-bold text-white">Solicitar Demostración Privada</h3>
+                  <span className="text-[10px] font-mono uppercase text-amber-400 font-bold tracking-wider">
+                    PROTOCOLO DE ACCESO INSTITUCIONAL & I+D
+                  </span>
+                  <h3 className="text-2xl font-bold text-white">
+                    {modalType === 'research_grant' ? 'Alianza para Postulación a Fondos I+D' : 'Solicitud de Sandbox & Dataset Académico'}
+                  </h3>
                   <p className="text-xs text-slate-300 font-serif">
-                    Te prepararemos una sesión en vivo con los polígonos satelitales y curvas de nivel de tu comuna o predio.
+                    Completa la ficha técnica para coordinar credenciales de API o cartas de patrocinio tecnológico institucional.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-sans">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                   <div className="space-y-1.5">
-                    <label className="text-slate-300 font-semibold">Nombre y Apellido *</label>
+                    <label className="text-slate-300 font-semibold">Investigador / Contacto *</label>
                     <input
                       type="text"
                       required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Ej. Andrés Ovalle"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-emerald-800/80 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                      value={formData.investigatorName}
+                      onChange={(e) => setFormData({ ...formData, investigatorName: e.target.value })}
+                      placeholder="Dr(a). Nombre Apellido"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-emerald-800 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 font-mono"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-slate-300 font-semibold">Email Corporativo / Personal *</label>
+                    <label className="text-slate-300 font-semibold">Institución / Centro / Universidad *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.institution}
+                      onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
+                      placeholder="Ej. INIA / U. de Talca / Fraunhofer"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-emerald-800 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 font-mono"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-slate-300 font-semibold">Email Institucional *</label>
                     <input
                       type="email"
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="andres@agricola.cl"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-emerald-800/80 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                      placeholder="investigador@instituto.cl"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-emerald-800 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 font-mono"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-slate-300 font-semibold">Teléfono o WhatsApp *</label>
-                    <input
-                      type="tel"
-                      required
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="+56 9 1234 5678"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-emerald-800/80 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-slate-300 font-semibold">Nombre del Predio o Empresa *</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.farmName}
-                      onChange={(e) => setFormData({ ...formData, farmName: e.target.value })}
-                      placeholder="Ej. Agrícola San Pedro / Fundo El Roble"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-emerald-800/80 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-sans">
-                  <div className="space-y-1.5">
-                    <label className="text-slate-300 font-semibold">Región / Comuna</label>
-                    <input
-                      type="text"
-                      value={formData.region}
-                      onChange={(e) => setFormData({ ...formData, region: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-emerald-800/80 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-slate-300 font-semibold">Superficie Aproximada</label>
+                    <label className="text-slate-300 font-semibold">Rol Académico</label>
                     <select
-                      value={formData.hectares}
-                      onChange={(e) => setFormData({ ...formData, hectares: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-emerald-800/80 text-white focus:outline-none focus:border-amber-400"
+                      value={formData.role}
+                      onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-emerald-800 text-white focus:outline-none focus:border-amber-400 font-mono"
                     >
-                      <option value="Menos de 10 ha">Menos de 10 ha (Parcelación / Familiar)</option>
-                      <option value="10 - 50 ha">10 a 50 ha (Comercial Mediano)</option>
-                      <option value="50 - 200 ha">50 a 200 ha (Agroindustria)</option>
-                      <option value="Más de 200 ha / Cuenca">Más de 200 ha / Junta de Vigilancia / APR</option>
+                      <option value="Investigador Principal (PI)">Investigador Principal (PI)</option>
+                      <option value="Co-Investigador / Postdoc">Co-Investigador / Postdoc</option>
+                      <option value="Director de Centro / Facultad">Director de Centro / Facultad</option>
+                      <option value="Estudiante de Postgrado (PhD/MSc)">Estudiante de Postgrado (PhD/MSc)</option>
+                      <option value="Gestor Tecnológico OTL">Gestor Tecnológico OTL / I+D</option>
                     </select>
                   </div>
                 </div>
 
-                <div className="space-y-1.5 text-xs font-sans">
-                  <label className="text-slate-300 font-semibold">Desafío Clave a Resolver</label>
-                  <select
-                    value={formData.interest}
-                    onChange={(e) => setFormData({ ...formData, interest: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-emerald-800/80 text-white focus:outline-none focus:border-amber-400"
-                  >
-                    <option value="Simulación de Riego FAO-56 & Heladas">Optimización de Riego FAO-56 & Heladas Catabáticas</option>
-                    <option value="Monitoreo Hidrológico de Cuenca & Pozos APR">Monitoreo Hidrológico de Cuenca & Pozos APR</option>
-                    <option value="Certificación EUDR & Pasaporte Verde">Certificación de Libre Deforestación EUDR / Pasaporte Verde</option>
-                    <option value="Pastoreo PRV & Transición Agroecológica">Pastoreo Racional Voisin (PRV) & Regenerativo</option>
-                    <option value="Integración de Cámaras Solares & Drones">AgriTwin Vision (Drones Autónomos & Cámaras 4G)</option>
-                  </select>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                  <div className="space-y-1.5">
+                    <label className="text-slate-300 font-semibold">Marco de Financiamiento / Concurso</label>
+                    <select
+                      value={formData.fundingGrant}
+                      onChange={(e) => setFormData({ ...formData, fundingGrant: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-emerald-800 text-white focus:outline-none focus:border-amber-400 font-mono"
+                    >
+                      <option value="FONDEF / ANID IDeA">FONDEF / ANID IDeA o I+D</option>
+                      <option value="Horizon Europe / Internacional">Horizon Europe / Cooperación Internacional</option>
+                      <option value="CORFO Bienes Públicos / Centros">CORFO Bienes Públicos / Centros</option>
+                      <option value="FONDECYT Regular / Iniciación">FONDECYT Regular / Iniciación</option>
+                      <option value="Financiamiento Interno Universidad">Financiamiento Propio / Interno</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-slate-300 font-semibold">Línea de Interés Principal</label>
+                    <select
+                      value={formData.researchFocus}
+                      onChange={(e) => setFormData({ ...formData, researchFocus: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-emerald-800 text-white focus:outline-none focus:border-amber-400 font-mono"
+                    >
+                      <option value="Modelación Hidroclimática & FAO-56">Modelación Hidroclimática & FAO-56</option>
+                      <option value="Dinámica Catabática de Heladas">Dinámica Catabática de Heladas</option>
+                      <option value="Monitoreo de Acuíferos & Pozos APR">Monitoreo de Acuíferos & Pozos APR</option>
+                      <option value="Trazabilidad Satelital & Carbono IPCC">Trazabilidad Satelital & Carbono IPCC</option>
+                      <option value="Despliegue de Sensores & Nodos LoRaWAN">Despliegue de Sensores & Nodos LoRaWAN</option>
+                    </select>
+                  </div>
                 </div>
 
-                <div className="pt-2 space-y-3">
+                <div className="pt-2 space-y-3 font-mono text-xs">
                   <button
                     type="submit"
-                    className="w-full py-4 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-sans font-extrabold text-sm shadow-xl flex items-center justify-center gap-2 cursor-pointer transition-all"
+                    className="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-sans font-extrabold text-sm shadow-xl flex items-center justify-center gap-2 cursor-pointer transition-all"
                   >
-                    <Send className="w-4 h-4" />
-                    <span>Confirmar Solicitud y Conectar por WhatsApp</span>
+                    <Send className="w-4 h-4 text-slate-950" />
+                    <span>Enviar Solicitud Institucional</span>
                   </button>
 
                   <div className="flex items-center justify-between text-[11px] text-slate-400 font-serif pt-1">
-                    <span>Atención técnica directa: <strong>+56 9 7669 6142</strong></span>
+                    <span>Contacto directo I+D: <strong>+56 9 7669 6142</strong></span>
                     <a
-                      href="mailto:contacto@agrotechchile.cl?subject=Solicitud%20Demostracion%20AgriTwin"
-                      className="text-amber-300 hover:underline flex items-center gap-1"
+                      href="mailto:contacto@agrotechchile.cl?subject=Solicitud%20Investigacion%20AgriTwin"
+                      className="text-amber-300 hover:underline flex items-center gap-1 font-mono"
                     >
                       <Mail className="w-3 h-3" />
                       <span>contacto@agrotechchile.cl</span>
                     </a>
                   </div>
-
-                  <p className="text-[10px] text-slate-500 text-center font-serif">
-                    Tus datos prediales se procesan bajo estricto acuerdo de confidencialidad comercial. Cero exposición pública.
-                  </p>
                 </div>
               </form>
             ) : (
-              <div className="py-6 text-center space-y-5 animate-fadeIn">
+              <div className="py-6 text-center space-y-5 animate-fadeIn font-mono">
                 <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 flex items-center justify-center mx-auto shadow-lg">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-2xl font-bold text-white">¡Solicitud Registrada con Éxito!</h3>
+                  <h3 className="text-2xl font-bold text-white font-sans">¡Solicitud Registrada en el Protocolo I+D!</h3>
                   <p className="text-sm text-slate-300 font-serif max-w-md mx-auto">
-                    Gracias <strong>{formData.name}</strong>. Hemos recibido los antecedentes de <strong>{formData.farmName}</strong> ({formData.region}).
+                    Gracias <strong>{formData.investigatorName}</strong> ({formData.institution}). Nuestro equipo de I+D revisará los antecedentes de tu línea experimental.
                   </p>
-                  <p className="text-xs text-amber-300 font-mono pt-1">
-                    Ticket de Demostración: #AT-{Math.floor(100000 + Math.random() * 900000)}
+                  <p className="text-xs text-amber-300 pt-1">
+                    Ticket Experimental: #RES-{Math.floor(100000 + Math.random() * 900000)}
                   </p>
                 </div>
 
-                {/* Acciones Inmediatas de Canal B2B */}
-                <div className="p-4 rounded-2xl bg-black/40 border border-emerald-500/30 space-y-3 text-left">
-                  <span className="text-[11px] font-mono text-amber-300 uppercase font-bold block">
-                    Canales de Enlace Directo
+                <div className="p-4 rounded-2xl bg-black/40 border border-emerald-500/30 space-y-3 text-left text-xs">
+                  <span className="text-[11px] text-amber-300 uppercase font-bold block">
+                    Canales Inmediatos
                   </span>
                   
-                  <div className="flex flex-col sm:flex-row gap-2">
+                  <div className="flex flex-col sm:flex-row gap-2 font-sans font-bold">
                     <a
-                      href={`https://wa.me/56976696142?text=Hola%20AgroTech%20Chile,%20solicito%20Demostraci%C3%B3n%20Privada%20de%20AgriTwin.%0A%0A*Contacto:*%20${encodeURIComponent(formData.name)}%0A*Predio:*%20${encodeURIComponent(formData.farmName)}%0A*Regi%C3%B3n:*%20${encodeURIComponent(formData.region)}%0A*Superficie:*%20${encodeURIComponent(formData.hectares)}%0A*Cultivo:*%20${encodeURIComponent(formData.cropType)}%0A*Inter%C3%A9s:*%20${encodeURIComponent(formData.interest)}`}
+                      href={`https://wa.me/56976696142?text=Hola%20AgroTech%20Chile,%20solicito%20acceso%20institucional%20a%20AgriTwin%20Testbed.%0A%0A*Investigador:*%20${encodeURIComponent(formData.investigatorName)}%0A*Institución:*%20${encodeURIComponent(formData.institution)}%0A*Fondo:*%20${encodeURIComponent(formData.fundingGrant)}%0A*Línea:*%20${encodeURIComponent(formData.researchFocus)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-sans text-xs font-bold flex items-center justify-center gap-1.5 shadow-md"
+                      className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center gap-1.5 shadow-md"
                     >
                       <PhoneCall className="w-3.5 h-3.5" />
-                      <span>Abrir WhatsApp Ahora</span>
+                      <span>Conectar por WhatsApp</span>
                     </a>
 
                     <a
-                      href={`mailto:contacto@agrotechchile.cl?subject=Solicitud%20Demostracion%20AgriTwin%20-%20${encodeURIComponent(formData.farmName)}&body=Contacto:%20${encodeURIComponent(formData.name)}%0AEmail:%20${encodeURIComponent(formData.email)}%0ATeléfono:%20${encodeURIComponent(formData.phone)}%0APredio:%20${encodeURIComponent(formData.farmName)}%0ARegión:%20${encodeURIComponent(formData.region)}%0ASuperficie:%20${encodeURIComponent(formData.hectares)}%0AInterés:%20${encodeURIComponent(formData.interest)}`}
-                      className="flex-1 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-sans text-xs font-bold flex items-center justify-center gap-1.5 border border-slate-600"
+                      href={`mailto:contacto@agrotechchile.cl?subject=Solicitud%20I%2BD%20AgriTwin%20-%20${encodeURIComponent(formData.institution)}&body=Investigador:%20${encodeURIComponent(formData.investigatorName)}%0AInstitución:%20${encodeURIComponent(formData.institution)}%0AEmail:%20${encodeURIComponent(formData.email)}%0AFondo:%20${encodeURIComponent(formData.fundingGrant)}%0ALínea:%20${encodeURIComponent(formData.researchFocus)}`}
+                      className="flex-1 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center gap-1.5 border border-slate-600"
                     >
                       <Mail className="w-3.5 h-3.5 text-amber-400" />
-                      <span>Enviar por Email</span>
+                      <span>Enviar Copia por Email</span>
                     </a>
                   </div>
 
                   <div className="pt-2 border-t border-emerald-950 flex items-center justify-between">
-                    <span className="text-[11px] text-slate-400 font-serif">Mientras tanto, puedes revisar la Carta Oficial:</span>
+                    <span className="text-[11px] text-slate-400 font-serif">Mientras tanto, consulta el dossier oficial:</span>
                     <a
                       href="https://danisantanderurrutia-coder.github.io/agritwin-app/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs font-mono font-bold text-amber-300 hover:underline flex items-center gap-1"
+                      className="text-xs font-bold text-amber-300 hover:underline flex items-center gap-1"
                     >
-                      <span>Ver Carta B2B en Vivo</span>
+                      <span>Ver Dossier en Vivo</span>
                       <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
                 </div>
 
-                <div className="pt-2 flex justify-center gap-3">
+                <div className="pt-2 flex justify-center gap-3 font-sans font-bold">
                   <button
                     onClick={() => { setIsDemoModalOpen(false); setIsSubmitted(false); }}
-                    className="px-6 py-2.5 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 text-white font-sans text-xs font-bold cursor-pointer"
+                    className="px-6 py-2.5 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 text-white text-xs cursor-pointer"
                   >
                     Cerrar y Volver a la Web
                   </button>
@@ -1602,7 +1345,8 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
 
 // Helper Icon para Temperatura
 function ThermometerIcon({ temp }: { temp: number }) {
-  if (temp <= 0) return <span className="text-cyan-400">❄️</span>;
+  if (temp <= 0) return <span className="text-sky-300">❄️</span>;
   if (temp < 15) return <span className="text-amber-300">🌤️</span>;
-  return <span className="text-amber-500">☀️</span>;
+  if (temp >= 32) return <span className="text-red-400">🔥</span>;
+  return <span className="text-amber-400">☀️</span>;
 }
