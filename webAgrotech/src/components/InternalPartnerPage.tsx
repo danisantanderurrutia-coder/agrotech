@@ -7,6 +7,7 @@ import { SocialMediaKitSection } from './SocialMediaKitSection';
 import { FounderAcademySection } from './FounderAcademySection';
 import { ChangelogHistorySection } from './ChangelogHistorySection';
 import { ExecutiveBulletinsSection } from './ExecutiveBulletinsSection';
+import { BrandIdentitySection } from './BrandIdentitySection';
 import { Lock, ArrowLeft, Presentation, Share2, Layers, BarChart3, Wrench, ShieldCheck, Sparkles, BookOpen, Sprout, History, TrendingUp, FileText } from 'lucide-react';
 
 interface InternalPartnerPageProps {
@@ -15,7 +16,7 @@ interface InternalPartnerPageProps {
 }
 
 export const InternalPartnerPage: React.FC<InternalPartnerPageProps> = ({ onNavigate, onOpenPitchDeck }) => {
-  const [internalTab, setInternalTab] = useState<'changelog' | 'commercial' | 'bulletins' | 'academy' | 'economics' | 'revenue' | 'bom' | 'social'>('bulletins');
+  const [internalTab, setInternalTab] = useState<'naming' | 'bulletins' | 'changelog' | 'commercial' | 'academy' | 'economics' | 'revenue' | 'bom' | 'social'>('naming');
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     try {
       return sessionStorage.getItem('agrotech_admin_auth') === 'true';
@@ -182,6 +183,18 @@ export const InternalPartnerPage: React.FC<InternalPartnerPageProps> = ({ onNavi
           <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-emerald-900/60">
             <div className="flex flex-wrap items-center gap-2">
               <button
+                onClick={() => setInternalTab('naming')}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sans text-xs font-bold transition-all ${
+                  internalTab === 'naming'
+                    ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400/50 font-black'
+                    : 'bg-emerald-950/80 border border-emerald-500/40 text-emerald-200 hover:bg-emerald-900'
+                }`}
+              >
+                <Sparkles className="w-4 h-4 text-amber-400" />
+                <span>Naming & Holding (2026)</span>
+              </button>
+
+              <button
                 onClick={() => setInternalTab('bulletins')}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sans text-xs font-bold transition-all ${
                   internalTab === 'bulletins'
@@ -292,6 +305,10 @@ export const InternalPartnerPage: React.FC<InternalPartnerPageProps> = ({ onNavi
 
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         
+        {internalTab === 'naming' && (
+          <BrandIdentitySection initialTab="naming" />
+        )}
+
         {internalTab === 'bulletins' && (
           <ExecutiveBulletinsSection />
         )}

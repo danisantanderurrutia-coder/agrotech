@@ -194,9 +194,9 @@ export function App() {
           />
         )}
 
-        {currentView === 'brand' && (
+        {(currentView === 'brand' || currentView === 'naming') && (
           <div className="max-w-7xl mx-auto px-4 lg:px-8 py-8 animate-fadeIn">
-            <BrandIdentitySection />
+            <BrandIdentitySection initialTab={currentView === 'naming' ? 'naming' : 'visual'} />
           </div>
         )}
       </main>
@@ -205,6 +205,7 @@ export function App() {
       {!isAgriTwin && (
         <Footer 
           onOpenPitchDeck={() => setIsPitchDeckOpen(true)}
+          onNavigate={handleNavigate}
         />
       )}
 

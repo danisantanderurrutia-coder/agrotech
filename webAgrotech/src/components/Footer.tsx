@@ -3,9 +3,10 @@ import { Presentation, Mail, MapPin, Globe, Sparkles, Send, CheckCircle } from '
 
 interface FooterProps {
   onOpenPitchDeck: () => void;
+  onNavigate?: (viewId: string) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenPitchDeck }) => {
+export const Footer: React.FC<FooterProps> = ({ onOpenPitchDeck, onNavigate }) => {
   const [contactSubmitted, setContactSubmitted] = useState(false);
   const [email, setEmail] = useState('');
 
@@ -100,13 +101,24 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPitchDeck }) => {
               </p>
             </div>
 
-            <button
-              onClick={onOpenPitchDeck}
-              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold text-xs font-sans shadow-md hover:brightness-110 transition-all flex items-center justify-center gap-2"
-            >
-              <Presentation className="w-4 h-4 text-white" />
-              <span>Abrir Pitch Deck</span>
-            </button>
+            <div className="space-y-2">
+              <button
+                onClick={onOpenPitchDeck}
+                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold text-xs font-sans shadow-md hover:brightness-110 transition-all flex items-center justify-center gap-2"
+              >
+                <Presentation className="w-4 h-4 text-white" />
+                <span>Abrir Pitch Deck</span>
+              </button>
+              {onNavigate && (
+                <button
+                  onClick={() => onNavigate('naming')}
+                  className="w-full py-2 rounded-xl bg-[#071810] border border-emerald-500/40 hover:border-amber-400 text-emerald-200 hover:text-white font-mono text-[11px] transition-all flex items-center justify-center gap-1.5"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Taller Naming Holding [2026]</span>
+                </button>
+              )}
+            </div>
           </div>
 
         </div>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chile AgroTech // Naming Strategy Deck</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .slide {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: scale(0.985);
+    }
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: scale(1);
+    }
+    .glass-card {
+      background: rgba(22, 27, 34, 0.82);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glow-blue {
+      box-shadow: 0 0 50px -15px rgba(37, 99, 235, 0.35);
+    }
+    .glow-emerald {
+      box-shadow: 0 0 50px -15px rgba(16, 185, 129, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-[#0B0D11] text-[#F3F4F6] h-full overflow-hidden flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+
+  <!-- Top Progress Bar & Header -->
+  <header class="w-full border-b border-white/10 bg-[#0F1218]/90 backdrop-blur px-6 py-3.5 flex items-center justify-between z-50">
+    <div class="flex items-center space-x-3">
+      <div class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></div>
+      <span class="font-mono text-xs tracking-widest uppercase font-semibold text-neutral-400">CHILE AGROTECH // STRATEGY ROOM</span>
+      <span class="text-neutral-600 font-mono text-xs">/</span>
+      <span class="font-mono text-xs text-blue-400 font-medium">HOLDING NAMING DECK</span>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex items-center space-x-4">
+      <button id="toggleNotesBtn" class="font-mono text-xs px-3 py-1.5 rounded-md border border-white/10 hover:border-white/30 text-neutral-300 hover:text-white transition flex items-center space-x-1.5 bg-white/5">
+        <span>Notas Orador [N]</span>
+      </button>
+      <div class="font-mono text-xs bg-white/5 px-3 py-1.5 rounded-md border border-white/10 text-neutral-300 font-medium tracking-wider">
+        <span id="currentSlideNum">01</span> <span class="text-neutral-500">/</span> <span>10</span>
+      </div>
+      <button id="fullscreenBtn" class="p-1.5 text-neutral-400 hover:text-white transition" title="Pantalla completa">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Progress Bar Line -->
+  <div class="w-full bg-white/5 h-1">
+    <div id="progressBar" class="bg-gradient-to-r from-blue-600 to-emerald-400 h-1 transition-all duration-300 ease-out" style="width: 10%;"></div>
+  </div>
+
+  <!-- Main Presentation Canvas -->
+  <main class="flex-1 relative flex items-center justify-center p-6 md:p-12 overflow-y-auto">
+    
+    <!-- SLIDE 1: PORTADA -->
+    <section class="slide active w-full max-w-5xl flex-col items-center justify-center text-center py-10" data-notes="Daniel abre la reunión estableciendo autoridad: Hoy no venimos a votar qué palabra suena bonita. Venimos a bautizar el holding corporativo matriz para los próximos 20 años.">
+      <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-6 uppercase tracking-wider">
+        <span>Sesión Extraordinaria de Directorio</span>
+      </div>
+      <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight max-w-4xl">
+        LA ARQUITECTURA <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-300 to-emerald-400">DEL NOMBRE</span>
+      </h1>
+      <p class="text-lg md:text-xl text-neutral-400 max-w-2xl font-light mb-10 leading-relaxed">
+        Definiendo la nave nodriza de <strong class="text-white font-medium">Chile AgroTech & AgriTwin</strong>: el equilibrio exacto entre la roca andina y el sensor orbital.
+      </p>
+      <div class="flex items-center space-x-6 text-xs font-mono text-neutral-500 border-t border-white/10 pt-6">
+        <span>MODERADOR: DANIEL SANTANDER</span>
+        <span>•</span>
+        <span>MAULE SUR · CHILE</span>
+        <span>•</span>
+        <span>HORIZONTE 2026-2046</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: ARQUITECTURA DE MARCA -->
+    <section class="slide w-full max-w-5xl flex-col justify-center py-6" data-notes="Explicar con claridad que AgriTwin no desaparece. AgriTwin es el motor de software. Fundo Meniel es el Living Lab de campo. Terran es el producto de parcelas. Lo que buscamos hoy es el nombre del Holding que firma contratos e invierte.">
+      <div class="mb-6">
+        <span class="text-xs font-mono uppercase tracking-widest text-blue-400">01 / ESTRUCTURA INSTITUCIONAL</span>
+        <h2 class="text-3xl font-bold text-white mt-1">La Nave Nodriza vs. Los Módulos de Misión</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-auto">
+        <!-- Top Level Umbrella Banner -->
+        <div class="md:col-span-3 glass-card p-6 rounded-2xl border-2 border-blue-500/30 glow-blue text-center">
+          <span class="text-xs font-mono uppercase tracking-widest text-blue-400 block mb-1">LA DECISIÓN DE HOY</span>
+          <h3 class="text-2xl font-black text-white tracking-wider">[ ? ? ? ? ? ? ? ? ? ? ]</h3>
+          <p class="text-neutral-400 text-sm mt-1 max-w-xl mx-auto font-light">
+            Holding Corporativo Matriz · Interlocutor ante Corfo, fondos de inversión, banca y titular de contratos.
+          </p>
+        </div>
+
+        <!-- Sub-brands -->
+        <div class="glass-card p-6 rounded-xl border border-white/10">
+          <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-mono font-bold text-sm mb-4">01</div>
+          <h4 class="text-lg font-bold text-white">AgriTwin</h4>
+          <span class="text-xs font-mono text-blue-400 block mb-2">MOTOR DE SOFTWARE & TELEMETRÍA</span>
+          <p class="text-neutral-400 text-xs leading-relaxed font-light">
+            Gemelo digital biofísico 3D, reflectancia satelital Sentinel-2, modelos FAO-56 y algoritmos de balance hídrico.
+          </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-xl border border-white/10">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-mono font-bold text-sm mb-4">02</div>
+          <h4 class="text-lg font-bold text-white">Fundo Meniel</h4>
+          <span class="text-xs font-mono text-emerald-400 block mb-2">LIVING LAB & CAMPO EXPERIMENTAL</span>
+          <p class="text-neutral-400 text-xs leading-relaxed font-light">
+            Centro de I+D en Parral, educación campesina, bosque comestible, agricultura sintrópica y soberanía de cuenca.
+          </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-xl border border-white/10">
+          <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-mono font-bold text-sm mb-4">03</div>
+          <h4 class="text-lg font-bold text-white">Terran / GeoReports</h4>
+          <span class="text-xs font-mono text-purple-400 block mb-2">INTELIGENCIA B2C & PROPRIETARY DATA</span>
+          <p class="text-neutral-400 text-xs leading-relaxed font-light">
+            Informes de riesgo hídrico, pendientes e inundación para compradores de parcelas y familias.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: AUTOPSIA DE CASOS -->
+    <section class="slide w-full max-w-5xl flex-col justify-center py-6" data-notes="Mostrar por qué las opciones anteriores fallaban. No para burlarse, sino para rescatar lo positivo: de Buen Vivir rescatamos la comunidad; de Solarpunks la energía y fotosíntesis; pero descartamos las palabras por su carga negativa en negocios.">
+      <div class="mb-6">
+        <span class="text-xs font-mono uppercase tracking-widest text-red-400">02 / LECCIONES APRENDIDAS</span>
+        <h2 class="text-3xl font-bold text-white mt-1">Autopsia: Por qué no funcionan estos 3 nombres</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card p-6 rounded-xl border-t-2 border-red-500/50">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-mono text-neutral-400">CASO A</span>
+            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-red-500/10 text-red-400 font-semibold">GENÉRICO</span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">«AgroTech»</h3>
+          <p class="text-neutral-400 text-xs leading-relaxed mb-4">
+            Es una <strong>categoría de mercado</strong>, no una marca. Es como fundar una aerolínea llamada "Aviones".
+          </p>
+          <div class="p-3 bg-white/5 rounded-lg text-xs font-mono text-neutral-300 space-y-1">
+            <div>• Registro INAPI: <span class="text-red-400">Imposible</span></div>
+            <div>• Recordación mental: <span class="text-red-400">Cero</span></div>
+          </div>
+        </div>
+
+        <div class="glass-card p-6 rounded-xl border-t-2 border-amber-500/50">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-mono text-neutral-400">CASO B</span>
+            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-500/10 text-amber-400 font-semibold">DERIVA SEMÁNTICA</span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">«Buen Vivir»</h3>
+          <p class="text-neutral-400 text-xs leading-relaxed mb-4">
+            Aunque proviene del <em>Sumak Kawsay</em>, en el mercado suena a centro de yoga, té de hierbas o una ONG informal.
+          </p>
+          <div class="p-3 bg-white/5 rounded-lg text-xs font-mono text-neutral-300 space-y-1">
+            <div>• Autoridad técnica: <span class="text-amber-400">Se diluye</span></div>
+            <div>• Reacción banqueros: <span class="text-amber-400">Desconfianza</span></div>
+          </div>
+        </div>
+
+        <div class="glass-card p-6 rounded-xl border-t-2 border-purple-500/50">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-mono text-neutral-400">CASO C</span>
+            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-purple-500/10 text-purple-400 font-semibold">CONTRACULTURA</span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">«Solarpunks»</h3>
+          <p class="text-neutral-400 text-xs leading-relaxed mb-4">
+            La filosofía es sublime, pero el sufijo <strong>"punk"</strong> huele a videojuego, rebeldía adolescente o proyecto cripto/NFT.
+          </p>
+          <div class="p-3 bg-white/5 rounded-lg text-xs font-mono text-neutral-300 space-y-1">
+            <div>• En la SNA / Corfo: <span class="text-purple-400">Descalificado</span></div>
+            <div>• Rescate: <span class="text-emerald-400">Tomamos su alma</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: LAS 8 REGLAS DE ORO -->
+    <section class="slide w-full max-w-5xl flex-col justify-center py-6" data-notes="Recorrer rápidamente las 8 reglas. Destacar la prueba de la radio de campo: si el tractorista o el regador no lo entiende por radio, o si la contadora tiene que deletrearlo tres veces para la factura, queda descalificado.">
+      <div class="mb-5">
+        <span class="text-xs font-mono uppercase tracking-widest text-emerald-400">03 / EL FILTRO DE CALIDAD</span>
+        <h2 class="text-3xl font-bold text-white mt-1">Las 8 Reglas Innegociables de Naming</h2>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="glass-card p-4 rounded-xl border border-white/5">
+          <span class="text-blue-400 font-mono text-xs font-bold block mb-1">01 / FONÉTICA</span>
+          <h4 class="text-sm font-semibold text-white">Prueba de la Radio</h4>
+          <p class="text-neutral-400 text-xs mt-1 font-light">Comprensible en el polvo de Parral por radio y fácil de dictar en una factura.</p>
+        </div>
+
+        <div class="glass-card p-4 rounded-xl border border-white/5">
+          <span class="text-blue-400 font-mono text-xs font-bold block mb-1">02 / DIALÉCTICA</span>
+          <h4 class="text-sm font-semibold text-white">Tierra + Satélite</h4>
+          <p class="text-neutral-400 text-xs mt-1 font-light">Ni pura tecnología fría de Silicon Valley, ni vivero campesino aislado.</p>
+        </div>
+
+        <div class="glass-card p-4 rounded-xl border border-white/5">
+          <span class="text-blue-400 font-mono text-xs font-bold block mb-1">03 / HOLDING</span>
+          <h4 class="text-sm font-semibold text-white">Paraguas Matriz</h4>
+          <p class="text-neutral-400 text-xs mt-1 font-light">No describir una función específica que mañana quede obsoleta.</p>
+        </div>
+
+        <div class="glass-card p-4 rounded-xl border border-white/5">
+          <span class="text-blue-400 font-mono text-xs font-bold block mb-1">04 / ESCALA</span>
+          <h4 class="text-sm font-semibold text-white">Vigencia Global</h4>
+          <p class="text-neutral-400 text-xs mt-1 font-light">Que suene impecable en Curicó, Mendoza, Lima o California.</p>
+        </div>
+
+        <div class="glass-card p-4 rounded-xl border border-white/5">
+          <span class="text-emerald-400 font-mono text-xs font-bold block mb-1">05 / DISEÑO</span>
+          <h4 class="text-sm font-semibold text-white">Peso Tipográfico</h4>
+          <p class="text-neutral-400 text-xs mt-1 font-light">Monolítico en mayúsculas sostenidas sobre papel mate o maquinaria.</p>
+        </div>
+
+        <div class="glass-card p-4 rounded-xl border border-white/5">
+          <span class="text-emerald-400 font-mono text-xs font-bold block mb-1">06 / CIENCIA</span>
+          <h4 class="text-sm font-semibold text-white">Rigor vs. Mito</h4>
+          <p class="text-neutral-400 text-xs mt-1 font-light">Anclado en biofísica y balance hídrico; cero dogmas esotéricos.</p>
+        </div>
+
+        <div class="glass-card p-4 rounded-xl border border-white/5">
+          <span class="text-emerald-400 font-mono text-xs font-bold block mb-1">07 / LEGAL</span>
+          <h4 class="text-sm font-semibold text-white">Blindaje INAPI</h4>
+          <p class="text-neutral-400 text-xs mt-1 font-light">Registrable en clases 9, 35 y 42 con dominios web limpios.</p>
+        </div>
+
+        <div class="glass-card p-4 rounded-xl border border-white/5">
+          <span class="text-emerald-400 font-mono text-xs font-bold block mb-1">08 / MADUREZ</span>
+          <h4 class="text-sm font-semibold text-white">Anti-Cliché Startup</h4>
+          <p class="text-neutral-400 text-xs mt-1 font-light">Prohibidos inventos estilo Agrofy, Plantix, Cultivaa o Farmapp.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: RUTAS 1 & 2 -->
+    <section class="slide w-full max-w-5xl flex-col justify-center py-6" data-notes="Contraste entre los dos primeros mundos: El polo de la roca y la cuenca (Ruta 1) versus el polo del satélite y la reflectancia espectral (Ruta 2).">
+      <div class="mb-5">
+        <span class="text-xs font-mono uppercase tracking-widest text-neutral-400">04 / RUTAS DE DECISIÓN · BLOQUE A</span>
+        <h2 class="text-3xl font-bold text-white mt-1">La Tierra Profunda vs. La Órbita Exacta</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Ruta 1 -->
+        <div class="glass-card p-7 rounded-2xl border-l-4 border-amber-600">
+          <span class="text-xs font-mono text-amber-500 font-semibold block mb-1">RUTA 01 · TECTÓNICA & SUELO</span>
+          <h3 class="text-2xl font-bold text-white mb-2">La Solidez Andina</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed mb-6 font-light">
+            Inspirada en la estratigrafía, la roca madre, las napas subterráneas y los sedimentos aluviales del Maule. Transmite gravitas, patrimonio y permanencia de 100 años.
+          </p>
+          <div class="bg-black/30 p-4 rounded-xl space-y-2 border border-white/5">
+            <div class="text-xs font-mono text-neutral-300"><span class="text-amber-400 font-semibold">Fortaleza:</span> Máxima credibilidad ante terratenientes tradicionales y banca.</div>
+            <div class="text-xs font-mono text-neutral-300"><span class="text-red-400 font-semibold">Riesgo:</span> Puede sonar inerte si no se proyecta la vida y los datos.</div>
+          </div>
+        </div>
+
+        <!-- Ruta 2 -->
+        <div class="glass-card p-7 rounded-2xl border-l-4 border-blue-500">
+          <span class="text-xs font-mono text-blue-400 font-semibold block mb-1">RUTA 02 · ESPECTRAL & CARTOGRÁFICA</span>
+          <h3 class="text-2xl font-bold text-white mb-2">La Mirada Orbital</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed mb-6 font-light">
+            Inspirada en la descomposición de la luz, la reflectancia del infrarrojo cercano, la matemática espacial y los vectores de precisión suiza.
+          </p>
+          <div class="bg-black/30 p-4 rounded-xl space-y-2 border border-white/5">
+            <div class="text-xs font-mono text-neutral-300"><span class="text-blue-400 font-semibold">Fortaleza:</span> Posicionamiento aeroespacial y de tecnología de grado militar.</div>
+            <div class="text-xs font-mono text-neutral-300"><span class="text-red-400 font-semibold">Riesgo:</span> Puede resultar frío o distante para el campesino tradicional.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: RUTAS 3 & 4 -->
+    <section class="slide w-full max-w-5xl flex-col justify-center py-6" data-notes="Contraste entre la identidad chilena sofisticada (estilo viña de exportación) y el monolito abstracto (estilo Palantir o Linear).">
+      <div class="mb-5">
+        <span class="text-xs font-mono uppercase tracking-widest text-neutral-400">05 / RUTAS DE DECISIÓN · BLOQUE B</span>
+        <h2 class="text-3xl font-bold text-white mt-1">Identidad de Raíz vs. Autoridad Abstracta</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Ruta 3 -->
+        <div class="glass-card p-7 rounded-2xl border-l-4 border-emerald-600">
+          <span class="text-xs font-mono text-emerald-500 font-semibold block mb-1">RUTA 03 · RAÍZ CHILENA ELEVADA</span>
+          <h3 class="text-2xl font-bold text-white mb-2">El Patrimonio Editorial</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed mb-6 font-light">
+            Nombres anclados en la toponimia noble del Maule, vientos andinos y materiales nobles (greda, cuencas cordilleranas) tratados con estética de lujo internacional.
+          </p>
+          <div class="bg-black/30 p-4 rounded-xl space-y-2 border border-white/5">
+            <div class="text-xs font-mono text-neutral-300"><span class="text-emerald-400 font-semibold">Fortaleza:</span> Empatía territorial instantánea y orgullo país genuino.</div>
+            <div class="text-xs font-mono text-neutral-300"><span class="text-red-400 font-semibold">Riesgo:</span> Requiere calibración para no parecer folclorismo de postal.</div>
+          </div>
+        </div>
+
+        <!-- Ruta 4 -->
+        <div class="glass-card p-7 rounded-2xl border-l-4 border-neutral-400">
+          <span class="text-xs font-mono text-neutral-400 font-semibold block mb-1">RUTA 04 · MONOLITO INSTITUCIONAL</span>
+          <h3 class="text-2xl font-bold text-white mb-2">La Soberanía del Criterio</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed mb-6 font-light">
+            Sustantivos de la lógica matemática y la filosofía del dato (estilo Palantir, Linear, Vitra). La empresa no opina; entrega la verdad incontrovertible del territorio.
+          </p>
+          <div class="bg-black/30 p-4 rounded-xl space-y-2 border border-white/5">
+            <div class="text-xs font-mono text-neutral-300"><span class="text-neutral-300 font-semibold">Fortaleza:</span> Elegancia atemporal, neutralidad absoluta y poder corporativo.</div>
+            <div class="text-xs font-mono text-neutral-300"><span class="text-red-400 font-semibold">Riesgo:</span> Exige un diseño gráfico impecable para no sonar genérico.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: RUTAS 5 & 6 -->
+    <section class="slide w-full max-w-5xl flex-col justify-center py-6" data-notes="Llegamos al núcleo de la visión de Daniel: la energía solar acelerando la fotosíntesis (Ruta 5) y la comunidad campesina con Living Lab y regeneración (Ruta 6).">
+      <div class="mb-5">
+        <span class="text-xs font-mono uppercase tracking-widest text-emerald-400">06 / RUTAS DE DECISIÓN · BLOQUE C</span>
+        <h2 class="text-3xl font-bold text-white mt-1">El Futuro Radiante & La Red Viva</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Ruta 5 -->
+        <div class="glass-card p-7 rounded-2xl border-l-4 border-yellow-400">
+          <span class="text-xs font-mono text-yellow-400 font-semibold block mb-1">RUTA 05 · TECNO-OPTIMISMO (SOLARPUNK ELEVADO)</span>
+          <h3 class="text-2xl font-bold text-white mb-2">Fotosíntesis + Silicio</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed mb-6 font-light">
+            La máquina al servicio de la abundancia vegetal. El sol andino capturado en sensores fotovoltaicos que alimentan la inteligencia de la cuenca.
+          </p>
+          <div class="bg-black/30 p-4 rounded-xl space-y-2 border border-white/5">
+            <div class="text-xs font-mono text-neutral-300"><span class="text-yellow-400 font-semibold">Fortaleza:</span> Magnetismo absoluto para talento joven y fondos climáticos globales.</div>
+            <div class="text-xs font-mono text-neutral-300"><span class="text-red-400 font-semibold">Riesgo:</span> Cuidar que no parezca una empresa de venta de paneles domiciliarios.</div>
+          </div>
+        </div>
+
+        <!-- Ruta 6 -->
+        <div class="glass-card p-7 rounded-2xl border-l-4 border-teal-400">
+          <span class="text-xs font-mono text-teal-400 font-semibold block mb-1">RUTA 06 · SIMBIOSIS & LIVING LAB</span>
+          <h3 class="text-2xl font-bold text-white mb-2">Comunidad y Regeneración</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed mb-6 font-light">
+            El corazón moral de Daniel Santander: educar personas, sanar ecosistemas, bosques productivos y animales coexistiendo con ciencia de alta precisión.
+          </p>
+          <div class="bg-black/30 p-4 rounded-xl space-y-2 border border-white/5">
+            <div class="text-xs font-mono text-neutral-300"><span class="text-teal-400 font-semibold">Fortaleza:</span> Propósito profundo, lealtad de la comunidad y trascendencia real.</div>
+            <div class="text-xs font-mono text-neutral-300"><span class="text-red-400 font-semibold">Riesgo:</span> Debe sonar a ciencia rigurosa para no parecer una ONG asistencialista.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: TABLA DE SÍNTESIS -->
+    <section class="slide w-full max-w-5xl flex-col justify-center py-6" data-notes="Usar esta tabla para fijar el mapa completo antes de votar. Pedirle al equipo que identifique cuáles 2 rutas resuenan con la esencia del proyecto.">
+      <div class="mb-5">
+        <span class="text-xs font-mono uppercase tracking-widest text-blue-400">07 / MAPA COMPARATIVO</span>
+        <h2 class="text-3xl font-bold text-white mt-1">Matriz de Síntesis de las 6 Rutas</h2>
+      </div>
+
+      <div class="glass-card rounded-2xl border border-white/10 overflow-hidden">
+        <table class="w-full text-left text-xs font-mono">
+          <thead class="bg-white/5 text-neutral-400 border-b border-white/10">
+            <tr>
+              <th class="p-4">Ruta Conceptual</th>
+              <th class="p-4">Emoción Dominante</th>
+              <th class="p-4">Mayor Fortaleza</th>
+              <th class="p-4">Riesgo a Neutralizar</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5 text-neutral-300 font-light">
+            <tr class="hover:bg-white/[0.02]">
+              <td class="p-4 font-semibold text-amber-400">1. Tectónica & Suelo</td>
+              <td class="p-4">Peso y Solidez</td>
+              <td class="p-4">Confianza bancaria y patrimonial</td>
+              <td class="p-4 text-neutral-400">Sentirse inerte o sin vida</td>
+            </tr>
+            <tr class="hover:bg-white/[0.02]">
+              <td class="p-4 font-semibold text-blue-400">2. Espectral & Órbita</td>
+              <td class="p-4">Precisión Fría</td>
+              <td class="p-4">Percepción de alta tecnología</td>
+              <td class="p-4 text-neutral-400">Parecer ajeno al campesino</td>
+            </tr>
+            <tr class="hover:bg-white/[0.02]">
+              <td class="p-4 font-semibold text-emerald-400">3. Raíz Chilena</td>
+              <td class="p-4">Orgullo Territorial</td>
+              <td class="p-4">Conexión cultural inmediata</td>
+              <td class="p-4 text-neutral-400">Caer en folclorismo local</td>
+            </tr>
+            <tr class="hover:bg-white/[0.02]">
+              <td class="p-4 font-semibold text-neutral-200">4. Monolito Abstracto</td>
+              <td class="p-4">Autoridad Silenciosa</td>
+              <td class="p-4">Elegancia atemporal corporativa</td>
+              <td class="p-4 text-neutral-400">Sonar distante o burocrático</td>
+            </tr>
+            <tr class="hover:bg-white/[0.02]">
+              <td class="p-4 font-semibold text-yellow-400">5. Tecno-Optimismo</td>
+              <td class="p-4">Energía y Futuro</td>
+              <td class="p-4">Magnetismo para innovación</td>
+              <td class="p-4 text-neutral-400">Confusión con instaladores solares</td>
+            </tr>
+            <tr class="hover:bg-white/[0.02]">
+              <td class="p-4 font-semibold text-teal-400">6. Simbiosis & Living Lab</td>
+              <td class="p-4">Vida y Pertenencia</td>
+              <td class="p-4">Inspiración comunitaria profunda</td>
+              <td class="p-4 text-neutral-400">Parecer ONG sin modelo comercial</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: DINÁMICA DE VOTACIÓN -->
+    <section class="slide w-full max-w-5xl flex-col justify-center py-6" data-notes="Iniciar el cronómetro de 30 minutos. Paso 1: descartar 3 rutas y quedarse con 2 o 3 finalistas. Paso 2: lluvia de ideas de nombres dentro de esas rutas ganadoras.">
+      <div class="mb-5">
+        <span class="text-xs font-mono uppercase tracking-widest text-emerald-400">08 / TALLER INTERACTIVO</span>
+        <h2 class="text-3xl font-bold text-white mt-1">Cómo Decidimos Hoy (30 Minutos)</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card p-6 rounded-2xl border border-white/10 text-center">
+          <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-mono font-bold mx-auto mb-4">1</div>
+          <h3 class="text-lg font-bold text-white mb-2">Eliminar Rutas</h3>
+          <span class="text-xs font-mono text-blue-400 block mb-3">10 MINUTOS</span>
+          <p class="text-neutral-400 text-xs leading-relaxed font-light">
+            Cada miembro descarta 3 rutas de la tabla. Identificamos por mayoría las <strong>2 o 3 avenidas finalistas</strong>.
+          </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl border border-white/10 text-center">
+          <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-mono font-bold mx-auto mb-4">2</div>
+          <h3 class="text-lg font-bold text-white mb-2">Propuestas Enmarcadas</h3>
+          <span class="text-xs font-mono text-emerald-400 block mb-3">10 MINUTOS</span>
+          <p class="text-neutral-400 text-xs leading-relaxed font-light">
+            Lluvia de nombres nuevos propuesta por el equipo, pero <em>únicamente</em> dentro de las rutas ganadoras.
+          </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl border border-white/10 text-center">
+          <div class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-mono font-bold mx-auto mb-4">3</div>
+          <h3 class="text-lg font-bold text-white mb-2">Matriz de Calificación</h3>
+          <span class="text-xs font-mono text-purple-400 block mb-3">10 MINUTOS</span>
+          <p class="text-neutral-400 text-xs leading-relaxed font-light">
+            Sometemos la terna a votación objetiva: Fonética (1-5), Tensión Dialéctica (1-5), Autoridad (1-5) y Comunidad (1-5).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: CONCLUSIÓN -->
+    <section class="slide w-full max-w-4xl flex-col items-center justify-center text-center py-12" data-notes="Cierre solemne de Daniel: No estamos eligiendo un nombre bonito para hoy; estamos levantando la bandera con la que transformaremos el territorio.">
+      <div class="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-8 glow-blue">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+      </div>
+      <blockquote class="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight mb-8">
+        "No estamos eligiendo una palabra que nos guste hoy.<br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Estamos izando la bandera</span> bajo la cual construiremos el futuro del territorio chileno."
+      </blockquote>
+      <p class="text-base text-neutral-400 font-light max-w-lg mb-10">
+        Abramos la sesión: ¿Cuáles son las dos rutas conceptuales que definen el alma de nuestra empresa?
+      </p>
+      <div class="inline-flex items-center space-x-2 text-xs font-mono text-neutral-500">
+        <span>PRESIÓN EN SILENCIO</span>
+        <span>•</span>
+        <span>DECISIÓN DE IMPACTO</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Speaker Notes Drawer (Toggled by 'N' or Button) -->
+  <aside id="speakerNotesDrawer" class="hidden w-full border-t border-white/10 bg-[#12161F] px-8 py-4 z-40 transition-all">
+    <div class="max-w-5xl mx-auto flex items-start justify-between">
+      <div>
+        <div class="flex items-center space-x-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+          <span class="text-[11px] font-mono uppercase tracking-wider text-amber-400 font-semibold">NOTAS DEL ORADOR (GUÍA DE DANIEL SANTANDER)</span>
+        </div>
+        <p id="speakerNotesText" class="text-sm text-neutral-200 font-light leading-relaxed max-w-4xl"></p>
+      </div>
+      <button id="closeNotesBtn" class="text-neutral-500 hover:text-white text-xs font-mono ml-4">CERRAR [ESC]</button>
+    </div>
+  </aside>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="w-full border-t border-white/10 bg-[#0F1218] px-6 py-3.5 flex items-center justify-between z-50">
+    <div class="flex items-center space-x-4">
+      <span class="text-xs font-mono text-neutral-500 hidden sm:inline">TECLAS: [←] ANTERIOR · [→] / [ESPACIO] SIGUIENTE · [N] NOTAS</span>
+    </div>
+
+    <div class="flex items-center space-x-3">
+      <button id="prevBtn" class="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-neutral-300 hover:text-white hover:bg-white/10 transition flex items-center space-x-1 disabled:opacity-30 disabled:pointer-events-none">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        <span>Anterior</span>
+      </button>
+
+      <button id="nextBtn" class="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-mono font-medium transition flex items-center space-x-1 shadow-lg shadow-blue-600/30">
+        <span>Siguiente</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </button>
+    </div>
+  </footer>
+
+  <!-- Script for Navigation & Interactions -->
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentSlide = 0;
+
+    const currentSlideNumEl = document.getElementById('currentSlideNum');
+    const progressBar = document.getElementById('progressBar');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const speakerNotesDrawer = document.getElementById('speakerNotesDrawer');
+    const speakerNotesText = document.getElementById('speakerNotesText');
+    const toggleNotesBtn = document.getElementById('toggleNotesBtn');
+    const closeNotesBtn = document.getElementById('closeNotesBtn');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+    function updateSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      // Update counters & progress
+      const numFormatted = String(currentSlide + 1).padStart(2, '0');
+      currentSlideNumEl.textContent = numFormatted;
+      const progressPercent = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = progressPercent + '%';
+
+      // Update speaker notes
+      const notes = slides[currentSlide].getAttribute('data-notes') || 'Sin notas para esta diapositiva.';
+      speakerNotesText.textContent = notes;
+
+      // Update button states
+      prevBtn.disabled = currentSlide === 0;
+      if (currentSlide === totalSlides - 1) {
+        nextBtn.innerHTML = '<span>Finalizar</span>';
+      } else {
+        nextBtn.innerHTML = '<span>Siguiente</span><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>';
+      }
+    }
+
+    function toggleNotes() {
+      speakerNotesDrawer.classList.toggle('hidden');
+    }
+
+    // Event listeners
+    prevBtn.addEventListener('click', () => updateSlide(currentSlide - 1));
+    nextBtn.addEventListener('click', () => {
+      if (currentSlide < totalSlides - 1) {
+        updateSlide(currentSlide + 1);
+      }
+    });
+
+    toggleNotesBtn.addEventListener('click', toggleNotes);
+    closeNotesBtn.addEventListener('click', () => speakerNotesDrawer.classList.add('hidden'));
+
+    fullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    });
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        if (currentSlide > 0) updateSlide(currentSlide - 1);
+      } else if (e.key.toLowerCase() === 'n') {
+        toggleNotes();
+      } else if (e.key === 'Escape') {
+        speakerNotesDrawer.classList.add('hidden');
+      }
+    });
+
+    // Init first slide notes
+    updateSlide(0);
+  </script>
+</body>
+</html>
