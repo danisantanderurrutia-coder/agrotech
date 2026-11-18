@@ -300,17 +300,17 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
   {
     id: 'ecosystem-living-lab',
     number: 8,
-    title: 'Living Lab Meniel, Drones & Biopreparados (Fase 3: Ecosistema)',
-    tagline: 'La visión madura a largo plazo: Fundo Meniel, drones autónomos, agroforestería y comunidad campesina',
+    title: 'Living Lab Maule Sur, Drones & Biopreparados (Fase 3: Ecosistema)',
+    tagline: 'La visión madura a largo plazo: Living Lab demostrativo, drones autónomos, agroforestería y comunidad campesina',
     category: 'BioTech & Token',
     phase: 3,
     phaseLabel: 'Fase 3 · Ecosistema a Largo Plazo',
     businessModel: 'I+D Colaborativa + Servicios de Dron On-Demand + Certificaciones',
     priceRange: 'Horizonte Estratégico 2026-2028',
     targetAudience: ['Comunidad silvoagropecuaria del Maule', 'Fondos de investigación ANID/Corfo', 'Empresas con metas de biodiversidad ESG'],
-    description: 'El despliegue de largo plazo de nuestro ecosistema. Una vez consolidada la masa crítica de predios monitoreados por software y hardware, habilitamos el Living Lab de Fundo Meniel: investigación agroforestal sintrópica, formulación de biopreparados, vuelos de drones DJI Dock 2 y transferencia técnica campesina.',
+    description: 'El despliegue de largo plazo de nuestro ecosistema. Una vez consolidada la masa crítica de predios monitoreados por software y hardware, habilitamos el Living Lab demostrativo: investigación agroforestal sintrópica, formulación de biopreparados, vuelos de drones DJI Dock 2 y transferencia técnica campesina.',
     keyFeatures: [
-      'Centro de I+D en Fundo Meniel (Parral): bosque comestible y agricultura sintrópica',
+      'Centro de I+D en Living Lab demostrativo: bosque comestible y agricultura sintrópica',
       'Estaciones Drone-in-a-Box con vuelos autónomos y ortomosaicos actualizados',
       'Dosificación calculada de té de compost y bioles según biología del suelo',
       'Certificados de Biodiversidad Vegetal (RewildMapper / PBC) para compensación ESG'

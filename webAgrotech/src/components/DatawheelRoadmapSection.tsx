@@ -649,11 +649,11 @@ export const DatawheelRoadmapSection: React.FC = () => {
 
                 <div className="space-y-1">
                   <h3 className="text-2xl font-black text-slate-900 dark:text-white">Ecosistema & Living Lab Territorial</h3>
-                  <p className="text-xs text-teal-500 dark:text-teal-400 font-mono font-bold">Meniel Living Lab • Regeneración • Academia</p>
+                  <p className="text-xs text-teal-500 dark:text-teal-400 font-mono font-bold">Living Lab • Regeneración • Academia</p>
                 </div>
 
                 <p className="text-xs text-slate-600 dark:text-emerald-100/80 font-serif leading-relaxed">
-                  Consolidación del Centro Científico de San Clemente (Meniel), investigación aplicada con universidades, fondos ANID/CORFO y flotas autónomas de drones.
+                  Consolidación del Centro Científico de San Clemente, investigación aplicada con universidades, fondos ANID/CORFO y flotas autónomas de drones.
                 </p>
 
                 <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-emerald-900/60">
@@ -661,7 +661,7 @@ export const DatawheelRoadmapSection: React.FC = () => {
                   <ul className="text-xs space-y-1.5 text-slate-700 dark:text-emerald-100/90 font-sans">
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-                      <span>Meniel Living Lab (20 ha agroecológicas en San Clemente)</span>
+                      <span>Living Lab Demostrativo (20 ha agroecológicas en San Clemente)</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0" />
@@ -884,10 +884,10 @@ export const DatawheelRoadmapSection: React.FC = () => {
               <div className="p-5 rounded-2xl bg-slate-50 dark:bg-black/30 border border-slate-200 dark:border-emerald-900/60 space-y-2">
                 <div className="flex items-center gap-2 text-sm font-bold text-teal-500 dark:text-teal-400">
                   <HelpCircle className="w-4 h-4 shrink-0" />
-                  <span>"¿Qué pasa con Meniel Living Lab y la pata de permacultura/solarpunk?"</span>
+                  <span>"¿Qué pasa con el Living Lab y la pata de permacultura/solarpunk?"</span>
                 </div>
                 <p className="text-xs text-slate-600 dark:text-emerald-100/80 font-serif pl-6 leading-relaxed">
-                  <strong>Respuesta:</strong> Meniel en San Clemente es nuestra catedral de I+D y nuestro campo de pruebas para levantar subsidios públicos (CORFO, ANID) y validar con universidades. No la eliminamos: la colocamos en la <strong>Fase 3</strong>, alimentada y solventada por el flujo de caja del Micro-SaaS de la Fase 1. Así el proyecto se sostiene por sus propios méritos comerciales y no por caridad.
+                  <strong>Respuesta:</strong> El Living Lab en San Clemente es nuestra catedral de I+D y nuestro campo de pruebas para levantar subsidios públicos (CORFO, ANID) y validar con universidades. No la eliminamos: la colocamos en la <strong>Fase 3</strong>, alimentada y solventada por el flujo de caja del Micro-SaaS de la Fase 1. Así el proyecto se sostiene por sus propios méritos comerciales y no por caridad.
                 </p>
               </div>
 

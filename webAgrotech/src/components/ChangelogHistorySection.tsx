@@ -32,7 +32,7 @@ export const CHANGELOG_DATA: ChangelogMilestone[] = [
       'AgroAlerta Pocket Bot: Micro-SaaS de WhatsApp con onboarding en 60 segundos (GPS/Rol + Cultivo), alertas de heladas radiativas (-1.8 °C), balance de agua y fuego perimetral sin apps pesadas.',
       'The Data Flywheel Engine: Ingesta pasiva de polígonos y fenología predial que densifica la malla territorial H3 y el Gemelo 3D Maestro sin costo de levantamiento.',
       'Escalera de Feature Stacking: Activación en 1 clic de módulos modulares (AgroAlerta Pro $15k ➔ BV Agua $45k ➔ BV Fuego $60k ➔ Pasaporte Verde EUDR €1.100 ➔ AgriTwin Suite 3D).',
-      'Roadmap Secuencial en 3 Fases: Fase 1 (Software Micro-SaaS inmediato), Fase 2 (Hardware IoT KioT como upgrade in-situ para clientes cálidos), Fase 3 (Meniel Living Lab, Academia & Ecosistema Regenerativo).',
+      'Roadmap Secuencial en 3 Fases: Fase 1 (Software Micro-SaaS inmediato), Fase 2 (Hardware IoT KioT como upgrade in-situ para clientes cálidos), Fase 3 (Living Lab Maule Sur, Academia & Ecosistema Regenerativo).',
       'Matriz de Relaciones Globales 8.a & 8.b: Integración de Malla AMR Hexgrid N1-N4, Balance de Tierras CutSheetRX y Calicata Digital 1D Campbell-Richards en el Vault de Obsidian.',
       'Panel de Administrador v3.1.0: Simulador de conversión y CAC interactivo (-85% CAC frente a venta en frío), mockup de WhatsApp y guion para inversores.'
     ],

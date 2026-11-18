@@ -226,7 +226,7 @@ export const ExecutiveBulletinsSection: React.FC = () => {
                     <td className="py-3 pl-4 text-right font-mono text-amber-300">Rüdiger Kaatz & Daniel</td>
                   </tr>
                   <tr>
-                    <td className="py-3 pr-4 font-bold text-white">Meniel Living Lab & Alianzas</td>
+                    <td className="py-3 pr-4 font-bold text-white">Living Lab & Alianzas</td>
                     <td className="py-3 px-4 font-mono text-blue-400">Fase 3: I+D & Academia</td>
                     <td className="py-3 px-4">San Clemente & Parral</td>
                     <td className="py-3 px-4">Postulación ANID / CORFO y validación agroecológica</td>

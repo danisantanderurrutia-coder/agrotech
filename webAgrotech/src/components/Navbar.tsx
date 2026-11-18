@@ -116,9 +116,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                         <Smartphone className="w-3.5 h-3.5 text-emerald-300" />
                       </div>
                       <div className="flex-1">
-                        <div className="flex items-center justify-between">
+                        <div>
                           <span className="font-bold text-xs text-white">AgroAlerta (WhatsApp)</span>
-                          <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-amber-400 text-slate-950">HERO</span>
                         </div>
                         <span className="text-[10px] text-emerald-200/80 font-sans block">Alertas de helada (-1.8 °C), estrés y fuego en 60s.</span>
                       </div>
@@ -155,9 +154,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                         <Cpu className="w-3.5 h-3.5" />
                       </div>
                       <div className="flex-1">
-                        <div className="flex items-center justify-between">
+                        <div>
                           <span className="font-bold text-xs text-white">AgriTwin 3D (Gemelo Maestro)</span>
-                          <span className="text-[9px] font-mono text-emerald-300">CORE</span>
                         </div>
                         <span className="text-[10px] text-emerald-200/70 font-sans block">Simulación biofísica, heladas catabáticas y FAO-56.</span>
                       </div>
@@ -176,9 +174,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                         <FileText className="w-3.5 h-3.5" />
                       </div>
                       <div className="flex-1">
-                        <div className="flex items-center justify-between">
+                        <div>
                           <span className="font-bold text-xs text-white">Informes Terran & Pasaporte EUDR</span>
-                          <span className="text-[9px] font-mono text-blue-300">24H / EXPORT</span>
                         </div>
                         <span className="text-[10px] text-emerald-200/70 font-sans block">Diagnóstico de cuenca y certificación de no-deforestación.</span>
                       </div>
@@ -235,7 +232,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <span className="font-bold text-xs text-white">Meniel Living Lab & Rewild Suite</span>
+                        <span className="font-bold text-xs text-white">Living Lab & Rewild Suite</span>
                       </div>
                       <span className="text-[10px] text-emerald-200/70 font-sans block">Centro I+D San Clemente, drones y restauración de cuenca.</span>
                     </div>
@@ -393,12 +390,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
 
           {/* 1. AgroAlerta Pocket Bot (WhatsApp) */}
           <div className="p-2.5 rounded-xl bg-gradient-to-r from-emerald-950 to-[#071810] border border-emerald-500/50 space-y-1.5">
-            <div className="flex items-center justify-between text-white font-bold">
-              <div className="flex items-center gap-2">
-                <Smartphone className="w-4 h-4 text-emerald-400" />
-                <span>AgroAlerta (WhatsApp)</span>
-              </div>
-              <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-400 text-slate-950 font-black">HERO</span>
+            <div className="flex items-center gap-2 text-white font-bold">
+              <Smartphone className="w-4 h-4 text-emerald-400" />
+              <span>AgroAlerta (WhatsApp)</span>
             </div>
             <div className="flex items-center justify-between pt-1 border-t border-emerald-900/60 text-[10px] font-mono">
               <button onClick={() => handleNavClick('landing')} className="text-emerald-300 hover:text-white flex items-center gap-1">
@@ -419,12 +413,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
 
           {/* 2. AgriTwin 3D Flagship */}
           <div className="p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 space-y-2">
-            <button onClick={() => handleNavClick('agritwin')} className="w-full flex items-center justify-between text-left text-white font-bold">
-              <div className="flex items-center gap-2">
-                <Cpu className="w-4 h-4 text-amber-400" />
-                <span>AgriTwin 3D (Gemelo Maestro)</span>
-              </div>
-              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-900 text-emerald-300">CORE</span>
+            <button onClick={() => handleNavClick('agritwin')} className="w-full flex items-center gap-2 text-left text-white font-bold">
+              <Cpu className="w-4 h-4 text-amber-400" />
+              <span>AgriTwin 3D (Gemelo Maestro)</span>
             </button>
             <div className="flex items-center justify-between pt-1 border-t border-emerald-900/60 text-[10px] font-mono">
               <button onClick={() => handleNavClick('agritwin')} className="text-emerald-300 hover:text-white flex items-center gap-1">
@@ -444,12 +435,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
           </div>
 
           {/* 3. Informes Terran & Pasaporte UE */}
-          <button onClick={() => handleNavClick('satellites')} className="flex items-center justify-between px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
-            <div className="flex items-center gap-2.5">
-              <FileText className="w-4 h-4 text-blue-400" />
-              <span>Informes Terran & Pasaporte EUDR</span>
-            </div>
-            <span className="text-[9px] font-mono text-blue-300 bg-blue-950 px-1 rounded">24H</span>
+          <button onClick={() => handleNavClick('satellites')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
+            <FileText className="w-4 h-4 text-blue-400" />
+            <span>Informes Terran & Pasaporte EUDR</span>
           </button>
 
           {/* --- FASE 2: HARDWARE (MOBILE) --- */}
@@ -458,12 +446,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             <span>Fase 2: Hardware IoT</span>
           </div>
 
-          <button onClick={() => handleNavClick('hardware')} className="flex items-center justify-between px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
-            <div className="flex items-center gap-2.5">
-              <Activity className="w-4 h-4 text-amber-400" />
-              <span>Kits KioT Hardware (Suelo & Clima)</span>
-            </div>
-            <span className="text-[9px] font-mono text-amber-300 bg-amber-950 px-1 rounded">UPGRADE</span>
+          <button onClick={() => handleNavClick('hardware')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
+            <Activity className="w-4 h-4 text-amber-400" />
+            <span>Kits KioT Hardware (Suelo & Clima)</span>
           </button>
 
           {/* --- FASE 3: ECOSISTEMA (MOBILE) --- */}
@@ -472,12 +457,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             <span>Fase 3: Ecosistema & Living Lab</span>
           </div>
 
-          <button onClick={() => handleNavClick('rewild-hub')} className="flex items-center justify-between px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
-            <div className="flex items-center gap-2.5">
-              <Trees className="w-4 h-4 text-emerald-400" />
-              <span>Meniel Living Lab & Rewild Suite</span>
-            </div>
-            <span className="text-[9px] font-mono text-teal-300 bg-teal-950 px-1 rounded">ESG</span>
+          <button onClick={() => handleNavClick('rewild-hub')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
+            <Trees className="w-4 h-4 text-emerald-400" />
+            <span>Living Lab & Rewild Suite</span>
           </button>
 
           <button onClick={() => handleNavClick('store')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
