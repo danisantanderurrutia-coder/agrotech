@@ -8,7 +8,8 @@ import { FounderAcademySection } from './FounderAcademySection';
 import { ChangelogHistorySection } from './ChangelogHistorySection';
 import { ExecutiveBulletinsSection } from './ExecutiveBulletinsSection';
 import { BrandIdentitySection } from './BrandIdentitySection';
-import { Lock, ArrowLeft, Presentation, Share2, Layers, BarChart3, Wrench, ShieldCheck, Sparkles, BookOpen, Sprout, History, TrendingUp, FileText } from 'lucide-react';
+import { DatawheelRoadmapSection } from './DatawheelRoadmapSection';
+import { Lock, ArrowLeft, Presentation, Share2, Layers, BarChart3, Wrench, ShieldCheck, Sparkles, BookOpen, Sprout, History, TrendingUp, FileText, Zap } from 'lucide-react';
 
 interface InternalPartnerPageProps {
   onNavigate: (viewId: string) => void;
@@ -16,7 +17,21 @@ interface InternalPartnerPageProps {
 }
 
 export const InternalPartnerPage: React.FC<InternalPartnerPageProps> = ({ onNavigate, onOpenPitchDeck }) => {
-  const [internalTab, setInternalTab] = useState<'naming' | 'bulletins' | 'changelog' | 'commercial' | 'academy' | 'economics' | 'revenue' | 'bom' | 'social'>('naming');
+  const [internalTab, setInternalTab] = useState<'datawheel' | 'naming' | 'bulletins' | 'changelog' | 'commercial' | 'academy' | 'economics' | 'revenue' | 'bom' | 'social'>(() => {
+    try {
+      const p = new URLSearchParams(window.location.search);
+      const tabParam = p.get('tab');
+      if (tabParam === 'datawheel' || tabParam === 'roadmap' || tabParam === 'agroalerta' || tabParam === 'flywheel') {
+        return 'datawheel';
+      }
+      if (tabParam && ['naming', 'bulletins', 'changelog', 'commercial', 'academy', 'economics', 'revenue', 'bom', 'social'].includes(tabParam)) {
+        return tabParam as any;
+      }
+    } catch {
+      // no-op
+    }
+    return 'datawheel';
+  });
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     try {
       return sessionStorage.getItem('agrotech_admin_auth') === 'true';
@@ -183,6 +198,19 @@ export const InternalPartnerPage: React.FC<InternalPartnerPageProps> = ({ onNavi
           <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-emerald-900/60">
             <div className="flex flex-wrap items-center gap-2">
               <button
+                onClick={() => setInternalTab('datawheel')}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sans text-xs font-bold transition-all ${
+                  internalTab === 'datawheel'
+                    ? 'bg-gradient-to-r from-emerald-500 via-teal-400 to-amber-300 text-slate-950 shadow-lg ring-2 ring-emerald-300 font-black'
+                    : 'bg-emerald-950/80 border border-emerald-500/40 text-emerald-200 hover:bg-emerald-900'
+                }`}
+              >
+                <Zap className="w-4 h-4 text-amber-400 fill-amber-400" />
+                <span>Data Flywheel & AgroAlerta</span>
+                <span className="text-[10px] bg-black/40 text-white px-1.5 py-0.5 rounded font-mono font-bold">NUEVO</span>
+              </button>
+
+              <button
                 onClick={() => setInternalTab('naming')}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sans text-xs font-bold transition-all ${
                   internalTab === 'naming'
@@ -305,6 +333,10 @@ export const InternalPartnerPage: React.FC<InternalPartnerPageProps> = ({ onNavi
 
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         
+        {internalTab === 'datawheel' && (
+          <DatawheelRoadmapSection />
+        )}
+
         {internalTab === 'naming' && (
           <BrandIdentitySection initialTab="naming" />
         )}

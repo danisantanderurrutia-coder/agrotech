@@ -175,7 +175,7 @@ export function App() {
           <SomosPage />
         )}
 
-        {(currentView === 'internal' || currentView === 'social') && (
+        {(currentView === 'internal' || currentView === 'social' || currentView === 'admin' || currentView === 'datawheel' || currentView === 'roadmap' || currentView === 'agroalerta') && (
           <InternalPartnerPage 
             onNavigate={handleNavigate}
             onOpenPitchDeck={() => setIsPitchDeckOpen(true)}
