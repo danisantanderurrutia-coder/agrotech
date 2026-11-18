@@ -83,7 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             <button
               onClick={() => setProductsDropdownOpen(!productsDropdownOpen)}
               className={`flex items-center gap-1 px-3 py-1.5 rounded-lg font-bold transition-all ${
-                ['hardware', 'satellites', 'apps', 'agritwin', 'rewild-hub', 'satellites-visor', 'satellites-rewild', 'satellites-pasaporte'].includes(currentView) || productsDropdownOpen
+                ['hardware', 'satellites', 'apps', 'agritwin', 'rewild-hub', 'satellites-visor', 'satellites-rewild', 'satellites-pasaporte', 'store', 'roadmap', 'roadmap-productos'].includes(currentView) || productsDropdownOpen
                   ? 'bg-emerald-700 text-white shadow-sm'
                   : 'text-emerald-100/80 hover:text-white hover:bg-emerald-900/60'
               }`}
@@ -212,33 +212,44 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                   </div>
                 </button>
 
+                <div className="my-1 border-t border-emerald-900/60" />
+
+                {/* 6. Tienda AgroTech */}
+                <button
+                  onClick={() => handleNavClick('store')}
+                  className={`w-full flex items-start gap-2.5 p-2 rounded-xl text-left transition-colors ${
+                    currentView === 'store' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
+                  }`}
+                >
+                  <div className="w-6 h-6 rounded-lg bg-amber-500/20 border border-amber-400 flex items-center justify-center shrink-0 mt-0.5 text-amber-400">
+                    <ShoppingBag className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-bold text-xs text-white">Tienda AgroTech</span>
+                    </div>
+                    <span className="text-[10px] text-emerald-200/70 font-sans block">Bio-insumos, kits IoT, preparados y herramientas de campo.</span>
+                  </div>
+                </button>
+
                 {/* Footer link to Roadmap */}
                 <div className="pt-2 border-t border-emerald-900/80 text-center">
                   <button
                     onClick={() => handleNavClick('roadmap')}
-                    className="w-full py-1.5 rounded-lg bg-emerald-950/70 border border-emerald-500/30 hover:border-amber-400 text-amber-300 hover:text-white font-mono text-[10px] font-bold transition-all flex items-center justify-center gap-1.5"
+                    className={`w-full py-2 rounded-xl border transition-all flex items-center justify-center gap-2 font-mono text-[11px] font-bold ${
+                      currentView === 'roadmap' || currentView === 'roadmap-productos'
+                        ? 'bg-emerald-900 text-amber-300 border-amber-400 shadow-sm'
+                        : 'bg-emerald-950/70 border-emerald-500/30 hover:border-amber-400 text-amber-300 hover:text-white'
+                    }`}
                   >
                     <Compass className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Ver Roadmap de Productos & Data Flywheel →</span>
+                    <span>Roadmap de Productos & Data Flywheel →</span>
                   </button>
                 </div>
 
               </div>
             )}
           </div>
-
-          {/* Roadmap Productos Tab */}
-          <button
-            onClick={() => handleNavClick('roadmap')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all ${
-              currentView === 'roadmap' || currentView === 'roadmap-productos'
-                ? 'bg-emerald-700 text-white shadow-sm'
-                : 'text-emerald-100/80 hover:text-white hover:bg-emerald-900/60'
-            }`}
-          >
-            <Compass className="w-3.5 h-3.5 text-amber-400" />
-            <span>Roadmap Productos</span>
-          </button>
 
           {/* Bóveda Tab */}
           <button
@@ -254,47 +265,60 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             <span>Bóveda</span>
           </button>
 
-          {/* Tienda (Dropdown / Direct Link) */}
-          <button
-            onClick={() => handleNavClick('store')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all ${
-              currentView === 'store'
-                ? 'bg-emerald-700 text-white shadow-sm'
-                : 'text-emerald-100/80 hover:text-white hover:bg-emerald-900/60'
-            }`}
-          >
-            <ShoppingBag className="w-3.5 h-3.5 text-amber-400" />
-            <span>Tienda</span>
-          </button>
+          {/* Comunidad (Dropdown: Red & Sé Parte) */}
+          <div className="relative" ref={communityRef}>
+            <button
+              onClick={() => setCommunityDropdownOpen(!communityDropdownOpen)}
+              className={`flex items-center gap-1 px-3 py-1.5 rounded-lg font-bold transition-all ${
+                ['community', 'join', 'community-join'].includes(currentView) || communityDropdownOpen
+                  ? 'bg-emerald-700 text-white shadow-sm'
+                  : 'text-emerald-100/80 hover:text-white hover:bg-emerald-900/60'
+              }`}
+            >
+              <Users className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Comunidad</span>
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform ${communityDropdownOpen ? 'rotate-180 text-amber-400' : 'text-emerald-400'}`} />
+            </button>
 
-          {/* Comunidad */}
-          <button
-            onClick={() => handleNavClick('community')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all ${
-              currentView === 'community'
-                ? 'bg-emerald-700 text-white shadow-sm'
-                : 'text-emerald-100/80 hover:text-white hover:bg-emerald-900/60'
-            }`}
-          >
-            <Users className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Comunidad</span>
-          </button>
+            {communityDropdownOpen && (
+              <div className="absolute top-full left-0 mt-2 w-80 bg-[#0B2519] rounded-2xl border border-emerald-500/40 p-2.5 space-y-1.5 shadow-2xl animate-fadeIn z-50">
+                {/* 1. Red & Actividades */}
+                <button
+                  onClick={() => handleNavClick('community')}
+                  className={`w-full flex items-start gap-2.5 p-2 rounded-xl text-left transition-colors ${
+                    currentView === 'community' ? 'bg-[#071A11] border border-emerald-500/30' : 'hover:bg-[#071A11]'
+                  }`}
+                >
+                  <div className="w-6 h-6 rounded-lg bg-emerald-500/20 border border-emerald-400 flex items-center justify-center shrink-0 mt-0.5 text-emerald-300">
+                    <Users className="w-3.5 h-3.5" />
+                  </div>
+                  <div className="flex-1">
+                    <span className="font-bold text-xs text-white block">Red & Actividades</span>
+                    <span className="text-[10px] text-emerald-200/70 font-sans block">Foros, alianzas de campo y encuentros comunitarios.</span>
+                  </div>
+                </button>
 
-          {/* Sé parte - Separada con Brillo Especial */}
-          <button
-            onClick={() => handleNavClick('join')}
-            className={`relative group flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-bold transition-all shadow-md overflow-hidden ${
-              currentView === 'join'
-                ? 'bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 text-[#0B2519] ring-2 ring-amber-300 shadow-glow-gold'
-                : 'bg-gradient-to-r from-emerald-950 via-emerald-900 to-emerald-950 text-amber-300 border border-amber-400/70 hover:border-amber-300 hover:shadow-glow-gold'
-            }`}
-            title="Membresías y Red de Apoyo Agroecológico"
-          >
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
-            <Heart className="w-3.5 h-3.5 text-rose-400 animate-pulse shrink-0" />
-            <span className="font-extrabold tracking-wide text-xs">Sé Parte</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping shrink-0" />
-          </button>
+                {/* 2. Sé Parte (Membresías) */}
+                <button
+                  onClick={() => handleNavClick('join')}
+                  className={`w-full flex items-start gap-2.5 p-2 rounded-xl text-left transition-colors ${
+                    currentView === 'join' || currentView === 'community-join' ? 'bg-[#071A11] border border-amber-400/50' : 'hover:bg-[#071A11]'
+                  }`}
+                >
+                  <div className="w-6 h-6 rounded-lg bg-amber-500/20 border border-amber-400 flex items-center justify-center shrink-0 mt-0.5 text-rose-400">
+                    <Heart className="w-3.5 h-3.5 animate-pulse" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-bold text-xs text-amber-300">Sé Parte (Membresías)</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
+                    </div>
+                    <span className="text-[10px] text-emerald-200/70 font-sans block">Apoyo a la transición agroecológica y beneficios.</span>
+                  </div>
+                </button>
+              </div>
+            )}
+          </div>
 
           {/* Cursos */}
           <button
@@ -382,11 +406,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             <span>Inicio</span>
           </button>
 
-          <button onClick={() => handleNavClick('roadmap')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-amber-300 font-bold bg-emerald-950/80 border border-emerald-500/40 hover:bg-emerald-900">
-            <Compass className="w-4 h-4 text-amber-400" />
-            <span>Roadmap Productos</span>
-          </button>
-
           <button onClick={() => handleNavClick('vault')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-purple-200 font-bold bg-purple-950/80 border border-purple-500/40 hover:bg-purple-900">
             <BookOpen className="w-4 h-4 text-amber-400" />
             <span>Bóveda</span>
@@ -456,20 +475,32 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             <span>Living Lab & Rewild Suite</span>
           </button>
 
+          {/* 6. Tienda */}
           <button onClick={() => handleNavClick('store')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
             <ShoppingBag className="w-4 h-4 text-amber-400" />
-            <span>Tienda</span>
+            <span>Tienda AgroTech</span>
           </button>
 
-          <button onClick={() => handleNavClick('community')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
-            <Users className="w-4 h-4 text-emerald-400" />
-            <span>Comunidad</span>
+          {/* 7. Roadmap */}
+          <button onClick={() => handleNavClick('roadmap')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-amber-300 font-bold bg-emerald-950/80 border border-emerald-500/40 hover:bg-emerald-900">
+            <Compass className="w-4 h-4 text-amber-400" />
+            <span>Roadmap de Productos & Data Flywheel</span>
           </button>
 
-          <button onClick={() => handleNavClick('join')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-amber-300 font-extrabold bg-gradient-to-r from-amber-950/80 to-emerald-950/80 border border-amber-400/50 shadow-sm">
-            <Heart className="w-4 h-4 text-rose-400 animate-pulse" />
-            <span>✨ Sé Parte</span>
-          </button>
+          {/* Comunidad (Red & Sé Parte) */}
+          <div className="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 space-y-1.5 my-1">
+            <span className="text-[10px] font-mono font-bold text-emerald-300 uppercase tracking-wider block px-1">
+              Comunidad
+            </span>
+            <button onClick={() => handleNavClick('community')} className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900 transition-colors">
+              <Users className="w-4 h-4 text-emerald-400" />
+              <span>Red & Actividades</span>
+            </button>
+            <button onClick={() => handleNavClick('join')} className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-amber-300 font-bold bg-amber-950/40 border border-amber-400/40 hover:bg-amber-950 transition-colors">
+              <Heart className="w-4 h-4 text-rose-400 animate-pulse" />
+              <span>✨ Sé Parte (Membresías)</span>
+            </button>
+          </div>
 
           <button onClick={() => handleNavClick('courses')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
             <GraduationCap className="w-4 h-4 text-amber-400" />
