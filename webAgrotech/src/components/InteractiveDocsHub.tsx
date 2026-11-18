@@ -362,7 +362,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
           }`}
         >
           <BookOpen className="w-4 h-4 text-amber-400" />
-          <span>6. Bóveda Técnica & Papers Canónicos</span>
+          <span>6. Bóveda</span>
         </button>
 
         <button

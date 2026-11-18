@@ -212,26 +212,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                   </div>
                 </button>
 
-                <div className="my-1 border-t border-emerald-900/60" />
-
-                {/* 6. Bóveda Técnica & Papers */}
-                <button
-                  onClick={() => handleNavClick('vault')}
-                  className={`w-full flex items-start gap-2.5 p-2 rounded-xl text-left transition-colors ${
-                    currentView === 'vault' || currentView === 'docs' ? 'bg-[#071A11] text-purple-300 border border-purple-500/40' : 'hover:bg-[#071A11] text-white'
-                  }`}
-                >
-                  <div className="w-6 h-6 rounded-lg bg-purple-500/20 border border-purple-400 flex items-center justify-center shrink-0 mt-0.5 text-purple-300">
-                    <BookOpen className="w-3.5 h-3.5" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-bold text-xs text-white">Bóveda Técnica & Papers Canónicos</span>
-                    </div>
-                    <span className="text-[10px] text-purple-200/80 font-sans block">Arquitectura de datos FAIR, calibración UQ y 3 papers imprimibles.</span>
-                  </div>
-                </button>
-
                 {/* Footer link to Roadmap */}
                 <div className="pt-2 border-t border-emerald-900/80 text-center">
                   <button
@@ -260,18 +240,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             <span>Roadmap Productos</span>
           </button>
 
-          {/* Bóveda Técnica & Papers Canónicos */}
+          {/* Bóveda Tab */}
           <button
             onClick={() => handleNavClick('vault')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all ${
               currentView === 'vault' || currentView === 'docs'
                 ? 'bg-purple-900 text-purple-100 border border-purple-400/50 shadow-sm'
-                : 'text-purple-200/90 hover:text-white hover:bg-purple-950/60'
+                : 'text-emerald-100/80 hover:text-white hover:bg-emerald-900/60'
             }`}
             title="Bóveda de Arquitectura de Datos, Modelos Biofísicos y Papers Canónicos"
           >
             <BookOpen className="w-3.5 h-3.5 text-amber-400" />
-            <span>Bóveda Técnica</span>
+            <span>Bóveda</span>
           </button>
 
           {/* Tienda (Dropdown / Direct Link) */}
@@ -407,6 +387,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             <span>Roadmap Productos</span>
           </button>
 
+          <button onClick={() => handleNavClick('vault')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-purple-200 font-bold bg-purple-950/80 border border-purple-500/40 hover:bg-purple-900">
+            <BookOpen className="w-4 h-4 text-amber-400" />
+            <span>Bóveda</span>
+          </button>
+
           {/* 1. AgroAlerta Pocket Bot (WhatsApp) */}
           <div className="p-2.5 rounded-xl bg-gradient-to-r from-emerald-950 to-[#071810] border border-emerald-500/50 space-y-1.5">
             <div className="flex items-center gap-2 text-white font-bold">
@@ -469,12 +454,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
           <button onClick={() => handleNavClick('rewild-hub')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
             <Trees className="w-4 h-4 text-emerald-400" />
             <span>Living Lab & Rewild Suite</span>
-          </button>
-
-          {/* 6. Bóveda Técnica & Papers */}
-          <button onClick={() => handleNavClick('vault')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-purple-200 font-bold bg-purple-950/60 border border-purple-500/40 hover:bg-purple-900">
-            <BookOpen className="w-4 h-4 text-amber-400" />
-            <span>Bóveda Técnica & Papers Canónicos</span>
           </button>
 
           <button onClick={() => handleNavClick('store')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
