@@ -33,99 +33,108 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenPitchDeck, onNav
 
       {/* SECCIÓN TRÍO ESTRELLA DE PRODUCTOS */}
       <section className="max-w-7xl mx-auto px-4 lg:px-8 space-y-8">
-        <div className="space-y-2 text-center max-w-3xl mx-auto">
-          <span className="text-amber-600 font-sans text-xs font-bold uppercase tracking-wider">
-            PRODUCTOS CON MAYOR TRACCIÓN Y DEMANDA
-          </span>
+        <div className="space-y-3 text-center max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 text-xs font-sans font-bold">
+            <span>Roadmap de Despliegue Secuencial · Software First</span>
+          </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B2519]">
             Soluciones Estrella <span className="text-emerald-700">Agro-Precisión Maule</span>
           </h2>
           <p className="text-slate-600 text-base font-serif">
-            Tres líneas clave que generan ingresos desde el Mes 1 hasta contratos B2B con exportadoras europeas.
+            Habilitamos el software de uno en uno: desde alertas de bolsillo en WhatsApp hasta el gemelo digital de cuenca. El hardware y el ecosistema físico se conectan como upgrade progresivo.
           </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-[11px] font-mono text-slate-600">
+            <span className="px-2.5 py-1 rounded bg-blue-100 text-blue-800 font-bold">FASE 1: SOFTWARE & DATA FLYWHEEL (HOY)</span>
+            <span>→</span>
+            <span className="px-2.5 py-1 rounded bg-amber-100 text-amber-800 font-bold">FASE 2: HARDWARE IOT CONECTADO</span>
+            <span>→</span>
+            <span className="px-2.5 py-1 rounded bg-purple-100 text-purple-800 font-bold">FASE 3: ECOSISTEMA & LIVING LAB</span>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
-          {/* Card 1: Kit KioT */}
-          {/* Card 1: AgriTwin 3D (Flagship Hero) */}
-          <div className="glass-panel p-6 rounded-2xl border-2 border-emerald-500/80 hover:border-emerald-400 transition-all space-y-4 flex flex-col justify-between group shadow-lg bg-gradient-to-b from-white to-emerald-50/30 relative overflow-hidden">
-            <div className="absolute top-0 right-0 bg-emerald-600 text-white text-[9px] font-mono font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
-              FLAGSHIP • 3D & VISIÓN
+          {/* Card 1: AgroAlerta Pocket (Hero Micro-SaaS) */}
+          <div className="glass-panel p-6 rounded-2xl border-2 border-emerald-500 hover:border-emerald-400 transition-all space-y-4 flex flex-col justify-between group shadow-lg bg-gradient-to-b from-emerald-50/40 via-white to-amber-50/20 relative overflow-hidden">
+            <div className="absolute top-0 right-0 bg-gradient-to-r from-emerald-600 to-amber-500 text-white text-[9px] font-mono font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+              MICRO-SAAS ESTRELLA · WHATSAPP 60S
             </div>
 
             <div className="space-y-3 pt-2">
               <div className="flex items-center justify-between font-mono text-xs">
                 <span className="px-2.5 py-1 rounded bg-emerald-100 text-emerald-900 font-bold border border-emerald-300">
-                  GEMELO DIGITAL 3D & VISIÓN
+                  DE BOLSILLO · CERO FRICCIÓN
                 </span>
-                <span className="text-emerald-700 font-bold">Desde $45.000 / mes</span>
+                <span className="text-emerald-700 font-bold">Gratis / $9.900 mes</span>
               </div>
 
               <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors">
-                AgriTwin 3D & Vision Drones
+                AgroAlerta: Telemetría de Bolsillo
               </h3>
 
               <p className="text-xs text-slate-600 font-serif leading-relaxed">
-                El corazón ciberfísico de AgroTech. Simulación biofísica 3D en tiempo real (heladas y agua) integrada con cámaras solares PTZ 4G, Frustums de visión, alertas Edge AI y vuelos autónomos DJI Dock 2.
+                Alertas satelitales en 60 segundos directo a tu WhatsApp: heladas katabáticas (ColdFlow), piro-riesgo extremo de incendios (FWI), estrés hídrico radicular y ventanas de viento. Sin apps pesadas ni configuraciones.
               </p>
             </div>
 
             <div className="space-y-2 pt-2">
-              <button
-                onClick={() => onNavigate('agritwin')}
-                className="w-full py-2.5 rounded-xl bg-[#0B2519] border border-emerald-500/50 text-amber-300 font-mono text-xs font-bold hover:bg-[#123827] transition-colors flex items-center justify-center gap-1.5 shadow-md"
+              <a
+                href="https://wa.me/56976696142?text=Hola%20AgroTech,%20quiero%20activar%20AgroAlerta%20para%20mi%20predio"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-mono text-xs font-bold transition-colors flex items-center justify-center gap-1.5 shadow-md"
               >
-                <span>Explorar Gemelo 3D en Vivo</span>
-                <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
-              </button>
+                <span>Activar Alertas por WhatsApp</span>
+                <ArrowRight className="w-3.5 h-3.5 text-amber-300" />
+              </a>
             </div>
           </div>
 
-          {/* Card 2: Kits KioT Hardware */}
-          <div className="glass-panel p-6 rounded-2xl border border-slate-200 hover:border-amber-500/50 transition-all space-y-4 flex flex-col justify-between group shadow-sm bg-white">
+          {/* Card 2: AgriTwin 3D Maestro */}
+          <div className="glass-panel p-6 rounded-2xl border border-slate-200 hover:border-emerald-500/50 transition-all space-y-4 flex flex-col justify-between group shadow-sm bg-white">
             <div className="space-y-3">
               <div className="flex items-center justify-between font-mono text-xs">
-                <span className="px-2.5 py-1 rounded bg-amber-100 text-amber-900 font-bold border border-amber-300">
-                  HARDWARE A.P.I.S.
+                <span className="px-2.5 py-1 rounded bg-blue-100 text-blue-900 font-bold border border-blue-300">
+                  EL TWIN MAESTRO
                 </span>
-                <span className="text-amber-800 font-bold">$185k - $380k CLP</span>
+                <span className="text-blue-800 font-bold">SaaS Cuencas & B2B</span>
               </div>
 
-              <h3 className="text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors">
-                Kits KioT Anti-Heladas & Riego
+              <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
+                AgriTwin 3D: Núcleo Biofísico
               </h3>
 
               <p className="text-xs text-slate-600 font-serif leading-relaxed">
-                Los ojos físicos del gemelo digital. Gabinete estanco IP65 autónomo con sondas DS18B20 (±0.5°C), suelo tri-estrato FDR y enlace LoRaWAN 915MHz.
+                El Plan Maestro territorial que procesa topografía 3D WebGL, balance hídrico de cuenca completa y provee las APIs para el Feature Stacking de todos los módulos hijos.
               </p>
             </div>
 
             <button
-              onClick={() => onNavigate('hardware')}
-              className="w-full py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-amber-300 font-mono text-xs font-bold hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5"
+              onClick={() => onNavigate('agritwin')}
+              className="w-full py-2.5 rounded-xl bg-[#0B2519] border border-emerald-500/50 text-amber-300 font-mono text-xs font-bold hover:bg-[#123827] transition-colors flex items-center justify-center gap-1.5"
             >
-              <span>Cotizar Kits de Hardware</span>
+              <span>Explorar Gemelo 3D en Vivo</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          {/* Card 3: Pasaporte Verde UE & Informes */}
+          {/* Card 3: Pasaporte Verde UE & Informes Terran */}
           <div className="glass-panel p-6 rounded-2xl border border-slate-200 hover:border-emerald-600/50 transition-all space-y-4 flex flex-col justify-between group shadow-sm bg-white">
             <div className="space-y-3">
               <div className="flex items-center justify-between font-mono text-xs">
                 <span className="px-2.5 py-1 rounded bg-emerald-950 text-emerald-300 font-bold">
                   EXPORTACIÓN & ESG
                 </span>
-                <span className="text-emerald-800 font-bold">€650 - €1.800</span>
+                <span className="text-emerald-800 font-bold">Desde $85k / €650</span>
               </div>
 
               <h3 className="text-xl font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
-                Pasaporte Verde UE & Informes
+                Informes Terran & Pasaporte Verde
               </h3>
 
               <p className="text-xs text-slate-600 font-serif leading-relaxed">
-                Certificación de no-deforestación EUDR con QR en pallets para exportadoras + Informes Geofísicos de Factibilidad y Riesgo Predial en 24h a 48h.
+                Monetización inmediata en 24h: diagnóstico geofísico pre-compra de parcelas (agua y heladas) + auditoría satelital libre de deforestación EUDR con QR para aduanas europeas.
               </p>
             </div>
 
@@ -133,7 +142,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenPitchDeck, onNav
               onClick={() => onNavigate('satellites')}
               className="w-full py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-emerald-300 font-mono text-xs font-bold hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5"
             >
-              <span>Certificar / Pedir Informe</span>
+              <span>Pedir Informe / Certificar</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>

@@ -125,3 +125,7 @@ Para consultar los contratos, acuerdos de IP y esquemas de comisiones/vesting, d
   * [[FAO-56 Penman-Monteith]]
   * [[STACK_TECNOLOGICO_ARQUITECTURA_AGRITWIN]]
   * [[DINAMICA_CLIMATICA_ESCENARIOS_CUENCA]]
+  * [[01_Marco_Teorico_Metodologia/MATRIZ_RELACIONES_GLOBALES_ARQUITECTURA_8_AB|Matriz de Relaciones Globales Arquitectura 8.a y 8.b (v3.1.0)]]
+  * [[02_Arquitectura_Software_Hardware/Malla AMR Hexgrid y Escalas N1-N4|Malla AMR Hexgrid N1-N4]]
+  * [[02_Arquitectura_Software_Hardware/CutSheetRX Balance de Tierras y Zanjas Keyline|CutSheetRX Balance de Tierras y Keyline]]
+  * [[02_Arquitectura_Software_Hardware/Calicata Digital 1D Campbell Richards|Calicata Digital 1D Campbell-Richards]]

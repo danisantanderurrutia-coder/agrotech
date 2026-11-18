@@ -100,63 +100,43 @@ export const BOM_MATRIX: BomItem[] = [
 
 export const PRODUCT_PORTFOLIO: ProductLine[] = [
   {
-    id: 'agritwin-suite',
+    id: 'agroalerta-pocket',
     number: 1,
-    title: 'AgriTwin 3D: Gemelo Digital Predial',
-    tagline: 'Plataforma central biofísica: Un Tronco Central y 6 Ramas de simulación y gestión predial',
-    category: 'Digital Twin',
-    businessModel: 'Suscripción SaaS Anual/Mensual B2B',
-    priceRange: '$45.000 - $160.000 CLP / mes',
-    targetAudience: ['Agricultores y fruticultores', 'Viñedos y exportadoras del Maule', 'Administradores de fundos comerciales'],
-    description: 'El corazón biofísico de AgroTech Chile. Replica el predio en 3D WebGL con balance hídrico diario FAO-56, simulación de drenaje térmico katabático (heladas) con 72h de anticipación y 6 ramas especializadas (Galpón IoT, Invernadero, Establo PRV, Rewilding, Cuenca Regional y Mesa Vecinal).',
+    title: 'AgroAlerta: Micro-SaaS de Bolsillo (WhatsApp)',
+    tagline: 'Alertas satelitales en 60 segundos por WhatsApp: heladas katabáticas, incendios, viento y estrés hídrico',
+    category: 'Micro-SaaS',
+    phase: 1,
+    phaseLabel: 'Fase 1 · Software Activo',
+    isHeroMicroSaaS: true,
+    businessModel: 'Freemium / Suscripción Mensual Pocket B2C & B2B',
+    priceRange: 'Gratis básico • $9.900 - $24.900 CLP / mes',
+    targetAudience: ['Agricultores y fruticultores de Maule y Ñuble', 'Administradores de campo con celular', 'Parceleros y viñedos comerciales'],
+    description: 'El caballo de Troya de nuestro ecosistema. Sin necesidad de descargar apps pesadas ni navegar visores 3D complejos, el agricultor recibe alertas críticas en su WhatsApp con 72h de anticipación: bolsones de heladas (ColdFlow), piro-riesgo extremo con viento Puelche, estrés hídrico radicular y ventanas de pulverización.',
     keyFeatures: [
-      'Visualización 3D interactiva con iluminación solar astronómica y topografía DEM 12.5m',
-      'Predicción katabática de heladas con 72 horas de anticipación a nivel de brote/cuartel',
-      'Balance de humedad en 3 estratos de suelo (0-20, 20-60, 60-100cm) vía FAO-56 y sondas FDR',
-      'Despliegue de 6 Ramas Productivas: Galpón IoT, Cultivos, Establo PRV, Rewilding, Cuenca 122k ha y Mesa DAO'
+      'Onboarding en 60 segundos: solo rol de avalúo o GPS + cultivo + WhatsApp',
+      'Predicción katabática de heladas con cálculo de temperatura mínima y hora de inicio',
+      'Alerta temprana de incendios forestales (FWI, humedad <20% y rachas de viento)',
+      'Monitoreo satelital Sentinel-2 semanal de estrés hídrico en estrato de raíces',
+      'Activa el Data Flywheel: cada alerta delimita el predio y alimenta el Twin Maestro'
     ],
     specs: {
-      'Motor 3D': 'Three.js / WebGL 2.0 PBR',
-      'Planes SaaS': 'Básico ($45k/mes) • Pro ($85k/mes) • Enterprise ($160k/mes)',
-      'Latencia Sensor': 'Sub-50ms vía WebSockets',
-      'Resolución Espacial': '10m píxel satelital + microclima de surco'
+      'Canal de Entrega': 'WhatsApp Business API + Notificaciones Push',
+      'Tiempo de Activación': 'Menos de 60 segundos',
+      'Modelos Biofísicos': 'ColdFlow katabático, FWI incendios y balance FAO-56',
+      'Resolución': 'Satelital 10m píxel + calibración topográfica DEM'
     },
-    impactMetric: 'Amortización en 1 sola noche al salvar el 90% de brotes ante heladas de radiación',
+    impactMetric: 'Salva cosechas en floración y previene pérdidas millonarias desde el primer día',
     iconName: 'Activity',
-    highlightColor: 'from-emerald-500 to-cyan-400'
-  },
-  {
-    id: 'kiot-hardware',
-    number: 2,
-    title: 'Kits A.P.I.S. / KioT Hardware & Riego',
-    tagline: 'Los ojos físicos del gemelo digital: microelectrónica maulina IP65 autónoma',
-    category: 'Hardware IoT',
-    businessModel: 'Venta de Hardware + Instalación Cooperativa + HaaS',
-    priceRange: '$185.000 - $380.000 CLP por kit',
-    targetAudience: ['Fruticultores (arándanos, manzanos, cerezos)', 'Vitivinicultores del Valle del Maule'],
-    description: 'Nodos de telemetría de campo fabricados en Talca con un 70% de margen bruto. Alimentan directamente las ramas de AgriTwin midiendo heladas, estratos de suelo y automatizando electroválvulas de riego.',
-    keyFeatures: [
-      'Gabinete estanco IP65 resistente a radiación UV y lluvias torrenciales maulinas',
-      'Sondas de acero inoxidable DS18B20 (±0.5°C) y sensores capacitivos tri-estrato FDR',
-      'Microcontrolador ESP32-S3 con LoRaWAN 915MHz de hasta 15 km y panel solar LiFePO4',
-      'Actuador KioT Valve para automatización de electroválvulas y bombas en horario valle'
-    ],
-    specs: {
-      'Kit Riego Base': '$185.000 CLP (Sonda suelo + Relé válvula)',
-      'Kit Anti-Heladas': '$220.000 CLP (Sonda DS18B20 + Sirena 110dB)',
-      'Estación Solar Completa': '$380.000 CLP (3 Nodos mesh + Panel solar + Soporte)',
-      'Modelo Arriendo HaaS': '$28.000 CLP / mes con mantención incluida'
-    },
-    impactMetric: 'Reduce el costo eléctrico de bombeo entre 30% y 38% y previene pérdidas por heladas',
-    iconName: 'Cpu',
-    highlightColor: 'from-amber-500 to-emerald-400'
+    highlightColor: 'from-emerald-500 to-amber-400'
   },
   {
     id: 'climate-reports',
-    number: 3,
-    title: 'Informes de Riesgo Agroclimático Predial',
-    tagline: 'Diagnóstico geofísico pre-compra e inversión: agua a 10 años y heladas a 15 años',
+    number: 2,
+    title: 'Informes de Riesgo Agroclimático Predial (Terran)',
+    tagline: 'Diagnóstico geofísico pre-compra e inversión: agua a 10 años y heladas a 15 años en 24h',
     category: 'Risk Analysis',
+    phase: 1,
+    phaseLabel: 'Fase 1 · Software Activo',
     businessModel: 'Venta directa por informe con entrega en 24h - 48h',
     priceRange: '$85.000 - $180.000 CLP (€95 - €180)',
     targetAudience: ['Compradores de parcelas', 'Corredores de propiedades rurales', 'Agricultores en expansión'],
@@ -178,11 +158,69 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
     highlightColor: 'from-blue-500 to-cyan-400'
   },
   {
-    id: 'green-passport',
+    id: 'bv-agua',
+    number: 3,
+    title: 'BV Agua: Telemetría Satelital & Balance de Cuenca',
+    tagline: 'Riego inteligente, balance FAO-56 diario y monitoreo de napas sin hardware inicial',
+    category: 'Digital Twin',
+    phase: 1,
+    phaseLabel: 'Fase 1 · Software Activo',
+    businessModel: 'Suscripción SaaS Anual/Mensual por Hectárea',
+    priceRange: '$35.000 - $95.000 CLP / mes',
+    targetAudience: ['Fruticultores y viñedos bajo riego tecnificado', 'Juntas de vigilancia de ríos', 'Comunidades de aguas'],
+    description: 'Módulo satelital del Twin Maestro dedicado a la gestión hídrica de precisión. Calcula la evapotranspiración real (ETc) y el agua disponible en 3 estratos de suelo mediante satélites Sentinel-2 e índices térmicos, recomendando horas de riego óptimas.',
+    keyFeatures: [
+      'Cálculo de lámina de riego diaria FAO-56 por cuartel y tipo de suelo',
+      'Detección satelital de fugas, obturaciones en goteros y estrés por sectores',
+      'Monitoreo histórico de caudales de cuenca y pozos profundos cercanos DGA',
+      'Preparado para enlazar electroválvulas en Fase 2 de hardware'
+    ],
+    specs: {
+      'Frecuencia de Actualización': 'Pases satelitales cada 5 días + interpolación diaria',
+      'Suelo Modelado': '3 estratos: 0-20 cm, 20-60 cm y 60-100 cm',
+      'Ahorro Esperado': '20% a 35% de agua y energía eléctrica de bombeo',
+      'Compatibilidad': 'Exportación de reportes para la Dirección General de Aguas'
+    },
+    impactMetric: 'Ahorro de hasta 35% de agua de riego y prevención de asfixia o estrés radicular',
+    iconName: 'Activity',
+    highlightColor: 'from-blue-600 to-emerald-400'
+  },
+  {
+    id: 'bv-fuego',
     number: 4,
-    title: 'Pasaporte Verde de Exportación UE',
-    tagline: 'Certificación ecológica digital y auditoría libre de deforestación (EUDR)',
+    title: 'BV Fuego: Piro-Defensa & Aspersores Perimetrales',
+    tagline: 'Detección temprana de riesgo de incendios forestales, viento Puelche y cortafuegos',
+    category: 'Automation & AI',
+    phase: 1,
+    phaseLabel: 'Fase 1 · Software Activo',
+    businessModel: 'SaaS Estacional (Verano) / Licencia Predial',
+    priceRange: '$45.000 - $110.000 CLP / mes en temporada de riesgo',
+    targetAudience: ['Fundos agrícolas y forestales limítrofes', 'Loteos y condominios rurales', 'Municipios del secano costero e interior'],
+    description: 'Sistema de alerta y defensa perimetral contra incendios forestales. Monitorea el índice de inflamabilidad del combustible vegetal (FWI), focos térmicos satelitales MODIS/VIIRS en 20 km a la redonda y modela la velocidad de avance del fuego según viento y topografía.',
+    keyFeatures: [
+      'Alerta inmediata ante rachas de viento Puelche y la regla 30-30-30',
+      'Mapeo de continuidad vegetal y diseño de cortafuegos Keyline eficientes',
+      'Integración con botones de pánico comunitarios y centrales de bomberos/CONAF',
+      'Lógica lista para activar matrices de aspersores de techo y perimetrales'
+    ],
+    specs: {
+      'Fuentes de Foco': 'NASA FIRMS (VIIRS 375m / MODIS 1km) en tiempo real',
+      'Tiempo de Alerta': '< 15 minutos desde detección satelital',
+      'Radio de Vigilancia': 'Hasta 50 km alrededor del predio protegido',
+      'Modo Offline': 'Planes de contingencia descargables en PDF para brigadas'
+    },
+    impactMetric: 'Protección patrimonial crítica contra el peor riesgo de la zona centro-sur',
+    iconName: 'Activity',
+    highlightColor: 'from-amber-500 to-red-500'
+  },
+  {
+    id: 'green-passport',
+    number: 5,
+    title: 'Pasaporte Verde de Exportación UE (EUDR)',
+    tagline: 'Certificación ecológica digital y auditoría libre de deforestación para aduanas europeas',
     category: 'Export ESG',
+    phase: 1,
+    phaseLabel: 'Fase 1 · Software Activo',
     businessModel: 'Fee por certificación por predio + Renovación anual',
     priceRange: '€650 - €1.800 por predio exportador',
     targetAudience: ['Exportadoras de vino, manzanas, cerezas y berries', 'Brokers y compradores ESG de la UE'],
@@ -204,108 +242,87 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
     highlightColor: 'from-amber-500 to-yellow-400'
   },
   {
-    id: 'biotoken-rewild',
-    number: 5,
-    title: 'RewildMapper SaaS & BioToken PBC',
-    tagline: 'Certificación de biodiversidad vegetal nativa y mercado de activos ecológicos',
-    category: 'BioTech & Token',
-    businessModel: 'Suscripción SaaS + Comisión de emisión de certificados (12%)',
-    priceRange: '$65.000 CLP / mes + comisión transaccional',
-    targetAudience: ['Propietarios de bosques nativos maulinos', 'Empresas con compromisos de mitigación ESG'],
-    description: 'Herramienta SaaS PWA para el diagnóstico y monitoreo de bosques esclerófilos nativos (boldo, peumo, roble). Emite Unidades de Biodiversidad Vegetal (PBC) bajo metodología IPCC Tier-2.',
-    keyFeatures: [
-      'Software SaaS RewildMapper con soporte offline PWA para relevamiento en campo',
-      'Generación de Certificados de Biodiversidad Vegetal (PBC - Plant Biodiversity Certificates)',
-      'Monitoreo satelital continuo de cobertura nativa y tasa de regeneración cada 5 días',
-      'Conexión con fondos de compensación ambiental y programas corporativos ESG'
-    ],
-    specs: {
-      'Plataforma SaaS': 'RewildMapper Cloud GIS Engine',
-      'Métrica Base': 'Índice de Diversidad Vegetal Nativa (IDVN)',
-      'Monitoreo Satelital': 'Pases cada 5 días (Sentinel-2 Spectral)',
-      'Auditoría': 'Verificación territorial por la Cooperativa AgroTech'
-    },
-    impactMetric: 'Ha impulsado la custodia y regeneración de +450 hectáreas de bosque nativo maulino',
-    iconName: 'Leaf',
-    highlightColor: 'from-green-500 to-emerald-400'
-  },
-  {
-    id: 'seminars-courses',
+    id: 'agritwin-suite',
     number: 6,
-    title: 'Seminarios & Cursos AgroTech Edulab',
-    tagline: 'Talleres presenciales "Manos en la Tierra", webinars y juego "Raíces y Chips"',
-    category: 'Education',
-    businessModel: 'Venta de entradas + Suscripciones online + Venta de juego de cartas',
-    priceRange: '$15.000 - $120.000 CLP',
-    targetAudience: ['Agricultores locales', 'Estudiantes de agronomía', 'Comunidades escolares maulinas'],
-    description: 'División educativa y formativa. Convierte el conocimiento agronómico y tecnológico en talleres prácticos de campo en el Maule, webinars técnicos y el juego de cartas educativo "Raíces y Chips".',
+    title: 'AgriTwin 3D Maestro: Núcleo Biofísico Territorial',
+    tagline: 'El Plan Maestro digital que orquesta topografía 3D, cuencas y alimenta a todos los Micro-SaaS',
+    category: 'Digital Twin',
+    phase: 1,
+    phaseLabel: 'Fase 1 · Software Activo',
+    businessModel: 'Suscripción SaaS Enterprise B2B / Gobiernos Regionales',
+    priceRange: '$120.000 - $350.000 CLP / mes',
+    targetAudience: ['Grandes agrícolas y viñedos de exportación', 'Juntas de vigilancia de cuencas', 'Gobiernos regionales e I+D'],
+    description: 'La nave nodriza computacional. El Twin Maestro no se vende como un software diario de bolsillo; es el núcleo que procesa modelos 3D orográficos, nubes de puntos LiDAR, balance hídrico de cuenca completa y provee las APIs a todos los Micro-SaaS hijos.',
     keyFeatures: [
-      'Juego de cartas didáctico "Raíces y Chips" sobre ecosistemas agrícolas y heladas ($15.000 CLP)',
-      'Talleres presenciales "Manos en la Tierra" en el Maule (sensores, biotecnología y compostaje)',
-      'Cursos online de precisión agrícola y manejo de microclimas con herramientas abiertas',
-      'Transferencia técnica respaldada por los profesionales de la Cooperativa'
+      'Motor 3D WebGL PBR con iluminación astronómica y sombras orográficas reales',
+      'Cuenca regional de 122.000 hectáreas integrada con estaciones DGA y satélites',
+      'Feature Stacking: activa y consolida todos los módulos hijos en una sola vista',
+      'Arquitectura OGC API y STAC/COG abierta para integración institucional'
     ],
     specs: {
-      'Modalidades': 'Presencial en campo (Maule) + Streaming HD',
-      'Edulab Product': 'Juego de Cartas "Raíces y Chips" ($15.000 CLP)',
-      'Certificación': 'Diploma de Capacitación Técnica AgroTech Chile',
-      'Frecuencia': '2 talleres presenciales al mes + webinars'
+      'Motor 3D': 'Three.js / WebGL 2.0 PBR',
+      'Planes SaaS': 'Enterprise Cuenca / Corporativo multi-campo',
+      'Latencia Sensor': 'Sub-50ms vía WebSockets',
+      'Resolución Espacial': '10m píxel satelital + microclima de surco'
     },
-    impactMetric: '+320 agricultores y 15 colegios maulinos capacitados en permacultura y tecnología',
-    iconName: 'GraduationCap',
-    highlightColor: 'from-purple-500 to-indigo-400'
+    impactMetric: 'Control total del territorio y visión unificada de cuenca para alta dirección',
+    iconName: 'Layers',
+    highlightColor: 'from-emerald-500 to-cyan-400'
   },
   {
-    id: 'agricultural-manuals',
+    id: 'kiot-hardware',
     number: 7,
-    title: 'Manuales & Guías de Campo AgroTech',
-    tagline: 'Guías de campo prácticas ilustradas: pasos claros, cero jerga, 100% aplicables',
-    category: 'Publishing',
-    businessModel: 'Venta digital (Ebook/PDF) + Impresión bajo demanda (POD)',
-    priceRange: '$12.000 - $28.000 CLP por guía',
-    targetAudience: ['Parceleros de fin de semana', 'Pequeños productores', 'Aficionados a la permacultura'],
-    description: 'Manuales prácticos diseñados para el agricultor que aprende haciendo. Diagramas visuales, esquemas de circuitos mecatrónicos y consejos probados en el suelo maulino.',
+    title: 'Kits KioT Hardware & Riego (Fase 2: Conexión Física)',
+    tagline: 'Upgrade físico en campo: microelectrónica LoRaWAN IP65 y sondas FDR para clientes de software',
+    category: 'Hardware IoT',
+    phase: 2,
+    phaseLabel: 'Fase 2 · Hardware a Largo Plazo',
+    businessModel: 'Venta de Hardware + Instalación + HaaS (Solo a clientes de software)',
+    priceRange: '$185.000 - $380.000 CLP por kit instalado',
+    targetAudience: ['Fruticultores tecnificados que ya usan AgroAlerta y BV Agua', 'Vitivinicultores que buscan calibración milimétrica'],
+    description: 'No vendemos hardware en frío a desconocidos. Los kits KioT se ofrecen como una calibración física a nivel de surco para quienes ya validaron el software: sondas de acero inoxidable en 3 estratos, microcontroladores ESP32-S3 autónomos con LoRaWAN y válvulas automatizadas para regar en horario valle.',
     keyFeatures: [
-      'Línea editorial de precisión agrícola: infografías claras y explicaciones directas',
-      'Capítulos sobre control de heladas en campo, sensores caseros y biopreparados',
-      'Esquemas de circuitos mecatrónicos y manejo de agua paso a paso',
-      'Distribución digital inmediata en PDF/ePub e impresa en papel kraft ecológico'
+      'Gabinete estanco IP65 fabricado en Maule, resistente a lluvias torrenciales y UV',
+      'Sondas tri-estrato FDR (0-20, 20-60, 60-100cm) y termometría de canopia DS18B20 (±0.5°C)',
+      'Enlace inalámbrico LoRaWAN 915MHz de hasta 15 km con batería solar LiFePO4',
+      'Actuador KioT Valve para automatizar electroválvulas en horario de menor costo eléctrico'
     ],
     specs: {
-      'Páginas': '120 - 180 páginas a color',
-      'Formato': 'Digital PDF/ePub + Físico Rústico Tapa Blanda',
-      'Idioma': 'Español (Chile/Latam)',
-      'Licencia': 'Conocimiento libre AgroTech Chile'
+      'Condición de Acceso': 'Habilitado exclusivamente como upgrade de AgroAlerta y BV Agua',
+      'Kit Riego Base': '$185.000 CLP (Sonda suelo + Relé válvula)',
+      'Estación Solar Completa': '$380.000 CLP (3 Nodos mesh + Panel solar + Soporte)',
+      'Modelo Arriendo HaaS': '$28.000 CLP / mes con mantención incluida'
     },
-    impactMetric: '+1.200 copias digitales y físicas distribuidas en el centro de Chile',
-    iconName: 'BookOpen',
-    highlightColor: 'from-amber-600 to-orange-400'
+    impactMetric: 'Calibración a nivel de raíz y reducción del costo eléctrico de bombeo en un 38%',
+    iconName: 'Cpu',
+    highlightColor: 'from-amber-500 to-emerald-400'
   },
   {
-    id: 'agritwin-vision-drones',
+    id: 'ecosystem-living-lab',
     number: 8,
-    title: 'AgriTwin Vision & Drones Autónomos',
-    tagline: 'Cámaras solares PTZ 4G, Frustums 3D y vuelos DJI Dock 2 conectados al gemelo digital',
-    category: 'Automation & AI',
-    businessModel: 'SaaS Add-on ($25.000 - $38.000 CLP/mes por cámara) + HaaS / Vuelos On-Demand',
-    priceRange: '$25.000 - $38.000 CLP / mes por cámara',
-    targetAudience: ['Dueños ausentes de predios', 'Inversionistas agrícolas y family offices', 'Fruticultores y viñedos comerciales', 'Ganaderos regenerativos (PRV)'],
-    description: 'La convergencia ciberfísica definitiva: cámaras solares PTZ 4G y estaciones Drone-in-a-Box conectadas bidireccionalmente al gemelo digital 3D. Incluye proyección de conos de cobertura en Three.js, streaming WebRTC de ultra baja latencia (<300ms), alertas Edge AI (intrusos, compuertas DGA, ganado, fauna nativa) y actualización dinámica de ortomosaicos sin recargar la aplicación.',
+    title: 'Living Lab Meniel, Drones & Biopreparados (Fase 3: Ecosistema)',
+    tagline: 'La visión madura a largo plazo: Fundo Meniel, drones autónomos, agroforestería y comunidad campesina',
+    category: 'BioTech & Token',
+    phase: 3,
+    phaseLabel: 'Fase 3 · Ecosistema a Largo Plazo',
+    businessModel: 'I+D Colaborativa + Servicios de Dron On-Demand + Certificaciones',
+    priceRange: 'Horizonte Estratégico 2026-2028',
+    targetAudience: ['Comunidad silvoagropecuaria del Maule', 'Fondos de investigación ANID/Corfo', 'Empresas con metas de biodiversidad ESG'],
+    description: 'El despliegue de largo plazo de nuestro ecosistema. Una vez consolidada la masa crítica de predios monitoreados por software y hardware, habilitamos el Living Lab de Fundo Meniel: investigación agroforestal sintrópica, formulación de biopreparados, vuelos de drones DJI Dock 2 y transferencia técnica campesina.',
     keyFeatures: [
-      'Proyección de conos de cobertura (Frustums 3D) interactivos sobre la topografía real en Three.js',
-      'Streaming de video de baja latencia con protocolo WebRTC / WHEP adaptable a enlaces rurales 4G y Starlink',
-      'Alertas Edge AI con YOLOv11 en el nodo: intrusión perimetral, aforo de compuertas DGA y conteo de ganado PRV',
-      'Integración desatendida con DJI Dock 2 y actualización en caliente de ortofotos multiespectrales (NDVI/RGB)'
+      'Centro de I+D en Fundo Meniel (Parral): bosque comestible y agricultura sintrópica',
+      'Estaciones Drone-in-a-Box con vuelos autónomos y ortomosaicos actualizados',
+      'Dosificación calculada de té de compost y bioles según biología del suelo',
+      'Certificados de Biodiversidad Vegetal (RewildMapper / PBC) para compensación ESG'
     ],
     specs: {
-      'Streaming Video': 'WebRTC / WHEP sub-300ms sobre 4G LTE-M y Starlink',
-      'Edge AI en Nodo': 'YOLOv11-Edge (Intrusos, Caudal DGA, BCS Ganado) y MegaDetector (Fauna ESG)',
-      'Estación Dron': 'Integración DJI Dock 2 / MAVLink con ortomosaicos automatizados',
-      'Motor 3D': 'Three.js Frustum volumétrico interactivo + PiP HUD + cambio dinámico de texturas'
+      'Despliegue': 'Fase 3 (Siguiente etapa tras consolidación de software y hardware)',
+      'Centro Territorial': 'Parral, Maule Sur, Chile',
+      'Articulación': 'Academia Campesina + Drones + Bioinsumos'
     },
-    impactMetric: 'Monitoreo 100% autónomo para dueños ausentes: 0 viajes innecesarios y respuesta ante incidentes en < 3 minutos',
-    iconName: 'Camera',
-    highlightColor: 'from-cyan-500 to-emerald-400'
+    impactMetric: 'Transformación territorial sistémica, soberanía de cuenca y biodiversidad verificada',
+    iconName: 'Leaf',
+    highlightColor: 'from-emerald-600 to-purple-500'
   }
 ];
 
