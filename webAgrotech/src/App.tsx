@@ -15,6 +15,7 @@ import { EdulabPage } from './components/EdulabPage';
 import { InteractiveDocsHub } from './components/InteractiveDocsHub';
 import { CuadernoOperadorHub } from './components/CuadernoOperadorHub';
 import { BrandIdentitySection } from './components/BrandIdentitySection';
+import { RoadmapProductosPage } from './components/RoadmapProductosPage';
 import { Footer } from './components/Footer';
 import { PitchDeckModal } from './components/PitchDeckModal';
 
@@ -71,6 +72,12 @@ export function App() {
 
         {(currentView === 'agritwin' || currentView === 'agritwin-showcase') && (
           <AgriTwinShowcasePage 
+            onNavigate={handleNavigate}
+          />
+        )}
+
+        {(currentView === 'roadmap' || currentView === 'roadmap-productos') && (
+          <RoadmapProductosPage 
             onNavigate={handleNavigate}
           />
         )}
