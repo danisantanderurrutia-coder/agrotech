@@ -8,7 +8,7 @@ version: 1.0
 
 # 💼 [[Plan Comercial y Go-To-Market SpA]] • Ecosistema [[AGROTECH]]
 
-> **Propósito del Documento**: Establecer la hoja de ruta comercial, la arquitectura de precios, el embudo de ventas en terreno y la proyección financiera de **AgroTech SpA** en articulación con la **Cooperativa de Trabajo**, para su presentación, validación y ejecución por parte del equipo fundador (**Daniel Santander**, **Paulina Urrutia**, **Wladimir** y **Pablo**).
+> **Propósito del Documento**: Establecer la hoja de ruta comercial, la arquitectura de precios, el embudo de ventas en terreno y la proyección financiera de **AgroTech SpA** en articulación con la **Cooperativa de Trabajo**, para su presentación, validación y ejecución por parte del equipo fundador (**Daniel Santander**, **Francisco Ipinza**, **Wladimir Gutiérrez**, **Rüdiger Kaatz**, **Cristian Cantuarias**, **Luis González** y **Daniela Mendoza**).
 
 ---
 
@@ -78,7 +78,8 @@ graph TD
 
     DANIEL["Daniel Santander<br/>(Dirección Estratégica & Alianzas)"]:::founder
     WLADIMIR["Wladimir<br/>(Dirección Financiera & Expansión Maule)"]:::founder
-    PAULINA["Paulina Urrutia<br/>(Ventas Técnicas & Producción Hardware)"]:::founder
+    RUDI["Rüdiger Kaatz<br/>(Living Lab & Conector Terreno)"]:::founder
+    FRANCISCO["Francisco Ipinza<br/>(Dirección Comercial B2B & Loteos)"]:::founder
     PABLO["Pablo<br/>(Inteligencia Comercial & Software de Ventas)"]:::founder
 
     COOP["Cooperativa de Trabajo<br/>(Instalaciones, Terreno, Drones)"]:::coop
@@ -97,7 +98,7 @@ graph TD
   * Prospección de convenios con comités de Agua Potable Rural ([[APRs]]) y asociaciones de canalistas.
   * Estructuración del flujo de caja, cobranza y términos de contratos anuales.
   * Coordinación de seminarios presenciales *"Manos en la Tierra"* como canal de captación.
-* **Paulina Urrutia (Directora de Operaciones Técnicas & Hardware)**:
+* **Rüdiger Kaatz & Luis González (Operaciones Técnicas, Terreno & Off-Grid)**:
   * Venta técnica consultiva en terreno (diagnóstico de qué kit necesita cada agricultor).
   * Elaboración de cotizaciones mecatrónicas y supervisión del stock en el taller de Talca.
   * Asignación de órdenes de instalación y calibración a los técnicos de la Cooperativa.
@@ -123,7 +124,7 @@ La venta agropecuaria se fundamenta en la **confianza local** y la **demostraci�
            │
            ▼
 [ ETAPA 2: Diagnóstico & Propuesta Cuantificada ]
-├── Visita técnica de Paulina o técnico cooperado al predio (30-45 min)
+├── Visita técnica de Rudi Kaatz, Luis González o técnico cooperado al predio (30-45 min)
 ├── Levantamiento de cuarteles críticos (puntos bajos propensos a heladas, bombeo)
 └── Entrega de Propuesta Formal con ROI garantizado y opción de financiamiento
            │
@@ -172,7 +173,7 @@ Para reducir la fricción de pago del agricultor, AgroTech articula postulacione
 
 ## 📋 7. Próximos Pasos Inmediatos (Plan de Acción 30 Días)
 
-1. **Validación Interna de Precios**: Aprobación formal de las tarifas y márgenes en reunión de socios entre Daniel, Paulina, Wladimir y Pablo.
+1. **Validación Interna de Precios**: Aprobación formal de las tarifas y márgenes en reunión de socios entre Daniel Santander, Francisco Ipinza, Wladimir Gutiérrez, Rüdiger Kaatz y socios SpA.
 2. **Habilitación de Showroom en Terreno**: Puesta a punto del gemelo 3D y telemetría en el **[[Predio Meniels]]** para visitas comerciales guiadas.
 3. **Firma del Primer Paquete de 5 Pilotos**: Cerrar 5 predios pioneros en Parral y Curicó bajo condiciones preferenciales de lanzamiento a cambio de testimonio y datos de validación agronómica.
 4. **Despliegue del Simulador y Pitch Deck en la Web**: Utilizar las herramientas del portal interno para cotizaciones en vivo con prospectos.

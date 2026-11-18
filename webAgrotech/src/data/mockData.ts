@@ -479,7 +479,7 @@ export const PROJECT_PITCH_SLIDES: PitchSlide[] = [
     content: {
       headline: 'Conocimiento práctico del suelo chileno combinado con ciencia ambiental europea',
       points: [
-        'Paulina Urrutia Maureira (Maule, Chile): Ingeniera en Automatización de Procesos. Lidera ensamblaje de hardware, impresión 3D, soporte en terreno y ventas locales.',
+        'Rüdiger Kaatz & Luis González (Maule Sur, Chile): Especialistas en infraestructura off-grid, bancos de baterías recicladas, cámaras 4G solares y operaciones en terreno.',
         'Daniel Santander Urrutia (Alemania): Geofísico, Permacultor y Experto en Ecología Forestal & Gases de Efecto Invernadero. Lidera procesamiento macro de datos, modelos climáticos y estrategia de contenidos.'
       ],
       metrics: [
@@ -819,15 +819,15 @@ export const MARKET_PITCH_SLIDES: PitchSlide[] = [
     content: {
       headline: 'La combinación exacta de capacidad operativa en terreno y visión científica global:',
       points: [
-        'Paulina Urrutia Maureira (Talca, Chile): Ingeniera en Automatización de Procesos. Lidera el diseño de PCBs en KiCad, fabricación mecatrónica, pruebas de estanqueidad IP65 y atención directa a productores en fundo.',
+        'Rüdiger Kaatz & Luis González (Parral, Maule Sur): Especialistas en infraestructura solar off-grid, bancos de baterías LiFePO4 recicladas, videovigilancia 4G y drones de terreno.',
         'Daniel Santander Urrutia (Friburgo / Berlín, Alemania): Geofísico, permacultor y analista de ecología forestal y GEI. Lidera el pipeline satelital Sentinel-2, modelos AgroTwin y conexión comercial ESG en la Unión Europea.',
         'Manifiesto de Ingeniería: "Cero consultorías de escritorio. Mecatrónica de terreno con las botas en el barro."',
         'Visión 2030: Consolidar a la Región del Maule como el referente sudamericano de agricultura regenerativa y de precisión de código abierto y alta tecnología.'
       ],
       metrics: [
-        { label: 'Paulina Urrutia', value: 'Operaciones Maule', detail: 'Hardware, PCB y Terreno' },
+        { label: 'Rudi & Luis', value: 'Operaciones Maule Sur', detail: 'Hardware Off-Grid y Terreno' },
         { label: 'Daniel Santander', value: 'Satélites & ESG UE', detail: 'Geofísica y Mercados Europa' },
-        { label: 'Contacto', value: 'contacto@urrutia.ag', detail: 'Talca, Chile • Berlín, Alemania' }
+        { label: 'Contacto', value: 'contacto@urrutia.ag', detail: 'Parral, Chile • Berlín, Alemania' }
       ],
       highlightBox: {
         title: 'Únete a la Transformación Agroclimática',
@@ -1016,7 +1016,7 @@ export const ORGANIZATION_PITCH_SLIDES: PitchSlide[] = [
       headline: 'Definición nítida de funciones sin solapamientos ni zonas grises:',
       points: [
         'Liderazgo Intelectual, Producto & Expansión UE (Daniel • Alemania): Dirección de software (AgriTwin/Rewild), modelos satelitales Sentinel-2, arquitectura de red, web global, relaciones ESG y levantamiento de capital.',
-        'Liderazgo Mecatrónica & Operaciones Maule (Paulina • Talca): Dirección de diseño PCB KiCad, pruebas de estanqueidad IP65, control de calidad en taller, compras locales y coordinación de la cooperativa en terreno.',
+        'Liderazgo Técnico, Off-Grid & Operaciones Maule Sur (Rudi & Luis • Parral): Almacenamiento LiFePO4, cámaras 4G solares, ensamblaje de kits mecatrónicos y Living Lab demostrativo.',
         'Técnicos de Ensamble y Calibración (Cooperativa): Armado de placas, soldadura, pruebas de sensores DS18B20 y empaque de Chef-Kits (pago por unidad testeada).',
         'Instaladores de Fundo y Soporte de Heladas: Despliegue de antenas LoRaWAN, cableado en bombas de pozo y atención rápida de emergencia predial.',
         'Comunidad, Eventos & Edulab: Organización de talleres presenciales, venta del juego "Raíces y Chips", gestión de redes sociales y prensa rural.'
@@ -1065,7 +1065,7 @@ export const ORGANIZATION_PITCH_SLIDES: PitchSlide[] = [
         'Por qué sumarte: Trabajarás con tecnología de nivel internacional (ESP32, LoRaWAN, satélites de la ESA, Three.js) resolviendo el problema más urgente del campo chileno: la crisis climática y la sequía.',
         'Cómo participar: 1) Como técnico de taller o instalador en la Cooperativa del Maule; 2) Como asesor comercial certificado en tu provincia; 3) Como tallerista o divulgador de Edulab.',
         'El Compromiso: Aprenderás, ganarás en proporción directa al valor que ayudes a crear y serás protagonista de la modernización regenerativa del campo chileno.',
-        'Contáctanos: Conversemos directamente con Paulina en Talca o con Daniel vía streaming desde Alemania.'
+        'Contáctanos: Conversemos directamente con Rudi Kaatz en Parral o con Daniel vía streaming desde Alemania.'
       ],
       metrics: [
         { label: 'Sede Terreno', value: 'Talca, Chile 🇨🇱', detail: 'Taller mecatrónico operativo' },
@@ -1193,7 +1193,7 @@ export const COMMERCIAL_PITCH_SLIDES: PitchSlide[] = [
     category: '5. Hardware & Margen',
     badge: 'Producción & BOM',
     content: {
-      headline: 'Diseño de bajo costo de componentes y alto margen comercial gracias al ensamblaje local de Paulina.',
+      headline: 'Diseño de bajo costo de componentes y alto margen comercial gracias al ensamblaje local y baterías de Rudi y Luis.',
       points: [
         'Kit Base Riego: Costo BOM $38.500 CLP → Precio venta $185.000 CLP (Margen SpA 58% = $107.500 CLP). Pago a cooperado instalador: $39.000 CLP.',
         'Kit Crítico Anti-Heladas: Costo BOM $44.200 CLP → Precio venta $220.000 CLP (Margen SpA 59% = $130.800 CLP). Incluye sirena 110dB y sonda industrial DS18B20.',
@@ -1203,7 +1203,7 @@ export const COMMERCIAL_PITCH_SLIDES: PitchSlide[] = [
       metrics: [
         { label: 'Margen SpA', value: '56% - 59%', detail: 'Margen bruto sobre BOM' },
         { label: 'Pago a Cooperativa', value: '$39K - $70K', detail: 'Por cada instalación realizada' },
-        { label: 'Taller Local', value: 'Talca 🇨🇱', detail: 'Ensamblaje liderado por Paulina' }
+        { label: 'Living Lab & Taller', value: 'Parral 🇨🇱', detail: 'Ensamblaje liderado por Rudi Kaatz' }
       ],
       highlightBox: {
         title: 'Economía Circular Local',
@@ -1276,7 +1276,7 @@ export const COMMERCIAL_PITCH_SLIDES: PitchSlide[] = [
       points: [
         '1. Showrooms de Terreno: Utilizar el Predio Meniels (Parral) y Fundo El Boldo (Curicó) para "Días de Campo". El agricultor ve el gemelo 3D, toca el sensor y escucha sonar la sirena antiheladas en vivo.',
         '2. El "Gancho Gratuito" (Lead Magnet): Entregar a presidentes de canales de regadío y APRs un Informe de Riesgo Agroclimático gratuito de su zona para abrir puertas de reunión.',
-        '3. Visita de Diagnóstico Técnico (30 min): Paulina Urrutia o un técnico cooperado visita el campo con medidor de terreno, identifica los 2 puntos críticos y cotiza en el acto.',
+        '3. Visita de Diagnóstico Técnico (30 min): Rudi Kaatz, Luis González o un técnico de campo visita el predio con medidor de terreno, identifica los 2 puntos críticos y cotiza en el acto.',
         '4. Garantía de 30 Días: Si durante el primer mes de uso el sistema no detecta anomalías o alertas útiles, se reembolsa el 100% de la suscripción.'
       ],
       metrics: [
@@ -1326,10 +1326,10 @@ export const COMMERCIAL_PITCH_SLIDES: PitchSlide[] = [
     content: {
       headline: 'Distribución transparente de tareas y metas cuantitativas para el próximo trimestre.',
       points: [
-        'Daniel Santander: Cierre de alianzas con 2 exportadoras clave para Pasaporte Verde y dirección de la plataforma digital.',
-        'Wladimir Gutiérrez: Presentación de convenios con 3 comités de APR y asociaciones de canalistas en Parral y Linares; control de caja y cobranzas.',
-        'Paulina Urrutia: Ensamblaje y pruebas de 10 Kits KioT en taller de Talca; coordinación de visitas técnicas y stock.',
-        'Pablo Pérez: Puesta en producción del simulador de precios y calculadora de ROI; seguimiento semanal de prospectos y métricas.',
+        'Daniel Santander: Cierre de alianzas con exportadoras clave para Pasaporte Verde y dirección de la plataforma digital.',
+        'Wladimir Gutiérrez: Presentación de convenios con comités de APR y asociaciones de canalistas en Parral y Linares; control de caja.',
+        'Rüdiger Kaatz & Luis González: Despliegue de kits KioT, sistemas de energía solar y living lab en Parral.',
+        'Francisco Ipinza: Prospección comercial B2B con viñas y convenios de loteos para venta de diagnósticos.',
         'Meta Trimestral: Alcanzar los primeros 8 contratos firmados de AgriTwin y $8.500.000 CLP de facturación acumulada antes del 31 de diciembre.'
       ],
       metrics: [
@@ -2148,7 +2148,7 @@ export const BOOKS_DATA: BookItem[] = [
   {
     id: 'book-manual-mecatronica',
     title: 'Manual de Mecatrónica Rural & Sensores IP65',
-    author: 'Paulina Urrutia Maureira & Equipo AgroTech Chile',
+    author: 'Rüdiger Kaatz & Equipo AgroTech Chile',
     publisher: 'Editorial AgroTech Chile • Talca',
     category: 'Mecatrónica & IoT',
     isOwnWork: true,
@@ -2190,7 +2190,7 @@ export const BOOKS_DATA: BookItem[] = [
   {
     id: 'book-raices-chips-libro',
     title: 'Raíces y Chips: Cuentos e Infografías Agroclimáticas',
-    author: 'Paulina Urrutia & Daniel Santander',
+    author: 'Rüdiger Kaatz & Daniel Santander',
     publisher: 'Urrutia Edulab Infantil',
     category: 'Infantil & Educación',
     isOwnWork: true,
@@ -2245,20 +2245,20 @@ export const BLOG_POSTS: BlogPost[] = [
     date: '20 de Agosto, 2026',
     readTime: '8 min lectura',
     coverImage: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
-    summary: 'Conversamos con Paulina Urrutia Maureira sobre los desafíos del ensamblaje mecatrónico local, el petg estanco IP65 y la mentalidad de solución directa.',
-    tags: ['Mecatrónica', 'Entrevista', 'Talca', 'PCB'],
+    summary: 'Conversamos con Rüdiger Kaatz sobre los desafíos de la energía solar off-grid, bancos de baterías recicladas y el Living Lab en Parral.',
+    tags: ['Off-Grid', 'Entrevista', 'Parral', 'Baterías'],
     content: [
-      'Entrevistador: Paulina, ¿por qué insistir en fabricar las placas y gabinetes en Talca en vez de importar todo terminado?',
-      'Paulina Urrutia: "Porque el equipo de importación estándar no aguanta las condiciones reales de nuestros campos. Un sensor genérico importado se sulfata con la humedad de la niebla maulina en dos meses o la carcasa plástica común se quiebra por la radiación solar estival."',
-      'Paulina agrega: "Nosotros diseñamos la PCB en KiCad asegurando pistas anchas para corrientes de relé, sellado de PETG en impresión 3D local y juntas de silicona de grado industrial. Si falla una sonda en medio de la noche, estamos a 30 minutos de distancia para dar respaldo directo al agricultor."',
-      'El resultado es un ecosistema IoT robusto que demuestra que en el Maule tenemos capacidad técnica de frontera.'
+      'Entrevistador: Rudi, ¿por qué insistir en almacenamiento con baterías LiFePO4 recicladas y sistemas solares autónomos en precordillera?',
+      'Rüdiger Kaatz: "Porque en la precordillera maulina los cortes de luz y los incendios son una amenaza constante. Un sistema que dependa de la red eléctrica convencional falla exactamente cuando más se le necesita."',
+      'Rudi agrega: "Con bancos de baterías reacondicionados y monitoreo continuo, garantizamos energía ininterrumpida para sistemas de aspersión anti-heladas, cámaras de seguridad 4G y sensores de humedad sin pagar sobrecostos innecesarios."',
+      'El resultado es un Living Lab demostrativo en Parral que valida la autonomía energética y la resiliencia predial.'
     ],
     comments: [
       {
         id: 'c3',
         author: 'Carlos Sepúlveda (Prototipado Linares)',
         date: '21 de Agosto, 2026',
-        text: 'Orgullo maulino ver mecatrónica hecha en Talca respondiendo a problemas reales. ¡Mucho éxito Paulina y equipo!'
+        text: 'Excelente iniciativa off-grid para el Maule Sur. ¡Mucho éxito Rudi y equipo!'
       }
     ]
   },
@@ -2292,7 +2292,7 @@ export const COURSES_DATA: Course[] = [
     locationOrPlatform: 'Fundo Piloto San Clemente, Talca, Región del Maule',
     coverImage: 'https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?auto=format&fit=crop&w=800&q=80',
     description: 'Hands-on directo en terreno. Aprende a montar sondas DS18B20, configurar transmisores LoRaWAN y proteger gabinetes mecatrónicos contra intemperie.',
-    instructor: 'Paulina Urrutia Maureira (Ingeniera en Automatización)',
+    instructor: 'Rüdiger Kaatz & Luis González (Especialistas Off-Grid)',
     syllabus: [
       'Fundamentos de sensórica de suelo y clima',
       'Soldadura y conexiones a prueba de humedad IP65',
@@ -2330,7 +2330,7 @@ export const COURSES_DATA: Course[] = [
     locationOrPlatform: 'Plataforma Online Urrutia Edulab',
     coverImage: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
     description: 'Curso intensivo completo de programación ESP32 en Arduino/PlatformIO, diseño de circuitos en KiCad y conexión MQTT con dashboards web agrícolas.',
-    instructor: 'Paulina Urrutia & Daniel Santander',
+    instructor: 'Rüdiger Kaatz & Daniel Santander',
     syllabus: [
       'Arquitectura de hardware de bajo consumo (Deep Sleep)',
       'Protocolo Modbus RS485 para sondas NPK de suelo',
@@ -2357,7 +2357,7 @@ export const COMMUNITY_POSTS: CommunityPost[] = [
   {
     id: 'post-2',
     title: 'Taller de Construcción de Trampas de Niebla y Compostaje en Yerbas Buenas',
-    author: 'Paulina Urrutia',
+    author: 'Rüdiger Kaatz',
     date: '18 de Agosto, 2026',
     category: 'Taller & Encuentro',
     text: '20 familias parceleras de Yerbas Buenas se reunieron en nuestro taller participativo de medición hídrica artesanal y compostaje con inoculación microbiana nativa.',

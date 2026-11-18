@@ -35,7 +35,7 @@ export const CHANGELOG_DATA: ChangelogMilestone[] = [
       'Modelamiento Micro-Atmosférico: Regla 30-30-30 en Viento Puelche (Foehn), drenaje catabático de heladas a 05:30 AM y balance ETo Penman-Monteith.',
       'Ganadería Regenerativa & PRV en AgriTwin 1: Matriz de 6 especies (bovinos, ovinos, gallinas, equinos, cerdos, piscicultura) con 1.8 UGM/ha y +4.2 kg MO/m².',
       'Generador de Informes Técnicos y Mapas de Riesgo Dinámicos con descarga .txt y exportación formal para auditorías CNR/CORFO.',
-      'Módulo de 4 Fases de Transición Permacultural de Julio Pérez y Paulina Urrutia en Fundo Meniel (24.8 ha).'
+      'Módulo de 4 Fases de Transición Permacultural de Julio Pérez y equipo de diseño en Fundo Meniel (24.8 ha).'
     ],
     systemImpact: 'Gobernanza y documentación estratégica 100% blindadas en HQ, sincronizadas con la malla IoT física y la cartografía territorial de la Cuenca Maule Sur.'
   },
@@ -84,7 +84,7 @@ export const CHANGELOG_DATA: ChangelogMilestone[] = [
     badgeColor: 'blue',
     summary: 'Formalización del modelo societario híbrido: SpA para socios capitalistas y horas de trabajo (sweat equity), y Cooperativa de Trabajo para miembros comunitarios y técnicos en terreno.',
     deliverables: [
-      'Estructuración del pacto de accionistas SpA (Daniel Santander 40%, Paulina Urrutia 30%, Fondo Tecnológico 20%, Reserva Cooperativa 10%).',
+      'Estructuración del pacto de accionistas SpA (Daniel Santander 40%, socios operativos y comerciales 30%, Fondo Tecnológico 20%, Reserva Cooperativa 10%).',
       'Definición de derechos de autoría intelectual del AgriTwin bajo titularidad de Daniel con usufructo compartido para la SpA.',
       'Diseño del brazo cooperativo: acceso a proyectos comisionados B2G, comités APR y autogestión de cuadrillas de campo.',
       'Matriz de resolución de empates, vesting dinámico por horas y dividendos semestrales.'

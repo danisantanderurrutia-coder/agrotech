@@ -591,17 +591,20 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
 * **Núcleo**: En lo **Económico** y en la **Naturaleza** (Bioeconomía regenerativa).
 * **3 Pilares (Áreas Asociadas a Productos)**:
   1. **🌿 Pilar Social (Líder: Wladimir)**: Producto principal = [[Pasaporte verde]]. Establece economías locales, infraestructura para la venta justa, y conexión con la sociedad mediante cursos, seminarios, foros, congresos y comités de agua potable rural ([[APRs]]).
-  2. **💻 Pilar Digital (Líderes: Daniel con Cristian Cantuarias y Paulina)**: Producto principal = [[Agritwin]] / [[DigitalTwin]] 3D. Modelación biofísica, telemetría y software.
-  3. **⚙️ Pilar Técnico (Líderes: Paulina con Rüdiger Kaatz y Luis González)**: Producto principal = **Implementación de Kits de Cultivo y Ganado**. Sensórica KioT, calibración en campo y redes LoRaWAN.
+  2. **💻 Pilar Digital (Líderes: Daniel con Cristian Cantuarias y Daniela Mendoza)**: Producto principal = [[Agritwin]] / [[DigitalTwin]] 3D. Modelación biofísica, telemetría, visor diegético y QA/QC cartográfico.
+  3. **⚙️ Pilar Técnico (Líderes: Rüdiger Kaatz y Luis González)**: Producto principal = **Implementación de Kits de Cultivo y Ganado**. Infraestructura off-grid, sensórica KioT, baterías recicladas, drones y redes LoRaWAN.
 * **Áreas Transversales**:
   * **Finanzas & B2B**: Wladimir & Francisco Ipinza.
   * **Comunicaciones & Terreno**: Daniel, Wladimir & Rüdiger Kaatz.
 
-## 👥 Socios SpA (Sistema Mixto Capital + Sweat Equity)
+## 👥 Socios y Liderazgo SpA (Sistema Mixto Capital + Sweat Equity)
 * **Daniel Santander**: Fundador • Dirección General & Arquitectura AgriTwin. Autoría moral protegida con usufructo comercial exclusivo licenciado a la SpA.
-* **Paulina (Prima)**: Técnico & Digital • Manufactura local en Talca y pruebas de terreno.
-* **Wladimir**: Finanzas & Social • Modelo económico, Pasaporte Verde y vinculación comunitaria.
+* **Francisco Ipinza ("Pancho")**: Comercial B2B & Convenios Loteos Inmobiliarios.
+* **Wladimir Gutiérrez ("Nene")**: Finanzas & Social • Modelo económico, Pasaporte Verde y vinculación gremial/comunitaria.
 * **Rüdiger Kaatz ("Rudi")**: Conector Operativo & Off-Grid • Living Lab Parral, baterías recicladas y despliegue de kits en terreno.
+* **Cristian Cantuarias**: Lead Game Designer & Co-Diseño UI/UX Front-End 3D.
+* **Luis González ("Lápiz")**: Socio Técnico • Red Terreno Parral, cámaras 4G solares y drones.
+* **Daniela Mendoza**: Lead de Validación Geoespacial & Teledetección (Geógrafa Censat Colombia).
 
 ## 🐝 Cooperativa de Trabajo (Red de Asociados)
 * **Luis González**: Empresa de Drones, Fotogrametría Aérea, Sensores Multiespectrales y Cámaras Térmicas.
@@ -626,9 +629,12 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
 
 ## 👥 2. Socios SpA y Modalidad Mixta
 1. **Daniel Santander**: Dirección General, autoría moral de AgriTwin.
-2. **Paulina**: Pilar Técnico y Digital (Laboratorio en Talca).
-3. **Wladimir**: Finanzas y Pilar Social (Estructuración y Alianzas).
+2. **Francisco Ipinza ("Pancho")**: Comercial B2B & Convenios Loteos.
+3. **Wladimir Gutiérrez ("Nene")**: Finanzas y Pilar Social (Estructuración y Alianzas).
 4. **Rüdiger Kaatz ("Rudi")**: Conector Operativo & Off-Grid (Living Lab Parral y Kits).
+5. **Cristian Cantuarias**: Lead Game Designer & Co-Diseño UI/UX Front-End 3D.
+6. **Luis González ("Lápiz")**: Socio Técnico (Red Terreno Parral & Drones).
+7. **Daniela Mendoza**: Lead de Validación Geoespacial & Teledetección (Censat Colombia).
 
 ## 🐝 3. Cooperativa de Trabajo (Miembros Asociados)
 * **Luis González**: Titular de empresa de drones, fotogrametría aérea, cámaras térmicas y sensores multiespectrales.

@@ -57,17 +57,17 @@ graph TD
    * **Misión**: Establecer economías locales y crear infraestructura logística y de confianza para la venta justa de alimentos y uvas campesinas.
    * **Acciones**: Conecta a la empresa con la sociedad civil mediante congresos, foros, cursos de capacitación, seminarios presenciales y convenios con comités de Agua Potable Rural ([[APRs]]).
 
-2. **💻 Pilar Digital (Líderes: Daniel con Pablo y Paulina)**:
+2. **💻 Pilar Digital (Líderes: Daniel con Cristian Cantuarias y Daniela Mendoza)**:
    * **Producto Insigne**: [[Agritwin]] / [[DigitalTwin]] 3D.
-   * **Misión**: Creación y mantenimiento del motor gráfico WebGL, shaders de suelo, algoritmos de evapotranspiración [[FAO-56 Penman-Monteith]], alertas tempranas de heladas e ingesta satelital Sentinel-2.
+   * **Misión**: Creación y mantenimiento del motor biofísico, visor diegético 3D, algoritmos de evapotranspiración [[FAO-56 Penman-Monteith]], alertas tempranas de heladas, ingesta satelital Sentinel-2 y validación cartográfica QA/QC.
 
-3. **⚙️ Pilar Técnico (Líderes: Paulina con Pablo)**:
-   * **Producto Insigne**: **Implementación de Kits de Cultivo y Ganado**.
-   * **Misión**: Fabricación de hardware local, ensamblado de gabinetes estancos IP65, diseño de placas PCB en KiCad, calibración de sensores de humedad de suelo por capacitancia e instalación de radioenlaces LoRaWAN (915 MHz).
+3. **⚙️ Pilar Técnico & Terreno (Líderes: Rüdiger Kaatz y Luis González)**:
+   * **Producto Insigne**: **Implementación de Kits de Cultivo y Ganado Off-Grid**.
+   * **Misión**: Infraestructura autónoma solar, almacenamiento LiFePO4 con baterías recicladas, cámaras 4G solares, patrullaje con drones, sensores de humedad y radioenlaces LoRaWAN (915 MHz).
 
 4. **Transversales**:
-   * **Finanzas**: Wladimir & Pablo (Estructuración de costos, flujos de caja, gestión de subvenciones CORFO/INDAP y precios de mercado).
-   * **Comunicaciones**: Daniel & Wladimir (Difusión comunitaria, relaciones institucionales con universidades y compradores ESG europeos).
+   * **Finanzas & B2B**: Wladimir Gutiérrez & Francisco Ipinza (Estructuración de costos, flujos de caja, convenios de loteos y prospección agroindustrial).
+   * **Comunicaciones & Expansión**: Daniel Santander & Wladimir Gutiérrez (Difusión comunitaria, relaciones institucionales, foros y compradores ESG europeos).
 
 ---
 
@@ -75,10 +75,13 @@ graph TD
 
 | Socio / Miembro | Entidad | Pilares Asignados | Modalidad de Ingreso | Responsabilidad Clave |
 | :--- | :--- | :--- | :--- | :--- |
-| **Daniel Santander** | AgroTech SpA | Digital • Dirección General • Producto | Fundador Original • Inversión Mixta | Arquitectura de AgriTwin, autoría moral de software, visión sistémica permacultural y alianzas internacionales. |
-| **Paulina (Prima)** | AgroTech SpA | Técnico • Digital | Mixto (*Sweat Equity* + Capital inicial) | Ensamblaje de hardware en Talca, control de calidad mecatrónica, pruebas de campo y soporte técnico. |
-| **Wladimir** | AgroTech SpA | Finanzas • Social | Mixto (*Sweat Equity* + Gestión) | Estructuración económica, pasaporte verde, vinculación comunitaria, foros, congresos y relaciones gremiales. |
-| **Pablo** | AgroTech SpA | Finanzas • Técnico • Digital | Mixto (*Sweat Equity* + Desarrollo) | Modelos financieros de suscripción, optimización de algoritmos de software y soporte en despliegue de kits. |
+| **Daniel Santander** | AgroTech SpA | Digital • Dirección General • Producto | Fundador Original • IP Matriz + Mixto | Arquitectura de AgriTwin, titularidad técnica exclusiva de la IP y algoritmos, visión biofísica y alianzas internacionales. |
+| **Francisco Ipinza ("Pancho")** | AgroTech SpA | Finanzas • Comercial B2B | Mixto (*Sweat Equity* + Ventas) | Prospección comercial con loteos, venta de informes de riesgo a parcelas y alianzas con agroindustrias medianas. |
+| **Wladimir Gutiérrez ("Nene")** | AgroTech SpA | Finanzas • Social | Mixto (*Sweat Equity* + Gestión) | Estructuración económica, pasaporte verde, vinculación gremial, foros, congresos y relaciones de gobernanza social. |
+| **Rüdiger Kaatz ("Rudi")** | AgroTech SpA | Técnico • Terreno • Off-Grid | Socio Operativo • Living Lab Parral | Baterías recicladas, conector operativo de kits en terreno, validación en Living Lab Parral y relación con inversionistas. |
+| **Cristian Cantuarias ("Cantuarias")** | AgroTech SpA | Digital • UI/UX | Mixto (*Sweat Equity* + Front 3D) | Lead Game Designer, co-diseño de interfaz diegética 3D (Git Flow feature/ui) y cesión de IP de entregables visuales. |
+| **Luis González ("Lápiz")** | Cooperativa / Terreno | Técnico • Terreno | Socio Técnico Autónomo | Red de terreno en Parral, cámaras 4G solares, patrullaje con drones y montaje de infraestructura de campo. |
+| **Daniela Mendoza** | Validación Científica | Digital • Geoespacial | Validación Científica (Censat) | Control de calidad cartográfico (QA/QC), validación de cuencas y teledetección satelital. |
 
 ---
 
@@ -139,8 +142,8 @@ graph LR
      * Establecer un periodo de consolidación de 24 a 36 meses con un *Cliff* de 6 meses.
      * Si un socio se retira antes del Cliff, devuelve sus acciones por el valor nominal.
   2. **Definición de Hitos Concretos por Pilar**:
-     * *Paulina*: Entrega de 20 kits KioT ensamblados y testeados en campo.
-     * *Pablo*: Cierre de módulo de facturación/suscripción y optimización del motor Three.js.
+     * *Rüdiger Kaatz*: Living Lab Parral validado y kits.
+     * *Francisco Ipinza*: Prospección B2B y loteos.
      * *Wladimir*: Modelo financiero de punto de equilibrio, 2 eventos/foros comunitarios y primeros 10 predios en Pasaporte Verde.
      * *Daniel*: Arquitectura general, integración de mapas y software AgriTwin funcional.
 
@@ -150,7 +153,7 @@ graph LR
   1. **Derechos Morales (Inalienables)**: Quedan irrevocablemente a nombre de **Daniel Santander** como autor del software (conforme a la Ley 17.336 de Propiedad Intelectual en Chile).
   2. **Derechos Patrimoniales y Usufructo Compartido**:
      * Daniel otorga a **AgroTech SpA** una **Licencia Exclusiva de Uso, Explotación y Usufructo Comercial a Nivel Global**.
-     * De esta forma, la SpA puede comercializar AgriTwin, vender licencias SaaS y cobrar suscripciones, distribuyendo los dividendos generados entre todos los socios accionistas (Paulina, Pablo, Wladimir, Daniel).
+     * De esta forma, la SpA puede comercializar AgriTwin, vender licencias SaaS y cobrar suscripciones, distribuyendo los dividendos generados entre todos los socios accionistas (el equipo de socios de la SpA).
      * **Cláusula de Reversión**: Si la SpA quiebra, se disuelve o se desvía de los principios agroecológicos fundacionales, la licencia revierte a Daniel, protegiendo el activo intelectual de caer en manos de terceros especulativos.
 
 ### C. Vínculo entre la SpA y la Cooperativa de Trabajo

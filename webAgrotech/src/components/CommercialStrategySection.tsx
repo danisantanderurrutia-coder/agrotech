@@ -136,7 +136,7 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
           </h2>
 
           <p className="text-slate-600 text-sm sm:text-base font-serif">
-            Hoja de ruta comercial ejecutiva para el equipo fundador (Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Rüdiger Kaatz, Francisco Ipinza). Catálogo de precios, simulador de ingresos en vivo, calculadora de ROI para clientes y embudo de terreno.
+            Hoja de ruta comercial ejecutiva para el equipo fundador (Daniel Santander, Francisco Ipinza, Wladimir Gutiérrez, Rüdiger Kaatz, Cristian Cantuarias). Catálogo de precios, simulador de ingresos en vivo, calculadora de ROI para clientes y embudo de terreno.
           </p>
         </div>
 
@@ -603,7 +603,7 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
                 <span>2. Hardware KioT: Venta, Margen & Modalidad HaaS</span>
               </h3>
               <p className="text-xs text-slate-500 font-serif">
-                Fabricación mecatrónica en Talca por Paulina y despliegue por la Cooperativa.
+                Infraestructura mecatrónica y baterías por Rudi Kaatz y Luis González, con despliegue de campo.
               </p>
             </div>
 
@@ -824,7 +824,7 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
               </div>
               <h4 className="font-bold text-sm text-slate-900">Diagnóstico en 30 Min</h4>
               <p className="text-xs text-slate-600">
-                Paulina o técnico de la cooperativa visita el predio con medidor de terreno. Identifica puntos bajos propensos a heladas y toma de bombeo.
+                Rudi Kaatz, Luis González o técnico de campo visita el predio con medidor de terreno. Identifica puntos bajos propensos a heladas y toma de bombeo.
               </p>
               <div className="text-[11px] text-amber-700 font-sans font-bold pt-2 border-t border-slate-200">
                 Entregable: Cotización formal con ROI calculado en el acto.
@@ -886,7 +886,7 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
                 <span className="font-bold text-slate-900 block">"La electrónica se rompe con el barro y el tractor"</span>
                 <p className="text-slate-600">
-                  <strong>Respuesta:</strong> Los gabinetes son IP65 impresos en PETG industrial resistente a rayos UV y golpes. Además, nuestro taller en Talca garantiza reemplazo en menos de 24 horas.
+                  <strong>Respuesta:</strong> Los gabinetes son IP65 impresos en PETG industrial resistente a rayos UV y golpes. Además, nuestro equipo técnico de terreno garantiza reemplazo en menos de 24 horas.
                 </p>
               </div>
             </div>
@@ -905,11 +905,11 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
               <span>Matriz de Responsabilidades Comerciales del Equipo</span>
             </h3>
             <p className="text-xs text-slate-600 font-serif">
-              Distribución de tareas comerciales claras para Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Rüdiger Kaatz, Francisco Ipinza y la red cooperativa.
+              Distribución de tareas comerciales claras para Daniel Santander, Francisco Ipinza, Wladimir Gutiérrez, Rüdiger Kaatz, Cristian Cantuarias, Luis González y Daniela Mendoza.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             
             {/* Daniel */}
             <div className="rounded-2xl border border-slate-200 p-5 space-y-3 bg-emerald-50/30">
@@ -919,49 +919,49 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
                 </div>
                 <div>
                   <h4 className="font-extrabold text-sm text-slate-900">Daniel Santander</h4>
-                  <span className="text-[10px] text-emerald-700 font-bold block uppercase">Dirección & Alianzas ESG</span>
+                  <span className="text-[10px] text-emerald-700 font-bold block uppercase">Dirección, IP & Alianzas ESG</span>
                 </div>
               </div>
               <ul className="text-xs text-slate-600 space-y-1.5 pt-2 border-t border-slate-200">
-                <li>• Cierre de contratos con exportadoras internacionales.</li>
-                <li>• Vínculo con importadores en Europa para Pasaporte Verde.</li>
-                <li>• Dirección científica y evolución de AgriTwin 3D.</li>
+                <li>• Custodia y evolución de la IP, algoritmos y motor biofísico.</li>
+                <li>• Cierre de contratos con exportadoras internacionales y nexo ESG Europa.</li>
+                <li>• Co-diseño de producto y supervisión técnica general.</li>
               </ul>
             </div>
 
-            {/* Paulina */}
-            <div className="rounded-2xl border border-slate-200 p-5 space-y-3 bg-amber-50/30">
-              <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center text-sm font-sans">
-                  PU
-                </div>
-                <div>
-                  <h4 className="font-extrabold text-sm text-slate-900">Paulina Urrutia</h4>
-                  <span className="text-[10px] text-amber-700 font-bold block uppercase">Ventas Técnicas & Taller</span>
-                </div>
-              </div>
-              <ul className="text-xs text-slate-600 space-y-1.5 pt-2 border-t border-slate-200">
-                <li>• Diagnósticos técnicos y visitas de campo a clientes.</li>
-                <li>• Dirección del ensamble de kits KioT en taller Talca.</li>
-                <li>• Asignación de órdenes de instalación a la cooperativa.</li>
-              </ul>
-            </div>
-
-            {/* Wladimir */}
+            {/* Francisco (Pancho) */}
             <div className="rounded-2xl border border-slate-200 p-5 space-y-3 bg-blue-50/30">
               <div className="flex items-center gap-2.5">
                 <div className="w-10 h-10 rounded-full bg-blue-700 text-white font-bold flex items-center justify-center text-sm font-sans">
-                  WG
+                  FI
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-sm text-slate-900">Wladimir Gutiérrez</h4>
-                  <span className="text-[10px] text-blue-700 font-bold block uppercase">Finanzas & Alianzas Maule</span>
+                  <h4 className="font-extrabold text-sm text-slate-900">Francisco Ipinza ("Pancho")</h4>
+                  <span className="text-[10px] text-blue-700 font-bold block uppercase">Dirección Comercial B2B & Loteos</span>
                 </div>
               </div>
               <ul className="text-xs text-slate-600 space-y-1.5 pt-2 border-t border-slate-200">
-                <li>• Acuerdos comerciales con APRs y juntas de regadío.</li>
-                <li>• Gestión de cobranza, contratos y flujo de caja SpA.</li>
-                <li>• Organización de seminarios presenciales "Manos en la Tierra".</li>
+                <li>• Prospección y alianzas con corredoras y desarrolladores de parcelas.</li>
+                <li>• Cierre de contratos B2B con viñas, packings y agroindustrias medianas.</li>
+                <li>• Venta masiva de diagnósticos prediales satelitales a compradores de loteos.</li>
+              </ul>
+            </div>
+
+            {/* Wladimir (Nene) */}
+            <div className="rounded-2xl border border-slate-200 p-5 space-y-3 bg-indigo-50/30">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-full bg-indigo-700 text-white font-bold flex items-center justify-center text-sm font-sans">
+                  WG
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-sm text-slate-900">Wladimir Gutiérrez ("Nene")</h4>
+                  <span className="text-[10px] text-indigo-700 font-bold block uppercase">Finanzas & Redes Gremiales</span>
+                </div>
+              </div>
+              <ul className="text-xs text-slate-600 space-y-1.5 pt-2 border-t border-slate-200">
+                <li>• Acuerdos comerciales con APRs, juntas de regadío y cooperativas.</li>
+                <li>• Gestión de cobranza, contratos, flujo de caja y tarifas SpA.</li>
+                <li>• Organización de foros y seminarios presenciales comunitarios.</li>
               </ul>
             </div>
 
@@ -973,13 +973,67 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
                 </div>
                 <div>
                   <h4 className="font-extrabold text-sm text-slate-900">Rüdiger Kaatz ("Rudi")</h4>
-                  <span className="text-[10px] text-amber-700 font-bold block uppercase">Conector Operativo & Living Lab</span>
+                  <span className="text-[10px] text-amber-700 font-bold block uppercase">Conector de Terreno & Living Lab</span>
                 </div>
               </div>
               <ul className="text-xs text-slate-600 space-y-1.5 pt-2 border-t border-slate-200">
-                <li>• Paquetización modular y distribución de kits KioT en terreno.</li>
-                <li>• Demostraciones en vivo en el Living Lab Parral para inversionistas.</li>
-                <li>• Venta directa de informes prediales y sistemas off-grid.</li>
+                <li>• Paquetización modular y distribución de kits mecatrónicos en terreno.</li>
+                <li>• Demostraciones en vivo en el Living Lab Parral para inversionistas y compradores.</li>
+                <li>• Ingeniería de almacenamiento con baterías recicladas y sistemas anti-incendios.</li>
+              </ul>
+            </div>
+
+            {/* Cantuarias */}
+            <div className="rounded-2xl border border-slate-200 p-5 space-y-3 bg-cyan-50/30">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-full bg-cyan-700 text-white font-bold flex items-center justify-center text-sm font-sans">
+                  CC
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-sm text-slate-900">Cristian Cantuarias</h4>
+                  <span className="text-[10px] text-cyan-700 font-bold block uppercase">Lead UI/UX & Gamificación 3D</span>
+                </div>
+              </div>
+              <ul className="text-xs text-slate-600 space-y-1.5 pt-2 border-t border-slate-200">
+                <li>• Co-diseño del visor 3D interactivo y experiencia de simulación estratégica.</li>
+                <li>• Diseño visual y gamificación de la interfaz para aumentar adopción comercial.</li>
+                <li>• Desarrollo front-end bajo flujo de ramas Git Flow con cesión formal de IP.</li>
+              </ul>
+            </div>
+
+            {/* Luis (Lápiz) */}
+            <div className="rounded-2xl border border-slate-200 p-5 space-y-3 bg-emerald-50/30">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-full bg-teal-800 text-white font-bold flex items-center justify-center text-sm font-sans">
+                  LG
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-sm text-slate-900">Luis González ("Lápiz")</h4>
+                  <span className="text-[10px] text-teal-700 font-bold block uppercase">Infraestructura Off-Grid & Drones</span>
+                </div>
+              </div>
+              <ul className="text-xs text-slate-600 space-y-1.5 pt-2 border-t border-slate-200">
+                <li>• Despliegue de cámaras 4G solares y enlaces de comunicación en Parral.</li>
+                <li>• Levantamiento y patrullaje aéreo con drones para inspección predial.</li>
+                <li>• Montaje físico de hardware y soporte técnico inmediato en terreno.</li>
+              </ul>
+            </div>
+
+            {/* Daniela Mendoza */}
+            <div className="rounded-2xl border border-slate-200 p-5 space-y-3 bg-teal-50/30">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-full bg-teal-700 text-white font-bold flex items-center justify-center text-sm font-sans">
+                  DM
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-sm text-slate-900">Daniela Mendoza</h4>
+                  <span className="text-[10px] text-teal-700 font-bold block uppercase">QA/QC Geoespacial & Censat</span>
+                </div>
+              </div>
+              <ul className="text-xs text-slate-600 space-y-1.5 pt-2 border-t border-slate-200">
+                <li>• Validación cartográfica y control de calidad (QA/QC) de capas satelitales.</li>
+                <li>• Análisis de cuencas hidrográficas y delimitación territorial técnica.</li>
+                <li>• Estandarización de criterios de certificación ambiental y pasaporte verde.</li>
               </ul>
             </div>
 

@@ -159,7 +159,7 @@ export const InternalPartnerPage: React.FC<InternalPartnerPageProps> = ({ onNavi
             <div className="flex flex-wrap items-center gap-2.5">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-sans font-bold">
                 <Lock className="w-3.5 h-3.5 text-amber-400" />
-                <span>Acceso Interno Socios • Daniel Santander & Paulina Urrutia</span>
+                <span>Acceso Interno Socios • Daniel Santander & Consejo Directivo</span>
               </div>
 
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#071A11] border border-emerald-500/40 text-emerald-300 text-xs font-mono shadow-sm">

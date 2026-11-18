@@ -332,6 +332,27 @@ export const ExecutiveBulletinsSection: React.FC = () => {
                 </div>
               </div>
 
+              {/* Daniela Mendoza */}
+              <div className="p-5 rounded-xl bg-[#0B2519] border border-teal-500/40 space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl">🗺️</span>
+                    <div>
+                      <h4 className="font-bold text-white text-sm">Daniela Mendoza</h4>
+                      <p className="text-xs text-teal-300">Lead de Validación Geoespacial & Teledetección (Geógrafa Censat Colombia)</p>
+                    </div>
+                  </div>
+                  <span className="px-2.5 py-1 rounded bg-teal-500/20 text-teal-300 font-mono text-xs font-bold border border-teal-500/30">
+                    QA/QC Cartográfico + Validación Científica
+                  </span>
+                </div>
+                <div className="pt-2 text-xs text-slate-300 space-y-1.5 border-t border-teal-900/50">
+                  <p>• <b>Validación y QA/QC de Mapas:</b> Control de calidad científico de las capas satelitales (Sentinel-2, NDVI/NDRE, coberturas y drenaje).</p>
+                  <p>• <b>Análisis de Cuencas y Relieve:</b> Validación de límites de cuencas hidrográficas, escorrentía superficial y modelos topográficos ALOS PALSAR.</p>
+                  <p>• <b>Ruta al Pasaporte Verde:</b> Estandarización metodológica para la certificación socioambiental y trazabilidad de deforestación.</p>
+                </div>
+              </div>
+
             </div>
           )}
 

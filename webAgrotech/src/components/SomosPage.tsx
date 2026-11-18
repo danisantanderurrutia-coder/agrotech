@@ -63,22 +63,22 @@ interface OpenVacancy {
   cooperativeOffer: string;
 }
 
-// ─── 1. SOCIOS FUNDADORES DE LA SpA (4 SOCIOS) ───
+// ─── 1. SOCIOS Y LÍDERES CLAVE DE LA SpA ───
 const SPA_PARTNERS: PartnerProfile[] = [
   {
     id: 'daniel',
     name: 'Daniel Santander',
     relation: 'Fundador & Director de Producto',
-    role: 'Socio Fundador • Arquitectura de Software & Ciencia Biofísica',
+    role: 'Socio Fundador • Arquitectura de Software & Ciencia Biofísica (IP)',
     location: 'Friburgo / Berlín, Alemania 🇩🇪 & Maule, Chile 🇨🇱',
     flag: '🇩🇪🇨🇱',
     animalTotem: '🦅 Cóndor Andino',
     animalDescription: 'Visión de altura sobre la cuenca macro y precisión geométrica en las corrientes de viento.',
     pillars: ['digital', 'comunicaciones'],
-    modality: 'Fundador Originario • Aporte Mixto (IP + Sweat Equity + Capital)',
-    description: 'Geofísico, permacultor y analista de ecología forestal y balances de gases de efecto invernadero. Autor moral e ideólogo de AgriTwin 3D. Lidera el modelado biofísico, el procesamiento satelital Sentinel-2 y el nexo con mercados ESG europeos.',
+    modality: 'Fundador Originario • Aporte Mixto (IP Matriz + Sweat Equity + Capital)',
+    description: 'Geofísico, permacultor y analista de ecología forestal y balances de gases de efecto invernadero. Titular exclusivo de la IP y algoritmos satelitales. Lidera el modelado biofísico, el procesamiento satelital Sentinel-2 y el nexo con mercados ESG europeos.',
     responsibilities: [
-      'Autoría moral y arquitectura de software de AgriTwin 3D',
+      'Autoría moral y arquitectura de software de AgriTwin 3D (Caja Negra e IP)',
       'Modelado de balances hídricos FAO-56 y drenaje katabático',
       'Ingesta satelital y calibración de reflectancia Sentinel-2 L2A',
       'Dirección estratégica de producto y alianzas de bioeconomía europea'
@@ -87,29 +87,29 @@ const SPA_PARTNERS: PartnerProfile[] = [
     avatarGradient: 'from-amber-600 via-amber-700 to-emerald-900'
   },
   {
-    id: 'paulina',
-    name: 'Paulina Urrutia',
-    relation: 'Socia Fundadora & Jefa de Taller',
-    role: 'Socia SpA • Manufactura Mecatrónica & Operación en Terreno',
-    location: 'Talca, Región del Maule, Chile 🇨🇱',
+    id: 'francisco',
+    name: 'Francisco Ipinza ("Pancho")',
+    relation: 'Socio SpA • Dirección Comercial B2B & Convenios',
+    role: 'Socio SpA • Expansión B2B & Convenios Loteos Inmobiliarios',
+    location: 'Santiago & Región del Maule, Chile 🇨🇱',
     flag: '🇨🇱',
-    animalTotem: '🐝 Abeja Nativa (Caupolicana) / Puma',
-    animalDescription: 'Laboriosidad incansable de taller y resiliencia territorial en el secano maulino.',
-    pillars: ['tecnico', 'digital'],
-    modality: 'Mixto (Sweat Equity de Laboratorio + Aporte de Capital Inicial)',
-    description: 'Ingeniera en Automatización de Procesos. Lidera el laboratorio de prototipado mecatrónico en Talca: diseño de placas de circuito impreso en KiCad, soldadura de precisión, ensamblaje de gabinetes estancos IP65 UV-Proof y pruebas de enlace LoRaWAN en viñedos.',
+    animalTotem: '🦊 Zorro Culpeo',
+    animalDescription: 'Astucia estratégica en negociación, visión comercial y velocidad táctica para abrir mercados.',
+    pillars: ['finanzas', 'social', 'comunicaciones'],
+    modality: 'Mixto (Sweat Equity Comercial + Prospección B2B + Aporte Inicial)',
+    description: 'Especialista en desarrollo de negocios, alianzas comerciales y prospección inmobiliaria rural. Lidera la venta de informes de riesgo satelital y factibilidad hídrica para parcelas y loteos, articulando contratos con viñas y agroindustrias medianas.',
     responsibilities: [
-      'Diseño y fabricación de PCBs para nodos KioT (KiCad)',
-      'Control de calidad y estanqueidad IP65 en gabinetes PETG',
-      'Pruebas de enlace de radiofrecuencia LoRaWAN (915 MHz)',
-      'Calibración de sondas FDR en campo y despliegue de kits'
+      'Prospección y cierre de convenios con loteadoras y corredoras de parcelas',
+      'Despliegue de informes de riesgo satelital y factibilidad hídrica B2C/B2B',
+      'Estructuración de ofertas comerciales para viñas y agroindustrias',
+      'Alianzas estratégicas para expansión de cartera en la zona central'
     ],
-    badgeColor: 'border-emerald-500 bg-emerald-50 text-emerald-900',
-    avatarGradient: 'from-emerald-600 via-teal-700 to-slate-900'
+    badgeColor: 'border-blue-500 bg-blue-50 text-blue-900',
+    avatarGradient: 'from-blue-600 via-indigo-700 to-slate-900'
   },
   {
     id: 'wladimir',
-    name: 'Wladimir Gutiérrez',
+    name: 'Wladimir Gutiérrez ("Nene")',
     relation: 'Socio SpA • Finanzas & Red Social',
     role: 'Socio SpA • Estructuración Financiera & Gobernanza Social',
     location: 'Santiago & Región del Maule, Chile 🇨🇱',
@@ -139,7 +139,7 @@ const SPA_PARTNERS: PartnerProfile[] = [
     animalDescription: 'Visión estratégica de altura, autonomía radical y resiliencia en ecosistemas extremos.',
     pillars: ['tecnico', 'digital', 'finanzas'],
     modality: 'Mixto (Infraestructura de Campo + Living Lab + Aporte Técnico)',
-    description: 'Especialista en energía solar aislada, bancos de baterías LiFePO4 recicladas y sistemas de defensa perimetral anti-incendios. Asume el rol de conector de terreno y logística de kits mecatrónicos en el Maule Sur, además de liderar el Living Lab / Centro Demostrativo en Parral y el canal con inversionistas extranjeros.',
+    description: 'Especialista en energía solar aislada, bancos de baterías LiFePO4 recicladas y sistemas de defensa perimetral anti-incendios. Conector de terreno y logística de kits mecatrónicos en el Maule Sur, además de liderar el Living Lab / Centro Demostrativo en Parral y el canal con inversionistas extranjeros.',
     responsibilities: [
       'Gestión y validación del Living Lab / Centro Demostrativo en Parral',
       'Ingeniería de almacenamiento energético off-grid con baterías recicladas',
@@ -151,24 +151,66 @@ const SPA_PARTNERS: PartnerProfile[] = [
   },
   {
     id: 'cristian',
-    name: 'Cristian Cantuarias',
-    relation: 'Socio SpA • Informática & Diseño Digital',
-    role: 'Socio SpA • Ingeniería Informática & Diseño Digital / UI-UX',
+    name: 'Cristian Cantuarias ("Cantuarias")',
+    relation: 'Socio SpA • Lead Game Designer & Co-Diseño UI/UX',
+    role: 'Socio SpA • Diseño de Interacción, Front-End 3D & Gamificación',
     location: 'Maule / Santiago, Chile 🇨🇱',
     flag: '🇨🇱',
     animalTotem: '🐆 Güiña del Maule',
     animalDescription: 'Agilidad digital, camuflaje elegante y precisión en interfaces visuales e interacción humano-máquina.',
     pillars: ['digital', 'comunicaciones'],
     modality: 'Mixto (Sweat Equity de Software & Diseño + Aporte Inicial)',
-    description: 'Ingeniero Informático y diseñador de interfaces digitales (UI/UX). Lidera el desarrollo de plataformas web interactivas, la experiencia de usuario en software agroclimático y la dirección de arte y diseño de producto digital en AgroTech.',
+    description: 'Ingeniero Informático, diseñador de juegos e interfaces digitales. Lidera el desarrollo de la interfaz diegética 3D estilo simulación estratégica (Civilization / Farming Simulator / Taller Agrícola) bajo gobernanza Git Flow (feature/ui) y cesión de IP de entregables visuales.',
     responsibilities: [
-      'Arquitectura e ingeniería de software frontend para la web principal y paneles',
-      'Diseño de interfaces UI/UX y sistemas de visualización de datos de campo',
+      'Co-diseño y arquitectura front-end del visor 3D diegético predial',
+      'Experiencia de usuario (UI/UX) gamificada e intuitiva para agricultores',
       'Desarrollo de módulos interactivos, simuladores y herramientas de conversión',
       'Dirección de arte digital, identidad visual y diseño responsive multidispositivo'
     ],
     badgeColor: 'border-cyan-500 bg-cyan-50 text-cyan-900',
     avatarGradient: 'from-cyan-600 via-blue-700 to-slate-900'
+  },
+  {
+    id: 'luis',
+    name: 'Luis González ("Lápiz")',
+    relation: 'Socio Técnico & Infraestructura Off-Grid',
+    role: 'Socio Técnico Autónomo • Red Terreno Parral, Cámaras 4G & Drones',
+    location: 'Parral, Región del Maule, Chile 🇨🇱',
+    flag: '🇨🇱',
+    animalTotem: '🦅 Halcón Cazador',
+    animalDescription: 'Precisión milimétrica de ojo aéreo, rápida intervención en campo y dominio técnico territorial.',
+    pillars: ['tecnico', 'digital'],
+    modality: 'Mixto (Infraestructura de Campo + Redes Autónomas + Operación Aérea)',
+    description: 'Especialista en telecomunicaciones rurales, videovigilancia solar 4G y operaciones de vuelo con drones en precordillera. Lidera el montaje físico de postes, cámaras de vigilancia perimetral, paneles solares, enlaces de radiofrecuencia y soporte aéreo de teledetección en Parral y precordillera.',
+    responsibilities: [
+      'Instalación y mantenimiento de cámaras 4G solares y sistemas de energía',
+      'Operación de drones para inspección visual y fotogrametría predial',
+      'Montaje de enlaces de radiofrecuencia y telecomunicaciones rurales',
+      'Soporte técnico directo de campo y patrullaje de infraestructura'
+    ],
+    badgeColor: 'border-emerald-500 bg-emerald-50 text-emerald-900',
+    avatarGradient: 'from-emerald-600 via-teal-700 to-slate-900'
+  },
+  {
+    id: 'daniela',
+    name: 'Daniela Mendoza',
+    relation: 'Lead de Validación Geoespacial & Teledetección',
+    role: 'Geógrafa Censat Colombia • QA/QC Cartográfico & Análisis de Cuencas',
+    location: 'Bogotá, Colombia 🇨🇴 & Maule, Chile 🇨🇱',
+    flag: '🇨🇴🇨🇱',
+    animalTotem: '🌿 Jaguar Andino / Colibrí Geógrafo',
+    animalDescription: 'Agudeza analítica sobre el relieve territorial, rigor cartográfico y custodia ecológica del agua.',
+    pillars: ['digital', 'social'],
+    modality: 'Validación Científica Geoespacial & Certificación de Mapas',
+    description: 'Geógrafa con destacada trayectoria en Censat Agua Viva (Colombia). Especialista en análisis territorial, justicia ambiental, teledetección y validación de cartografía hidrológica. Lidera el control de calidad científico y la auditoría de coberturas de suelo y cuencas de AgriTwin.',
+    responsibilities: [
+      'Validación cartográfica y control de calidad (QA/QC) de capas satelitales',
+      'Auditoría geoespacial de coberturas vegetales, cuencas y drenajes',
+      'Metodologías de análisis socioambiental y gobernanza hídrica',
+      'Validación técnica de modelos geográficos para certificación verde'
+    ],
+    badgeColor: 'border-teal-500 bg-teal-50 text-teal-900',
+    avatarGradient: 'from-teal-600 via-emerald-700 to-slate-900'
   }
 ];
 
@@ -518,17 +560,17 @@ export const SomosPage: React.FC = () => {
                     ⚙️
                   </span>
                   <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-amber-900 text-amber-200 border border-amber-500/30">
-                    Líder: Paulina Urrutia
+                    Líderes: Rüdiger Kaatz & Luis González
                   </span>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-amber-100">3. Pilar Técnico</h3>
+                  <h3 className="text-lg font-bold text-amber-100">3. Pilar Técnico & Terreno</h3>
                   <div className="text-xs font-mono text-amber-300 font-semibold mt-0.5">
-                    Producto: Implementación de Kits
+                    Producto: Hardware Off-Grid & Kits de Campo
                   </div>
                 </div>
                 <p className="text-xs text-amber-100/70 font-serif leading-relaxed">
-                  Manufactura local de hardware KioT en Talca, placas PCB KiCad, sondas de humedad FDR capacitivas, radioenlaces LoRaWAN (915 MHz) y cuadrillas de instalación en predios de cultivo y ganado.
+                  Infraestructura autónoma off-grid, almacenamiento LiFePO4, cámaras 4G solares, levantamiento con drones, gabinetes IP65 y cuadrillas de instalación en predios y Living Lab Parral.
                 </p>
               </div>
 
@@ -568,7 +610,7 @@ export const SomosPage: React.FC = () => {
             <span className="text-amber-700 font-sans text-xs font-bold uppercase tracking-wider">
               ESTRUCTURA DE CAPITAL Y SWEAT EQUITY
             </span>
-            <h2 className="text-3xl font-extrabold text-[#0B2519]">Los 5 Socios de AgroTech SpA</h2>
+            <h2 className="text-3xl font-extrabold text-[#0B2519]">Equipo Directivo, Socios y Liderazgo de AgroTech SpA</h2>
             <p className="text-sm text-slate-600 font-serif">
               Ingresan bajo un sistema mixto que combina inversión inicial de capital con tiempo y trabajo comprometido (sin sueldo inicial), adquiriendo derechos de usufructo y participación sobre los productos.
             </p>
@@ -956,7 +998,7 @@ export const SomosPage: React.FC = () => {
                 </h3>
               </div>
               <p className="text-xs sm:text-sm text-slate-600 font-serif leading-relaxed">
-                El inicio basado en confianza y trabajo no remunerado (<strong>Sweat Equity</strong>) debe formalizarse mediante un <strong>Pacto de Accionistas (*Shareholders Agreement*)</strong> con calendario de <em>Vesting</em> a 24 o 36 meses con un <em>Cliff</em> de 6 meses para Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Rüdiger Kaatz y Cristian Cantuarias.
+                El inicio basado en confianza y trabajo no remunerado (<strong>Sweat Equity</strong>) debe formalizarse mediante un <strong>Pacto de Accionistas (*Shareholders Agreement*)</strong> con calendario de <em>Vesting</em> a 24 o 36 meses con un <em>Cliff</em> de 6 meses para Daniel Santander, Francisco Ipinza, Rüdiger Kaatz, Wladimir Gutiérrez, Cristian Cantuarias, Luis González y Daniela Mendoza.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-sans">
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
@@ -999,7 +1041,7 @@ export const SomosPage: React.FC = () => {
                   <div>
                     <strong className="text-emerald-950 font-sans">Licencia Exclusiva de Explotación & Usufructo para AgroTech SpA:</strong>
                     <span className="text-emerald-900 font-serif block">
-                      Daniel otorga una licencia de usufructo comercial exclusivo a la SpA. Los ingresos por suscripciones SaaS y servicios se integran al balance social de la empresa y se distribuyen en dividendos entre todos los socios (Daniel Santander, Paulina Urrutia, Wladimir Gutiérrez, Rüdiger Kaatz, Cristian Cantuarias) según su porcentaje accionario.
+                      Daniel otorga una licencia de usufructo comercial exclusivo a la SpA. Los ingresos por suscripciones SaaS y servicios se integran al balance social de la empresa y se distribuyen en dividendos entre todos los socios (Daniel Santander, Francisco Ipinza, Rüdiger Kaatz, Wladimir Gutiérrez, Cristian Cantuarias, Luis González, Daniela Mendoza) según su porcentaje accionario.
                     </span>
                   </div>
                 </div>

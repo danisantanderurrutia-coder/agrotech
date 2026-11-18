@@ -216,25 +216,28 @@ graph TD
    * **Producto Insigne**: [[Pasaporte verde]].
    * **Objetivo**: Establecer economías locales y generar infraestructura comercial para la venta justa de cosechas campesinas.
    * **Conexión Social**: Articula a la empresa con la comunidad a través de cursos de capacitación, seminarios, actividades de terreno, foros, congresos y convenios con comités de Agua Potable Rural ([[APRs]]).
-2. **💻 Pilar Digital (Liderado por Daniel con Pablo y Paulina)**:
+2. **💻 Pilar Digital (Liderado por Daniel con Cristian Cantuarias y Daniela Mendoza)**:
    * **Producto Insigne**: [[Agritwin]] / [[DigitalTwin]] 3D.
-   * **Objetivo**: Plataforma digital de simulación biofísica, telemetría satelital Sentinel-2, modelos de heladas katabáticas y gemelo digital WebGL.
-3. **⚙️ Pilar Técnico (Liderado por Paulina con Pablo)**:
-   * **Producto Insigne**: **Implementación de Kits de Cultivo y Ganado**.
-   * **Objetivo**: Fabricación e instalación de hardware local ([[KioT Hardware]]), calibración de sondas FDR en campo y redes LoRaWAN.
+   * **Objetivo**: Plataforma digital de simulación biofísica, telemetría satelital Sentinel-2, modelos de heladas katabáticas, visor diegético 3D y control de calidad cartográfico.
+3. **⚙️ Pilar Técnico & Terreno (Liderado por Rüdiger Kaatz y Luis González)**:
+   * **Producto Insigne**: **Implementación de Kits de Cultivo y Ganado Off-Grid**.
+   * **Objetivo**: Infraestructura solar autónoma, bancos de baterías LiFePO4 recicladas, cámaras 4G solares, drones de inspección y redes LoRaWAN en Parral y precordillera.
 4. **Áreas Transversales**:
-   * **Finanzas**: Wladimir & Pablo (Estructuración de flujos, modelos de suscripción y control de costos).
-   * **Comunicaciones**: Daniel & Wladimir (Difusión institucional, congresos y relación con compradores ESG europeos).
+   * **Finanzas & Comercial B2B**: Wladimir Gutiérrez & Francisco Ipinza (Estructuración de flujos, alianzas de loteos y cuentas agroindustriales).
+   * **Comunicaciones & Expansión**: Daniel Santander & Wladimir Gutiérrez (Difusión institucional, alianzas europeas ESG y foros).
 
-### 👥 Distribución de Socios en AgroTech SpA (Sistema Mixto Capital + Sweat Equity)
+### 👥 Distribución de Socios y Liderazgo en AgroTech SpA (Sistema Mixto Capital + Sweat Equity)
 Al inicio no existen sueldos de mercado; los socios ingresan con un **sistema mixto de inversión**: porcentaje de aporte inicial de capital sumado al trabajo y tiempo invertido (*sweat equity*), formalizado primero mediante contrato verbal transicional y posteriormente por un **Pacto de Accionistas escrito con calendario de Vesting (24-36 meses con Cliff de 6 meses)** para ganar derechos plenos sobre las acciones y el usufructo de los productos.
 
 | Socio SpA | Pilares de Dedicación | Modalidad | Responsabilidades Clave |
 | :--- | :--- | :--- | :--- |
-| **Daniel Santander** | Digital • Dirección General • Producto | Fundador • Inversión Mixta | Arquitectura conceptual de AgriTwin, autoría moral del código fuente, dirección científica y alianzas ESG. |
-| **Paulina (Prima)** | Técnico • Digital | Mixto (*Sweat Equity* + Taller) | Dirección de ensamblaje en Talca, diseño de placas PCB en KiCad, fabricación de gabinetes IP65 y pruebas de campo. |
-| **Wladimir** | Finanzas • Social | Mixto (*Sweat Equity* + Finanzas) | Estrategia financiera, expansión del Pasaporte Verde, convenios con APRs, organización de seminarios, foros y congresos. |
-| **Pablo** | Finanzas • Técnico • Digital | Mixto (*Sweat Equity* + Software) | Modelación financiera y comercial, optimización de algoritmos de software y soporte en implementación mecatrónica de kits. |
+| **Daniel Santander** | Digital • Dirección General • Producto | Fundador • IP Matriz + Mixto | Arquitectura de AgriTwin, titularidad de IP del motor biofísico, dirección científica y alianzas ESG Europa. |
+| **Francisco Ipinza ("Pancho")** | Finanzas • Comercial B2B | Mixto (*Sweat Equity* + Ventas) | Prospección comercial con loteos, venta de informes de riesgo a parcelas y alianzas con agroindustrias medianas. |
+| **Wladimir Gutiérrez ("Nene")** | Finanzas • Social | Mixto (*Sweat Equity* + Finanzas) | Estrategia financiera, expansión del Pasaporte Verde, convenios con APRs, organización de seminarios, foros y congresos. |
+| **Rüdiger Kaatz ("Rudi")** | Técnico • Terreno • Off-Grid | Socio Operativo • Living Lab | Baterías recicladas, conector operativo de kits mecatrónicos en terreno, Living Lab Parral y relación con inversionistas. |
+| **Cristian Cantuarias ("Cantuarias")** | Digital • UI/UX | Mixto (*Sweat Equity* + Front 3D) | Lead Game Designer, co-diseño de interfaz diegética 3D (Git Flow feature/ui) y cesión de IP de entregables visuales. |
+| **Luis González ("Lápiz")** | Técnico • Terreno | Socio Técnico Autónomo | Red de terreno en Parral, cámaras 4G solares, patrullaje con drones y montaje de infraestructura. |
+| **Daniela Mendoza** | Digital • Geoespacial | Validación Científica (Censat) | Control de calidad cartográfico (QA/QC), validación de cuencas y teledetección satelital. |
 
 ### 📜 Propiedad Intelectual y Derechos de Autoría de [[Agritwin]]
 * **Derechos Morales (Inalienables)**: La ley 17.336 reconoce a **Daniel Santander** como el autor e ideólogo original de AgriTwin.
