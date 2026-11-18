@@ -94,119 +94,165 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             </button>
 
             {productsDropdownOpen && (
-              <div className="absolute top-full left-0 mt-2 w-92 bg-[#0B2519] rounded-2xl border border-emerald-500/40 p-2.5 space-y-1.5 shadow-2xl animate-fadeIn z-50">
-                {/* 1. AgriTwin 3D Flagship */}
-                <div className={`p-2.5 rounded-xl transition-colors ${
-                  currentView === 'agritwin' ? 'bg-[#071A11] border border-emerald-500/30' : 'hover:bg-[#071A11]'
-                }`}>
-                  <button
-                    onClick={() => handleNavClick('agritwin')}
-                    className="w-full flex items-start gap-3 text-left"
-                  >
-                    <div className="w-6 h-6 rounded-lg bg-emerald-500/20 border border-emerald-400 flex items-center justify-center shrink-0 mt-0.5 text-amber-400">
-                      <Cpu className="w-3.5 h-3.5" />
-                    </div>
-                    <div className="flex-1">
-                      <div>
-                        <span className="font-bold text-xs text-white">AgriTwin 3D (Gemelo Digital)</span>
+              <div className="absolute top-full left-0 mt-2 w-96 bg-[#0B2519] rounded-2xl border border-emerald-500/40 p-3 space-y-2.5 shadow-2xl animate-fadeIn z-50">
+                
+                {/* --- FASE 1: SOFTWARE & MICRO-SAAS --- */}
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between px-2 py-0.5">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold flex items-center gap-1">
+                      <Zap className="w-3 h-3 text-amber-400" />
+                      <span>Fase 1: Software Micro-SaaS</span>
+                    </span>
+                    <span className="text-[9px] font-mono text-emerald-300/80 bg-emerald-950 px-1.5 py-0.2 rounded border border-emerald-800">Inmediato</span>
+                  </div>
+
+                  {/* 1. AgroAlerta Pocket (Hero) */}
+                  <div className="p-2.5 rounded-xl bg-gradient-to-r from-emerald-950/80 to-[#071810] border border-emerald-500/50 hover:border-emerald-400 transition-all space-y-1.5">
+                    <button
+                      onClick={() => handleNavClick('landing')}
+                      className="w-full flex items-start gap-2.5 text-left"
+                    >
+                      <div className="w-6 h-6 rounded-lg bg-emerald-500/20 border border-emerald-400 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">
+                        <Smartphone className="w-3.5 h-3.5 text-emerald-300" />
                       </div>
-                      <span className="text-[10px] text-emerald-200/70 font-sans block">Simulación biofísica, heladas catabáticas y FAO-56.</span>
-                    </div>
-                  </button>
-                  <div className="mt-2 pt-2 border-t border-emerald-900/60 flex items-center justify-between text-[10px] font-mono">
-                    <button 
-                      onClick={() => handleNavClick('agritwin')}
-                      className="text-emerald-300 hover:text-white font-bold flex items-center gap-1"
-                    >
-                      <span>Ver Showcase Web</span>
-                      <ArrowRight className="w-3 h-3" />
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-xs text-white">AgroAlerta (WhatsApp)</span>
+                          <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-amber-400 text-slate-950">HERO</span>
+                        </div>
+                        <span className="text-[10px] text-emerald-200/80 font-sans block">Alertas de helada (-1.8 °C), estrés y fuego en 60s.</span>
+                      </div>
                     </button>
-                    <a
-                      href="https://danisantanderurrutia-coder.github.io/agritwin-app/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-amber-300 hover:text-amber-200 font-bold flex items-center gap-1 px-2 py-0.5 rounded bg-amber-400/10 border border-amber-400/30"
-                      title="Abrir Carta de Presentación B2B Ejecutiva"
+                    <div className="pt-1.5 border-t border-emerald-900/60 flex items-center justify-between text-[10px] font-mono">
+                      <button 
+                        onClick={() => handleNavClick('landing')}
+                        className="text-emerald-300 hover:text-white font-bold flex items-center gap-1"
+                      >
+                        <span>Ver en Home</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </button>
+                      <a
+                        href="https://wa.me/56976696142?text=Hola%20AgroTech,%20quiero%20activar%20AgroAlerta%20para%20mi%20predio"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-emerald-300 hover:text-white font-bold flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-500/20 border border-emerald-400/40"
+                      >
+                        <span>Activar WhatsApp</span>
+                        <Globe className="w-3 h-3" />
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* 2. AgriTwin 3D Core */}
+                  <div className={`p-2 rounded-xl transition-colors ${
+                    currentView === 'agritwin' ? 'bg-[#071A11] border border-emerald-500/30' : 'hover:bg-[#071A11]'
+                  }`}>
+                    <button
+                      onClick={() => handleNavClick('agritwin')}
+                      className="w-full flex items-start gap-2.5 text-left"
                     >
-                      <span>Carta Ejecutiva B2B</span>
-                      <Globe className="w-3 h-3" />
-                    </a>
+                      <div className="w-6 h-6 rounded-lg bg-emerald-500/20 border border-emerald-400 flex items-center justify-center shrink-0 mt-0.5 text-amber-400">
+                        <Cpu className="w-3.5 h-3.5" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-xs text-white">AgriTwin 3D (Gemelo Maestro)</span>
+                          <span className="text-[9px] font-mono text-emerald-300">CORE</span>
+                        </div>
+                        <span className="text-[10px] text-emerald-200/70 font-sans block">Simulación biofísica, heladas catabáticas y FAO-56.</span>
+                      </div>
+                    </button>
+                  </div>
+
+                  {/* 3. Informes Terran & Pasaporte UE */}
+                  <div className={`p-2 rounded-xl transition-colors ${
+                    ['satellites', 'satellites-pasaporte'].includes(currentView) ? 'bg-[#071A11] border border-emerald-500/30' : 'hover:bg-[#071A11]'
+                  }`}>
+                    <button
+                      onClick={() => handleNavClick('satellites')}
+                      className="w-full flex items-start gap-2.5 text-left"
+                    >
+                      <div className="w-6 h-6 rounded-lg bg-blue-500/20 border border-blue-400 flex items-center justify-center shrink-0 mt-0.5 text-blue-300">
+                        <FileText className="w-3.5 h-3.5" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-xs text-white">Informes Terran & Pasaporte EUDR</span>
+                          <span className="text-[9px] font-mono text-blue-300">24H / EXPORT</span>
+                        </div>
+                        <span className="text-[10px] text-emerald-200/70 font-sans block">Diagnóstico de cuenca y certificación de no-deforestación.</span>
+                      </div>
+                    </button>
                   </div>
                 </div>
 
-                {/* 2. Kits KioT Hardware */}
-                <button
-                  onClick={() => handleNavClick('hardware')}
-                  className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors ${
-                    currentView === 'hardware' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
-                  }`}
-                >
-                  <div className="w-6 h-6 rounded-lg bg-amber-500/20 border border-amber-400 flex items-center justify-center shrink-0 mt-0.5 text-amber-400">
-                    <Activity className="w-3.5 h-3.5" />
+                {/* --- FASE 2: HARDWARE IOT (UPGRADE) --- */}
+                <div className="space-y-1 pt-1.5 border-t border-emerald-900/60">
+                  <div className="flex items-center justify-between px-2 py-0.5">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold flex items-center gap-1">
+                      <Activity className="w-3 h-3 text-amber-400" />
+                      <span>Fase 2: Hardware IoT</span>
+                    </span>
+                    <span className="text-[9px] font-mono text-amber-300/80 bg-amber-950 px-1.5 py-0.2 rounded border border-amber-800">Upgrade Clientes</span>
                   </div>
-                  <div>
-                    <div>
-                      <span className="font-bold text-xs text-white">Kits A.P.I.S. / KioT Hardware</span>
-                    </div>
-                    <span className="text-[10px] text-emerald-200/70 font-sans block">Sondas FDR tri-estrato, heladas y válvulas LoRaWAN.</span>
-                  </div>
-                </button>
 
-                {/* 3. Rewild Suite */}
-                <button
-                  onClick={() => handleNavClick('rewild-hub')}
-                  className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors ${
-                    currentView === 'rewild-hub' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
-                  }`}
-                >
-                  <div className="w-6 h-6 rounded-lg bg-emerald-500/20 border border-emerald-400 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">
-                    <Trees className="w-3.5 h-3.5" />
-                  </div>
-                  <div>
-                    <div>
-                      <span className="font-bold text-xs text-white">Rewild Suite (Biodiversidad)</span>
+                  <button
+                    onClick={() => handleNavClick('hardware')}
+                    className={`w-full flex items-start gap-2.5 p-2 rounded-xl text-left transition-colors ${
+                      currentView === 'hardware' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
+                    }`}
+                  >
+                    <div className="w-6 h-6 rounded-lg bg-amber-500/20 border border-amber-400 flex items-center justify-center shrink-0 mt-0.5 text-amber-400">
+                      <Activity className="w-3.5 h-3.5" />
                     </div>
-                    <span className="text-[10px] text-emerald-200/70 font-sans block">Field Suite & GoWild Survey para bosque nativo.</span>
-                  </div>
-                </button>
-
-                <div className="my-1 border-t border-emerald-900/60" />
-
-                {/* 4. Informes de Riesgo Predial */}
-                <button
-                  onClick={() => handleNavClick('satellites')}
-                  className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors ${
-                    currentView === 'satellites' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
-                  }`}
-                >
-                  <div className="w-6 h-6 rounded-lg bg-blue-500/20 border border-blue-400 flex items-center justify-center shrink-0 mt-0.5 text-blue-300">
-                    <FileText className="w-3.5 h-3.5" />
-                  </div>
-                  <div>
                     <div>
-                      <span className="font-bold text-xs text-white">Informes de Riesgo Predial</span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-bold text-xs text-white">Kits KioT Hardware (Suelo & Clima)</span>
+                      </div>
+                      <span className="text-[10px] text-emerald-200/70 font-sans block">Sondas FDR tri-estrato. Calibración física in-situ bajo pedido.</span>
                     </div>
-                    <span className="text-[10px] text-emerald-200/70 font-sans block">Diagnóstico geofísico pre-compra: agua y heladas.</span>
-                  </div>
-                </button>
+                  </button>
+                </div>
 
-                {/* 5. Pasaporte Verde UE */}
-                <button
-                  onClick={() => handleNavClick('satellites-pasaporte')}
-                  className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors ${
-                    currentView === 'satellites-pasaporte' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
-                  }`}
-                >
-                  <div className="w-6 h-6 rounded-lg bg-amber-500/20 border border-amber-400 flex items-center justify-center shrink-0 mt-0.5 text-amber-400">
-                    <QrCode className="w-3.5 h-3.5" />
+                {/* --- FASE 3: ECOSISTEMA & LIVING LAB --- */}
+                <div className="space-y-1 pt-1.5 border-t border-emerald-900/60">
+                  <div className="flex items-center justify-between px-2 py-0.5">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-teal-400 font-bold flex items-center gap-1">
+                      <Trees className="w-3 h-3 text-teal-400" />
+                      <span>Fase 3: Ecosistema & Living Lab</span>
+                    </span>
+                    <span className="text-[9px] font-mono text-teal-300/80 bg-teal-950 px-1.5 py-0.2 rounded border border-teal-800">Largo Plazo</span>
                   </div>
-                  <div>
-                    <div>
-                      <span className="font-bold text-xs text-white">Pasaporte Verde UE (EUDR)</span>
+
+                  <button
+                    onClick={() => handleNavClick('rewild-hub')}
+                    className={`w-full flex items-start gap-2.5 p-2 rounded-xl text-left transition-colors ${
+                      currentView === 'rewild-hub' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
+                    }`}
+                  >
+                    <div className="w-6 h-6 rounded-lg bg-emerald-500/20 border border-emerald-400 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">
+                      <Trees className="w-3.5 h-3.5" />
                     </div>
-                    <span className="text-[10px] text-emerald-200/70 font-sans block">Auditoría no-deforestación y QR para pallets a Europa.</span>
-                  </div>
-                </button>
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-bold text-xs text-white">Meniel Living Lab & Rewild Suite</span>
+                      </div>
+                      <span className="text-[10px] text-emerald-200/70 font-sans block">Centro I+D San Clemente, drones y restauración de cuenca.</span>
+                    </div>
+                  </button>
+                </div>
+
+                {/* Footer link to Roadmap */}
+                <div className="pt-2 border-t border-emerald-900/80 text-center">
+                  <button
+                    onClick={() => handleNavClick('internal')}
+                    className="w-full py-1.5 rounded-lg bg-emerald-950/70 border border-emerald-500/30 hover:border-amber-400 text-amber-300 hover:text-white font-mono text-[10px] font-bold transition-all flex items-center justify-center gap-1.5"
+                  >
+                    <Layers className="w-3 h-3 text-amber-400" />
+                    <span>Ver Roadmap Estratégico & Data Flywheel →</span>
+                  </button>
+                </div>
+
               </div>
             )}
           </div>
@@ -339,13 +385,46 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             <span>Inicio</span>
           </button>
 
-          {/* 1. AgriTwin 3D Flagship */}
+          {/* --- FASE 1: SOFTWARE & MICRO-SAAS (MOBILE) --- */}
+          <div className="px-2 pt-1 text-[10px] font-mono text-emerald-400 font-bold uppercase flex items-center gap-1">
+            <Zap className="w-3 h-3 text-amber-400" />
+            <span>Fase 1: Software Micro-SaaS</span>
+          </div>
+
+          {/* 1. AgroAlerta Pocket Bot (WhatsApp) */}
+          <div className="p-2.5 rounded-xl bg-gradient-to-r from-emerald-950 to-[#071810] border border-emerald-500/50 space-y-1.5">
+            <div className="flex items-center justify-between text-white font-bold">
+              <div className="flex items-center gap-2">
+                <Smartphone className="w-4 h-4 text-emerald-400" />
+                <span>AgroAlerta (WhatsApp)</span>
+              </div>
+              <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-400 text-slate-950 font-black">HERO</span>
+            </div>
+            <div className="flex items-center justify-between pt-1 border-t border-emerald-900/60 text-[10px] font-mono">
+              <button onClick={() => handleNavClick('landing')} className="text-emerald-300 hover:text-white flex items-center gap-1">
+                <span>Ver en Home</span>
+                <ArrowRight className="w-3 h-3" />
+              </button>
+              <a 
+                href="https://wa.me/56976696142?text=Hola%20AgroTech,%20quiero%20activar%20AgroAlerta%20para%20mi%20predio" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-emerald-300 hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-500/20 border border-emerald-400/40"
+              >
+                <span>Activar WhatsApp</span>
+                <Globe className="w-3 h-3" />
+              </a>
+            </div>
+          </div>
+
+          {/* 2. AgriTwin 3D Flagship */}
           <div className="p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 space-y-2">
-            <button onClick={() => handleNavClick('agritwin')} className="w-full flex items-center justify-between text-left text-amber-300 font-bold">
+            <button onClick={() => handleNavClick('agritwin')} className="w-full flex items-center justify-between text-left text-white font-bold">
               <div className="flex items-center gap-2">
                 <Cpu className="w-4 h-4 text-amber-400" />
-                <span>AgriTwin 3D (Showcase)</span>
+                <span>AgriTwin 3D (Gemelo Maestro)</span>
               </div>
+              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-900 text-emerald-300">CORE</span>
             </button>
             <div className="flex items-center justify-between pt-1 border-t border-emerald-900/60 text-[10px] font-mono">
               <button onClick={() => handleNavClick('agritwin')} className="text-emerald-300 hover:text-white flex items-center gap-1">
@@ -364,28 +443,41 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             </div>
           </div>
 
-          {/* 2. Kits KioT Hardware */}
-          <button onClick={() => handleNavClick('hardware')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
-            <Activity className="w-4 h-4 text-emerald-400" />
-            <span>Kits A.P.I.S. / KioT Hardware</span>
+          {/* 3. Informes Terran & Pasaporte UE */}
+          <button onClick={() => handleNavClick('satellites')} className="flex items-center justify-between px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
+            <div className="flex items-center gap-2.5">
+              <FileText className="w-4 h-4 text-blue-400" />
+              <span>Informes Terran & Pasaporte EUDR</span>
+            </div>
+            <span className="text-[9px] font-mono text-blue-300 bg-blue-950 px-1 rounded">24H</span>
           </button>
 
-          {/* 3. Informes de Riesgo Predial */}
-          <button onClick={() => handleNavClick('satellites')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
-            <FileText className="w-4 h-4 text-blue-400" />
-            <span>Informes de Riesgo Predial (24h)</span>
+          {/* --- FASE 2: HARDWARE (MOBILE) --- */}
+          <div className="px-2 pt-2 text-[10px] font-mono text-amber-400 font-bold uppercase flex items-center gap-1 border-t border-emerald-900/60">
+            <Activity className="w-3 h-3 text-amber-400" />
+            <span>Fase 2: Hardware IoT</span>
+          </div>
+
+          <button onClick={() => handleNavClick('hardware')} className="flex items-center justify-between px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
+            <div className="flex items-center gap-2.5">
+              <Activity className="w-4 h-4 text-amber-400" />
+              <span>Kits KioT Hardware (Suelo & Clima)</span>
+            </div>
+            <span className="text-[9px] font-mono text-amber-300 bg-amber-950 px-1 rounded">UPGRADE</span>
           </button>
 
-          {/* 4. Pasaporte Verde UE */}
-          <button onClick={() => handleNavClick('satellites-pasaporte')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
-            <QrCode className="w-4 h-4 text-amber-400" />
-            <span>Pasaporte Verde UE (EUDR)</span>
-          </button>
+          {/* --- FASE 3: ECOSISTEMA (MOBILE) --- */}
+          <div className="px-2 pt-2 text-[10px] font-mono text-teal-400 font-bold uppercase flex items-center gap-1 border-t border-emerald-900/60">
+            <Trees className="w-3 h-3 text-teal-400" />
+            <span>Fase 3: Ecosistema & Living Lab</span>
+          </div>
 
-          {/* 5. Rewild Suite */}
-          <button onClick={() => handleNavClick('rewild-hub')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
-            <Trees className="w-4 h-4 text-emerald-400" />
-            <span>Rewild Suite (Biodiversidad ESG)</span>
+          <button onClick={() => handleNavClick('rewild-hub')} className="flex items-center justify-between px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
+            <div className="flex items-center gap-2.5">
+              <Trees className="w-4 h-4 text-emerald-400" />
+              <span>Meniel Living Lab & Rewild Suite</span>
+            </div>
+            <span className="text-[9px] font-mono text-teal-300 bg-teal-950 px-1 rounded">ESG</span>
           </button>
 
           <button onClick={() => handleNavClick('store')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
