@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { 
   Presentation, Layers, Map, ShoppingBag, Share2, Menu, X, Globe, Sparkles, Wrench, 
   GraduationCap, Cpu, ChevronDown, Leaf, ArrowRight, Shield, Activity, FileText,
-  Users, Newspaper, Lock, BookOpen, Heart, Trees, QrCode, MonitorPlay, Database, MapPin
+  Users, Newspaper, Lock, BookOpen, Heart, Trees, QrCode, MonitorPlay, Database, MapPin,
+  Smartphone, Zap, CheckCircle2
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -106,9 +107,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                       <Cpu className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-center gap-1.5 flex-wrap">
+                      <div>
                         <span className="font-bold text-xs text-white">AgriTwin 3D (Gemelo Digital)</span>
-                        <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 font-bold">FLAGSHIP B2B</span>
                       </div>
                       <span className="text-[10px] text-emerald-200/70 font-sans block">Simulación biofísica, heladas catabáticas y FAO-56.</span>
                     </div>
@@ -145,9 +145,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                     <Activity className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-1.5">
+                    <div>
                       <span className="font-bold text-xs text-white">Kits A.P.I.S. / KioT Hardware</span>
-                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 font-bold">HARDWARE IP65</span>
                     </div>
                     <span className="text-[10px] text-emerald-200/70 font-sans block">Sondas FDR tri-estrato, heladas y válvulas LoRaWAN.</span>
                   </div>
@@ -164,9 +163,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                     <Trees className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-1.5">
+                    <div>
                       <span className="font-bold text-xs text-white">Rewild Suite (Biodiversidad)</span>
-                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-emerald-400/20 text-emerald-300 font-bold">ESG & RESTAURACIÓN</span>
                     </div>
                     <span className="text-[10px] text-emerald-200/70 font-sans block">Field Suite & GoWild Survey para bosque nativo.</span>
                   </div>
@@ -185,9 +183,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                     <FileText className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-1.5">
+                    <div>
                       <span className="font-bold text-xs text-white">Informes de Riesgo Predial</span>
-                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-blue-400/20 text-blue-300 font-bold">24H EXPRESS</span>
                     </div>
                     <span className="text-[10px] text-emerald-200/70 font-sans block">Diagnóstico geofísico pre-compra: agua y heladas.</span>
                   </div>
@@ -204,9 +201,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                     <QrCode className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-1.5">
+                    <div>
                       <span className="font-bold text-xs text-white">Pasaporte Verde UE (EUDR)</span>
-                      <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 font-bold">CERTIFICACIÓN</span>
                     </div>
                     <span className="text-[10px] text-emerald-200/70 font-sans block">Auditoría no-deforestación y QR para pallets a Europa.</span>
                   </div>
@@ -350,7 +346,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                 <Cpu className="w-4 h-4 text-amber-400" />
                 <span>AgriTwin 3D (Showcase)</span>
               </div>
-              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300">B2B</span>
             </button>
             <div className="flex items-center justify-between pt-1 border-t border-emerald-900/60 text-[10px] font-mono">
               <button onClick={() => handleNavClick('agritwin')} className="text-emerald-300 hover:text-white flex items-center gap-1">
