@@ -248,6 +248,14 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
             <a href="#especificaciones" className="text-slate-300 hover:text-[#2DD4BF] transition-colors">
               {lang === 'en' ? '04. Data Architecture' : '04. Arquitectura'}
             </a>
+            <button
+              onClick={() => onNavigate ? onNavigate('vault') : window.open('./docs/PAPER_CIENTIFICO_AGRITWIN_IMPRIMIBLE.html', '_blank')}
+              className="text-[#2DD4BF] hover:text-white transition-colors flex items-center gap-1 cursor-pointer font-bold px-2 py-1 rounded bg-[#092226] border border-[#2DD4BF]/40"
+              title="Abrir Bóveda Técnica y Papers Científicos"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+              <span>{lang === 'en' ? '05. Technical Vault ↗' : '05. Bóveda Técnica ↗'}</span>
+            </button>
           </nav>
 
           {/* Selector de Idioma & CTA Primario */}
@@ -1117,7 +1125,7 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                   <td className="py-3.5 px-4 font-mono font-bold text-white">3D Farm Twin</td>
                   <td className="py-3.5 px-4 font-serif">Three.js WebGL (PBR materials, sub-meter DEM)</td>
                   <td className="py-3.5 px-4 font-mono text-cyan-300">60 FPS interactive client rendering</td>
-                  <td className="py-3.5 px-4 font-serif">24.8 ha (Fundo Meniel cadastre)</td>
+                  <td className="py-3.5 px-4 font-serif">24.8 ha (Living Lab Maule Sur cadastre)</td>
                 </tr>
                 <tr className="hover:bg-[#0E1E30]/50 transition-colors">
                   <td className="py-3.5 px-4 font-mono font-bold text-white">Vadose Zone Soil Probes</td>
@@ -1133,6 +1141,120 @@ export const AgriTwinShowcasePage: React.FC<AgriTwinShowcasePageProps> = ({ onNa
                 </tr>
               </tbody>
             </table>
+          </div>
+
+          {/* Tarjeta de Acceso a la Bóveda Técnica & Whitepapers Canónicos */}
+          <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#0B1A2C] via-[#0E253D] to-[#071320] border border-[#23456B] shadow-2xl space-y-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1A314A] pb-5">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-purple-500/20 border border-purple-400/40 text-purple-300 flex items-center justify-center shrink-0 shadow-sm">
+                  <BookOpen className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-lg sm:text-xl font-bold text-white font-mono flex items-center gap-2">
+                    <span>{lang === 'en' ? 'Open Architecture Vault & Scientific Whitepapers' : 'Bóveda de Arquitectura Abierta & Papers Canónicos'}</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-400/30">
+                      FAIR • OGC
+                    </span>
+                  </h3>
+                  <p className="text-xs text-slate-300 font-serif mt-0.5">
+                    {lang === 'en'
+                      ? 'Detailed data ingestion pipelines, Richards 1D vadose math, Sobol sensitivity calibration, and printable peer-review reports.'
+                      : 'Especificaciones de ingesta de datos, formulación matemática Richards 1D, calibración Sobol UQ e informes peer-review imprimibles.'
+                    }
+                  </p>
+                </div>
+              </div>
+
+              {onNavigate && (
+                <button
+                  onClick={() => onNavigate('vault')}
+                  className="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-mono text-xs font-bold transition-all flex items-center gap-2 shadow-md w-fit shrink-0 cursor-pointer"
+                >
+                  <Database className="w-4 h-4 text-amber-300" />
+                  <span>{lang === 'en' ? 'Explore Full Technical Vault (49 Notes)' : 'Explorar Bóveda Técnica (49 Notas)'}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+
+            {/* Fila de los 3 Papers Imprimibles */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 rounded-2xl bg-[#091827] border border-blue-500/30 hover:border-blue-400/60 transition-all flex flex-col justify-between space-y-3">
+                <div className="space-y-1">
+                  <span className="text-[9px] font-mono font-bold text-blue-300 px-2 py-0.5 rounded bg-blue-950/80 border border-blue-500/30">
+                    PAPER 1 • TRL 7/8
+                  </span>
+                  <h4 className="text-xs font-bold text-white pt-1">
+                    {lang === 'en' ? 'AgriTwin: Multiscale Biophysical Twin' : 'AgriTwin: Gemelo Digital Biofísico'}
+                  </h4>
+                  <p className="text-[11px] text-slate-300 font-serif leading-snug">
+                    {lang === 'en'
+                      ? 'Canonical IMRAD monograph: 1D Campbell-Richards coupling, AMR Hexgrid, and Sobol global sensitivity.'
+                      : 'Monografía IMRAD completa: acoplamiento Richards 1D, malla AMR Hexgrid y calibración global de Sobol.'
+                    }
+                  </p>
+                </div>
+                <a
+                  href="./docs/PAPER_CIENTIFICO_AGRITWIN_IMPRIMIBLE.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2 rounded-xl bg-blue-600/80 hover:bg-blue-600 text-white font-mono text-[11px] font-bold text-center flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <span>{lang === 'en' ? 'Read Paper (KaTeX Math) ↗' : 'Leer Monografía (KaTeX) ↗'}</span>
+                </a>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#091827] border border-rose-500/30 hover:border-rose-400/60 transition-all flex flex-col justify-between space-y-3">
+                <div className="space-y-1">
+                  <span className="text-[9px] font-mono font-bold text-rose-300 px-2 py-0.5 rounded bg-rose-950/80 border border-rose-500/30">
+                    PAPER 2 • HINDCAST REAL
+                  </span>
+                  <h4 className="text-xs font-bold text-white pt-1">
+                    {lang === 'en' ? 'Climate Risk vs. Historical Megafires' : 'Riesgo Climático vs. Megaincendios'}
+                  </h4>
+                  <p className="text-[11px] text-slate-300 font-serif leading-snug">
+                    {lang === 'en'
+                      ? 'Empirical validation in Santa Juana and Viña del Mar: Albini-Byram flame front delay and Keyline buffers.'
+                      : 'Validación en Santa Juana y Viña del Mar: retardo de frente de fuego Albini-Byram y franjas Keyline.'
+                    }
+                  </p>
+                </div>
+                <a
+                  href="./docs/INFORME_HINDCAST_REAL_IMPRIMIBLE.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2 rounded-xl bg-rose-700/80 hover:bg-rose-700 text-white font-mono text-[11px] font-bold text-center flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <span>{lang === 'en' ? 'Read Fire Report ↗' : 'Leer Informe Incendios ↗'}</span>
+                </a>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#091827] border border-cyan-500/30 hover:border-cyan-400/60 transition-all flex flex-col justify-between space-y-3">
+                <div className="space-y-1">
+                  <span className="text-[9px] font-mono font-bold text-cyan-300 px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/30">
+                    PAPER 3 • HINDCAST REAL
+                  </span>
+                  <h4 className="text-xs font-bold text-white pt-1">
+                    {lang === 'en' ? 'Atmospheric River Megafloods' : 'Megainundaciones Ríos Atmosféricos'}
+                  </h4>
+                  <p className="text-[11px] text-slate-300 font-serif leading-snug">
+                    {lang === 'en'
+                      ? '2023 Maule & Mataquito events: 2D hydrodynamics, CutSheetRX balance, and +143 min flood peak attenuation.'
+                      : 'Eventos 2023 en Licantén y Longaví: hidrodinámica 2D, balance CutSheetRX y retardo de pico aluvial.'
+                    }
+                  </p>
+                </div>
+                <a
+                  href="./docs/INFORME_HINDCAST_REAL_INUNDACIONES_IMPRIMIBLE.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2 rounded-xl bg-cyan-700/80 hover:bg-cyan-700 text-white font-mono text-[11px] font-bold text-center flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <span>{lang === 'en' ? 'Read Flood Report ↗' : 'Leer Informe Inundaciones ↗'}</span>
+                </a>
+              </div>
+            </div>
           </div>
 
         </div>

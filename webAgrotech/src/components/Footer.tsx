@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Presentation, Mail, MapPin, Globe, Sparkles, Send, CheckCircle } from 'lucide-react';
+import { Presentation, Mail, MapPin, Globe, Sparkles, Send, CheckCircle, BookOpen } from 'lucide-react';
 
 interface FooterProps {
   onOpenPitchDeck: () => void;
@@ -110,13 +110,22 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPitchDeck, onNavigate }) =
                 <span>Abrir Pitch Deck</span>
               </button>
               {onNavigate && (
-                <button
-                  onClick={() => onNavigate('naming')}
-                  className="w-full py-2 rounded-xl bg-[#071810] border border-emerald-500/40 hover:border-amber-400 text-emerald-200 hover:text-white font-mono text-[11px] transition-all flex items-center justify-center gap-1.5"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Taller Naming Holding [2026]</span>
-                </button>
+                <>
+                  <button
+                    onClick={() => onNavigate('vault')}
+                    className="w-full py-2 rounded-xl bg-[#071810] border border-purple-500/40 hover:border-purple-400 text-purple-200 hover:text-white font-mono text-[11px] transition-all flex items-center justify-center gap-1.5"
+                  >
+                    <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Bóveda Técnica & Papers ↗</span>
+                  </button>
+                  <button
+                    onClick={() => onNavigate('naming')}
+                    className="w-full py-2 rounded-xl bg-[#071810] border border-emerald-500/40 hover:border-amber-400 text-emerald-200 hover:text-white font-mono text-[11px] transition-all flex items-center justify-center gap-1.5"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Taller Naming Holding [2026]</span>
+                  </button>
+                </>
               )}
             </div>
           </div>
