@@ -179,18 +179,18 @@ export const InternalPartnerPage: React.FC<InternalPartnerPageProps> = ({ onNavi
 
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#071A11] border border-emerald-500/40 text-emerald-300 text-xs font-mono shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                <span className="font-bold text-amber-400">Versión: "Semilla brotando"</span>
+                <span className="font-bold text-amber-400">Versión: "Data Flywheel & AgroAlerta"</span>
                 <span className="text-emerald-500">•</span>
-                <span>v2.6.0 (Vie 25 Sep 2026, 20:25)</span>
+                <span>v3.1.0 (Noviembre 2026)</span>
               </div>
             </div>
             
             <h1 className="text-3xl sm:text-5xl font-extrabold text-white">
-              Panel de Administrador <span className="text-amber-400">& Estrategia B2B</span>
+              Panel de Administrador <span className="text-amber-400">& Estrategia 2026</span>
             </h1>
 
             <p className="text-base text-emerald-100/80 font-serif max-w-3xl">
-              Centro de mando privado para fundadores. Historial evolutivo prompt a prompt, datos de versión vigentes, academia B2B, finanzas SpA y costos de hardware.
+              Centro de mando privado para fundadores. Estrategia Data Flywheel & Feature Stacking, Micro-SaaS AgroAlerta de bolsillo, Roadmap en 3 Fases (Software ➔ Hardware ➔ Ecosistema), Boletines de Gobierno SpA, Naming 2026 y Matriz BOM.
             </p>
           </div>
 

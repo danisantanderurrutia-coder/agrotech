@@ -443,6 +443,53 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
       {subTab === 'pricing' && (
         <div className="space-y-10 animate-fadeIn">
           
+          {/* Section 0: Micro-SaaS de Bolsillo AgroAlerta (Fase 1 - Puerta de Entrada) */}
+          <div className="space-y-4 p-6 rounded-3xl bg-gradient-to-br from-emerald-950 via-[#0B2519] to-teal-950 text-white border border-emerald-500/30 shadow-xl">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-800/60 pb-3">
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold bg-emerald-900/60 px-2.5 py-0.5 rounded border border-emerald-700">
+                  FASE 1 • EL CABALLO DE TROYA
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-white mt-1 flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-amber-400" />
+                  <span>0. Micro-SaaS AgroAlerta Pocket (WhatsApp 60s)</span>
+                </h3>
+              </div>
+              <span className="text-xs font-mono font-bold text-amber-300 bg-amber-400/20 px-3 py-1 rounded-full border border-amber-400/30">
+                CAC: $18 USD • Margen: 96%
+              </span>
+            </div>
+
+            <p className="text-xs text-emerald-100/80 font-serif leading-relaxed max-w-3xl">
+              La puerta de entrada masiva para todo agricultor de Maule y O'Higgins. Sin apps pesadas ni configuraciones. El usuario envía su GPS/Rol por WhatsApp y recibe alertas satelitales hiperlocales. Cada nuevo usuario densifica el Data Flywheel de la cuenca.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+              <div className="p-4 rounded-2xl bg-black/40 border border-emerald-500/20 space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-bold text-emerald-300 font-mono">AgroAlerta Free (Gancho)</span>
+                  <span className="text-xs font-mono text-emerald-400 font-black">$0 / mes</span>
+                </div>
+                <p className="text-[11px] text-slate-300 font-serif">
+                  Alertas meteorológicas comunitarias de cuenca. Captura el Rol, polígono y cultivo del productor sin costo para alimentar el Gemelo Digital regional.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 space-y-2 relative">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-bold text-white font-mono flex items-center gap-1.5">
+                    <span>AgroAlerta Pocket Pro</span>
+                    <span className="text-[9px] bg-amber-400 text-slate-950 px-1.5 py-0.2 rounded font-black">HERO</span>
+                  </span>
+                  <span className="text-sm font-mono text-amber-300 font-black">$14.990 CLP / mes</span>
+                </div>
+                <p className="text-[11px] text-emerald-100 font-serif">
+                  Alertas hiperlocales a nivel de cuartel: heladas radiativas con 72h de anticipación, ventanas de viento para pulverización y aviso de golpe de calor.
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* Section 1: AgriTwin SaaS Tiers */}
           <div className="space-y-4">
             <div className="space-y-1">
@@ -598,12 +645,15 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
           {/* Section 2: Hardware Kits Pricing */}
           <div className="space-y-4 pt-6 border-t border-slate-200">
             <div className="space-y-1">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-800 text-[11px] font-mono font-bold">
+                FASE 2 • UPGRADE DE PRECISIÓN PARA USUARIOS DE SOFTWARE
+              </div>
               <h3 className="text-xl font-extrabold text-[#0B2519] flex items-center gap-2">
                 <Wrench className="w-5 h-5 text-amber-600" />
-                <span>2. Hardware KioT: Venta, Margen & Modalidad HaaS</span>
+                <span>2. Hardware KioT: Fabricación Just-In-Time</span>
               </h3>
               <p className="text-xs text-slate-500 font-serif">
-                Infraestructura mecatrónica y baterías por Rudi Kaatz y Luis González, con despliegue de campo.
+                Resolución Boletín 3: El hardware no se vende a puerta fría. Se ofrece bajo pedido exclusivamente a usuarios de software que requieren calibración física in-situ de suelo y microclima. Cero stock inmovilizado en bodega.
               </p>
             </div>
 

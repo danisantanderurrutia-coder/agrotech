@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShieldCheck, Scale, Clock, Users, ArrowUpRight, CheckCircle2, AlertCircle, FileText, ChevronRight, Layers, Sparkles, BatteryCharging, Flame, MapPin, GitBranch, Cpu, Briefcase } from 'lucide-react';
+import { ShieldCheck, Scale, Clock, Users, ArrowUpRight, CheckCircle2, AlertCircle, FileText, ChevronRight, Layers, Sparkles, BatteryCharging, Flame, MapPin, GitBranch, Cpu, Briefcase, Zap, Smartphone, RefreshCw } from 'lucide-react';
 
 interface Bulletin {
   id: string;
@@ -12,10 +12,19 @@ interface Bulletin {
 }
 
 export const ExecutiveBulletinsSection: React.FC = () => {
-  const [selectedBulletinId, setSelectedBulletinId] = useState<string>('boletin-1');
+  const [selectedBulletinId, setSelectedBulletinId] = useState<string>('boletin-3');
   const [activeSubTab, setActiveSubTab] = useState<'gobierno' | 'roles' | 'vesting' | 'mes1'>('gobierno');
 
   const bulletins: Bulletin[] = [
+    {
+      id: 'boletin-3',
+      number: 3,
+      title: 'Data Flywheel, AgroAlerta & Moratoria de Hardware',
+      subtitle: 'Inversión del Embudo: Software-First en WhatsApp, Eliminación de Riesgo de Stock y Stacking de Margen Alto',
+      date: 'Noviembre 2026',
+      status: 'published',
+      author: 'Daniel Santander (Fundador & Dirección Estratégica)'
+    },
     {
       id: 'boletin-1',
       number: 1,
@@ -73,7 +82,7 @@ export const ExecutiveBulletinsSection: React.FC = () => {
                 >
                   <FileText className="w-3.5 h-3.5" />
                   <span>Boletín N.° {b.number}</span>
-                  {b.id === 'boletin-2' && <span className="text-[10px] text-amber-900 bg-amber-300/80 px-1 rounded font-mono">Nuevo</span>}
+                  {b.id === 'boletin-3' && <span className="text-[10px] text-slate-950 bg-amber-400 px-1.5 py-0.5 rounded font-mono font-bold">Vigente 2026</span>}
                 </button>
               ))}
             </div>
@@ -84,14 +93,14 @@ export const ExecutiveBulletinsSection: React.FC = () => {
         <div className="mt-6 flex flex-wrap items-center justify-between gap-4 text-xs">
           <div className="flex items-center gap-3">
             <span className="px-2.5 py-1 rounded bg-amber-400 text-slate-950 font-bold font-mono">
-              {selectedBulletinId === 'boletin-1' ? 'N.° 1 — VIGENTE' : 'N.° 2 — EN DESPLIEGUE'}
+              {selectedBulletinId === 'boletin-3' ? 'N.° 3 — VIGENTE / ESTRATEGIA 2026' : selectedBulletinId === 'boletin-2' ? 'N.° 2 — EN DESPLIEGUE' : 'N.° 1 — FORMALIZADO'}
             </span>
             <span className="text-emerald-300 font-semibold">
-              {selectedBulletinId === 'boletin-1' ? 'Octubre 2026' : 'Noviembre 2026'}
+              {bulletins.find(b => b.id === selectedBulletinId)?.date}
             </span>
             <span className="text-emerald-500">•</span>
             <span className="text-emerald-200">
-              Autoría: {selectedBulletinId === 'boletin-1' ? bulletins[0].author : bulletins[1].author}
+              Autoría: {bulletins.find(b => b.id === selectedBulletinId)?.author}
             </span>
           </div>
 
@@ -101,6 +110,135 @@ export const ExecutiveBulletinsSection: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* ========================================================
+          CUERPO DEL BOLETÍN N.° 3: DATA FLYWHEEL & ROADMAP 3 FASES
+          ======================================================== */}
+      {selectedBulletinId === 'boletin-3' && (
+        <div className="bg-[#071A11] border border-emerald-500/30 rounded-2xl p-6 lg:p-8 space-y-8 shadow-xl text-slate-100 animate-fadeIn">
+          
+          <div className="border-b border-emerald-900/60 pb-5 space-y-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold border border-emerald-500/40">
+                <Zap className="w-3.5 h-3.5 text-amber-400" />
+                Resolución Directiva de Estrategia • Vigente Noviembre 2026
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-xs font-mono font-bold border border-amber-400/30">
+                Aprobado por Fundador & Consejo
+              </span>
+            </div>
+            <h3 className="text-2xl sm:text-4xl font-extrabold text-white">
+              Inversión del Embudo: Software-First, AgroAlerta y Moratoria de Stock Físico
+            </h3>
+            <p className="text-xs sm:text-sm text-emerald-200/80 font-serif leading-relaxed max-w-4xl">
+              Resolución obligatoria para todo el equipo comercial y operativo: queda formalmente prohibido intentar vender hardware físico KioT en frío o inmovilizar capital de trabajo en inventario en bodega. Toda captación de clientes se realiza mediante el micro-SaaS de WhatsApp <strong>AgroAlerta</strong>, alimentando el <strong>Data Flywheel</strong> de la cuenca y escalando tickets vía <strong>Feature Stacking</strong>.
+            </p>
+          </div>
+
+          {/* 4 Acuerdos Fundacionales del Boletín 3 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <div className="p-5 rounded-xl bg-[#0B2519] border border-amber-500/30 hover:border-amber-400/60 transition-all space-y-2">
+              <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 mb-1 border border-amber-500/20">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-sm text-white">1. Moratoria de Hardware en Frío</h4>
+              <p className="text-xs text-amber-200/80 font-serif leading-relaxed">
+                El hardware físico pasa a <strong>Fase 2</strong>. Solo se cotiza o ensambla bajo pedido (Just-In-Time) como un upgrade de calibración in-situ para agricultores que ya pagan software. Cero riesgo de obsolescencia.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-[#0B2519] border border-emerald-500/30 hover:border-emerald-400/60 transition-all space-y-2">
+              <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-1 border border-emerald-500/20">
+                <Smartphone className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-sm text-white">2. AgroAlerta WhatsApp (CAC $18)</h4>
+              <p className="text-xs text-emerald-200/80 font-serif leading-relaxed">
+                El canal de penetración primario es WhatsApp. En 60 segundos el productor registra su Rol y cultivo. El costo de servicio es ~$0 gracias a la telemetría abierta Sentinel-2, Landsat y reanálisis climático ERA5.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-[#0B2519] border border-teal-500/30 hover:border-teal-400/60 transition-all space-y-2">
+              <div className="w-10 h-10 rounded-lg bg-teal-500/10 flex items-center justify-center text-teal-400 mb-1 border border-teal-500/20">
+                <RefreshCw className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-sm text-white">3. El Loop Virtuoso (Datawheel)</h4>
+              <p className="text-xs text-teal-200/80 font-serif leading-relaxed">
+                Cada predio nuevo ingresado auto-delinea su polígono y densifica la Malla Hexgrid H3 de la cuenca (Curicó, Linares, Talca). El Gemelo Maestro afina su precisión microclimática sin gastar un peso en brigadas de campo.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-[#0B2519] border border-blue-500/30 hover:border-blue-400/60 transition-all space-y-2">
+              <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 mb-1 border border-blue-500/20">
+                <Layers className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-sm text-white">4. Feature Stacking (Margen 91%)</h4>
+              <p className="text-xs text-blue-200/80 font-serif leading-relaxed">
+                Una vez ganada la confianza diaria del agrónomo, se activan módulos de alto ticket con 1 clic: BV Agua ($45k/mes), BV Fuego ($60k/mes) y Pasaporte Verde EUDR (€1.100), elevando el ARPU sin nuevo CAC.
+              </p>
+            </div>
+
+          </div>
+
+          {/* Tabla de Metas Operativas Maule Q4 2026 - Q1 2027 */}
+          <div className="p-6 rounded-2xl bg-[#0B2519] border border-emerald-500/30 space-y-4">
+            <div className="flex items-center justify-between">
+              <h4 className="font-bold text-base text-white flex items-center gap-2">
+                <Briefcase className="w-4 h-4 text-amber-400" />
+                <span>Plan de Ejecución Territorial Maule (Q4 2026 — Q1 2027)</span>
+              </h4>
+              <span className="text-xs font-mono text-emerald-400 bg-emerald-950 px-2.5 py-1 rounded-full border border-emerald-800">
+                Objetivo: 120 Predios Conectados
+              </span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs font-sans">
+                <thead>
+                  <tr className="border-b border-emerald-800/80 text-emerald-300 font-mono">
+                    <th className="py-2.5 pr-4">Hito Operativo</th>
+                    <th className="py-2.5 px-4">Canal / Producto</th>
+                    <th className="py-2.5 px-4">Zona Prioritaria</th>
+                    <th className="py-2.5 px-4">Métrica de Éxito</th>
+                    <th className="py-2.5 pl-4 text-right">Responsable</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-emerald-900/40 text-slate-200">
+                  <tr>
+                    <td className="py-3 pr-4 font-bold text-white">Despliegue AgroAlerta WhatsApp</td>
+                    <td className="py-3 px-4 font-mono text-emerald-400">Micro-SaaS Heladas / Agua</td>
+                    <td className="py-3 px-4">Curicó & Linares (Cerezo / Avellano)</td>
+                    <td className="py-3 px-4">120 usuarios activos (&gt;75% retención)</td>
+                    <td className="py-3 pl-4 text-right font-mono text-amber-300">Daniel Santander</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4 font-bold text-white">Feature Stacking: BV Agua & Fuego</td>
+                    <td className="py-3 px-4 font-mono text-teal-400">Software Satelital Recurrente</td>
+                    <td className="py-3 px-4">Valle Central Maule</td>
+                    <td className="py-3 px-4">35% conversión a planes de pago ($52k ARPU)</td>
+                    <td className="py-3 pl-4 text-right font-mono text-amber-300">Equipo Comercial</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4 font-bold text-white">Upgrade a Hardware Físico KioT</td>
+                    <td className="py-3 px-4 font-mono text-amber-400">Fase 2: Sensores de Precisión</td>
+                    <td className="py-3 px-4">Clientes Software Pro</td>
+                    <td className="py-3 px-4">30 estaciones bajo pedido (cero stock ocioso)</td>
+                    <td className="py-3 pl-4 text-right font-mono text-amber-300">Rüdiger Kaatz & Daniel</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4 font-bold text-white">Meniel Living Lab & Alianzas</td>
+                    <td className="py-3 px-4 font-mono text-blue-400">Fase 3: I+D & Academia</td>
+                    <td className="py-3 px-4">San Clemente & Parral</td>
+                    <td className="py-3 px-4">Postulación ANID / CORFO y validación agroecológica</td>
+                    <td className="py-3 pl-4 text-right font-mono text-amber-300">Daniel & Asesores</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      )}
 
       {/* ========================================================
           CUERPO DEL BOLETÍN N.° 1

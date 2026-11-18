@@ -20,13 +20,32 @@ export interface ChangelogMilestone {
 
 export const CHANGELOG_DATA: ChangelogMilestone[] = [
   {
+    id: 'milestone-10',
+    version: 'v3.1.0',
+    name: 'Data Flywheel, AgroAlerta de Bolsillo & Roadmap 3 Fases',
+    timestamp: 'Miércoles 18 Nov 2026, 04:30 hrs',
+    category: 'arquitectura',
+    badgeColor: 'emerald',
+    isCurrent: true,
+    summary: 'Reestructuración integral del modelo de captación y portafolio: Software-First impulsado por AgroAlerta de bolsillo en WhatsApp (60s onboarding), eliminación del riesgo de inventario de hardware (postergado a Fase 2 como upgrade para clientes existentes) y consolidación del Roadmap en 3 Fases con Malla AMR Hexgrid N1-N4, CutSheetRX y Calicata Digital 1D.',
+    deliverables: [
+      'AgroAlerta Pocket Bot: Micro-SaaS de WhatsApp con onboarding en 60 segundos (GPS/Rol + Cultivo), alertas de heladas radiativas (-1.8 °C), balance de agua y fuego perimetral sin apps pesadas.',
+      'The Data Flywheel Engine: Ingesta pasiva de polígonos y fenología predial que densifica la malla territorial H3 y el Gemelo 3D Maestro sin costo de levantamiento.',
+      'Escalera de Feature Stacking: Activación en 1 clic de módulos modulares (AgroAlerta Pro $15k ➔ BV Agua $45k ➔ BV Fuego $60k ➔ Pasaporte Verde EUDR €1.100 ➔ AgriTwin Suite 3D).',
+      'Roadmap Secuencial en 3 Fases: Fase 1 (Software Micro-SaaS inmediato), Fase 2 (Hardware IoT KioT como upgrade in-situ para clientes cálidos), Fase 3 (Meniel Living Lab, Academia & Ecosistema Regenerativo).',
+      'Matriz de Relaciones Globales 8.a & 8.b: Integración de Malla AMR Hexgrid N1-N4, Balance de Tierras CutSheetRX y Calicata Digital 1D Campbell-Richards en el Vault de Obsidian.',
+      'Panel de Administrador v3.1.0: Simulador de conversión y CAC interactivo (-85% CAC frente a venta en frío), mockup de WhatsApp y guion para inversores.'
+    ],
+    systemImpact: 'Modelo de negocio con capital-efficiency de clase mundial: CAC de $18 USD, margen bruto del 91% y cero riesgo de quiebra por hardware inmovilizado en bodega.'
+  },
+  {
     id: 'milestone-9',
     version: 'v2.7.0',
     name: 'Holding AgroTech, Obsidian Vault & Red Centinela Territorial',
     timestamp: 'Sábado 26 Sep 2026, 01:30 hrs',
     category: 'arquitectura',
     badgeColor: 'purple',
-    isCurrent: true,
+    isCurrent: false,
     summary: 'Consolidación del Holding AgroTech en 5 capas interoperables, integración nativa del Vault de Obsidian en AgroTech HQ, despliegue de la Red Centinela Ground-Truth Mesh con estaciones DMC/DGA/INIA, modelamiento micro-atmosférico y Ganadería PRV.',
     deliverables: [
       'AgroTech HQ: Cabina de mando privada para fundadores con integración REST directa al Vault de Obsidian (/Documents/Agrotech/Agro Tech).',
