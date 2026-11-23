@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atlas Visual de la Megamigración • AgriTwin v3.0 → v3.2.0</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: #FAF7F2;
+      color: #1C1917;
+      font-family: -apple-system, BlinkMacSystemFont, "Plus Jakarta Sans", "Segoe UI", Roboto, sans-serif;
+    }
+    .font-editorial { font-family: Georgia, "Times New Roman", serif; }
+    .slide-card {
+      background: #FFFFFF;
+      border: 1px solid #E7DAC6;
+      box-shadow: 0 10px 30px -10px rgba(28, 25, 23, 0.08);
+    }
+    .soft-panel {
+      background: #FCFBF8;
+      border: 1px solid #E7DAC6;
+    }
+    .nav-pill { transition: all 0.18s ease; background: #FFFFFF; color: #57534E; border-color: #E7DAC6; }
+    .nav-pill:hover { background: #F5EFE6; color: #1C1917; border-color: #D6C3A5; }
+    .nav-pill.active {
+      background: #065F46;
+      border-color: #065F46;
+      color: #FFFFFF;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(6, 95, 70, 0.22);
+    }
+    .paper-grid {
+      background-image: radial-gradient(rgba(180, 154, 114, 0.18) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .fade-in { animation: fadeSlide 0.22s ease-out; }
+    @keyframes fadeSlide { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .wireframe-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .wireframe-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.10);
+    }
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-thumb { background: #D6C3A5; border-radius: 99px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col paper-grid select-none">
+
+  <!-- BARRA SUPERIOR EDITORIAL LUMINOSA -->
+  <header class="sticky top-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-xl border-b border-[#E7DAC6] px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 shadow-xs">
+    <div class="flex items-center gap-2.5">
+      <span class="px-2.5 py-1 rounded-xl bg-emerald-700 text-white font-mono text-xs font-black shadow-xs">📊 ATLAS DE LA MEGAMIGRACIÓN</span>
+      <span class="hidden md:inline font-mono text-xs text-stone-600 font-semibold">AgriTwin v3.0 (3.a) → v3.1 (3.b) → v3.2.0 + Landscope</span>
+    </div>
+
+    <div class="flex items-center gap-2 font-mono text-xs">
+      <span id="slideCounter" class="px-2.5 py-1 rounded-lg bg-stone-100 border border-[#E7DAC6] text-stone-800 font-bold">Lámina 1 / 11</span>
+      <button onclick="prevSlide()" class="px-2.5 py-1 rounded-lg bg-white hover:bg-stone-100 border border-[#E7DAC6] text-stone-700 font-semibold cursor-pointer" title="Anterior (←)">← Ant</button>
+      <button onclick="nextSlide()" class="px-2.5 py-1 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold cursor-pointer shadow-xs" title="Siguiente (→)">Sig →</button>
+      <a href="../devtools/stagediff/stagediff.html" target="_blank" rel="noopener" class="px-2.5 py-1 rounded-lg bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-900 font-bold">🎛️ Abrir VSD</a>
+    </div>
+  </header>
+
+  <!-- BARRA DE CAPÍTULOS -->
+  <div class="bg-[#F5EFE6]/90 border-b border-[#E7DAC6] px-4 py-2 overflow-x-auto">
+    <div class="max-w-7xl mx-auto flex items-center gap-1.5 font-mono text-[11px] whitespace-nowrap" id="chapterBar">
+      <button onclick="goSlide(0)" id="pill-0" class="nav-pill active px-2.5 py-1 rounded-lg border cursor-pointer">1. Mapa Global</button>
+      <button onclick="goSlide(1)" id="pill-1" class="nav-pill px-2.5 py-1 rounded-lg border cursor-pointer">2. Autores I: Mapas &amp; Física</button>
+      <button onclick="goSlide(2)" id="pill-2" class="nav-pill px-2.5 py-1 rounded-lg border cursor-pointer">3. Autores II: Campo &amp; IA</button>
+      <button onclick="goSlide(3)" id="pill-3" class="nav-pill px-2.5 py-1 rounded-lg border cursor-pointer">4. Comparativa 10+3 Repos</button>
+      <button onclick="goSlide(4)" id="pill-4" class="nav-pill px-2.5 py-1 rounded-lg border cursor-pointer">5. Fase 3.a (OGC &amp; Clima)</button>
+      <button onclick="goSlide(5)" id="pill-5" class="nav-pill px-2.5 py-1 rounded-lg border cursor-pointer">6. Fase 3.b (AMR &amp; CutSheet)</button>
+      <button onclick="goSlide(6)" id="pill-6" class="nav-pill px-2.5 py-1 rounded-lg border cursor-pointer">7. v3.2.0: Crecidas CC</button>
+      <button onclick="goSlide(7)" id="pill-7" class="nav-pill px-2.5 py-1 rounded-lg border cursor-pointer">8. v3.2.0: Heladas &amp; Mulch</button>
+      <button onclick="goSlide(8)" id="pill-8" class="nav-pill px-2.5 py-1 rounded-lg border cursor-pointer">9. v3.2.0: Piro-Vórtice</button>
+      <button onclick="goSlide(9)" id="pill-9" class="nav-pill px-2.5 py-1 rounded-lg border cursor-pointer">10. Motores Landscope</button>
+      <button onclick="goSlide(10)" id="pill-10" class="nav-pill px-2.5 py-1 rounded-lg border cursor-pointer">11. Inventario &amp; Puente VSD</button>
+    </div>
+  </div>
+
+  <!-- CONTENEDOR PRINCIPAL DE LÁMINAS -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8">
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         LÁMINA 1: MAPA GLOBAL DE LA MEGAMIGRACIÓN (CON DIAGRAMA DE FLUJO VISUAL)
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="slide-0" class="slide fade-in space-y-6">
+      <div class="slide-card p-6 sm:p-8 rounded-3xl space-y-6">
+        <div class="space-y-2 border-b border-[#E7DAC6] pb-5">
+          <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300 font-mono text-[11px] font-bold">CAPÍTULO 01 · VISIÓN DE CONJUNTO</span>
+          <h1 class="text-2xl sm:text-4xl font-black text-stone-900 font-editorial tracking-tight">Mapa Global de la Megamigración AgriTwin</h1>
+          <p class="text-sm text-stone-600 max-w-4xl leading-relaxed">
+            Qué ocurre realmente <strong>por dentro</strong> entre las fuentes de datos, el servidor en puerto 7777, los motores biofísicos y los 2 visores — y qué <strong>capacidades visuales</strong> desbloquea cada oleada para diseñar luego en <strong>AgriTwin VSD</strong>.
+          </p>
+        </div>
+
+        <!-- DIAGRAMA VISUAL SVG: CÓMO VIAJA EL DATO DESDE EL SATÉLITE HASTA TUS 2 VISORES -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-[#FCFBF8] border border-[#E7DAC6] space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px]">
+            <span class="font-bold text-stone-800">🗺️ RADIOGRAFÍA INTERNA: ¿QUÉ OCURRE DENTRO DE AGRITWIN v3.2.0?</span>
+            <span class="text-emerald-700 font-bold">Flujo de datos en tiempo real (&lt; 15 ms)</span>
+          </div>
+          <svg viewBox="0 0 980 230" class="w-full h-auto">
+            <!-- Columna 1: Fuentes Reales -->
+            <rect x="10" y="16" width="200" height="198" rx="16" fill="#F0F9FF" stroke="#7DD3FC" stroke-width="1.5"/>
+            <text x="110" y="38" text-anchor="middle" fill="#0369A1" font-size="11" font-weight="bold" font-family="monospace">1. FUENTES REALES</text>
+            <rect x="24" y="50" width="172" height="32" rx="8" fill="#FFFFFF" stroke="#BAE6FD"/>
+            <text x="110" y="70" text-anchor="middle" fill="#0F172A" font-size="11">🛰️ Sentinel-1/2 + DEM 30m</text>
+            <rect x="24" y="90" width="172" height="32" rx="8" fill="#FFFFFF" stroke="#BAE6FD"/>
+            <text x="110" y="110" text-anchor="middle" fill="#0F172A" font-size="11">🌦️ ECMWF 168h (14 vars)</text>
+            <rect x="24" y="130" width="172" height="32" rx="8" fill="#FFFFFF" stroke="#BAE6FD"/>
+            <text x="110" y="150" text-anchor="middle" fill="#0F172A" font-size="11">🌱 SoilGrids 250m + DGA</text>
+            <rect x="24" y="170" width="172" height="32" rx="8" fill="#FFFFFF" stroke="#BAE6FD"/>
+            <text x="110" y="190" text-anchor="middle" fill="#0F172A" font-size="11">📡 Kit KioT (o Virtual EKF)</text>
+
+            <!-- Flechas 1 -> 2 -->
+            <path d="M210,115 L252,115" stroke="#0284C7" stroke-width="2.5" marker-end="url(#arrBlue)"/>
+
+            <!-- Columna 2: Servidor Monolito 7777 (Fase 3.a) -->
+            <rect x="256" y="16" width="205" height="198" rx="16" fill="#ECFDF5" stroke="#6EE7B7" stroke-width="1.5"/>
+            <text x="358" y="38" text-anchor="middle" fill="#047857" font-size="11" font-weight="bold" font-family="monospace">2. HUB :7777 (FASE 3.a)</text>
+            <rect x="270" y="50" width="177" height="44" rx="8" fill="#FFFFFF" stroke="#A7F3D0"/>
+            <text x="358" y="68" text-anchor="middle" fill="#065F46" font-size="11" font-weight="bold">Pila OGC (8 Clases)</text>
+            <text x="358" y="84" text-anchor="middle" fill="#57534E" font-size="9.5">EDR · WFS3 · STA · STAC</text>
+            <rect x="270" y="104" width="177" height="44" rx="8" fill="#FFFFFF" stroke="#A7F3D0"/>
+            <text x="358" y="122" text-anchor="middle" fill="#065F46" font-size="11" font-weight="bold">Caché Clima 168h</text>
+            <text x="358" y="138" text-anchor="middle" fill="#57534E" font-size="9.5">/api/weather/full-168h (3ms)</text>
+            <rect x="270" y="158" width="177" height="44" rx="8" fill="#FFFFFF" stroke="#A7F3D0"/>
+            <text x="358" y="176" text-anchor="middle" fill="#065F46" font-size="11" font-weight="bold">Sombra EKF + Pozos</text>
+            <text x="358" y="192" text-anchor="middle" fill="#57534E" font-size="9.5">Kalman ±1.2% · Cono Thiem</text>
+
+            <!-- Flechas 2 -> 3 -->
+            <path d="M461,115 L503,115" stroke="#059669" stroke-width="2.5" marker-end="url(#arrGreen)"/>
+
+            <!-- Columna 3: Motores Biofísicos (Fase 3.b + v3.2.0 + Landscope) -->
+            <rect x="507" y="16" width="225" height="198" rx="16" fill="#FFFBEB" stroke="#FCD34D" stroke-width="1.5"/>
+            <text x="619" y="38" text-anchor="middle" fill="#B45309" font-size="11" font-weight="bold" font-family="monospace">3. MOTORES (3.b + v3.2.0)</text>
+            <rect x="521" y="50" width="197" height="44" rx="8" fill="#FFFFFF" stroke="#FDE68A"/>
+            <text x="619" y="68" text-anchor="middle" fill="#92400E" font-size="11" font-weight="bold">AMR H3 + CutSheetRX</text>
+            <text x="619" y="84" text-anchor="middle" fill="#57534E" font-size="9.5">187 hex Richards · Cut/Fill Keyline</text>
+            <rect x="521" y="104" width="197" height="44" rx="8" fill="#FFF1F2" stroke="#FECDD3"/>
+            <text x="619" y="122" text-anchor="middle" fill="#9F1239" font-size="11" font-weight="bold">Física Extrema v3.2.0</text>
+            <text x="619" y="138" text-anchor="middle" fill="#57534E" font-size="9.5">CC +59% · Heladas HAND · Piro-Vórtice</text>
+            <rect x="521" y="158" width="197" height="44" rx="8" fill="#F0FDFA" stroke="#99F6E4"/>
+            <text x="619" y="176" text-anchor="middle" fill="#0F766E" font-size="11" font-weight="bold">Motores Landscope</text>
+            <text x="619" y="192" text-anchor="middle" fill="#57534E" font-size="9.5">Flujo D8 · Sol · Suelo · Corredores</text>
+
+            <!-- Flechas 3 -> 4 -->
+            <path d="M732,80 L772,72" stroke="#D97706" stroke-width="2.5" marker-end="url(#arrAmber)"/>
+            <path d="M732,150 L772,162" stroke="#D97706" stroke-width="2.5" marker-end="url(#arrAmber)"/>
+
+            <!-- Columna 4: Capacidades Visuales en 2 Visores -->
+            <rect x="776" y="16" width="194" height="92" rx="14" fill="#EFF6FF" stroke="#60A5FA" stroke-width="1.8"/>
+            <text x="873" y="38" text-anchor="middle" fill="#1D4ED8" font-size="11.5" font-weight="bold">🛰️ VISOR SATELITAL</text>
+            <text x="873" y="57" text-anchor="middle" fill="#334155" font-size="10">122.070 ha · Leaflet + 60 FPS</text>
+            <text x="873" y="75" text-anchor="middle" fill="#475569" font-size="9.5">Capas B&amp;N Windy · AMR · D8</text>
+            <text x="873" y="92" text-anchor="middle" fill="#475569" font-size="9.5">Vórtice · CC · Corredores</text>
+
+            <rect x="776" y="122" width="194" height="92" rx="14" fill="#ECFDF5" stroke="#34D399" stroke-width="1.8"/>
+            <text x="873" y="144" text-anchor="middle" fill="#047857" font-size="11.5" font-weight="bold">🧊 GEMELO 3D PREDIO</text>
+            <text x="873" y="163" text-anchor="middle" fill="#334155" font-size="10">24.8 ha Meniel · Three.js</text>
+            <text x="873" y="181" text-anchor="middle" fill="#475569" font-size="9.5">Obras Keyline · Suelo 1D</text>
+            <text x="873" y="198" text-anchor="middle" fill="#475569" font-size="9.5">Sol DEM · Pozos · Sensores</text>
+
+            <defs>
+              <marker id="arrBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#0284C7"/></marker>
+              <marker id="arrGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#059669"/></marker>
+              <marker id="arrAmber" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#D97706"/></marker>
+            </defs>
+          </svg>
+        </div>
+
+        <!-- LÍNEA DE TIEMPO VISUAL POR FASES (MANTENIDA) -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 font-mono text-xs">
+          <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+            <span class="text-[10px] px-2 py-0.5 rounded bg-stone-200 text-stone-700 font-bold">BASE · v2.x</span>
+            <h3 class="text-sm font-black text-stone-900">Núcleo Continuo</h3>
+            <ul class="space-y-1 text-[11px] text-stone-600 font-sans">
+              <li>• Cubeta simple FAO-56</li>
+              <li>• Visor Cuenca 122k ha + 3D Meniel</li>
+              <li>• Matriz C2 y Hindcast Viña / Licantén</li>
+              <li>• Llamadas directas Open-Meteo</li>
+            </ul>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-sky-50/70 border-2 border-sky-300 space-y-2">
+            <span class="text-[10px] px-2 py-0.5 rounded bg-sky-100 text-sky-900 font-bold">FASE 3.a · v3.0.0</span>
+            <h3 class="text-sm font-black text-sky-900">Estándares &amp; Clima</h3>
+            <ul class="space-y-1 text-[11px] text-stone-700 font-sans">
+              <li>• Monolito único en <code>:7777</code></li>
+              <li>• Pila OGC (EDR, WFS3, STA, STAC)</li>
+              <li>• API centralizada 168h (14 vars)</li>
+              <li>• Richards 1D + EKF + Sensor Honesto</li>
+              <li>• Cono de Thiem (Pozos y kWh/m³)</li>
+            </ul>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-emerald-50/70 border-2 border-emerald-300 space-y-2">
+            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 font-bold">FASE 3.b · v3.1.0</span>
+            <h3 class="text-sm font-black text-emerald-900">Superficie Táctica</h3>
+            <ul class="space-y-1 text-[11px] text-stone-700 font-sans">
+              <li>• Malla Hexagonal AMR (N1–N4 H3)</li>
+              <li>• 37 hex N2 + 187 hex N3 (5 estratos)</li>
+              <li>• CutSheetRX (Desmonte/Terraplén)</li>
+              <li>• Calicata 1D Campbell &amp; Feddes</li>
+              <li>• Regla de Oro Meniel (2D ⇄ 3D)</li>
+            </ul>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-rose-50/70 border-2 border-rose-300 space-y-2">
+            <span class="text-[10px] px-2 py-0.5 rounded bg-rose-100 text-rose-900 font-bold">v3.2.0 + LANDSCOPE</span>
+            <h3 class="text-sm font-black text-rose-900">Física Extrema &amp; Paisaje</h3>
+            <ul class="space-y-1 text-[11px] text-stone-700 font-sans">
+              <li>• Clausius-Clapeyron + Isoterma 0°C</li>
+              <li>• Heladas Stefan-Boltzmann + HAND + Mulch</li>
+              <li>• Piro-Vórtice WUI (pavesas 2.4 km)</li>
+              <li>• Landscope: Flujo D8, Sol, Ficha, Corredores</li>
+              <li>• Figuras 16, 17 y 18 (R 300 DPI)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3 ESCALONES DE LATENCIA -->
+        <div class="p-4 rounded-2xl soft-panel space-y-2.5">
+          <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
+            <span class="font-bold text-amber-800">⚡ 3 ESCALONES DE LATENCIA (DOCTRINA DESTINE FRUGAL)</span>
+            <span class="text-[10.5px] text-stone-500">Sin supercomputadores · Todo corre local en el puerto 7777</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-mono">
+            <div class="p-3 rounded-xl bg-white border border-emerald-200 space-y-1">
+              <div class="text-emerald-800 font-black">ESCALÓN 1 · &lt; 1 ms (60 FPS)</div>
+              <div class="text-stone-600 font-sans text-[11px]">Subrogados ultraligeros + Canvas Leaflet 60 FPS + Three.js WebGL en navegador.</div>
+            </div>
+            <div class="p-3 rounded-xl bg-white border border-sky-200 space-y-1">
+              <div class="text-sky-800 font-black">ESCALÓN 2 · 1–15 ms (Servidor :7777)</div>
+              <div class="text-stone-600 font-sans text-[11px]"><code>server.cjs</code> + <code>js/engines/*.cjs</code>: API 168h, mallas AMR H3, CutSheetRX, EKF y OGC.</div>
+            </div>
+            <div class="p-3 rounded-xl bg-white border border-purple-200 space-y-1">
+              <div class="text-purple-800 font-black">ESCALÓN 3 · Offline Batch (R &amp; Python)</div>
+              <div class="text-stone-600 font-sans text-[11px]">Calibración pesada, scripts R 4.5.2 (300 DPI), benchmarks DGA/Sentinel-1 y entrenamiento.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         LÁMINA 2: LO QUE HACÍAN LOS AUTORES (I) — MAPAS, HEXÁGONOS Y PAISAJE
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="slide-1" class="slide hidden fade-in space-y-6">
+      <div class="slide-card p-6 sm:p-8 rounded-3xl space-y-6">
+        <div class="space-y-1.5 border-b border-[#E7DAC6] pb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-900 border border-sky-300 font-mono text-[11px] font-bold">LO QUE HACÍAN LOS AUTORES · PARTE I (ESPACIAL &amp; FÍSICA)</span>
+            <div class="flex items-center gap-2 font-mono text-[10.5px]">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold">✅ Ya en Megamigración</span>
+              <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300 font-bold">💡 No considerado aún</span>
+            </div>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black text-stone-900 font-editorial">Autores Espaciales: ridvanzengin, MONICA ZALF y Landscope</h2>
+          <p class="text-xs sm:text-sm text-stone-600">
+            Todo lo que ofrecían visualmente los repositorios cartográficos y biofísicos — separando lo que <strong>ya propusimos integrar</strong> de las <strong>joyas que aún no habíamos considerado</strong>.
+          </p>
+        </div>
+
+        <!-- BLOQUE 1: RIDVANZENGIN / AGRITWIN (4 VISTAS REALES) -->
+        <div class="p-5 rounded-2xl soft-panel space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h3 class="font-mono text-sm font-black text-sky-900">1. ridvanzengin / AgriTwin (MapLibre GL + Malla H3 en 4 Modos)</h3>
+            <span class="font-mono text-[10.5px] text-stone-500">4 vistas completas sobre los mismos hexágonos</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <!-- Vista 1: Field Explorer -->
+            <div class="wireframe-card p-3.5 rounded-xl space-y-2">
+              <div class="flex justify-between items-center font-mono text-[10px]">
+                <b class="text-stone-900">Field Explorer</b>
+                <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-900 font-bold">✅ Ya</span>
+              </div>
+              <svg viewBox="0 0 180 80" class="w-full h-20 rounded-lg bg-slate-50 border border-slate-200">
+                <polygon points="45,18 65,18 75,34 65,50 45,50 35,34" fill="#38BDF8" fill-opacity="0.55" stroke="#0284C7"/>
+                <polygon points="78,18 98,18 108,34 98,50 78,50 68,34" fill="#10B981" fill-opacity="0.55" stroke="#059669"/>
+                <polygon points="61,44 81,44 91,60 81,76 61,76 51,60" fill="#F59E0B" fill-opacity="0.55" stroke="#D97706"/>
+                <rect x="114" y="12" width="58" height="56" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+                <text x="120" y="26" fill="#0F172A" font-size="7.5" font-weight="bold" font-family="monospace">Celda H3</text>
+                <text x="120" y="38" fill="#0369A1" font-size="7" font-family="monospace">NDVI: 0.72</text>
+                <text x="120" y="50" fill="#059669" font-size="7" font-family="monospace">DEM: 312m</text>
+                <text x="120" y="62" fill="#B45309" font-size="7" font-family="monospace">Serie 12m</text>
+              </svg>
+              <p class="text-[10.5px] text-stone-600">Clic en cualquier hexágono abre elevación, NDVI, suelo y serie climática de esa celda.</p>
+            </div>
+
+            <!-- Vista 2: Crop Fit -->
+            <div class="wireframe-card p-3.5 rounded-xl border-amber-300 space-y-2">
+              <div class="flex justify-between items-center font-mono text-[10px]">
+                <b class="text-amber-900">Crop Fit (8 Cultivos)</b>
+                <span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">💡 Nuevo</span>
+              </div>
+              <svg viewBox="0 0 180 80" class="w-full h-20 rounded-lg bg-amber-50/40 border border-amber-200">
+                <rect x="10" y="10" width="75" height="60" rx="6" fill="#FFFFFF" stroke="#FDE68A"/>
+                <text x="16" y="24" fill="#92400E" font-size="7.5" font-weight="bold" font-family="monospace">Aptitud:</text>
+                <text x="16" y="37" fill="#15803D" font-size="7.5" font-family="monospace">🍒 Cerezo 92%</text>
+                <text x="16" y="50" fill="#0369A1" font-size="7.5" font-family="monospace">🌰 Avell. 86%</text>
+                <text x="16" y="63" fill="#B91C1C" font-size="7.5" font-family="monospace">🥑 Palto  28%</text>
+                <!-- Mini curva clima vs requerimiento -->
+                <path d="M96,60 Q118,22 140,34 T172,56" fill="none" stroke="#0284C7" stroke-width="2"/>
+                <rect x="96" y="28" width="76" height="18" fill="#10B981" fill-opacity="0.22"/>
+                <text x="96" y="73" fill="#57534E" font-size="6.8" font-family="monospace">Clima vs Requerim.</text>
+              </svg>
+              <p class="text-[10.5px] text-stone-600">Puntúa cada hexágono para 8 cultivos y grafica mes a mes el clima real vs. óptimo del cultivo.</p>
+            </div>
+
+            <!-- Vista 3: Yield & Profit -->
+            <div class="wireframe-card p-3.5 rounded-xl border-amber-300 space-y-2">
+              <div class="flex justify-between items-center font-mono text-[10px]">
+                <b class="text-emerald-900">Yield &amp; Profit ($/ha)</b>
+                <span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">💡 Nuevo</span>
+              </div>
+              <svg viewBox="0 0 180 80" class="w-full h-20 rounded-lg bg-emerald-50/40 border border-emerald-200">
+                <polygon points="30,16 55,16 65,36 55,56 30,56 20,36" fill="#059669" fill-opacity="0.7" stroke="#065F46"/>
+                <text x="42" y="39" text-anchor="middle" fill="#FFFFFF" font-size="7.5" font-weight="bold">+$4.2M</text>
+                <polygon points="68,16 93,16 103,36 93,56 68,56 58,36" fill="#F59E0B" fill-opacity="0.65" stroke="#B45309"/>
+                <text x="80" y="39" text-anchor="middle" fill="#FFFFFF" font-size="7.5" font-weight="bold">+$1.8M</text>
+                <text x="110" y="26" fill="#065F46" font-size="7.5" font-weight="bold" font-family="monospace">11.4 ton/ha</text>
+                <text x="110" y="40" fill="#57534E" font-size="7" font-family="monospace">Riego: -$420k</text>
+                <text x="110" y="52" fill="#57534E" font-size="7" font-family="monospace">Insum: -$680k</text>
+                <text x="110" y="66" fill="#047857" font-size="7.5" font-weight="bold" font-family="monospace">Margen: 68%</text>
+              </svg>
+              <p class="text-[10.5px] text-stone-600">Mapa coroplético de toneladas/ha y ganancia neta por celda con desglose de costos.</p>
+            </div>
+
+            <!-- Vista 4: What-If Lado a Lado -->
+            <div class="wireframe-card p-3.5 rounded-xl border-amber-300 space-y-2">
+              <div class="flex justify-between items-center font-mono text-[10px]">
+                <b class="text-purple-900">What-If Split View</b>
+                <span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">💡 Nuevo</span>
+              </div>
+              <svg viewBox="0 0 180 80" class="w-full h-20 rounded-lg bg-purple-50/40 border border-purple-200">
+                <rect x="8" y="10" width="76" height="60" rx="6" fill="#DCFCE7" stroke="#16A34A"/>
+                <text x="46" y="25" text-anchor="middle" fill="#166534" font-size="7.5" font-weight="bold" font-family="monospace">BASE HOY</text>
+                <text x="46" y="46" text-anchor="middle" fill="#15803D" font-size="9" font-weight="bold">92 pts</text>
+                <rect x="96" y="10" width="76" height="60" rx="6" fill="#FEE2E2" stroke="#DC2626"/>
+                <text x="134" y="25" text-anchor="middle" fill="#991B1B" font-size="7.5" font-weight="bold" font-family="monospace">+2°C / -30%</text>
+                <text x="134" y="46" text-anchor="middle" fill="#DC2626" font-size="9" font-weight="bold">61 pts</text>
+                <line x1="90" y1="6" x2="90" y2="74" stroke="#7E22CE" stroke-width="2" stroke-dasharray="3 2"/>
+              </svg>
+              <p class="text-[10.5px] text-stone-600">Dibujas un polígono, alteras clima o riego y comparas el mapa base vs. escenario lado a lado.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOQUE 2: MONICA ZALF + LANDSCOPE -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="p-4 rounded-2xl soft-panel space-y-2.5">
+            <div class="flex justify-between items-center font-mono text-xs">
+              <b class="text-purple-900">2. monica-agritwin (ZALF Alemania)</b>
+              <span class="text-[10px] text-stone-500">Física de cultivos &amp; sequía</span>
+            </div>
+            <div class="space-y-2 text-[11.5px]">
+              <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+                <b class="text-emerald-900">✅ Ya considerado:</b> Richards 1D multicapa, curvas de retención Campbell, estrés radicular Feddes con anoxia y dinámica de Nitrógeno / Materia Orgánica.
+              </div>
+              <div class="p-2.5 rounded-xl bg-amber-50 border border-amber-200">
+                <b class="text-amber-900">💡 No considerado aún:</b> Mapas de <strong>Días bajo Umbral de Estrés por Sequía (<code>TraDef &lt; DST</code>)</strong>, proyección de rendimiento promedio por región y mapas de sensibilidad climática.
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl soft-panel space-y-2.5">
+            <div class="flex justify-between items-center font-mono text-xs">
+              <b class="text-teal-900">3. landscope.earth + Akshay + landscapen</b>
+              <span class="text-[10px] text-stone-500">Última milla del GIS sin QGIS</span>
+            </div>
+            <div class="space-y-2 text-[11.5px]">
+              <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+                <b class="text-emerald-900">✅ Ya considerado:</b> Redes de escorrentía D8, insolación solar DEM (Wh/m²), Ficha Rápida Edafológica 1-clic y Corredores de Conectividad (<em>least-cost paths</em>).
+              </div>
+              <div class="p-2.5 rounded-xl bg-amber-50 border border-amber-200">
+                <b class="text-amber-900">💡 No considerado aún:</b> Flujo <strong>"Zero-Setup" al subir KML/Shapefile</strong> (precalcula todo en segundo plano), subida de DEM propio de dron y <strong>exportación CAD / DXF / GeoTIFF</strong> para maquinaria.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         LÁMINA 3: LO QUE HACÍAN LOS AUTORES (II) — CAMPO, IA, ALERTAS Y PECUARIO
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="slide-2" class="slide hidden fade-in space-y-6">
+      <div class="slide-card p-6 sm:p-8 rounded-3xl space-y-6">
+        <div class="space-y-1.5 border-b border-[#E7DAC6] pb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 font-mono text-[11px] font-bold">LO QUE HACÍAN LOS AUTORES · PARTE II (MINI-PANTALLAS VISUALES)</span>
+            <div class="flex items-center gap-2 font-mono text-[10.5px]">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold">✅ Ya en Megamigración</span>
+              <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300 font-bold">💡 No considerado aún</span>
+            </div>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black text-stone-900 font-editorial">Cómo lucían realmente las interfaces de Campo, IA y Pecuario</h2>
+          <p class="text-xs sm:text-sm text-stone-600">
+            Réplicas visuales en miniatura de lo que veía el usuario en cada repositorio original (no botones sueltos, sino su pantalla real).
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+          <!-- 1. Kiwi-Agri-twin: Mini-pantalla Simulador Día a Día + ExplanationBox -->
+          <div class="wireframe-card p-4 rounded-2xl space-y-2.5">
+            <div class="flex justify-between items-center font-mono text-xs">
+              <b class="text-amber-900">1. Kiwi-Agri-twin</b>
+              <span class="text-[9.5px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">💡 Simulador + Explicación</span>
+            </div>
+            <!-- Mini ventana visual de la app Kiwi -->
+            <div class="rounded-xl border border-stone-200 bg-stone-50 overflow-hidden text-[10px]">
+              <div class="px-2.5 py-1 bg-stone-200/80 flex justify-between items-center font-mono text-[9px] text-stone-700">
+                <span>🌾 Simulación · <b id="kiwiDayLbl">Día 42 (Floración)</b></span>
+                <button type="button" onclick="stepKiwiDemo()" class="px-1.5 py-0.5 rounded bg-emerald-700 hover:bg-emerald-800 text-white font-bold cursor-pointer">▶ +1 Día</button>
+              </div>
+              <div class="p-2.5 space-y-2">
+                <div class="grid grid-cols-3 gap-1.5 text-center font-mono">
+                  <div class="p-1.5 rounded bg-white border border-stone-200"><div class="text-[8px] text-stone-500">Humedad</div><b id="kiwiMoist" class="text-amber-700">48%</b></div>
+                  <div class="p-1.5 rounded bg-white border border-stone-200"><div class="text-[8px] text-stone-500">Calor</div><b id="kiwiHeat" class="text-rose-700">31°C</b></div>
+                  <div class="p-1.5 rounded bg-white border border-stone-200"><div class="text-[8px] text-stone-500">Riego Rec.</div><b id="kiwiIrr" class="text-sky-700">22 mm</b></div>
+                </div>
+                <div class="p-2 rounded-lg bg-amber-50 border-l-4 border-amber-500 text-stone-700 leading-snug">
+                  <b class="text-amber-900">¿Por qué?</b> <span id="kiwiWhy">La humedad bajó de 55% y vienen 3 días secos sobre 30°C.</span>
+                </div>
+              </div>
+            </div>
+            <div class="text-[10.5px] text-stone-600"><b class="text-emerald-800">✅ Ya:</b> Curva TAW/RAW · <b class="text-amber-800">💡 Extra:</b> Avance día a día + explicación en lenguaje humano.</div>
+          </div>
+
+          <!-- 2. smart-agriculture-digital-twin: Mini-visor Escáner de Hoja + Cosecha -->
+          <div class="wireframe-card p-4 rounded-2xl space-y-2.5">
+            <div class="flex justify-between items-center font-mono text-xs">
+              <b class="text-emerald-900">2. smart-agriculture-twin</b>
+              <span class="text-[9.5px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">💡 Visión Hoja + Cosecha</span>
+            </div>
+            <svg viewBox="0 0 260 122" class="w-full h-32 rounded-xl bg-stone-50 border border-stone-200">
+              <!-- Panel izquierdo: Foto hoja escaneada con bounding box IA -->
+              <rect x="8" y="8" width="112" height="106" rx="8" fill="#ECFDF5" stroke="#A7F3D0"/>
+              <path d="M64,20 C90,34 94,74 64,98 C34,74 38,34 64,20 Z" fill="#16A34A" fill-opacity="0.75" stroke="#14532D" stroke-width="1.2"/>
+              <line x1="64" y1="22" x2="64" y2="96" stroke="#DCFCE7" stroke-width="1"/>
+              <!-- Manchas detectadas + recuadro rojo de IA -->
+              <circle cx="56" cy="54" r="5" fill="#FDE047" fill-opacity="0.9"/>
+              <circle cx="67" cy="64" r="4" fill="#FDE047" fill-opacity="0.9"/>
+              <rect x="44" y="42" width="34" height="32" fill="none" stroke="#DC2626" stroke-width="1.6" stroke-dasharray="3 2"/>
+              <rect x="14" y="88" width="100" height="18" rx="4" fill="#991B1B"/>
+              <text x="64" y="100" text-anchor="middle" fill="#FFFFFF" font-size="7.5" font-weight="bold" font-family="monospace">Oídio · 87% conf.</text>
+              <!-- Panel derecho: Mini gráfica de cosecha esperada -->
+              <rect x="128" y="8" width="124" height="106" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+              <text x="136" y="23" fill="#0F172A" font-size="8" font-weight="bold" font-family="monospace">Cosecha Proyectada</text>
+              <rect x="140" y="62" width="18" height="32" rx="3" fill="#CBD5E1"/>
+              <rect x="166" y="48" width="18" height="46" rx="3" fill="#38BDF8"/>
+              <rect x="192" y="36" width="18" height="58" rx="3" fill="#10B981"/>
+              <rect x="218" y="54" width="18" height="40" rx="3" fill="#F59E0B"/>
+              <text x="136" y="106" fill="#047857" font-size="8" font-weight="bold" font-family="monospace">Est: 8.4 ton/ha (+12%)</text>
+            </svg>
+            <div class="text-[10.5px] text-stone-600"><b class="text-emerald-800">✅ Ya:</b> Horizontes + NPK · <b class="text-amber-800">💡 Extra:</b> Foto de hoja con detección IA + proyector de cosecha.</div>
+          </div>
+
+          <!-- 3. GAURANGSURTE-AgriTwin: Mini-teléfono con Alerta SMS/WhatsApp -->
+          <div class="wireframe-card p-4 rounded-2xl space-y-2.5">
+            <div class="flex justify-between items-center font-mono text-xs">
+              <b class="text-stone-900">3. GAURANGSURTE-AgriTwin</b>
+              <span class="text-[9.5px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">💡 SMS / WhatsApp</span>
+            </div>
+            <!-- Mockup visual de pantalla móvil -->
+            <div class="rounded-xl border-2 border-stone-300 bg-[#ECE5DD] overflow-hidden text-[10px]">
+              <div class="px-2.5 py-1 bg-[#075E54] text-white font-mono text-[9px] flex justify-between">
+                <span>📲 Alerta Campo (SMS / WA)</span>
+                <span>04:30</span>
+              </div>
+              <div class="p-2.5 space-y-1.5">
+                <div class="bg-white rounded-lg rounded-tl-none p-2 shadow-xs border border-stone-200 text-stone-800 leading-snug">
+                  <b class="text-rose-700">❄️ Alerta Helada -1.8°C</b><br/>
+                  Cuartel Cerezos en 30 min. ¿Activar riego anti-helada?
+                </div>
+                <div class="bg-[#DCF8C6] rounded-lg rounded-tr-none p-1.5 ml-10 shadow-xs text-stone-800 font-mono text-[9px] text-right">
+                  ✓ 1 · Confirmar activación
+                </div>
+              </div>
+            </div>
+            <div class="text-[10.5px] text-stone-600"><b class="text-emerald-800">✅ Ya:</b> Umbrales alarma · <b class="text-amber-800">💡 Extra:</b> Mensajería directa al celular (alineado a AgroAlerta).</div>
+          </div>
+
+          <!-- 4. Agri-Agentic-Suite: Diagrama visual Chat Multi-Agente Local -->
+          <div class="wireframe-card p-4 rounded-2xl space-y-2.5">
+            <div class="flex justify-between items-center font-mono text-xs">
+              <b class="text-indigo-900">4. Agri-Agentic-Suite</b>
+              <span class="text-[9.5px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">💡 3 Agentes Locales</span>
+            </div>
+            <svg viewBox="0 0 260 122" class="w-full h-32 rounded-xl bg-indigo-50/40 border border-indigo-200">
+              <!-- Consulta arriba -->
+              <rect x="30" y="8" width="200" height="24" rx="12" fill="#FFFFFF" stroke="#818CF8" stroke-width="1.3"/>
+              <text x="130" y="23" text-anchor="middle" fill="#312E81" font-size="8" font-family="monospace">"¿Cuánto cuesta regar + tratar oídio?"</text>
+              <!-- Flechas a 3 agentes -->
+              <line x1="130" y1="32" x2="48" y2="52" stroke="#6366F1" stroke-width="1.4"/>
+              <line x1="130" y1="32" x2="130" y2="52" stroke="#6366F1" stroke-width="1.4"/>
+              <line x1="130" y1="32" x2="212" y2="52" stroke="#6366F1" stroke-width="1.4"/>
+              <!-- 3 cajas de agentes -->
+              <rect x="10" y="52" width="76" height="32" rx="6" fill="#EEF2FF" stroke="#6366F1"/>
+              <text x="48" y="66" text-anchor="middle" fill="#3730A3" font-size="7.5" font-weight="bold" font-family="monospace">GroundTruth</text>
+              <text x="48" y="77" text-anchor="middle" fill="#4338CA" font-size="6.8">Manuales RAG</text>
+              <rect x="92" y="52" width="76" height="32" rx="6" fill="#ECFDF5" stroke="#10B981"/>
+              <text x="130" y="66" text-anchor="middle" fill="#065F46" font-size="7.5" font-weight="bold" font-family="monospace">Finanzas IA</text>
+              <text x="130" y="77" text-anchor="middle" fill="#047857" font-size="6.8">Flujo de Caja</text>
+              <rect x="174" y="52" width="76" height="32" rx="6" fill="#FFFBEB" stroke="#F59E0B"/>
+              <text x="212" y="66" text-anchor="middle" fill="#92400E" font-size="7.5" font-weight="bold" font-family="monospace">Visión IA</text>
+              <text x="212" y="77" text-anchor="middle" fill="#B45309" font-size="6.8">Fotos Campo</text>
+              <!-- Respuesta unificada -->
+              <rect x="22" y="94" width="216" height="20" rx="6" fill="#312E81"/>
+              <text x="130" y="107" text-anchor="middle" fill="#FFFFFF" font-size="7.5" font-family="monospace">Respuesta citada 100% local (Ollama)</text>
+            </svg>
+            <div class="text-[10.5px] text-stone-600"><b class="text-amber-800">💡 No considerado aún:</b> Suite de 3 agentes IA corriendo local sin pagar APIs externas.</div>
+          </div>
+
+          <!-- 5. NemoClaw-agritwin-dairy: Mini-ficha de Vaca + Curva de Leche -->
+          <div class="wireframe-card p-4 rounded-2xl space-y-2.5">
+            <div class="flex justify-between items-center font-mono text-xs">
+              <b class="text-rose-900">5. NemoClaw-agritwin-dairy</b>
+              <span class="text-[9.5px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">💡 Ficha Animal</span>
+            </div>
+            <div class="rounded-xl border border-rose-200 bg-rose-50/40 p-2.5 space-y-2 text-[10px]">
+              <div class="flex justify-between items-center font-mono">
+                <b class="text-rose-950">🐄 Vaca #142 · Potrero 4</b>
+                <span class="px-1.5 py-0.5 rounded bg-rose-600 text-white text-[8.5px] font-bold">⚠️ Fiebre +0.9°C</span>
+              </div>
+              <svg viewBox="0 0 220 44" class="w-full h-11 rounded bg-white border border-rose-100">
+                <path d="M8,16 L45,14 L85,15 L125,18 L165,28 L210,34" fill="none" stroke="#E11D48" stroke-width="2"/>
+                <text x="10" y="38" fill="#64748B" font-size="7.5" font-family="monospace">Leche: 26L ➔ 21.4L/día (caída detectada)</text>
+              </svg>
+              <div class="text-[9.5px] text-rose-900 font-sans"><b>Acción sugerida:</b> Separar en manga para revisión sanitaria.</div>
+            </div>
+            <div class="text-[10.5px] text-stone-600"><b class="text-emerald-800">✅ Ya:</b> Esquema base · <b class="text-amber-800">💡 Extra:</b> Ficha individual por vaca, leche y alerta sanitaria.</div>
+          </div>
+
+          <!-- 6. FedAgriTwin & AgriTwin-RL: Red Federada de Vecinos -->
+          <div class="wireframe-card p-4 rounded-2xl space-y-2.5">
+            <div class="flex justify-between items-center font-mono text-xs">
+              <b class="text-purple-900">6. FedAgriTwin &amp; AgriTwin-RL</b>
+              <span class="text-[9.5px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">💡 Red Federada</span>
+            </div>
+            <svg viewBox="0 0 260 122" class="w-full h-32 rounded-xl bg-purple-50/40 border border-purple-200">
+              <!-- 3 predios vecinos -->
+              <circle cx="42" cy="30" r="20" fill="#FFFFFF" stroke="#9333EA" stroke-width="1.5"/>
+              <text x="42" y="33" text-anchor="middle" fill="#581C87" font-size="7.5" font-weight="bold">Fundo A</text>
+              <circle cx="42" cy="92" r="20" fill="#FFFFFF" stroke="#9333EA" stroke-width="1.5"/>
+              <text x="42" y="95" text-anchor="middle" fill="#581C87" font-size="7.5" font-weight="bold">Fundo B</text>
+              <circle cx="218" cy="61" r="22" fill="#ECFDF5" stroke="#059669" stroke-width="1.8"/>
+              <text x="218" y="64" text-anchor="middle" fill="#065F46" font-size="7.5" font-weight="bold">Meniel</text>
+              <!-- Nodo central federado -->
+              <rect x="100" y="42" width="66" height="38" rx="10" fill="#581C87"/>
+              <text x="133" y="59" text-anchor="middle" fill="#FFFFFF" font-size="7.5" font-weight="bold" font-family="monospace">Modelo</text>
+              <text x="133" y="71" text-anchor="middle" fill="#E9D5FF" font-size="7" font-family="monospace">Federado</text>
+              <!-- Flechas sin datos privados -->
+              <line x1="62" y1="35" x2="100" y2="54" stroke="#9333EA" stroke-width="1.5" stroke-dasharray="3 2"/>
+              <line x1="62" y1="87" x2="100" y2="68" stroke="#9333EA" stroke-width="1.5" stroke-dasharray="3 2"/>
+              <line x1="166" y1="61" x2="196" y2="61" stroke="#059669" stroke-width="1.8"/>
+              <text x="130" y="112" text-anchor="middle" fill="#6B21A8" font-size="7.5" font-family="monospace">Aprende de 9 vecinos sin exponer datos privados</text>
+            </svg>
+            <div class="text-[10.5px] text-stone-600"><b class="text-emerald-800">✅ Ya:</b> Subrogado &lt;1ms + WAL · <b class="text-amber-800">💡 Extra:</b> Entrenamiento federado entre los 9 predios vecinos.</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         LÁMINA 4: TABLA COMPARATIVA CONSOLIDADA (YA CONSIDERADO vs PENDIENTE)
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="slide-3" class="slide hidden fade-in space-y-6">
+      <div class="slide-card p-6 sm:p-8 rounded-3xl space-y-5">
+        <div class="space-y-1.5 border-b border-[#E7DAC6] pb-4">
+          <span class="px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-900 border border-purple-300 font-mono text-[11px] font-bold">CAPÍTULO 04 · MATRIZ DECISORIA DE REFERENTES</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-stone-900 font-editorial">Comparativa Completa: Qué Ya Tomamos vs. Qué Queda Disponible</h2>
+          <p class="text-xs sm:text-sm text-stone-600">
+            Tabla única de los <strong>10 GitHubs + 3 Landscope</strong> para comparar de un vistazo qué ya forma parte de la megamigración y qué capacidades de los autores siguen disponibles para futuras olas.
+          </p>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-[#E7DAC6]">
+          <table class="w-full text-left border-collapse font-mono text-xs">
+            <thead class="bg-[#F5EFE6] text-stone-800 text-[10.5px] border-b border-[#E7DAC6]">
+              <tr>
+                <th class="p-2.5">Repositorio / Referente</th>
+                <th class="p-2.5">✅ Lo que YA propusimos integrar</th>
+                <th class="p-2.5">💡 Lo que TAMBIÉN hacían (No considerado aún)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#EFE7DA] text-[11px] bg-white">
+              <tr><td class="p-2.5 font-bold text-sky-800">ridvanzengin / AgriTwin</td><td class="p-2.5 font-sans text-stone-700">Malla H3 O(1) + Field Explorer (clic por hexágono).</td><td class="p-2.5 font-sans text-amber-900 bg-amber-50/40"><b>Crop Fit (8 cultivos)</b>, <b>Yield &amp; Profit ($/ha)</b> y <b>What-If lado a lado</b>.</td></tr>
+              <tr><td class="p-2.5 font-bold text-purple-800">monica-agritwin (ZALF)</td><td class="p-2.5 font-sans text-stone-700">Richards 1D, Campbell, Feddes con anoxia y N/SOM.</td><td class="p-2.5 font-sans text-amber-900 bg-amber-50/40">Mapas de <b>Días de Sequía (TraDef &lt; DST)</b> y sensibilidad regional.</td></tr>
+              <tr><td class="p-2.5 font-bold text-amber-800">Kiwi-Agri-twin</td><td class="p-2.5 font-sans text-stone-700">Curva de riego predictivo TAW/RAW.</td><td class="p-2.5 font-sans text-amber-900 bg-amber-50/40"><b>ExplanationBox humana</b> (el porqué) + botón <b>Avanzar +1 día</b>.</td></tr>
+              <tr><td class="p-2.5 font-bold text-emerald-800">smart-agriculture-twin</td><td class="p-2.5 font-sans text-stone-700">Estratos visuales de suelo + barras N-P-K.</td><td class="p-2.5 font-sans text-amber-900 bg-amber-50/40"><b>Escáner de hojas IA</b>, calculadora de cosecha y chat asistente.</td></tr>
+              <tr><td class="p-2.5 font-bold text-teal-800">landscope.earth / Akshay / landscapen</td><td class="p-2.5 font-sans text-stone-700">Flujo D8, insolación solar, ficha 1-clic y corredores ecológicos.</td><td class="p-2.5 font-sans text-amber-900 bg-amber-50/40">Flujo <b>Zero-Setup al subir KML/SHP</b>, DEM de dron y <b>exportación CAD/DXF</b>.</td></tr>
+              <tr><td class="p-2.5 font-bold text-stone-800">GAURANGSURTE-AgriTwin</td><td class="p-2.5 font-sans text-stone-700">Umbrales de alarma contextuales y textura.</td><td class="p-2.5 font-sans text-amber-900 bg-amber-50/40"><b>Alertas SMS/WhatsApp</b> directas al agricultor + catálogo de insumos.</td></tr>
+              <tr><td class="p-2.5 font-bold text-indigo-800">Agri-Agentic-Suite</td><td class="p-2.5 font-sans text-stone-500 italic">Solo referencia arquitectónica.</td><td class="p-2.5 font-sans text-amber-900 bg-amber-50/40"><b>3 Agentes locales (Ollama):</b> GroundTruth RAG, Financiero y Visión.</td></tr>
+              <tr><td class="p-2.5 font-bold text-rose-800">NemoClaw / FedAgriTwin / RL</td><td class="p-2.5 font-sans text-stone-700">Sombra Digital (WAL SPIFFS) + subrogado &lt;1 ms.</td><td class="p-2.5 font-sans text-amber-900 bg-amber-50/40"><b>Entidades por vaca/leche</b> + <b>Aprendizaje Federado</b> entre vecinos.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         LÁMINA 3: FASE 3.a (PARTE A) — CON DIAGRAMAS VISUALES DE POZO Y FLUJO
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="slide-4" class="slide hidden fade-in space-y-6">
+      <div class="slide-card p-6 sm:p-8 rounded-3xl space-y-6">
+        <div class="space-y-1.5 border-b border-[#E7DAC6] pb-4">
+          <span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-900 border border-sky-300 font-mono text-[11px] font-bold">CAPÍTULO 03 · FASE 3.a (v3.0.0)</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-stone-900 font-editorial">Cimientos de Ingeniería: OGC, Clima 168h, Sensor Honesto y Pozo Thiem</h2>
+          <p class="text-xs sm:text-sm text-stone-600">
+            La Parte A construyó el "motor silencioso" en el puerto <strong>7777</strong> y tradujo 3 realidades físicas clave: <strong>clima horario continuo</strong>, <strong>honestidad del sensor</strong> y <strong>dinámica real del pozo profundo</strong>.
+          </p>
+        </div>
+
+        <!-- 2 DIAGRAMAS VISUALES EXPLICATIVOS -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <!-- Diagrama A: Cono de Abatimiento de Thiem -->
+          <div class="p-4 rounded-2xl soft-panel space-y-2">
+            <div class="flex justify-between items-center font-mono text-xs">
+              <b class="text-indigo-900">🕳️ Cómo funciona el Pozo y el Cono de Thiem</b>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold">Física del Subsuelo</span>
+            </div>
+            <svg viewBox="0 0 420 155" class="w-full h-40 rounded-xl bg-white border border-indigo-200">
+              <!-- Superficie suelo -->
+              <rect x="0" y="0" width="420" height="28" fill="#ECFDF5"/>
+              <line x1="0" y1="28" x2="420" y2="28" stroke="#059669" stroke-width="2"/>
+              <!-- Tierra -->
+              <rect x="0" y="28" width="420" height="127" fill="#FEF3C7" fill-opacity="0.45"/>
+              <!-- Nivel estático (sin bombear) -->
+              <line x1="0" y1="62" x2="420" y2="62" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="5 4"/>
+              <text x="10" y="57" fill="#0369A1" font-size="9.5" font-family="monospace" font-weight="bold">Nivel Estático: 18.5 m</text>
+              <!-- Agua con cono de abatimiento al bombear -->
+              <path d="M0,66 Q165,70 198,118 L222,118 Q255,70 420,66 L420,155 L0,155 Z" fill="#0EA5E9" fill-opacity="0.28" stroke="#0284C7" stroke-width="2"/>
+              <!-- Tubo del pozo -->
+              <rect x="200" y="14" width="20" height="128" fill="#334155" stroke="#0F172A"/>
+              <rect x="204" y="114" width="12" height="24" fill="#F59E0B"/>
+              <!-- Flechas de abatimiento -->
+              <line x1="232" y1="62" x2="232" y2="116" stroke="#DC2626" stroke-width="1.8"/>
+              <text x="238" y="93" fill="#B91C1C" font-size="9.5" font-family="monospace" font-weight="bold">Abatimiento: -7.7 m</text>
+              <text x="238" y="106" fill="#92400E" font-size="9" font-family="monospace">Nivel Dinámico: 26.2 m</text>
+              <text x="180" y="12" fill="#0F172A" font-size="9.5" font-family="monospace" font-weight="bold">⚡ Bomba Q = 15 L/s (0.082 kWh/m³)</text>
+            </svg>
+            <p class="text-[11px] text-stone-600">Al prender la bomba, el agua baja formando un embudo (cono). A mayor profundidad, más cuenta de luz paga el agricultor.</p>
+          </div>
+
+          <!-- Diagrama B: Sensor Estimado vs Sonda Física + Hub 7777 -->
+          <div class="p-4 rounded-2xl soft-panel space-y-3">
+            <div class="flex justify-between items-center font-mono text-xs">
+              <b class="text-amber-900">📡 Contraste Visual: Honestidad del Dato</b>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold">Sin datos engañosos</span>
+            </div>
+            <div class="space-y-2.5">
+              <div class="p-3 rounded-xl bg-amber-50 border border-amber-300 space-y-1">
+                <div class="flex justify-between items-center font-mono text-[10.5px]">
+                  <span class="font-bold text-amber-900">🛰️ Estimado por Satélite y Clima (±1.2%)</span>
+                  <span class="px-1.5 py-0.5 rounded bg-white text-amber-800 border border-amber-300 text-[9px]">SIN HARDWARE AÚN</span>
+                </div>
+                <p class="text-[11px] text-stone-700">Calculado con satélite + Richards 1D + EKF. El agricultor sabe exactamente el margen de error.</p>
+              </div>
+              <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1">
+                <div class="flex justify-between items-center font-mono text-[10.5px]">
+                  <span class="font-bold text-emerald-900">🟢 Sonda Física en Terreno (Kit KioT En Vivo)</span>
+                  <span class="px-1.5 py-0.5 rounded bg-emerald-700 text-white text-[9px]">EN VIVO · WAL 10k</span>
+                </div>
+                <p class="text-[11px] text-stone-700">Midiendo directo a 10/30/60 cm vía LoRaWAN. Si se corta la señal rural, guarda 10.000 lecturas en memoria flash.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 TARJETAS TÉCNICAS DE FASE 3.a (MANTENIDAS EN VERSIÓN CLARA) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-2xl bg-sky-50/50 border border-sky-200 space-y-2">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="font-bold text-sky-900">🏛️ 1. Pila OGC Nativa (8 Clases Activas)</span>
+              <span class="px-2 py-0.5 rounded bg-stone-200 text-stone-700 text-[10px]">🧱 Infraestructura Invisible</span>
+            </div>
+            <div class="grid grid-cols-2 gap-1.5 font-mono text-[10.5px]">
+              <div class="p-2 rounded-lg bg-white border border-sky-100"><b class="text-emerald-800">OGC EDR</b> · Cubo 4D</div>
+              <div class="p-2 rounded-lg bg-white border border-sky-100"><b class="text-sky-800">OGC Features</b> · QGIS</div>
+              <div class="p-2 rounded-lg bg-white border border-sky-100"><b class="text-amber-800">STA-Lite</b> · IoT</div>
+              <div class="p-2 rounded-lg bg-white border border-sky-100"><b class="text-purple-800">STAC / COG</b> · Sentinel</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-200 space-y-2">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="font-bold text-emerald-900">🌦️ 2. Motor Meteorológico 168h (3.1 ms)</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 text-[10px] font-bold">🗺️ + 🎛️ Visible (Windy)</span>
+            </div>
+            <p class="text-[11.5px] text-stone-700 leading-relaxed">
+              <code>GET /api/weather/full-168h</code> entrega <strong>7 días hora a hora</strong> con 14 variables (T°, rocío, HR%, VPD, lluvia, viento 10/80/120m, isoterma 0°C, nubosidad, DNI, 5 capas suelo y FWI) alimentando riego, heladas e incendios a la vez.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         LÁMINA 4: FASE 3.b (PARTE B) — ZOOM AMR N1-N4 + CALICATA + CUTSHEET
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="slide-5" class="slide hidden fade-in space-y-6">
+      <div class="slide-card p-6 sm:p-8 rounded-3xl space-y-6">
+        <div class="space-y-1.5 border-b border-[#E7DAC6] pb-4">
+          <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300 font-mono text-[11px] font-bold">CAPÍTULO 04 · FASE 3.b (v3.1.0)</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-stone-900 font-editorial">Superficie Táctica: Zoom Hexagonal AMR, Calicata 1D &amp; CutSheetRX</h2>
+          <p class="text-xs sm:text-sm text-stone-600">
+            Visualización concreta de cómo se refina la malla desde la cuenca hasta la zanja Keyline, cómo <strong>un hexágono N3 ES una calicata 1D</strong>, y cómo se calcula el movimiento de tierras.
+          </p>
+        </div>
+
+        <!-- VISUALIZACIÓN 1: ZOOM MULTIESCALA EN 4 CUADROS (N1 -> N4) -->
+        <div class="p-4 rounded-2xl soft-panel space-y-2.5">
+          <div class="font-mono text-xs font-bold text-purple-900">⬡ ZOOM ADAPTATIVO AMR: MISMO TERRITORIO EN 4 RESOLUCIONES</div>
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 font-mono text-[10.5px]">
+            <div class="p-3 rounded-xl bg-white border border-purple-200 text-center space-y-1.5">
+              <svg viewBox="0 0 120 70" class="w-full h-16">
+                <polygon points="45,10 75,10 90,35 75,60 45,60 30,35" fill="#F3E8FF" stroke="#9333EA" stroke-width="2"/>
+                <text x="60" y="38" text-anchor="middle" fill="#6B21A8" font-size="10" font-weight="bold">N1</text>
+              </svg>
+              <div class="font-bold text-purple-900">N1 · Macro (850 m)</div>
+              <div class="text-[9.5px] text-stone-500 font-sans">Cuenca Maule Sur (122k ha)</div>
+            </div>
+            <div class="p-3 rounded-xl bg-white border border-indigo-200 text-center space-y-1.5">
+              <svg viewBox="0 0 120 70" class="w-full h-16">
+                <polygon points="35,14 55,14 65,30 55,46 35,46 25,30" fill="#E0E7FF" stroke="#4F46E5" stroke-width="1.5"/>
+                <polygon points="65,14 85,14 95,30 85,46 65,46 55,30" fill="#C7D2FE" stroke="#4F46E5" stroke-width="1.5"/>
+                <polygon points="50,36 70,36 80,52 70,68 50,68 40,52" fill="#E0E7FF" stroke="#4F46E5" stroke-width="1.5"/>
+              </svg>
+              <div class="font-bold text-indigo-900">N2 · Vecindad (320 m)</div>
+              <div class="text-[9.5px] text-stone-500 font-sans">37 hexágonos (radio 5 km)</div>
+            </div>
+            <div class="p-3 rounded-xl bg-emerald-50/60 border-2 border-emerald-400 text-center space-y-1.5">
+              <svg viewBox="0 0 120 70" class="w-full h-16">
+                <g fill="#A7F3D0" stroke="#059669" stroke-width="1">
+                  <polygon points="28,12 40,12 46,22 40,32 28,32 22,22"/><polygon points="48,12 60,12 66,22 60,32 48,32 42,22"/><polygon points="68,12 80,12 86,22 80,32 68,32 62,22"/>
+                  <polygon points="38,28 50,28 56,38 50,48 38,48 32,38"/><polygon points="58,28 70,28 76,38 70,48 58,48 52,38" fill="#34D399"/><polygon points="78,28 90,28 96,38 90,48 78,48 72,38"/>
+                </g>
+              </svg>
+              <div class="font-bold text-emerald-900">N3 · Meniel (110 m)</div>
+              <div class="text-[9.5px] text-emerald-800 font-sans font-semibold">187 hex (0.5 ha · 5 capas)</div>
+            </div>
+            <div class="p-3 rounded-xl bg-white border border-amber-300 text-center space-y-1.5">
+              <svg viewBox="0 0 120 70" class="w-full h-16">
+                <path d="M12,55 Q45,45 60,25 T108,18" fill="none" stroke="#D97706" stroke-width="3"/>
+                <path d="M12,62 Q45,52 60,32 T108,25" fill="none" stroke="#0284C7" stroke-width="2" stroke-dasharray="3 2"/>
+              </svg>
+              <div class="font-bold text-amber-900">N4 · Zanja (35 m)</div>
+              <div class="text-[9.5px] text-stone-500 font-sans">Microtopografía Keyline</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VISUALIZACIÓN 2 & 3: HEXÁGONO N3 = CALICATA 1D  +  CORTE CUTSHEETRX -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <!-- Hexágono N3 baja a 5 estratos -->
+          <div class="p-5 rounded-2xl bg-amber-50/40 border border-amber-200 space-y-3">
+            <div class="font-mono text-xs font-bold text-amber-900">🔬 CADA HEXÁGONO N3 CONTIENE SU PROPIA CALICATA 1D</div>
+            <svg viewBox="0 0 380 150" class="w-full h-36 rounded-xl bg-white border border-amber-200">
+              <!-- Hexágono superior -->
+              <polygon points="45,28 85,14 125,28 125,46 85,60 45,46" fill="#34D399" fill-opacity="0.45" stroke="#059669" stroke-width="2"/>
+              <text x="85" y="40" text-anchor="middle" fill="#065F46" font-size="9.5" font-weight="bold" font-family="monospace">Hex N3 (0.5ha)</text>
+              <!-- Flecha hacia columna -->
+              <path d="M130,38 L168,38" stroke="#D97706" stroke-width="2" marker-end="url(#arrAmber2)"/>
+              <!-- 5 capas de tierra -->
+              <rect x="175" y="12" width="190" height="24" rx="4" fill="#451A03"/><text x="183" y="28" fill="#FDE68A" font-size="9.5" font-family="monospace">0–10 cm · θ=0.34 · -33 kPa</text>
+              <rect x="175" y="38" width="190" height="24" rx="4" fill="#78350F"/><text x="183" y="54" fill="#FEF3C7" font-size="9.5" font-family="monospace">10–25 cm · θ=0.31 · Raíces 60%</text>
+              <rect x="175" y="64" width="190" height="24" rx="4" fill="#92400E"/><text x="183" y="80" fill="#FFFFFF" font-size="9.5" font-family="monospace">25–50 cm · θ=0.28 · -110 kPa</text>
+              <rect x="175" y="90" width="190" height="24" rx="4" fill="#B45309"/><text x="183" y="106" fill="#FFFFFF" font-size="9.5" font-family="monospace">50–75 cm · θ=0.26 · -240 kPa</text>
+              <rect x="175" y="116" width="190" height="24" rx="4" fill="#D97706"/><text x="183" y="132" fill="#FFFBEB" font-size="9.5" font-family="monospace">75–150 cm · θ=0.22 · Capilar</text>
+              <defs><marker id="arrAmber2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#D97706"/></marker></defs>
+            </svg>
+            <p class="text-[11px] text-stone-600">Por eso no hace falta duplicar botones: al hacer clic en un hexágono N3 en el mapa, puedes inspeccionar sus 5 capas de Richards 1D / Campbell.</p>
+          </div>
+
+          <!-- Corte Transversal CutSheetRX -->
+          <div class="p-5 rounded-2xl bg-emerald-50/40 border border-emerald-200 space-y-3">
+            <div class="font-mono text-xs font-bold text-emerald-900">📐 CORTE VISUAL CUTSHEETRX (DESMONTE vs TERRAPLÉN)</div>
+            <svg viewBox="0 0 380 120" class="w-full h-32 rounded-xl bg-white border border-emerald-200">
+              <!-- Terreno original DEM -->
+              <path d="M10,25 Q100,40 190,68 T370,105" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="5 4"/>
+              <!-- Diseño Zanja + Camellón -->
+              <path d="M10,25 Q100,40 148,54 L166,88 L192,88 L218,45 L245,78 T370,105" fill="none" stroke="#059669" stroke-width="2.8"/>
+              <!-- Desmonte (Cut) -->
+              <polygon points="148,54 166,88 192,88 202,68" fill="#F59E0B" fill-opacity="0.35"/>
+              <!-- Terraplén (Fill) -->
+              <polygon points="202,68 218,45 245,78 228,76" fill="#0EA5E9" fill-opacity="0.38"/>
+              <text x="142" y="106" fill="#B45309" font-size="9.5" font-weight="bold" font-family="monospace">Cut +13.612 m³</text>
+              <text x="218" y="37" fill="#0369A1" font-size="9.5" font-weight="bold" font-family="monospace">Fill -13.384 m³</text>
+              <text x="16" y="18" fill="#64748B" font-size="8.5" font-family="monospace">--- Terreno Natural DEM 30m</text>
+            </svg>
+            <div class="flex items-center justify-between font-mono text-[11px] bg-white p-2 rounded-xl border border-emerald-200">
+              <span>Balance Neto: <b class="text-emerald-800">-228 m³</b></span>
+              <span class="text-stone-600">Regla de Oro: <b>Meniel ➔ 3D SÍ · Afuera ➔ 2D</b></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         LÁMINA 5: v3.2.0 (I) — CLAUSIUS-CLAPEYRON & ISOTERMA 0°C
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="slide-6" class="slide hidden fade-in space-y-6">
+      <div class="slide-card p-6 sm:p-8 rounded-3xl space-y-5">
+        <div class="space-y-1.5 border-b border-[#E7DAC6] pb-4">
+          <span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-900 border border-sky-300 font-mono text-[11px] font-bold">CAPÍTULO 05 · FÍSICA v3.2.0 (ATWIN RIESGO CLIMÁTICO)</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-stone-900 font-editorial">Crecidas por Ríos Atmosféricos: Clausius-Clapeyron e Isoterma 0°C</h2>
+          <p class="text-xs sm:text-sm text-stone-600">
+            Operador puro <code>basin.evaluateClausiusClapeyronScaling(params)</code>. Explica por qué un río atmosférico cálido (+2.5 K) dispara inundaciones catastróficas como Licantén / Mataquito 2023.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+          <div class="lg:col-span-5 space-y-3 font-mono text-xs">
+            <div class="p-3.5 rounded-xl bg-sky-50 border border-sky-200 space-y-1">
+              <div class="text-sky-900 font-bold">1. Escalamiento de Vapor (CC &amp; Super-CC)</div>
+              <div class="text-stone-700 font-sans text-[11.5px]">\(\alpha_{\text{CC}} = 0.068\,\text{K}^{-1}\) (diario) y \(\alpha_{\text{CC,peak}} = 0.118\,\text{K}^{-1}\) (horario convectivo).</div>
+            </div>
+            <div class="p-3.5 rounded-xl bg-rose-50 border border-rose-200 space-y-1">
+              <div class="text-rose-900 font-bold">2. Ascenso de Isoterma 0°C (+385 m)</div>
+              <div class="text-stone-700 font-sans text-[11.5px]">\(\Delta z_{0^\circ\text{C}} = \Delta T / 0.0065\). La lluvia cae líquida donde antes nevaba: la cuenca pluvial activa salta de <strong>69.5% → 82.5%</strong>.</div>
+            </div>
+            <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 space-y-1">
+              <div class="text-amber-900 font-bold">3. Amplificación de Caudal (+59.6%)</div>
+              <div class="text-stone-700 font-sans text-[11.5px]">Caudal pico Mataquito alcanza <strong>5.120 m³/s</strong>. Regla hidráulica: <em>Level-Pool 0D</em> para tranques; <em>Saint-Venant 2D</em> para valles y laderas.</div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-900 text-sky-200 text-[10.5px]">
+              Canvas 60 FPS: <code>🌊 CAUDAL MATAQUITO ➔ 5.120 m³/s [CC +2.5°C ➔ Q +59%]</code>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 space-y-2">
+            <div class="flex justify-between items-center font-mono text-[11px]">
+              <span class="text-sky-800 font-bold">Figura 16 (Benchmark R 4.5.2 · 300 DPI)</span>
+              <a href="figures/fig16_clausius_clapeyron_isotherm_scaling.png" target="_blank" class="text-amber-700 font-bold hover:underline">Ampliar 300 DPI ↗</a>
+            </div>
+            <div class="rounded-2xl overflow-hidden border border-[#E7DAC6] bg-white p-2 shadow-xs">
+              <img src="figures/fig16_clausius_clapeyron_isotherm_scaling.png" alt="Figura 16 Clausius-Clapeyron" class="w-full h-auto max-h-[370px] object-contain mx-auto" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         LÁMINA 6: v3.2.0 (II) — HELADAS STEFAN-BOLTZMANN, HAND & MULCH
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="slide-7" class="slide hidden fade-in space-y-6">
+      <div class="slide-card p-6 sm:p-8 rounded-3xl space-y-5">
+        <div class="space-y-1.5 border-b border-[#E7DAC6] pb-4">
+          <span class="px-2.5 py-0.5 rounded-full bg-cyan-100 text-cyan-900 border border-cyan-300 font-mono text-[11px] font-bold">CAPÍTULO 06 · FÍSICA v3.2.0 (ATWIN RIESGO CLIMÁTICO)</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-stone-900 font-editorial">Heladas Radiativas: Stefan-Boltzmann, Drenaje Catabático HAND &amp; Mulch</h2>
+          <p class="text-xs sm:text-sm text-stone-600">
+            Operador puro <code>richards.calculateNocturnalRadiativeBalance(params)</code> alimentado directamente por las series horarias de <code>/api/weather/full-168h</code>.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+          <div class="lg:col-span-5 space-y-3 font-mono text-xs">
+            <div class="p-3.5 rounded-xl bg-cyan-50 border border-cyan-200 space-y-1.5">
+              <div class="text-cyan-900 font-bold">1. Balance Radiativo Nocturno (Brutsaert 1975)</div>
+              <div class="text-[11px] text-stone-800">$$R_{\text{nl}} = \varepsilon_{\text{suelo}}\sigma T_{\text{skin}}^4 - \varepsilon_{\text{atm}}(e_a, T_{\text{air}})\sigma T_{\text{air}}^4$$</div>
+              <div class="text-stone-600 font-sans text-[11px]">Noches despejadas y secas disparan pérdidas &lt; -68 W/m² hacia el cielo.</div>
+            </div>
+            <div class="p-3.5 rounded-xl bg-rose-50 border border-rose-200 space-y-1">
+              <div class="text-rose-900 font-bold">2. Decantación Catabática por Relieve (HAND)</div>
+              <div class="text-stone-700 font-sans text-[11.5px]">El aire frío denso escurre hacia los bajos del predio: \(\Delta T_{\text{catab}}(\text{HAND}) = -2.10^\circ\text{C}\) adicionales en fondo de valle.</div>
+            </div>
+            <div class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 space-y-1">
+              <div class="text-emerald-900 font-bold">3. Escudo Térmico por Acolchado (Mulch)</div>
+              <div class="text-stone-700 font-sans text-[11.5px]">La cobertura vegetal aísla el suelo ganando <strong>+2.56 °C</strong>, previniendo Heladas Negras devastadoras en floración.</div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 space-y-2">
+            <div class="flex justify-between items-center font-mono text-[11px]">
+              <span class="text-cyan-800 font-bold">Figura 17 (Benchmark R 4.5.2 · 300 DPI)</span>
+              <a href="figures/fig17_stefan_boltzmann_catabatic_frost.png" target="_blank" class="text-amber-700 font-bold hover:underline">Ampliar 300 DPI ↗</a>
+            </div>
+            <div class="rounded-2xl overflow-hidden border border-[#E7DAC6] bg-white p-2 shadow-xs">
+              <img src="figures/fig17_stefan_boltzmann_catabatic_frost.png" alt="Figura 17 Stefan-Boltzmann Heladas" class="w-full h-auto max-h-[370px] object-contain mx-auto" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         LÁMINA 7: v3.2.0 (III) — PIRO-VORTICIDAD & CORTAFUEGOS WUI
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="slide-8" class="slide hidden fade-in space-y-6">
+      <div class="slide-card p-6 sm:p-8 rounded-3xl space-y-5">
+        <div class="space-y-1.5 border-b border-[#E7DAC6] pb-4">
+          <span class="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-900 border border-rose-300 font-mono text-[11px] font-bold">CAPÍTULO 07 · FÍSICA v3.2.0 (ATWIN RIESGO CLIMÁTICO)</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-stone-900 font-editorial">Megaincendios: Piro-Vórtice y Perforación de Cortafuegos WUI</h2>
+          <p class="text-xs sm:text-sm text-stone-600">
+            Operador puro <code>basin.evaluateWuiFireBreakBehavior(params)</code>. Explica por qué los cortafuegos convencionales fallan en eventos extremos como Viña del Mar 2024 y Santa Juana 2023.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+          <div class="lg:col-span-5 space-y-3 font-mono text-xs">
+            <div class="p-3.5 rounded-xl bg-rose-50 border border-rose-200 space-y-1">
+              <div class="text-rose-900 font-bold">1. Umbral de Activación Piro-Convectiva</div>
+              <div class="text-stone-700 font-sans text-[11.5px]">Se dispara cuando \(I_{\text{Byram}} \ge 3.000\,\text{kW/m}\) y la cizalladura vertical baja \(S_{0\text{-}1} \ge 12\,\text{m/s}\) (o convergencia en quebrada \(\ge 25^\circ\)).</div>
+            </div>
+            <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 space-y-1">
+              <div class="text-amber-900 font-bold">2. Estiramiento Vorticial &amp; Balística Albini</div>
+              <div class="text-stone-700 font-sans text-[11.5px]">Factor de estiramiento \(\Omega_{\text{vortex}} \in [1.0, 3.2]\) eleva pavesas incandescentes hasta <strong>2.4 km</strong>, perforando fajas cortafuego WUI de 45 m con <strong>\(P_{\text{spotting}} = 94\%\)</strong>.</div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-900 text-amber-300 text-[10.5px]">
+              Canvas 60 FPS (<code>drawRtsVorticityWhirl</code>):<br/>
+              <code>🌀 PIRO-VÓRTICE: SALTO PAVESAS &gt;1.8 km (CIZALLADURA 14 m/s)</code>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 space-y-2">
+            <div class="flex justify-between items-center font-mono text-[11px]">
+              <span class="text-rose-800 font-bold">Figura 18 (Benchmark R 4.5.2 · 300 DPI)</span>
+              <a href="figures/fig18_fire_vorticity_whirl_spotting.png" target="_blank" class="text-amber-700 font-bold hover:underline">Ampliar 300 DPI ↗</a>
+            </div>
+            <div class="rounded-2xl overflow-hidden border border-[#E7DAC6] bg-white p-2 shadow-xs">
+              <img src="figures/fig18_fire_vorticity_whirl_spotting.png" alt="Figura 18 Piro-Vorticidad" class="w-full h-auto max-h-[370px] object-contain mx-auto" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         LÁMINA 8: MOTORES LANDSCOPE
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="slide-9" class="slide hidden fade-in space-y-6">
+      <div class="slide-card p-6 sm:p-8 rounded-3xl space-y-6">
+        <div class="space-y-1.5 border-b border-[#E7DAC6] pb-4">
+          <span class="px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-900 border border-teal-300 font-mono text-[11px] font-bold">CAPÍTULO 08 · FISIOLOGÍA DEL PAISAJE</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-stone-900 font-editorial">Los 4 Operadores Visuales de Landscope &amp; Landscapen</h2>
+          <p class="text-xs sm:text-sm text-stone-600">
+            Resolver la <em>"última milla del GIS sin exigir saber GIS"</em>: unificar en el mismo visor el <strong>flujo de agua</strong>, la <strong>energía solar</strong>, la <strong>aptitud del suelo</strong> y el <strong>flujo ecológico</strong>.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-5 rounded-2xl bg-sky-50/60 border border-sky-200 space-y-2">
+            <div class="flex justify-between font-mono text-xs"><b class="text-sky-900">💧 1. Flujo Acumulado D8 (landscope.earth)</b><span class="text-stone-500">Mapa 2D + 3D</span></div>
+            <p class="text-xs text-stone-700 leading-relaxed">Calcula sobre el DEM hacia dónde escurre cada gota en las laderas, dibujando automáticamente las líneas de drenaje natural, zonas de encharcamiento y puntos óptimos para zanjas Keyline.</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-amber-50/60 border border-amber-200 space-y-2">
+            <div class="flex justify-between font-mono text-xs"><b class="text-amber-900">☀️ 2. Geomorphons &amp; Insolación Solar (landscope.earth)</b><span class="text-stone-500">Mapa 2D + 3D</span></div>
+            <p class="text-xs text-stone-700 leading-relaxed">Clasifica crestas, laderas y vaguadas y calcula horas de radiación solar directa (\(\text{Wh/m}^2\)) según orientación, clave para ubicar huertos, frutales y paneles solares.</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-teal-50/60 border border-teal-200 space-y-2">
+            <div class="flex justify-between font-mono text-xs"><b class="text-teal-900">📋 3. Ficha Rápida Edafológica 1-Clic (Akshay)</b><span class="text-stone-500">Consulta 1-Clic</span></div>
+            <p class="text-xs text-stone-700 leading-relaxed">Traduce variables técnicas de SoilGrids (arcilla/arena/limo) a una ficha simple y accionable al tocar cualquier punto: clase textural, drenaje, aptitud de uso y recomendación de labranza.</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-fuchsia-50/60 border border-fuchsia-200 space-y-2">
+            <div class="flex justify-between font-mono text-xs"><b class="text-fuchsia-900">🐾 4. Corredores de Conectividad (landscapen · Theobald)</b><span class="text-stone-500">Rewilding / SIG</span></div>
+            <p class="text-xs text-stone-700 leading-relaxed">Trata el paisaje como red viva y no polígonos aislados: calcula <em>least-cost paths</em> y matrices de resistencia para mostrar dónde restaurar vegetación maximiza la conectividad biológica.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         LÁMINA 9: INVENTARIO AUDITADO & PUENTE A VSD
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="slide-10" class="slide hidden fade-in space-y-6">
+      <div class="slide-card p-6 sm:p-8 rounded-3xl space-y-6">
+        <div class="space-y-1.5 border-b border-[#E7DAC6] pb-4">
+          <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300 font-mono text-[11px] font-bold">CAPÍTULO 09 · INVENTARIO AUDITADO &amp; SIGUIENTE PASO</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-stone-900 font-editorial">Inventario Real en Puerto 7777 &amp; Puente hacia AgriTwin VSD</h2>
+          <p class="text-xs sm:text-sm text-stone-600">
+            Resumen operativo de las <strong>7 pruebas backend (100% verdes)</strong> y la separación por capa de visibilidad para diseñar la interfaz limpia desde <strong>AgriTwin VSD v2</strong>.
+          </p>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-[#E7DAC6]">
+          <table class="w-full text-left border-collapse font-mono text-xs">
+            <thead class="bg-[#F5EFE6] text-stone-800 text-[10.5px] border-b border-[#E7DAC6]">
+              <tr>
+                <th class="p-2.5">Servicio / Motor (:7777)</th>
+                <th class="p-2.5">Salida Auditada</th>
+                <th class="p-2.5">Latencia</th>
+                <th class="p-2.5">Naturaleza UX (Protocolo 3 Capas)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#EFE7DA] text-[11px] bg-white">
+              <tr><td class="p-2.5 text-sky-800 font-bold">/api/ogc/conformance + /api/version</td><td class="p-2.5 text-stone-700">8 clases OGC · SemVer v3.2.0</td><td class="p-2.5 text-emerald-700 font-bold">12.0 ms</td><td class="p-2.5"><span class="px-2 py-0.5 rounded bg-stone-100 text-stone-700 border border-stone-200">🧱 Invisible (solo Vault)</span></td></tr>
+              <tr><td class="p-2.5 text-sky-800 font-bold">/api/weather/full-168h</td><td class="p-2.5 text-stone-700">168h continuas · 14 variables · FWI máx 23.1</td><td class="p-2.5 text-emerald-700 font-bold">3.1 ms</td><td class="p-2.5"><span class="px-2 py-0.5 rounded bg-sky-100 text-sky-900">🎛️ Scrubber + Escala Windy (Auto-B&amp;N)</span></td></tr>
+              <tr><td class="p-2.5 text-purple-800 font-bold">/api/zalf/hexgrid?level=n2 / n3</td><td class="p-2.5 text-stone-700">37 hex N2 (5km) · 187 hex N3 (5 capas Richards)</td><td class="p-2.5 text-emerald-700 font-bold">1.2 – 3.7 ms</td><td class="p-2.5"><span class="px-2 py-0.5 rounded bg-purple-100 text-purple-900">🗺️ Capa Mapa + Clic muestra Calicata 1D</span></td></tr>
+              <tr><td class="p-2.5 text-emerald-800 font-bold">POST /api/zalf/hexgrid (CutSheetRX)</td><td class="p-2.5 text-stone-700">Cut +13.612 · Fill -13.384 · Balance -228 m³</td><td class="p-2.5 text-emerald-700 font-bold">1.4 ms</td><td class="p-2.5"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900">🗺️ Al trazar ROI (Regla de Oro interna)</span></td></tr>
+              <tr><td class="p-2.5 text-amber-800 font-bold">/api/iot/shadow/status (EKF)</td><td class="p-2.5 text-stone-700">2 nodos rastreados · Richards 1D + EKF · WAL</td><td class="p-2.5 text-emerald-700 font-bold">&lt; 2 ms</td><td class="p-2.5"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900">🎛️ Badge claro: Estimado vs Sonda Física</span></td></tr>
+              <tr><td class="p-2.5 text-rose-800 font-bold">js/engines/* (v3.2.0)</td><td class="p-2.5 text-stone-700">CC +59.6% · Stefan-Boltzmann/Mulch · Piro-Vórtice</td><td class="p-2.5 text-emerald-700 font-bold">&lt; 1 ms</td><td class="p-2.5"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-900">🗺️ Canvas 60 FPS + Alertas Riesgo</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="space-y-1 text-xs">
+            <div class="font-mono font-bold text-emerald-900">📌 Arista Post-Migración Registrada</div>
+            <p class="text-stone-700">Estaciones / Showrooms de suelo en el Gemelo 3D (estilo <em>Wetland Monitor</em>) y el objeto Pozo 3D con nivel dinámico quedan reservados para su propio chat tras cerrar esta migración.</p>
+          </div>
+          <a href="../devtools/stagediff/stagediff.html" target="_blank" rel="noopener" class="shrink-0 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-mono text-xs font-black shadow-md text-center">
+            🎛️ Ir a AgriTwin VSD v2 ➔
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const TOTAL = 11;
+    let current = 0;
+
+    function goSlide(idx) {
+      current = Math.max(0, Math.min(TOTAL - 1, idx));
+      for (let i = 0; i < TOTAL; i++) {
+        document.getElementById('slide-' + i).classList.toggle('hidden', i !== current);
+        document.getElementById('pill-' + i).classList.toggle('active', i === current);
+      }
+      document.getElementById('slideCounter').textContent = `Lámina ${current + 1} / ${TOTAL}`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function nextSlide() { goSlide(current + 1); }
+    function prevSlide() { goSlide(current - 1); }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextSlide();
+      else if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    let kiwiDay = 42;
+    function stepKiwiDemo() {
+      kiwiDay = kiwiDay >= 45 ? 42 : kiwiDay + 1;
+      const states = {
+        42: ['Día 42 (Floración)', '48%', '31°C', '22 mm', 'La humedad bajó de 55% y vienen 3 días secos sobre 30°C.'],
+        43: ['Día 43 (Post-Riego)', '68%', '29°C', '0 mm', 'Riego aplicado ayer: humedad en zona óptima (RAW). No regar hoy.'],
+        44: ['Día 44 (Cuaja)', '61%', '32°C', '0 mm', 'Alta demanda evaporativa, pero aún queda reserva útil para 24h.'],
+        45: ['Día 45 (Cuaja)', '52%', '33°C', '25 mm', 'Se cruza umbral 55% con ola de calor: programar 25 mm al alba.']
+      }[kiwiDay];
+      document.getElementById('kiwiDayLbl').textContent = states[0];
+      document.getElementById('kiwiMoist').textContent = states[1];
+      document.getElementById('kiwiHeat').textContent = states[2];
+      document.getElementById('kiwiIrr').textContent = states[3];
+      document.getElementById('kiwiWhy').textContent = states[4];
+    }
+  </script>
+</body>
+</html>

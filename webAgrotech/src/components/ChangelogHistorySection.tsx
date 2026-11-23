@@ -20,13 +20,29 @@ export interface ChangelogMilestone {
 
 export const CHANGELOG_DATA: ChangelogMilestone[] = [
   {
+    id: 'milestone-11',
+    version: 'v3.2.0',
+    name: 'Megamigración Biofísica Completa (3.a + 3.b + v3.2.0 + Landscope) & Atlas Visual',
+    timestamp: 'Sábado 21 Nov 2026, 05:30 hrs',
+    category: 'agritwin',
+    badgeColor: 'emerald',
+    isCurrent: true,
+    summary: 'Consolidación de la capa biofísica v3.2.0 (Clausius-Clapeyron + Isoterma 0°C, Balance Radiativo Stefan-Boltzmann/HAND/Mulch, Piro-Vórtice WUI), publicación del Atlas Visual Interactivo de la Megamigración (9 láminas) en Vault > Recursos y despliegue del motor externo de auditoría visual AgriTwin VSD v2 (Shell + 5 Slots + AgriBus).',
+    deliverables: [
+      'Atlas Visual de la Megamigración (docs/ATLAS_MEGAMIGRACION_VISUAL.html): Presentación interactiva de 9 láminas cubriendo Fases 3.a, 3.b, v3.2.0, los 10 repositorios GitHub y aprendizajes Landscope.',
+      'Capa Biofísica v3.2.0 en motores puros (js/engines/): evaluateClausiusClapeyronScaling (+385 m isoterma, +59.6% caudal Mataquito), calculateNocturnalRadiativeBalance (-2.10°C HAND, +2.56°C Mulch) y evaluateWuiFireBreakBehavior (piro-vórtice, pavesas 2.4 km, P_spot 94%).',
+      'Figuras Científicas 16, 17 y 18 (300 DPI en R 4.5.2) integradas en los 3 papers imprimibles y actualizadas en el Tratado de Migración (Sección 16.10).',
+      'AgriTwin VSD v2 (devtools/stagediff/): Auditor visual-visual externo (0 bytes cliente) con puzle base de 55 piezas, Spotlight Leaf-Only y Protocolo Estricto de 7 Leyes de Diseño UX.'
+    ],
+    systemImpact: 'Cierra al 100% la brecha entre la ingeniería biofísica del backend (puerto 7777) y la gobernanza visual modular previa al despliegue de interfaz.'
+  },
+  {
     id: 'milestone-10',
     version: 'v3.1.0',
     name: 'Data Flywheel, AgroAlerta de Bolsillo & Roadmap 3 Fases',
     timestamp: 'Miércoles 18 Nov 2026, 04:30 hrs',
     category: 'arquitectura',
     badgeColor: 'emerald',
-    isCurrent: true,
     summary: 'Reestructuración integral del modelo de captación y portafolio: Software-First impulsado por AgroAlerta de bolsillo en WhatsApp (60s onboarding), eliminación del riesgo de inventario de hardware (postergado a Fase 2 como upgrade para clientes existentes) y consolidación del Roadmap en 3 Fases con Malla AMR Hexgrid N1-N4, CutSheetRX y Calicata Digital 1D.',
     deliverables: [
       'AgroAlerta Pocket Bot: Micro-SaaS de WhatsApp con onboarding en 60 segundos (GPS/Rol + Cultivo), alertas de heladas radiativas (-1.8 °C), balance de agua y fuego perimetral sin apps pesadas.',

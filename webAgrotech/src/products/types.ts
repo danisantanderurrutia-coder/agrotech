@@ -68,6 +68,7 @@ export interface ProductDefinition {
   status: 'operational' | 'in-development' | 'deployed';
   category: ProductCategory;
   logoUrl: string;
+  previewImageUrl?: string;
   architectureRole: 'Plataforma Madre' | 'Suite Predial 3D' | 'Suite Territorial Regional' | 'Suite PWA Campo' | 'Hijo 1 (3D Engine)' | 'Hijo 2 (PWA Field)' | 'Módulo Edge IoT' | 'Núcleo Satelital' | 'División Edulab';
   techStack: string[];
   description: string;

@@ -5,7 +5,7 @@ import {
   MapPin, Shield, BookOpen, FileText, ChevronRight, Activity, 
   Compass, Flame, Sun, Droplets, Wind, Maximize2, Minimize2,
   Sliders, Play, Code2, AlertTriangle, Eye, EyeOff, BarChart2,
-  Printer, CheckCircle2
+  Printer, CheckCircle2, HelpCircle, Map, FileCode
 } from 'lucide-react';
 import { 
   PRODUCTS_REGISTRY, 
@@ -385,10 +385,28 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+                className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
               >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
+                {/* Hero Preview Image Banner */}
+                {product.previewImageUrl ? (
+                  <div className="relative h-44 bg-slate-900 overflow-hidden group/img">
+                    <img
+                      src={product.previewImageUrl}
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+                    <span className="absolute bottom-2.5 left-3 text-[10px] font-mono font-bold text-white px-2 py-0.5 rounded bg-black/60 backdrop-blur-xs border border-white/20">
+                      {product.architectureRole}
+                    </span>
+                    {product.port && (
+                      <span className="absolute bottom-2.5 right-3 text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/90 text-slate-950 font-black shadow-xs">
+                        Demo Activa
+                      </span>
+                    )}
+                  </div>
+                ) : (
+                  <div className="px-6 pt-6 flex items-center justify-between">
                     <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-slate-100 text-slate-800 font-bold border border-slate-300">
                       {product.architectureRole}
                     </span>
@@ -398,40 +416,43 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                       </span>
                     )}
                   </div>
+                )}
 
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-[#0B2519] border border-emerald-500/40 p-1.5 shrink-0 flex items-center justify-center overflow-hidden">
-                      <img src={product.logoUrl} alt={product.name} className="w-full h-full object-contain" />
-                    </div>
-                    <div>
-                      <h3 className="font-extrabold text-base text-slate-900">{product.name}</h3>
-                      <p className="text-[11px] text-slate-500 font-sans">{product.tagline}</p>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-slate-600 font-serif leading-relaxed line-clamp-3">
-                    {product.description}
-                  </p>
-
-                  {/* Highlights */}
-                  <div className="space-y-1.5 pt-1">
-                    {product.highlights.slice(0, 3).map((hl, i) => (
-                      <div key={i} className="flex items-start gap-2 text-[11px] text-slate-700">
-                        <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                        <span className="font-sans">{hl}</span>
+                <div className="p-6 flex flex-col justify-between flex-1 space-y-4">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-xl bg-[#0B2519] border border-emerald-500/40 p-1.5 shrink-0 flex items-center justify-center overflow-hidden shadow-xs">
+                        <img src={product.logoUrl} alt={product.name} className="w-full h-full object-contain" />
                       </div>
-                    ))}
-                  </div>
+                      <div>
+                        <h3 className="font-extrabold text-base text-slate-900">{product.name}</h3>
+                        <p className="text-[11px] text-slate-500 font-sans">{product.tagline}</p>
+                      </div>
+                    </div>
 
-                  {/* Tech stack badges */}
-                  <div className="flex flex-wrap gap-1 pt-2">
-                    {product.techStack.map((tech, i) => (
-                      <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
-                        {tech}
-                      </span>
-                    ))}
+                    <p className="text-xs text-slate-600 font-serif leading-relaxed line-clamp-3">
+                      {product.description}
+                    </p>
+
+                    {/* Highlights */}
+                    <div className="space-y-1.5 pt-1">
+                      {product.highlights.slice(0, 3).map((hl, i) => (
+                        <div key={i} className="flex items-start gap-2 text-[11px] text-slate-700">
+                          <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                          <span className="font-sans">{hl}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Tech stack badges */}
+                    <div className="flex flex-wrap gap-1 pt-2">
+                      {product.techStack.map((tech, i) => (
+                        <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
 
                 {/* Card Actions */}
                 <div className="pt-4 border-t border-slate-100 flex items-center gap-2">
@@ -454,6 +475,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                   >
                     <Radio className="w-4 h-4 text-emerald-700" />
                   </button>
+                </div>
                 </div>
               </div>
             ))}
@@ -1360,101 +1382,240 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
               )}
             </div>
 
-            {/* Showcase de los 3 Papers Científicos Canónicos (Printable & Peer-Review Ready) */}
-            <div className="space-y-3 p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-[#0B1726] to-[#0A1624] text-white border border-slate-800 shadow-md">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-lg">📄</span>
+            {/* Showcase de Documentos Maestros & Monografías Científicas */}
+            <div className="space-y-4 p-6 rounded-3xl bg-gradient-to-br from-slate-950 via-[#0B1726] to-[#0A1624] text-white border border-slate-800 shadow-xl">
+              
+              {/* Header Showcase */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300">
+                    <BookOpen className="w-5 h-5" />
+                  </div>
                   <div>
-                    <h4 className="font-bold text-sm text-white font-mono tracking-tight">Monografías Científicas Canónicas & Informes Hindcast</h4>
-                    <p className="text-[11px] text-slate-400 font-serif">Documentación peer-review con ecuaciones KaTeX, aparato bibliográfico canónico y figuras a 300 DPI.</p>
+                    <h4 className="font-extrabold text-base text-white font-mono tracking-tight">
+                      Grandes Documentos de Arquitectura, Atlas & Monografías
+                    </h4>
+                    <p className="text-xs text-slate-400 font-serif">
+                      Documentación canónica peer-review, mapas visuales interactivos y manifiestos de arquitectura TRL 7/8.
+                    </p>
                   </div>
                 </div>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 w-fit">
-                  HTML Interactivo + Imprimible PDF
+                <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 w-fit font-bold">
+                  Documentación Oficial Imprimible & Web
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
-                {/* Paper 1: Monografía Canónica */}
-                <div className="p-4 rounded-xl bg-[#0F2236] border border-blue-500/40 hover:border-blue-400 transition-all flex flex-col justify-between space-y-3 group">
-                  <div className="space-y-1.5">
+              {/* FILA 1: DOCUMENTOS MAESTROS DE ARQUITECTURA (ATLAS VISUAL + TRATADO DE MIGRACIÓN) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                {/* Atlas Visual de la Megamigración */}
+                <div className="p-5 rounded-2xl bg-gradient-to-br from-purple-950/40 to-slate-900 border-2 border-purple-500/50 hover:border-purple-400 transition-all flex flex-col justify-between space-y-4 group shadow-lg">
+                  <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-blue-900/60 text-blue-300 border border-blue-400/30">
-                        PAPER 1 • TRL 7/8
+                      <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-purple-900/80 text-purple-200 border border-purple-400/50">
+                        🗺️ ATLAS INTERACTIVO • V3.2.0
                       </span>
-                      <span className="text-xs">🔬</span>
+                      <span className="text-[10px] font-mono text-emerald-400 font-bold">14 MOTORES • 5 SLOTS</span>
                     </div>
-                    <h5 className="font-bold text-xs text-white group-hover:text-blue-300 transition-colors">
-                      AgriTwin: Gemelo Digital Biofísico Multiescala
+                    <h5 className="font-extrabold text-base text-white group-hover:text-purple-300 transition-colors">
+                      Atlas Visual de la Megamigración AgriTwin
                     </h5>
-                    <p className="text-[11px] text-slate-300 font-serif leading-relaxed line-clamp-3">
-                      Monografía completa IMRAD: acoplamiento 1D Campbell-Richards, malla AMR Hexgrid y análisis de sensibilidad global de Sobol.
+                    <p className="text-xs text-slate-300 font-serif leading-relaxed">
+                      Mapa de ingeniería visual interactivo: auditoría completa de los 14 motores desacoplados, desmontaje de deuda técnica a cero, microbenchmarks de 60 FPS y arquitectura canónica de 5 slots de interfaz.
                     </p>
                   </div>
-                  <a
-                    href="./docs/PAPER_CIENTIFICO_AGRITWIN_IMPRIMIBLE.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-mono text-[11px] font-bold text-center transition-all flex items-center justify-center gap-1.5 shadow-sm"
-                  >
-                    <span>Leer Monografía (KaTeX)</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
+                  <div className="pt-2">
+                    <a
+                      href="./docs/ATLAS_MEGAMIGRACION_VISUAL.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-mono text-xs font-bold text-center transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-purple-500/20"
+                    >
+                      <Map className="w-4 h-4" />
+                      <span>Explorar Atlas Visual Interactivo</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
                 </div>
 
-                {/* Paper 2: Megaincendios Hindcast */}
-                <div className="p-4 rounded-xl bg-[#0F2236] border border-rose-500/40 hover:border-rose-400 transition-all flex flex-col justify-between space-y-3 group">
-                  <div className="space-y-1.5">
+                {/* Tratado de Migración de Arquitectura */}
+                <div className="p-5 rounded-2xl bg-gradient-to-br from-amber-950/30 to-slate-900 border-2 border-amber-500/50 hover:border-amber-400 transition-all flex flex-col justify-between space-y-4 group shadow-lg">
+                  <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-rose-900/60 text-rose-300 border border-rose-400/30">
-                        PAPER 2 • HINDCAST REAL
+                      <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-amber-900/80 text-amber-200 border border-amber-400/50">
+                        📜 MANIFIESTO CANÓNICO • TRL 7/8
                       </span>
-                      <span className="text-xs">🔥</span>
+                      <span className="text-[10px] font-mono text-amber-400 font-bold">14 CAPÍTULOS • OGC & FAIR</span>
                     </div>
-                    <h5 className="font-bold text-xs text-white group-hover:text-rose-300 transition-colors">
-                      Riesgo Climático vs. Megaincendios Históricos
+                    <h5 className="font-extrabold text-base text-white group-hover:text-amber-300 transition-colors">
+                      Tratado de Migración & Arquitectura Unificada
                     </h5>
-                    <p className="text-[11px] text-slate-300 font-serif leading-relaxed line-clamp-3">
-                      Validación empírica en Santa Juana y Viña del Mar: retardo de frente Albini-Byram, buffers Keyline y mallas AMR cortafuego.
+                    <p className="text-xs text-slate-300 font-serif leading-relaxed">
+                      Tratado canónico de 14 capítulos: contratos de datos GeoJSON/Arrow, soberanía edge sin fugas de propiedad intelectual, balance determinista Campbell-Richards y desacoplamiento de capas frontend.
                     </p>
                   </div>
-                  <a
-                    href="./docs/INFORME_HINDCAST_REAL_IMPRIMIBLE.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-2 rounded-lg bg-rose-700 hover:bg-rose-600 text-white font-mono text-[11px] font-bold text-center transition-all flex items-center justify-center gap-1.5 shadow-sm"
-                  >
-                    <span>Leer Informe Incendios</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
+                  <div className="flex items-center gap-2 pt-2">
+                    <a
+                      href="./docs/TRATADO_MIGRACION_ARQUITECTURA_AGRITWIN_V3.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-slate-950 font-mono text-xs font-bold text-center transition-all flex items-center justify-center gap-1.5 shadow-md"
+                    >
+                      <FileCode className="w-4 h-4" />
+                      <span>Leer Tratado HTML</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                    <a
+                      href="./docs/TRATADO_MIGRACION_ARQUITECTURA_AGRITWIN_V3.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      download="TRATADO_MIGRACION_ARQUITECTURA_AGRITWIN_V3.pdf"
+                      className="py-2.5 px-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-mono text-xs font-bold transition-all flex items-center gap-1.5"
+                      title="Descargar versión PDF oficial"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>PDF</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* FILA 2: PAPERS CIENTÍFICOS CANÓNICOS (IMRAD & HINDCAST) */}
+              <div className="pt-2">
+                <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block pb-2 font-bold">
+                  MONOGRAFÍAS CIENTÍFICAS IMRAD & INFORMES HINDCAST HISTÓRICOS
+                </span>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {/* Paper 1: Monografía Canónica */}
+                  <div className="p-4 rounded-xl bg-[#0F2236] border border-blue-500/40 hover:border-blue-400 transition-all flex flex-col justify-between space-y-3 group">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-blue-900/60 text-blue-300 border border-blue-400/30">
+                          PAPER 1 • TRL 7/8
+                        </span>
+                        <span className="text-xs">🔬</span>
+                      </div>
+                      <h5 className="font-bold text-xs text-white group-hover:text-blue-300 transition-colors">
+                        AgriTwin: Gemelo Digital Biofísico Multiescala
+                      </h5>
+                      <p className="text-[11px] text-slate-300 font-serif leading-relaxed line-clamp-3">
+                        Monografía completa IMRAD: acoplamiento 1D Campbell-Richards, malla AMR Hexgrid y análisis de sensibilidad global de Sobol.
+                      </p>
+                    </div>
+                    <a
+                      href="./docs/PAPER_CIENTIFICO_AGRITWIN_IMPRIMIBLE.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-mono text-[11px] font-bold text-center transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                    >
+                      <span>Leer Monografía (KaTeX)</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+
+                  {/* Paper 2: Megaincendios Hindcast */}
+                  <div className="p-4 rounded-xl bg-[#0F2236] border border-rose-500/40 hover:border-rose-400 transition-all flex flex-col justify-between space-y-3 group">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-rose-900/60 text-rose-300 border border-rose-400/30">
+                          PAPER 2 • HINDCAST REAL
+                        </span>
+                        <span className="text-xs">🔥</span>
+                      </div>
+                      <h5 className="font-bold text-xs text-white group-hover:text-rose-300 transition-colors">
+                        Riesgo Climático vs. Megaincendios Históricos
+                      </h5>
+                      <p className="text-[11px] text-slate-300 font-serif leading-relaxed line-clamp-3">
+                        Validación empírica en Santa Juana y Viña del Mar: retardo de frente Albini-Byram, buffers Keyline y mallas AMR cortafuego.
+                      </p>
+                    </div>
+                    <a
+                      href="./docs/INFORME_HINDCAST_REAL_IMPRIMIBLE.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-2 rounded-lg bg-rose-700 hover:bg-rose-600 text-white font-mono text-[11px] font-bold text-center transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                    >
+                      <span>Leer Informe Incendios</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+
+                  {/* Paper 3: Megainundaciones Hindcast */}
+                  <div className="p-4 rounded-xl bg-[#0F2236] border border-cyan-500/40 hover:border-cyan-400 transition-all flex flex-col justify-between space-y-3 group">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-900/60 text-cyan-300 border border-cyan-400/30">
+                          PAPER 3 • HINDCAST REAL
+                        </span>
+                        <span className="text-xs">🌊</span>
+                      </div>
+                      <h5 className="font-bold text-xs text-white group-hover:text-cyan-300 transition-colors">
+                        Megainundaciones por Ríos Atmosféricos
+                      </h5>
+                      <p className="text-[11px] text-slate-300 font-serif leading-relaxed line-clamp-3">
+                        Eventos 2023 en Licantén, Longaví y Ancoa: simulación hidrodinámica 2D, balance CutSheetRX y retardo de pico de inundación (+143 min).
+                      </p>
+                    </div>
+                    <a
+                      href="./docs/INFORME_HINDCAST_REAL_INUNDACIONES_IMPRIMIBLE.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-2 rounded-lg bg-cyan-700 hover:bg-cyan-600 text-white font-mono text-[11px] font-bold text-center transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                    >
+                      <span>Leer Informe Inundaciones</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* SECCIÓN EXPLICATIVA: ¿QUÉ ES EL CATÁLOGO DE ESPECIFICACIONES & NOTAS VIVAS? */}
+            <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200/80 text-amber-950 space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-xl bg-amber-200/80 text-amber-900 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                  <HelpCircle className="w-4 h-4" />
+                </div>
+                <div className="space-y-1">
+                  <h4 className="font-black text-sm text-amber-950 font-serif">
+                    ¿Qué es el Catálogo de Especificaciones & Notas Vivas?
+                  </h4>
+                  <p className="text-xs text-amber-900 font-serif leading-relaxed">
+                    Es la <strong>Wiki de Ingeniería y Base de Conocimiento Abierta de AgroTech</strong>, sincronizada en tiempo real desde nuestro Vault de Obsidian. 
+                    Aquí no publicamos código privado ni datos confidenciales de predios, sino las <strong>especificaciones matemáticas, contratos de datos y protocolos de gobernanza</strong> que sustentan todo nuestro ecosistema bajo principios <strong>FAIR</strong> (Findable, Accessible, Interoperable, Reusable).
+                  </p>
+                </div>
+              </div>
+
+              {/* Grid explicativo de las 3 categorías */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-xs">
+                <div className="bg-white/80 p-3 rounded-xl border border-amber-200 space-y-1 shadow-2xs">
+                  <div className="flex items-center gap-1.5 font-bold text-purple-900 font-mono">
+                    <span>📐</span>
+                    <span>Arquitectura & Software</span>
+                  </div>
+                  <p className="text-[11px] text-slate-600 font-serif leading-snug">
+                    Especificaciones técnicas de microservicios, contratos de esquemas OGC (WFS/GeoJSON), protocolos de telemetría LoRaWAN y arquitectura de interfaz desacoplada.
+                  </p>
                 </div>
 
-                {/* Paper 3: Megainundaciones Hindcast */}
-                <div className="p-4 rounded-xl bg-[#0F2236] border border-cyan-500/40 hover:border-cyan-400 transition-all flex flex-col justify-between space-y-3 group">
-                  <div className="space-y-1.5">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-900/60 text-cyan-300 border border-cyan-400/30">
-                        PAPER 3 • HINDCAST REAL
-                      </span>
-                      <span className="text-xs">🌊</span>
-                    </div>
-                    <h5 className="font-bold text-xs text-white group-hover:text-cyan-300 transition-colors">
-                      Megainundaciones por Ríos Atmosféricos
-                    </h5>
-                    <p className="text-[11px] text-slate-300 font-serif leading-relaxed line-clamp-3">
-                      Eventos 2023 en Licantén, Longaví y Ancoa: simulación hidrodinámica 2D, balance CutSheetRX y retardo de pico de inundación (+143 min).
-                    </p>
+                <div className="bg-white/80 p-3 rounded-xl border border-amber-200 space-y-1 shadow-2xs">
+                  <div className="flex items-center gap-1.5 font-bold text-emerald-900 font-mono">
+                    <span>🔬</span>
+                    <span>Biofísica & Modelos</span>
                   </div>
-                  <a
-                    href="./docs/INFORME_HINDCAST_REAL_INUNDACIONES_IMPRIMIBLE.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-2 rounded-lg bg-cyan-700 hover:bg-cyan-600 text-white font-mono text-[11px] font-bold text-center transition-all flex items-center justify-center gap-1.5 shadow-sm"
-                  >
-                    <span>Leer Informe Inundaciones</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
+                  <p className="text-[11px] text-slate-600 font-serif leading-snug">
+                    Formulaciones matemáticas de los motores de simulación: balance hídrico Campbell-Richards, evapotranspiración Penman-Monteith (FAO-56) y combustión forestal.
+                  </p>
+                </div>
+
+                <div className="bg-white/80 p-3 rounded-xl border border-amber-200 space-y-1 shadow-2xs">
+                  <div className="flex items-center gap-1.5 font-bold text-amber-900 font-mono">
+                    <span>🤝</span>
+                    <span>Gobernanza & Dossiers</span>
+                  </div>
+                  <p className="text-[11px] text-slate-600 font-serif leading-snug">
+                    Fichas de validación de campo en predios piloto, actas de auditoría MRV, protocolos de calibración UQ y marcos de cumplimiento normativo (EUDR / SAG).
+                  </p>
                 </div>
               </div>
             </div>

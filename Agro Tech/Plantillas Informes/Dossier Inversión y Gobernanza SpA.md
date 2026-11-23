@@ -44,7 +44,7 @@ tipo: dossier-inversion
 | Socio / Entidad | Participación | Rol |
 | :--- | ---: | :--- |
 | **Daniel Santander** | 40 % | Arquitecto de Software & Director Técnico |
-| **Paulina Urrutia** | 30 % | Gestión Territorial & Relaciones Institucionales |
+| **Socios Operativos (Sweat Equity)** | Vesting 24-36m | Pancho, Nene, Rudi Kaatz, Cantuarias, Lápiz, Daniela |
 | **Fondo Tecnológico** | 20 % | Capital de riesgo / CORFO Semilla |
 | **Reserva Cooperativa** | 10 % | Fondo colectivo — [[Economía de los Hombros]] |
 
@@ -116,7 +116,7 @@ Módulo [[RewildMapper]] de cuantificación de servicios ecosistémicos y crédi
 | Rol | Nombre | Firma |
 | :--- | :--- | :--- |
 | Arquitecto de Software & Director Técnico | **Daniel Santander** | __________________ |
-| Gestión Territorial & Relaciones Institucionales | **Paulina Urrutia** | __________________ |
+| Conector Operativo & Living Lab Parral | **Rüdiger Kaatz ("Rudi")** | __________________ |
 
 > **Hash de integridad MRV:** `{{mrv_hash}}`
 > **Generado por:** [[AGROTECH]] — Motor de Reportes v1.0

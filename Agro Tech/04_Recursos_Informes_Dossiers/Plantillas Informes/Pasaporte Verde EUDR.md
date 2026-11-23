@@ -145,7 +145,7 @@ Referencia: [[RewildMapper]] — Módulo de conectividad ecológica.
 | Rol | Nombre | Firma |
 | :--- | :--- | :--- |
 | Arquitecto de Software & Director Técnico | **Daniel Santander** | __________________ |
-| Gestión Territorial & Relaciones Institucionales | **Paulina Urrutia** | __________________ |
+| Conector Operativo & Living Lab Parral | **Rüdiger Kaatz ("Rudi")** | __________________ |
 
 > **Hash de integridad MRV:** `{{mrv_hash}}`
 > **Generado por:** [[AGROTECH]] — Motor de Reportes v1.0
