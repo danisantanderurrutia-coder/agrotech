@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { LandingPage } from './components/LandingPage';
 import { HardwarePage } from './components/HardwarePage';
@@ -18,26 +18,42 @@ import { BrandIdentitySection } from './components/BrandIdentitySection';
 import { RoadmapProductosPage } from './components/RoadmapProductosPage';
 import { Footer } from './components/Footer';
 import { PitchDeckModal } from './components/PitchDeckModal';
+import { parseRoute, syncHashUrl, VaultTab } from './utils/router';
 
 export function App() {
-  const [currentView, setCurrentView] = useState<string>(() => {
-    try {
-      const p = new URLSearchParams(window.location.search);
-      if (p.get('view')) return p.get('view')!;
-      // Si la URL es agritwin-app o contiene agritwin en path o host, abrir directamente el showcase
-      if (window.location.pathname.toLowerCase().includes('agritwin') || 
-          window.location.hostname.toLowerCase().includes('agritwin')) {
-        return 'agritwin';
-      }
-      return 'landing';
-    } catch {
-      return 'landing';
-    }
-  });
+  const initialRoute = parseRoute();
+  const [currentView, setCurrentView] = useState<string>(initialRoute.view);
+  const [vaultTab, setVaultTab] = useState<VaultTab>(initialRoute.vaultTab || 'vault');
   const [isPitchDeckOpen, setIsPitchDeckOpen] = useState(false);
 
-  const handleNavigate = (viewId: string) => {
-    setCurrentView(viewId);
+  // Escuchar cambios de hash o navegación en historial (Back / Forward del navegador)
+  useEffect(() => {
+    const handleLocationChange = () => {
+      const parsed = parseRoute();
+      setCurrentView(parsed.view);
+      if (parsed.vaultTab) {
+        setVaultTab(parsed.vaultTab);
+      }
+    };
+
+    window.addEventListener('hashchange', handleLocationChange);
+    window.addEventListener('popstate', handleLocationChange);
+    return () => {
+      window.removeEventListener('hashchange', handleLocationChange);
+      window.removeEventListener('popstate', handleLocationChange);
+    };
+  }, []);
+
+  const handleNavigate = (viewId: string, subTab?: string) => {
+    if (viewId === 'vault' || viewId === 'docs' || viewId === 'boveda') {
+      const targetTab = (subTab as VaultTab) || 'vault';
+      setVaultTab(targetTab);
+      setCurrentView('vault');
+      syncHashUrl('vault', targetTab);
+    } else {
+      setCurrentView(viewId);
+      syncHashUrl(viewId);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -119,7 +135,11 @@ export function App() {
         {(currentView === 'docs' || currentView === 'vault') && (
           <div className="max-w-7xl mx-auto px-4 lg:px-8 py-8 animate-fadeIn">
             <InteractiveDocsHub 
-              initialTab="vault"
+              initialTab={vaultTab}
+              onTabChange={(tab) => {
+                setVaultTab(tab);
+                syncHashUrl('vault', tab);
+              }}
               onNavigate={handleNavigate}
             />
           </div>

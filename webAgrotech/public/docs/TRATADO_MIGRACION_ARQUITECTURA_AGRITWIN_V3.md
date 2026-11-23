@@ -507,7 +507,7 @@ def compute_scenario_scores(self, scenario_id: int) -> dict:
 <text x="16" y="148" font-size="9.5" fill="#334155">Clic en cualquier hexágono abre su panel lateral con topografía, NDVI, suelo y serie de 12 meses.</text>
 <rect x="408" y="4" width="388" height="158" rx="10" fill="#ffffff" stroke="#f59e0b" stroke-width="1.8"/>
 <text x="420" y="25" font-size="11.5" font-weight="800" fill="#92400e">2. Crop Fit (Idoneidad Difusa para 8 Cultivos)</text>
-<rect x="716" y="10" width="68" height="19" rx="5" fill="#fef3c7" stroke="#f59e0b"/><text x="750" y="23" text-anchor="middle" font-size="9" font-weight="800" fill="#92400e">💡 Disponible</text>
+<rect x="716" y="10" width="68" height="19" rx="5" fill="#fef3c7" stroke="#f59e0b"/><text x="750" y="23" text-anchor="middle" font-size="9" font-weight="800" fill="#92400e">★ Disponible</text>
 <rect x="420" y="34" width="168" height="96" rx="8" fill="#fffbeb" stroke="#fde68a"/>
 <text x="430" y="52" font-size="9.5" font-weight="800" fill="#92400e" font-family="monospace">Ranking de Aptitud:</text>
 <rect x="430" y="60" width="136" height="15" rx="3" fill="#bbf7d0"/><text x="436" y="71" font-size="9" font-weight="700" fill="#14532d" font-family="monospace">1. Cerezo     92%</text>
@@ -521,7 +521,7 @@ def compute_scenario_scores(self, scenario_id: int) -> dict:
 <text x="420" y="148" font-size="9.5" fill="#334155">Evalúa 8 cultivos por hexágono y grafica mes a mes el clima real frente al trapecio óptimo del cultivo.</text>
 <rect x="4" y="174" width="388" height="158" rx="10" fill="#ffffff" stroke="#059669" stroke-width="1.8"/>
 <text x="16" y="195" font-size="11.5" font-weight="800" fill="#065f46">3. Yield &amp; Profit (Rentabilidad y Costo Bombeo)</text>
-<rect x="312" y="180" width="68" height="19" rx="5" fill="#fef3c7" stroke="#f59e0b"/><text x="346" y="193" text-anchor="middle" font-size="9" font-weight="800" fill="#92400e">💡 Disponible</text>
+<rect x="312" y="180" width="68" height="19" rx="5" fill="#fef3c7" stroke="#f59e0b"/><text x="346" y="193" text-anchor="middle" font-size="9" font-weight="800" fill="#92400e">★ Disponible</text>
 <rect x="16" y="204" width="176" height="96" rx="8" fill="#ecfdf5" stroke="#a7f3d0"/>
 <polygon points="52,218 88,218 104,248 88,278 52,278 36,248" fill="#059669" fill-opacity="0.82" stroke="#064e3b" stroke-width="1.8"/>
 <text x="70" y="252" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">+$4.2M</text>
@@ -535,7 +535,7 @@ def compute_scenario_scores(self, scenario_id: int) -> dict:
 <text x="16" y="318" font-size="9.5" fill="#334155">Cruza las toneladas esperadas contra la profundidad del pozo y la factura eléctrica de bombeo.</text>
 <rect x="408" y="174" width="388" height="158" rx="10" fill="#ffffff" stroke="#7e22ce" stroke-width="1.8"/>
 <text x="420" y="195" font-size="11.5" font-weight="800" fill="#581c87">4. What-If Split View (Comparador Lado a Lado)</text>
-<rect x="716" y="180" width="68" height="19" rx="5" fill="#fef3c7" stroke="#f59e0b"/><text x="750" y="193" text-anchor="middle" font-size="9" font-weight="800" fill="#92400e">💡 Disponible</text>
+<rect x="716" y="180" width="68" height="19" rx="5" fill="#fef3c7" stroke="#f59e0b"/><text x="750" y="193" text-anchor="middle" font-size="9" font-weight="800" fill="#92400e">★ Disponible</text>
 <rect x="420" y="204" width="170" height="96" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.6"/>
 <text x="505" y="226" text-anchor="middle" font-size="9.5" font-weight="800" fill="#166534" font-family="monospace">ESCENARIO BASE HOY</text>
 <polygon points="485,238 525,238 538,262 525,286 485,286 472,262" fill="#16a34a" fill-opacity="0.35" stroke="#15803d" stroke-width="1.6"/>
@@ -1477,13 +1477,13 @@ Arquitectura en microservicios contenerizados (`docker-compose.yml`) con modelos
 <text x="16" y="24" font-size="11" font-weight="800" fill="#92400e">1. Kiwi-Agri-twin (Simulador Diario + Explicación)</text>
 <rect x="16" y="32" width="364" height="92" rx="7" fill="#f8fafc" stroke="#cbd5e1"/>
 <rect x="16" y="32" width="364" height="22" rx="7" fill="#e7e5e4"/>
-<text x="26" y="47" font-size="9" font-weight="700" fill="#1c1917" font-family="monospace">🌾 Simulación · Día 42 (Floración)</text>
+<text x="26" y="47" font-size="9" font-weight="700" fill="#1c1917" font-family="monospace">▸ Simulación · Día 42 (Floración)</text>
 <rect x="302" y="35" width="70" height="16" rx="4" fill="#047857"/><text x="337" y="46" text-anchor="middle" font-size="8.5" font-weight="800" fill="#ffffff">▶ +1 Día</text>
 <rect x="26" y="60" width="106" height="28" rx="5" fill="#ffffff" stroke="#d6d3d1"/><text x="79" y="78" text-anchor="middle" font-size="9.5" font-weight="800" fill="#b45309" font-family="monospace">Humedad: 48%</text>
 <rect x="144" y="60" width="106" height="28" rx="5" fill="#ffffff" stroke="#d6d3d1"/><text x="197" y="78" text-anchor="middle" font-size="9.5" font-weight="800" fill="#be123c" font-family="monospace">Calor: 31°C</text>
 <rect x="262" y="60" width="108" height="28" rx="5" fill="#ffffff" stroke="#d6d3d1"/><text x="316" y="78" text-anchor="middle" font-size="9.5" font-weight="800" fill="#0369a1" font-family="monospace">Riego: 22 mm</text>
 <rect x="26" y="94" width="344" height="24" rx="4" fill="#fef3c7" stroke="#f59e0b"/><text x="34" y="109" font-size="8.8" font-weight="600" fill="#78350f">¿Por qué regar 22 mm? La humedad bajó de 55% y vienen 3 días sobre 30°C.</text>
-<text x="16" y="140" font-size="8.8" fill="#334155">✓ Ya: Curva TAW/RAW · 💡 Extra: Botón paso a paso + caja «¿Por qué?» en lenguaje humano.</text>
+<text x="16" y="140" font-size="8.8" fill="#334155">✓ Ya: Curva TAW/RAW · ★ Extra: Botón paso a paso + caja «¿Por qué?» en lenguaje humano.</text>
 <rect x="408" y="4" width="388" height="146" rx="10" fill="#ffffff" stroke="#059669" stroke-width="1.8"/>
 <text x="420" y="24" font-size="11" font-weight="800" fill="#065f46">2. smart-agriculture-twin (Escáner Hoja + Cosecha)</text>
 <rect x="420" y="32" width="164" height="92" rx="7" fill="#ecfdf5" stroke="#a7f3d0"/>
@@ -1499,18 +1499,18 @@ Arquitectura en microservicios contenerizados (`docker-compose.yml`) con modelos
 <rect x="688" y="52" width="24" height="52" rx="3" fill="#10b981"/>
 <rect x="724" y="68" width="24" height="36" rx="3" fill="#f59e0b"/>
 <text x="608" y="117" font-size="8.8" font-weight="800" fill="#047857" font-family="monospace">Estimado: 8.4 ton/ha (+12%)</text>
-<text x="420" y="140" font-size="8.8" fill="#334155">✓ Ya: Actuadores/Válvulas · 💡 Extra: Visión artificial en hojas + proyector de cosecha.</text>
+<text x="420" y="140" font-size="8.8" fill="#334155">✓ Ya: Actuadores/Válvulas · ★ Extra: Visión artificial en hojas + proyector de cosecha.</text>
 <rect x="4" y="162" width="388" height="146" rx="10" fill="#ffffff" stroke="#475569" stroke-width="1.8"/>
 <text x="16" y="182" font-size="11" font-weight="800" fill="#0f172a">3. GAURANGSURTE-AgriTwin (Alerta SMS / WhatsApp)</text>
 <rect x="16" y="190" width="364" height="92" rx="7" fill="#ece5dd" stroke="#a8a29e"/>
 <rect x="16" y="190" width="364" height="20" rx="7" fill="#075e54"/>
-<text x="26" y="204" font-size="8.8" font-weight="800" fill="#ffffff" font-family="monospace">📲 AgroAlerta Celular (SMS / WhatsApp) · 04:30 AM</text>
+<text x="26" y="204" font-size="8.8" font-weight="800" fill="#ffffff" font-family="monospace">▸ AgroAlerta Celular (SMS / WhatsApp) · 04:30 AM</text>
 <rect x="26" y="216" width="246" height="36" rx="6" fill="#ffffff" stroke="#d6d3d1"/>
-<text x="34" y="230" font-size="8.8" font-weight="800" fill="#be123c">❄️ Alerta Helada Radiativa -1.8°C en 30 min</text>
+<text x="34" y="230" font-size="8.8" font-weight="800" fill="#be123c">❄ Alerta Helada Radiativa -1.8°C en 30 min</text>
 <text x="34" y="244" font-size="8.2" fill="#334155">Cuartel Cerezos Meniel. ¿Activar aspersión anti-helada?</text>
 <rect x="180" y="256" width="188" height="20" rx="5" fill="#dcf8c6" stroke="#86efac"/>
 <text x="274" y="269" text-anchor="middle" font-size="8.5" font-weight="800" fill="#065f46" font-family="monospace">✓ 1 · Confirmar activación</text>
-<text x="16" y="298" font-size="8.8" fill="#334155">✓ Ya: Umbrales de alarma C2 · 💡 Extra: Confirmación Human-in-the-Loop vía SMS rural.</text>
+<text x="16" y="298" font-size="8.8" fill="#334155">✓ Ya: Umbrales de alarma C2 · ★ Extra: Confirmación Human-in-the-Loop vía SMS rural.</text>
 <rect x="408" y="162" width="388" height="146" rx="10" fill="#ffffff" stroke="#6366f1" stroke-width="1.8"/>
 <text x="420" y="182" font-size="11" font-weight="800" fill="#312e81">4. Agri-Agentic-Suite (3 Agentes IA Locales Ollama)</text>
 <rect x="436" y="190" width="332" height="22" rx="11" fill="#eef2ff" stroke="#818cf8" stroke-width="1.4"/>
@@ -1522,17 +1522,17 @@ Arquitectura en microservicios contenerizados (`docker-compose.yml`) con modelos
 <rect x="548" y="226" width="108" height="32" rx="6" fill="#ecfdf5" stroke="#10b981"/><text x="602" y="240" text-anchor="middle" font-size="8.5" font-weight="800" fill="#065f46">YieldWise</text><text x="602" y="252" text-anchor="middle" font-size="7.8" fill="#047857">Costo y Margen</text>
 <rect x="672" y="226" width="108" height="32" rx="6" fill="#fffbeb" stroke="#f59e0b"/><text x="726" y="240" text-anchor="middle" font-size="8.5" font-weight="800" fill="#92400e">FieldScout</text><text x="726" y="252" text-anchor="middle" font-size="7.8" fill="#b45309">Visión Foliar</text>
 <rect x="436" y="263" width="332" height="19" rx="5" fill="#312e81"/><text x="602" y="276" text-anchor="middle" font-size="8.2" font-weight="700" fill="#ffffff" font-family="monospace">Respuesta unificada 100% local sin pagar nube</text>
-<text x="420" y="298" font-size="8.8" fill="#334155">💡 Disponible: Orquestador de 3 agentes IA locales sobre Ollama para zonas sin internet.</text>
+<text x="420" y="298" font-size="8.8" fill="#334155">★ Disponible: Orquestador de 3 agentes IA locales sobre Ollama para zonas sin internet.</text>
 <rect x="4" y="320" width="388" height="146" rx="10" fill="#ffffff" stroke="#e11d48" stroke-width="1.8"/>
 <text x="16" y="340" font-size="11" font-weight="800" fill="#881337">5. NemoClaw-agritwin-dairy (Ficha Animal &amp; PRV)</text>
 <rect x="16" y="348" width="364" height="92" rx="7" fill="#fff1f2" stroke="#fecdd3"/>
-<text x="26" y="365" font-size="9.2" font-weight="800" fill="#881337" font-family="monospace">🐄 Vaca #142 · Potrero PRV 4 (Collar IoT)</text>
-<rect x="278" y="352" width="92" height="18" rx="4" fill="#e11d48"/><text x="324" y="364" text-anchor="middle" font-size="8.2" font-weight="800" fill="#ffffff">⚠️ Fiebre +0.9°C</text>
+<text x="26" y="365" font-size="9.2" font-weight="800" fill="#881337" font-family="monospace">▸ Vaca #142 · Potrero PRV 4 (Collar IoT)</text>
+<rect x="278" y="352" width="92" height="18" rx="4" fill="#e11d48"/><text x="324" y="364" text-anchor="middle" font-size="8.2" font-weight="800" fill="#ffffff">▲ Fiebre +0.9°C</text>
 <rect x="26" y="374" width="344" height="40" rx="5" fill="#ffffff" stroke="#ffe4e6"/>
 <path d="M36,386 L90,384 L150,385 L210,389 L270,400 L354,407" fill="none" stroke="#e11d48" stroke-width="2.4"/>
 <text x="36" y="408" font-size="8.2" font-weight="700" fill="#64748b" font-family="monospace">Curva Leche: 26.0 L/día ➔ 21.4 L/día (caída detectada)</text>
 <text x="26" y="431" font-size="8.5" font-weight="700" fill="#881337">Acción recomendada: Separar en manga para revisión sanitaria.</text>
-<text x="16" y="456" font-size="8.8" fill="#334155">✓ Ya: Contratos JSON tipados · 💡 Extra: Ficha individual por animal en rotación PRV.</text>
+<text x="16" y="456" font-size="8.8" fill="#334155">✓ Ya: Contratos JSON tipados · ★ Extra: Ficha individual por animal en rotación PRV.</text>
 <rect x="408" y="320" width="388" height="146" rx="10" fill="#ffffff" stroke="#9333ea" stroke-width="1.8"/>
 <text x="420" y="340" font-size="11" font-weight="800" fill="#581c87">6. FedAgriTwin &amp; AgriTwin-RL (Red Federada Vecinal)</text>
 <rect x="420" y="348" width="364" height="92" rx="7" fill="#faf5ff" stroke="#e9d5ff"/>
@@ -1545,7 +1545,7 @@ Arquitectura en microservicios contenerizados (`docker-compose.yml`) con modelos
 <line x1="487" y1="377" x2="552" y2="389" stroke="#9333ea" stroke-width="1.8" stroke-dasharray="4 3"/>
 <line x1="487" y1="413" x2="552" y2="401" stroke="#9333ea" stroke-width="1.8" stroke-dasharray="4 3"/>
 <line x1="656" y1="395" x2="708" y2="395" stroke="#059669" stroke-width="2.2"/>
-<text x="420" y="456" font-size="8.8" fill="#334155">✓ Ya: Subrogado &lt;1ms + ADR-001 · 💡 Extra: Aprendizaje cooperativo entre los 9 vecinos.</text>
+<text x="420" y="456" font-size="8.8" fill="#334155">✓ Ya: Subrogado &lt;1ms + ADR-001 · ★ Extra: Aprendizaje cooperativo entre los 9 vecinos.</text>
 </svg>
 </figure>
 
@@ -2042,7 +2042,7 @@ flowchart TD
 <text x="360" y="84" font-size="8" fill="#047857" font-family="monospace">CutSheetRX: -228 m³</text>
 <text x="287" y="112" font-size="9.5" fill="#1e293b">• Malla Hexagonal AMR (N1→N4 / H3)</text>
 <text x="287" y="130" font-size="9.5" fill="#1e293b">• Calicata 1D MONICA (0–100 cm)</text>
-<text x="287" y="148" font-size="9.5" fill="#1e293b">• CutSheetRX en 📐 Keyline &amp; Terreno</text>
+<text x="287" y="148" font-size="9.5" fill="#1e293b">• CutSheetRX en ▸ Keyline &amp; Terreno</text>
 <text x="287" y="166" font-size="9.5" fill="#1e293b">• Regla de Oro (2D ↔ Gemelo 3D)</text>
 <text x="287" y="196" font-size="8.8" font-weight="700" font-family="monospace" fill="#047857">Atlas VSD · Lámina 6 (M3 y M4)</text>
 <path d="M527 108 L543 108" stroke="#475569" stroke-width="2.5"/>
@@ -2095,7 +2095,7 @@ flowchart TD
 <rect x="284" y="96" width="182" height="22" rx="4" fill="#7dd3fc" stroke="#0284c7"/><text x="292" y="111" font-size="9" font-weight="700" fill="#082f49" font-family="monospace">25–50 cm · 35.1% · -33 kPa</text>
 <rect x="284" y="123" width="204" height="22" rx="4" fill="#38bdf8" stroke="#0369a1"/><text x="292" y="138" font-size="9" font-weight="700" fill="#082f49" font-family="monospace">50–75 cm · 36.6% · -24 kPa</text>
 <rect x="284" y="150" width="228" height="22" rx="4" fill="#0284c7" stroke="#075985"/><text x="292" y="165" font-size="9" font-weight="700" fill="#ffffff" font-family="monospace">75–100cm · 37.6% · -17 kPa</text>
-<text x="284" y="192" font-size="9" fill="#334155">Clic en hexágono (2D) o botón 🔬 (3D)</text>
+<text x="284" y="192" font-size="9" fill="#334155">Clic en hexágono (2D) o botón [2D] (3D)</text>
 <text x="284" y="216" font-size="8.8" font-family="monospace" fill="#0369a1">DEFAULT_LAYERS · Richards 1D + Campbell</text>
 <rect x="540" y="6" width="256" height="228" rx="10" fill="#ffffff" stroke="#d97706" stroke-width="1.8"/>
 <text x="552" y="28" font-size="11" font-weight="800" fill="#b45309">3. CutSheetRX (Corte y Camellón Keyline)</text>
@@ -2108,7 +2108,7 @@ flowchart TD
 <text x="678" y="56" font-size="8.2" font-weight="800" fill="#047857" font-family="monospace">RELLENO (Bordo)</text>
 <rect x="552" y="132" width="112" height="28" rx="5" fill="#fef3c7" stroke="#f59e0b"/><text x="608" y="150" text-anchor="middle" font-size="9.2" font-weight="800" fill="#92400e" font-family="monospace">Corte: +1.420 m³</text>
 <rect x="672" y="132" width="112" height="28" rx="5" fill="#d1fae5" stroke="#10b981"/><text x="728" y="150" text-anchor="middle" font-size="9.2" font-weight="800" fill="#065f46" font-family="monospace">Relleno: -1.192 m³</text>
-<text x="552" y="182" font-size="9" font-weight="700" fill="#047857">✓ Vive en 5ª Pestaña 📐 Keyline &amp; Terreno</text>
+<text x="552" y="182" font-size="9" font-weight="700" fill="#047857">✓ Vive en 5ª Pestaña ▸ Keyline &amp; Terreno</text>
 <text x="552" y="198" font-size="8.8" fill="#475569">✓ Si cae en Meniel → sincroniza con 3D</text>
 <text x="552" y="216" font-size="8.8" font-family="monospace" fill="#b45309">POST /api/zalf/hexgrid · AgriBus</text>
 </svg>
@@ -2175,8 +2175,8 @@ En la consolidación de la Parte B se auditaron y eliminaron 1.724 líneas de c�
 <text x="122" y="114" font-size="8.5" font-weight="800" fill="#0369a1">Área lluvia: 82.5%</text>
 <rect x="220" y="34" width="160" height="102" rx="7" fill="#0f172a"/>
 <text x="230" y="52" font-size="8.8" font-weight="700" fill="#7dd3fc" font-family="monospace">Hidrograma Río (m³/s)</text>
-<path d="M230,118 Q268,112 292,86 T368,114" fill="none" stroke="#64748b" stroke-width="1.8" stroke-dasharray="3 2"/>
-<path d="M230,118 Q268,104 294,56 T368,110" fill="none" stroke="#38bdf8" stroke-width="2.6"/>
+<path d="M230,118 Q268,112 292,86 L368,114" fill="none" stroke="#64748b" stroke-width="1.8" stroke-dasharray="3 2"/>
+<path d="M230,118 Q268,104 294,56 L368,110" fill="none" stroke="#38bdf8" stroke-width="2.6"/>
 <text x="230" y="72" font-size="8.8" font-weight="800" fill="#38bdf8" font-family="monospace">Q pico: 5.120 (+59.6%)</text>
 <rect x="230" y="122" width="140" height="8" rx="3" fill="#0284c7"/>
 <text x="16" y="156" font-size="9" fill="#334155">Paleta Crameri: Oleron · +6.8%/°C vapor (11.8%/°C convectivo) · Lámina 7 (Módulo 7).</text>
@@ -2212,18 +2212,18 @@ En la consolidación de la Parte B se auditaron y eliminaron 1.724 líneas de c�
 <text x="420" y="205" font-size="11.5" font-weight="800" fill="#0f766e">4. Los 4 Operadores Visuales de Landscope &amp; Landscapen</text>
 <rect x="420" y="214" width="364" height="102" rx="7" fill="#f0fdfa" stroke="#99f6e4"/>
 <polygon points="434,224 554,224 574,274 444,296" fill="#f59e0b" fill-opacity="0.28" stroke="#d97706" stroke-width="1.4"/>
-<text x="444" y="242" font-size="8.2" font-weight="800" fill="#b45309" font-family="monospace">☀️ Sol DEM: 6.420 Wh/m²</text>
+<text x="444" y="242" font-size="8.2" font-weight="800" fill="#b45309" font-family="monospace">☼ Sol DEM: 6.420 Wh/m²</text>
 <path d="M440,254 L496,266 L552,284 L624,302" fill="none" stroke="#0284c7" stroke-width="3"/>
 <path d="M474,234 L496,266" fill="none" stroke="#38bdf8" stroke-width="2"/>
 <path d="M524,242 L552,284" fill="none" stroke="#38bdf8" stroke-width="2"/>
-<text x="450" y="308" font-size="8.5" font-weight="800" fill="#0369a1" font-family="monospace">💧 Red Flujo D8 (Oleron)</text>
+<text x="450" y="308" font-size="8.5" font-weight="800" fill="#0369a1" font-family="monospace">◈ Red Flujo D8 (Oleron)</text>
 <path d="M584,228 Q648,256 756,298" fill="none" stroke="#15803d" stroke-width="5" stroke-dasharray="8 4"/>
-<text x="614" y="244" font-size="8.2" font-weight="800" fill="#166534" font-family="monospace">🐾 Corredor Theobald</text>
+<text x="614" y="244" font-size="8.2" font-weight="800" fill="#166534" font-family="monospace">◈ Corredor Theobald</text>
 <rect x="618" y="262" width="154" height="44" rx="5" fill="#ffffff" stroke="#0d9488" stroke-width="1.5"/>
-<text x="626" y="277" font-size="8" font-weight="800" fill="#0f766e" font-family="monospace">📋 Ficha 1-Clic (Akshay)</text>
+<text x="626" y="277" font-size="8" font-weight="800" fill="#0f766e" font-family="monospace">▣ Ficha 1-Clic (Akshay)</text>
 <text x="626" y="290" font-size="7.8" fill="#334155">Franco Arcilloso · Clase IIr</text>
 <text x="626" y="301" font-size="7.5" fill="#047857">Drenaje Bueno · Mulch</text>
-<text x="420" y="336" font-size="9" fill="#334155">D8, Sol y Ficha viven en 📐 Keyline &amp; Terreno; Corredores en 🛰️ Capas SIG · Lámina 10 (M8 y M9).</text>
+<text x="420" y="336" font-size="9" fill="#334155">D8, Sol y Ficha viven en ▸ Keyline &amp; Terreno; Corredores en ◈ Capas SIG · Lámina 10 (M8 y M9).</text>
 </svg>
 </figure>
 
@@ -2288,31 +2288,31 @@ Tras consolidar las Partes A y B de la Migración 8.2, la plataforma escala can�
 <rect x="4" y="4" width="388" height="200" rx="10" fill="#ffffff" stroke="#0f172a" stroke-width="1.8"/>
 <text x="16" y="25" font-size="11" font-weight="800" fill="#0f172a">ADR-002 · Panel Derecho Visor Satelital (Grid 2×3 sin scroll)</text>
 <rect x="16" y="36" width="176" height="44" rx="6" fill="#f1f5f9" stroke="#64748b" stroke-width="1.4"/>
-<text x="24" y="55" font-size="10" font-weight="800" fill="#0f172a">1. 🌦️ Tiempo &amp; Hídrico</text>
+<text x="24" y="55" font-size="10" font-weight="800" fill="#0f172a">1. ◈ Tiempo &amp; Hídrico</text>
 <text x="24" y="70" font-size="8.2" fill="#475569">Clima 7D · CAPE · 5 APRs</text>
 <rect x="202" y="36" width="178" height="44" rx="6" fill="#f1f5f9" stroke="#64748b" stroke-width="1.4"/>
-<text x="210" y="55" font-size="10" font-weight="800" fill="#0f172a">2. 🛰️ Capas SIG &amp; Satélite</text>
+<text x="210" y="55" font-size="10" font-weight="800" fill="#0f172a">2. ◈ Capas SIG &amp; Satélite</text>
 <text x="210" y="70" font-size="8.2" fill="#475569">8 Bandas S2 · LULC · Corredores</text>
 <rect x="16" y="88" width="176" height="44" rx="6" fill="#ffe4e6" stroke="#e11d48" stroke-width="1.4"/>
-<text x="24" y="107" font-size="10" font-weight="800" fill="#be123c">3. ⚡ Riesgos Climáticos</text>
+<text x="24" y="107" font-size="10" font-weight="800" fill="#be123c">3. ◈ Riesgos Climáticos</text>
 <text x="24" y="122" font-size="8.2" fill="#881337">M5 Helada · M6 Fuego · M7 Río</text>
 <rect x="202" y="88" width="178" height="44" rx="6" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.4"/>
-<text x="210" y="107" font-size="10" font-weight="800" fill="#0369a1">4. 💧 Agua &amp; Tranques</text>
+<text x="210" y="107" font-size="10" font-weight="800" fill="#0369a1">4. ◈ Agua &amp; Tranques</text>
 <text x="210" y="122" font-size="8.2" fill="#0c4a6e">18 Tranques Vecinales · DGA</text>
 <rect x="16" y="140" width="176" height="54" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
-<text x="24" y="159" font-size="10" font-weight="800" fill="#92400e">5. 📐 Keyline &amp; Terreno</text>
+<text x="24" y="159" font-size="10" font-weight="800" fill="#92400e">5. ▸ Keyline &amp; Terreno</text>
 <text x="24" y="173" font-size="8.2" font-weight="700" fill="#78350f">M4 CutSheetRX · M3 AMR</text>
 <text x="24" y="186" font-size="8" fill="#78350f">M8 D8/Sol · M9a Ficha · DEM</text>
 <rect x="202" y="140" width="178" height="54" rx="6" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
-<text x="210" y="159" font-size="10" font-weight="800" fill="#065f46">6. 📡 Sensores &amp; Red</text>
+<text x="210" y="159" font-size="10" font-weight="800" fill="#065f46">6. ◈ Sensores &amp; Red</text>
 <text x="210" y="173" font-size="8.2" font-weight="700" fill="#047857">M1: 5 Predio (Agrupados)</text>
 <text x="210" y="186" font-size="8" fill="#047857">+ 4 Est. Públicas + 187 N3</text>
 <rect x="408" y="4" width="388" height="200" rx="10" fill="#ffffff" stroke="#059669" stroke-width="1.8"/>
 <text x="420" y="25" font-size="11" font-weight="800" fill="#047857">ADR-001 · Aislamiento de Sensores (Predio → Satélite)</text>
 <rect x="420" y="38" width="170" height="154" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.6"/>
-<text x="430" y="58" font-size="10" font-weight="800" fill="#065f46">🧊 Gemelo 3D (24.8 ha)</text>
+<text x="430" y="58" font-size="10" font-weight="800" fill="#065f46">▣ Gemelo 3D (24.8 ha)</text>
 <text x="430" y="78" font-size="9" font-weight="700" fill="#0f172a">• Solo 5 Sensores Predio</text>
-<text x="430" y="96" font-size="8.8" fill="#0369a1">• Botón 🔬 abre gráfico 2D</text>
+<text x="430" y="96" font-size="8.8" fill="#0369a1">• Botón [2D] abre gráfico 2D</text>
 <rect x="430" y="104" width="150" height="44" rx="4" fill="#0f172a"/>
 <rect x="436" y="110" width="84" height="6" rx="2" fill="#38bdf8"/><text x="526" y="116" font-size="7.2" fill="#e2e8f0" font-family="monospace">0-10cm</text>
 <rect x="436" y="120" width="98" height="6" rx="2" fill="#38bdf8"/><text x="538" y="126" font-size="7.2" fill="#e2e8f0" font-family="monospace">25-50</text>
@@ -2321,7 +2321,7 @@ Tras consolidar las Partes A y B de la Migración 8.2, la plataforma escala can�
 <text x="430" y="182" font-size="8.2" fill="#be123c">✗ Sin estaciones de cuenca</text>
 <path d="M594 114 L616 114" stroke="#059669" stroke-width="2.5"/>
 <rect x="620" y="38" width="164" height="154" rx="8" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.6"/>
-<text x="630" y="58" font-size="10" font-weight="800" fill="#0369a1">🛰️ Satelital (122k ha)</text>
+<text x="630" y="58" font-size="10" font-weight="800" fill="#0369a1">◈ Satelital (122k ha)</text>
 <text x="630" y="78" font-size="8.8" font-weight="700" fill="#047857">• 1 Marcador Predio</text>
 <text x="638" y="92" font-size="8" fill="#475569">(se expande en 5 a z≥14)</text>
 <text x="630" y="112" font-size="8.8" font-weight="700" fill="#0369a1">• 4 Est. Públicas DGA/DMC</text>

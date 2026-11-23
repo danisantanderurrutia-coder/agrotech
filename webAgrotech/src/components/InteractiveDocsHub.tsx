@@ -24,11 +24,13 @@ import { resolveAsset, handleImageFallback } from '../utils/assets';
 interface InteractiveDocsHubProps {
   onNavigate?: (viewId: string) => void;
   initialTab?: 'products' | 'predios' | 'sensors' | 'graphics' | 'scripts' | 'vault' | 'permaculture';
+  onTabChange?: (tab: 'products' | 'predios' | 'sensors' | 'graphics' | 'scripts' | 'vault' | 'permaculture') => void;
 }
 
 export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({ 
   onNavigate,
-  initialTab = 'products'
+  initialTab = 'products',
+  onTabChange
 }) => {
   const [activeTab, setActiveTab] = useState<'products' | 'predios' | 'sensors' | 'graphics' | 'scripts' | 'vault' | 'permaculture'>(initialTab);
   const [selectedProductId, setSelectedProductId] = useState<string>('all');
@@ -36,12 +38,17 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
+  const handleTabSwitch = (tab: 'products' | 'predios' | 'sensors' | 'graphics' | 'scripts' | 'vault' | 'permaculture') => {
+    setActiveTab(tab);
+    onTabChange?.(tab);
+  };
+
   // Sub-view toggle for sensors: telemetry simulator vs formal report
   const [sensorSubView, setSensorSubView] = useState<'telemetry' | 'report'>('telemetry');
 
   // Sincronizar activeTab cuando cambie initialTab desde navegación externa
   useEffect(() => {
-    if (initialTab) {
+    if (initialTab && initialTab !== activeTab) {
       setActiveTab(initialTab);
     }
   }, [initialTab]);
@@ -554,7 +561,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
       {/* ===================== PRIMARY NAVIGATION TABS ===================== */}
       <div className="flex items-center gap-2 overflow-x-auto border-b border-slate-200 pb-2">
         <button
-          onClick={() => setActiveTab('products')}
+          onClick={() => handleTabSwitch('products')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sans text-xs font-bold transition-all shrink-0 ${
             activeTab === 'products'
               ? 'bg-[#0B2519] text-white shadow-md'
@@ -566,7 +573,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
         </button>
 
         <button
-          onClick={() => setActiveTab('predios')}
+          onClick={() => handleTabSwitch('predios')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sans text-xs font-bold transition-all shrink-0 ${
             activeTab === 'predios'
               ? 'bg-[#0B2519] text-white shadow-md'
@@ -578,7 +585,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
         </button>
 
         <button
-          onClick={() => setActiveTab('sensors')}
+          onClick={() => handleTabSwitch('sensors')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sans text-xs font-bold transition-all shrink-0 ${
             activeTab === 'sensors'
               ? 'bg-[#0B2519] text-white shadow-md'
@@ -590,7 +597,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
         </button>
 
         <button
-          onClick={() => setActiveTab('graphics')}
+          onClick={() => handleTabSwitch('graphics')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sans text-xs font-bold transition-all shrink-0 ${
             activeTab === 'graphics'
               ? 'bg-[#0B2519] text-white shadow-md'
@@ -602,7 +609,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
         </button>
 
         <button
-          onClick={() => setActiveTab('scripts')}
+          onClick={() => handleTabSwitch('scripts')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sans text-xs font-bold transition-all shrink-0 ${
             activeTab === 'scripts'
               ? 'bg-[#0B2519] text-white shadow-md'
@@ -614,7 +621,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
         </button>
 
         <button
-          onClick={() => setActiveTab('vault')}
+          onClick={() => handleTabSwitch('vault')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sans text-xs font-bold transition-all shrink-0 ${
             activeTab === 'vault'
               ? 'bg-purple-950 text-purple-100 border border-purple-400/50 shadow-md ring-2 ring-purple-400/30'
@@ -626,7 +633,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
         </button>
 
         <button
-          onClick={() => setActiveTab('permaculture')}
+          onClick={() => handleTabSwitch('permaculture')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sans text-xs font-bold transition-all shrink-0 ${
             activeTab === 'permaculture'
               ? 'bg-[#0B2519] text-white shadow-md ring-2 ring-emerald-400/50'
@@ -746,7 +753,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                   <button
                     onClick={() => {
                       setSelectedProductId(product.id);
-                      setActiveTab('sensors');
+                      handleTabSwitch('sensors');
                     }}
                     className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
                     title="Ver telemetría y datos"
