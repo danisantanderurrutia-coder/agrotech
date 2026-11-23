@@ -2,10 +2,10 @@ import { ProductDefinition } from './types';
 import { PREDIO_MENIELS, PREDIO_EL_BOLDO, PREDIO_QUEBRADA_BOLDOS } from './prediosData';
 
 export const PRODUCTS_REGISTRY: ProductDefinition[] = [
-  // 1. AGRITWIN 3D
+  // 1. x AGRITWIN 3D
   {
     id: 'agritwin',
-    name: 'AgriTwin 3D',
+    name: 'x Agritwin',
     tagline: 'Gemelo Digital Biofísico & Simulación 3D de Predios',
     version: '2.4.0',
     status: 'operational',
@@ -156,10 +156,10 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
     ]
   },
 
-  // 2. REWILD SUITE & REWILDMAPPER
+  // 2. x REWILD MAPPER
   {
     id: 'rewild',
-    name: 'Rewild Suite & RewildMapper',
+    name: 'x Rewild Mapper',
     tagline: 'Biomonitoreo Esclerófilo, PWA Offline & BioToken PBC',
     version: '1.8.2',
     status: 'operational',
@@ -290,11 +290,11 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
     ]
   },
 
-  // 3. KIOT HARDWARE & AUTOMATION EDGE
+  // 3. x AGROALERTA & HARDWARE EDGE
   {
     id: 'kiot-hardware',
-    name: 'KioT Sensores & Hardware Edge',
-    tagline: 'Nodos de Campo IP65 Plug-and-Play con ESP32 & LoRaWAN',
+    name: 'x AgroAlerta',
+    tagline: 'Hardware IoT, Nodos de Terreno & Alertas Críticas',
     version: '3.1.0',
     status: 'deployed',
     category: 'iot-hardware',
@@ -396,10 +396,10 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
     ]
   },
 
-  // 4. SATELLITES & VISOR PREDIAL / PASAPORTE VERDE
+  // 4. x TERRA RADAR & SATELLITES
   {
     id: 'satellites',
-    name: 'Inteligencia Satelital & Pasaporte Verde',
+    name: 'x Terra Radar',
     tagline: 'Copernicus Sentinel-2, Análisis Espectral & Certificación UE',
     version: '2.0.1',
     status: 'deployed',
@@ -505,17 +505,17 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
     ]
   },
 
-  // 5. PERMACULTURA & URRUTIA EDULAB
+  // 5. x PERMACULTURA MAPPER & X LIVING LAB
   {
     id: 'permaculture-edulab',
-    name: 'Permacultura & Urrutia Edulab',
-    tagline: 'Principios Regenerativos, Economía de los Hombros & Juegos Educativos',
+    name: 'x Permacultura Mapper',
+    tagline: 'Principios Regenerativos, Economía de los Hombros & X Living Lab',
     version: '1.2.0',
     status: 'operational',
     category: 'permaculture-edulab',
     logoUrl: './logo-peumo-quantum.jpg',
     previewImageUrl: './arbol_alquimico_splash.jpg',
-    architectureRole: 'División Edulab',
+    architectureRole: 'X Living Lab',
     techStack: ['Diseño Keyline', 'Zonificación 0-5', 'Biomimética', 'Lúdica Educativa', 'Gobernanza Cooperativa'],
     description: 'El corazón conceptual y ético de AgroTech Chile. Asesorado por Julio Pérez, traduce los principios de la permacultura y la agroecología en arquitectura de software, infraestructura de agua y el juego de cartas "Raíces y Chips".',
     highlights: [
@@ -529,7 +529,7 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
         id: 'ds-permaculture-metabolism',
         name: 'Matriz Metabólica Predial de Meniels',
         type: 'soil-db',
-        provider: 'Urrutia Edulab & Permacultura Team',
+        provider: 'X Living Lab & Permacultura Team',
         frequency: 'Mensual',
         format: 'JSON',
         description: 'Balance integrado de kilocalorías, kilovatios-hora, biomasa de leña y metros cúbicos de agua.',
@@ -662,10 +662,10 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
     ]
   },
 
-  // 6. AGRITWIN VISION & DRONES
+  // 6. x VISION & DRONES
   {
     id: 'agritwin-vision',
-    name: 'AgriTwin Vision & Drones',
+    name: 'x Vision',
     tagline: 'Vigilancia Ciberfísica 3D, Edge AI & Drone-in-a-Box',
     version: '1.0.0',
     status: 'operational',

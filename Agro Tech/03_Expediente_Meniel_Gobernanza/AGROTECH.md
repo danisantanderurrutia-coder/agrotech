@@ -38,11 +38,11 @@ graph TD
 
     AGROTECH["[[AGROTECH]]<br/>(Plataforma Madre & HoldCo)"]:::core
     
-    AGRITWIN["[[Agritwin]] / [[DigitalTwin]] 3D<br/>(Hijo 1 • Simulación Biofísica)"]:::son
-    REWILD["[[RewildMapper]] & [[Rewild Suite]]<br/>(Hijo 2 • PWA Biomonitoreo)"]:::son
-    KIOT["[[KioT Hardware]]<br/>(Nodos IP65 & ESP32)"]:::son
-    PASAPORTE["[[Pasaporte verde]] UE<br/>(Trazabilidad & Cero Deforestación)"]:::son
-    EDULAB["[[Urrutia Edulab]] & [[Juegos]]<br/>(Raíces y Chips)"]:::son
+    AGRITWIN["[[x Agritwin]] / [[DigitalTwin]] 3D<br/>(Línea x • Simulación Biofísica)"]:::son
+    REWILD["[[x Rewild Mapper]] & [[Rewild Suite]]<br/>(Línea x • PWA Biomonitoreo)"]:::son
+    KIOT["[[x AgroAlerta]] & [[KioT Hardware]]<br/>(Línea x • Nodos IP65 & ESP32)"]:::son
+    PASAPORTE["[[x Terra Radar]] & [[Pasaporte verde]]<br/>(Línea x • Satélites & EUDR)"]:::son
+    EDULAB["[[X Living Lab]] & [[Juegos]]<br/>(Raíces y Chips)"]:::son
     
     TRANSITION["[[Simulador de Transición Permacultural]]<br/>(Predio de mi Tío • Fases)"]:::son
     REGIONAL["[[AgroTwin Regional Parral y Retiro]]<br/>(Macro LULC 122.000 ha)"]:::son
@@ -92,9 +92,11 @@ Para evitar la sobrecarga de navegadores en zonas rurales con conectividad inter
 
 ---
 
-## 📦 2. Matriz de Productos y Servicios
+## 📦 2. Matriz de Productos y Servicios (Líneas "x Products")
 
-### 🌟 Producto Insigne: [[Agritwin]] / [[DigitalTwin]] Predial
+> **Parámetro X**: En la fase actual de desarrollo e incubación técnica, los productos operan bajo el prefijo experimental **"x"** (*x Agritwin*, *x Rewild Mapper*, *x AgroAlerta*, *x Terra Radar*, *x Permacultura Mapper*, *x Vision*), denotando módulos de ingeniería en validación continua de campo antes de su bautizo comercial definitivo.
+
+### 🌟 Línea Insigne: [[x Agritwin]] (Gemelo Digital Biofísico 3D)
 El principal baluarte tecnológico de [[AGROTECH]]. Modela en tres dimensiones cualquier predio agrícola conectando tres capas simultáneas:
 1. **Capa Satelital**: Pases cada 5 días de Sentinel-2 L2A para calcular vigor vegetal (`NDVI`), contenido hídrico (`NDWI`) y estrés hídrico (`CWSI`).
 2. **Capa Físico-Climática**: Algoritmos de balance de agua en suelo basados en [[FAO-56 Penman-Monteith]] en 3 estratos (0-20cm, 20-60cm, 60-100cm) y modelado katabático de drenaje de aire frío para predicción de heladas de radiación con 72h de anticipación.
@@ -144,9 +146,10 @@ Hardware diseñado y ensamblado con prototipado local para resistir barro, polvo
   * *Kit Bio-Visión*: Cámara ESP32-CAM + IA de diagnóstico foliar.
   * *Kit Bio-Ahuyentador*: Radar microondas y ultrasonido (20-65 kHz) para disuasión ecológica de fauna invasora.
 
-### 🎲 División Lúdico-Educativa: [[Urrutia Edulab]] & [[juegos]]
+### 🎲 División Lúdico-Educativa & Campo Experimental: [[X Living Lab]] & [[juegos]]
+* **Rol Estratégico del Living Lab**: Espacio de innovación abierta y transferencia tecnológica territorial donde la comunidad campesina, cooperativas y liceos agrícolas interactúan con las líneas operativas ("x Products").
 * **Juego "Raíces y Chips"**: Juego de cartas estratégico infantil y familiar donde los jugadores combinan insectos benéficos, micorrizas, sensores mecatrónicos y cubiertas vegetales para proteger su huerto frente a sequías y heladas.
-* **Seminarios "Manos en la Tierra"**: Talleres presenciales en el Maule y streaming internacional sobre bioinsumos, permacultura aplicada y Google Earth Engine para agricultores.
+* **Seminarios y Validación en Terreno**: Talleres presenciales en el Maule y streaming sobre bioinsumos, permacultura aplicada y teledetección para agricultores.
 
 ---
 

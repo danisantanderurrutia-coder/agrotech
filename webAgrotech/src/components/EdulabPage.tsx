@@ -24,15 +24,15 @@ export const EdulabPage: React.FC<EdulabPageProps> = ({ onNavigate }) => {
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-900/80 border border-emerald-500/40 text-emerald-300 text-xs font-sans font-bold">
               <GraduationCap className="w-3.5 h-3.5" />
-              <span>Capacitación agronómica en terreno y manuales operacionales</span>
+              <span>Laboratorio Vivo Territorial, Innovación Abierta & Juegos Estratégicos</span>
             </div>
             
             <h1 className="text-3xl sm:text-5xl font-extrabold text-white">
-              Urrutia Edulab & <span className="text-amber-400">Juego "Raíces y Chips"</span>
+              X Living Lab & <span className="text-amber-400">Juegos Estratégicos de Campo</span>
             </h1>
 
             <p className="text-base text-emerald-100/80 font-serif max-w-3xl">
-              Talleres presenciales en la Región del Maule, webinars online de precisión agrícola y literatura técnica sin jerga corporativa para agricultores y equipos de campo.
+              Laboratorio vivo de campo en la Región del Maule: validación comunitaria de las líneas operativas ("x Products"), juegos de mesa territoriales ("Raíces y Chips"), talleres de biofísica y transferencia tecnológica sin jerga corporativa.
             </p>
           </div>
         </div>

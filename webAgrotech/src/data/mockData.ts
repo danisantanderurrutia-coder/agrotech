@@ -102,7 +102,7 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
   {
     id: 'agroalerta-pocket',
     number: 1,
-    title: 'AgroAlerta: Micro-SaaS de Bolsillo (WhatsApp)',
+    title: 'x AgroAlerta: Micro-SaaS de Bolsillo (WhatsApp)',
     tagline: 'Alertas satelitales en 60 segundos por WhatsApp: heladas katabáticas, incendios, viento y estrés hídrico',
     category: 'Micro-SaaS',
     phase: 1,
@@ -132,7 +132,7 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
   {
     id: 'climate-reports',
     number: 2,
-    title: 'Informes de Riesgo Agroclimático Predial (Terran)',
+    title: 'x Terra Radar: Informes de Riesgo Agroclimático (Terran)',
     tagline: 'Diagnóstico geofísico pre-compra e inversión: agua a 10 años y heladas a 15 años en 24h',
     category: 'Risk Analysis',
     phase: 1,
@@ -160,7 +160,7 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
   {
     id: 'bv-agua',
     number: 3,
-    title: 'BV Agua: Telemetría Satelital & Balance de Cuenca',
+    title: 'x BV Agua: Telemetría Satelital & Balance de Cuenca',
     tagline: 'Riego inteligente, balance FAO-56 diario y monitoreo de napas sin hardware inicial',
     category: 'Digital Twin',
     phase: 1,
@@ -188,7 +188,7 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
   {
     id: 'bv-fuego',
     number: 4,
-    title: 'BV Fuego: Piro-Defensa & Aspersores Perimetrales',
+    title: 'x BV Fuego: Piro-Defensa & Aspersores Perimetrales',
     tagline: 'Detección temprana de riesgo de incendios forestales, viento Puelche y cortafuegos',
     category: 'Automation & AI',
     phase: 1,
@@ -216,7 +216,7 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
   {
     id: 'green-passport',
     number: 5,
-    title: 'Pasaporte Verde de Exportación UE (EUDR)',
+    title: 'x Pasaporte Verde: Exportación UE (EUDR)',
     tagline: 'Certificación ecológica digital y auditoría libre de deforestación para aduanas europeas',
     category: 'Export ESG',
     phase: 1,
@@ -244,7 +244,7 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
   {
     id: 'agritwin-suite',
     number: 6,
-    title: 'AgriTwin 3D Maestro: Núcleo Biofísico Territorial',
+    title: 'x Agritwin: Núcleo Biofísico Territorial 3D',
     tagline: 'El Plan Maestro digital que orquesta topografía 3D, cuencas y alimenta a todos los Micro-SaaS',
     category: 'Digital Twin',
     phase: 1,
@@ -272,7 +272,7 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
   {
     id: 'kiot-hardware',
     number: 7,
-    title: 'Kits KioT Hardware & Riego (Fase 2: Conexión Física)',
+    title: 'x AgroAlerta Nodos: Kits KioT Hardware & Riego (Fase 2)',
     tagline: 'Upgrade físico en campo: microelectrónica LoRaWAN IP65 y sondas FDR para clientes de software',
     category: 'Hardware IoT',
     phase: 2,
@@ -300,7 +300,7 @@ export const PRODUCT_PORTFOLIO: ProductLine[] = [
   {
     id: 'ecosystem-living-lab',
     number: 8,
-    title: 'Living Lab Maule Sur, Drones & Biopreparados (Fase 3: Ecosistema)',
+    title: 'X Living Lab Maule Sur, Drones & Biopreparados (Fase 3: Ecosistema)',
     tagline: 'La visión madura a largo plazo: Living Lab demostrativo, drones autónomos, agroforestería y comunidad campesina',
     category: 'BioTech & Token',
     phase: 3,

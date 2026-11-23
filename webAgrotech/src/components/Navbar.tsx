@@ -107,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                     </div>
                     <div className="flex-1">
                       <div>
-                        <span className="font-bold text-xs text-white">AgroAlerta (WhatsApp)</span>
+                        <span className="font-bold text-xs text-white">x AgroAlerta (Alertas WhatsApp)</span>
                       </div>
                       <span className="text-[10px] text-emerald-200/80 font-sans block">Alertas de helada (-1.8 °C), estrés y fuego en 60s.</span>
                     </div>
@@ -132,7 +132,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                   </div>
                 </div>
 
-                {/* 2. AgriTwin 3D Core */}
+                {/* 2. x AgriTwin 3D Core */}
                 <div className={`p-2 rounded-xl transition-colors ${
                   currentView === 'agritwin' ? 'bg-[#071A11] border border-emerald-500/30' : 'hover:bg-[#071A11]'
                 }`}>
@@ -145,14 +145,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                     </div>
                     <div className="flex-1">
                       <div>
-                        <span className="font-bold text-xs text-white">AgriTwin 3D (Gemelo Maestro)</span>
+                        <span className="font-bold text-xs text-white">x Agritwin (Gemelo Biofísico 3D)</span>
                       </div>
                       <span className="text-[10px] text-emerald-200/70 font-sans block">Simulación biofísica, heladas catabáticas y FAO-56.</span>
                     </div>
                   </button>
                 </div>
 
-                {/* 3. Informes Terran & Pasaporte UE */}
+                {/* 3. x Terra Radar & Satélites */}
                 <div className={`p-2 rounded-xl transition-colors ${
                   ['satellites', 'satellites-pasaporte'].includes(currentView) ? 'bg-[#071A11] border border-emerald-500/30' : 'hover:bg-[#071A11]'
                 }`}>
@@ -165,7 +165,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                     </div>
                     <div className="flex-1">
                       <div>
-                        <span className="font-bold text-xs text-white">Informes Terran & Pasaporte EUDR</span>
+                        <span className="font-bold text-xs text-white">x Terra Radar (Satélites & EUDR)</span>
                       </div>
                       <span className="text-[10px] text-emerald-200/70 font-sans block">Diagnóstico de cuenca y certificación de no-deforestación.</span>
                     </div>
@@ -174,7 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
 
                 <div className="my-1 border-t border-emerald-900/60" />
 
-                {/* 4. Hardware KioT */}
+                {/* 4. x AgroAlerta / Nodos Edge */}
                 <button
                   onClick={() => handleNavClick('hardware')}
                   className={`w-full flex items-start gap-2.5 p-2 rounded-xl text-left transition-colors ${
@@ -186,7 +186,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                   </div>
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <span className="font-bold text-xs text-white">Kits KioT Hardware (Suelo & Clima)</span>
+                      <span className="font-bold text-xs text-white">x AgroAlerta Nodos (K-IoT Hardware)</span>
                     </div>
                     <span className="text-[10px] text-emerald-200/70 font-sans block">Sondas FDR tri-estrato. Calibración física in-situ bajo pedido.</span>
                   </div>
@@ -194,7 +194,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
 
                 <div className="my-1 border-t border-emerald-900/60" />
 
-                {/* 5. Living Lab & Rewild */}
+                {/* 5. x Rewild Mapper & X Living Lab */}
                 <button
                   onClick={() => handleNavClick('rewild-hub')}
                   className={`w-full flex items-start gap-2.5 p-2 rounded-xl text-left transition-colors ${
@@ -206,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                   </div>
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <span className="font-bold text-xs text-white">Living Lab & Rewild Suite</span>
+                      <span className="font-bold text-xs text-white">x Rewild Mapper (X Living Lab)</span>
                     </div>
                     <span className="text-[10px] text-emerald-200/70 font-sans block">Centro I+D San Clemente, drones y restauración de cuenca.</span>
                   </div>
@@ -434,11 +434,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             </div>
           </div>
 
-          {/* 2. AgriTwin 3D Flagship */}
+          {/* 2. x AgriTwin 3D Flagship */}
           <div className="p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 space-y-2">
             <button onClick={() => handleNavClick('agritwin')} className="w-full flex items-center gap-2 text-left text-white font-bold">
               <Cpu className="w-4 h-4 text-amber-400" />
-              <span>AgriTwin 3D (Gemelo Maestro)</span>
+              <span>x Agritwin (Gemelo Biofísico 3D)</span>
             </button>
             <div className="flex items-center justify-between pt-1 border-t border-emerald-900/60 text-[10px] font-mono">
               <button onClick={() => handleNavClick('agritwin')} className="text-emerald-300 hover:text-white flex items-center gap-1">
@@ -457,22 +457,22 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             </div>
           </div>
 
-          {/* 3. Informes Terran & Pasaporte UE */}
+          {/* 3. x Terra Radar & Satélites */}
           <button onClick={() => handleNavClick('satellites')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
             <FileText className="w-4 h-4 text-blue-400" />
-            <span>Informes Terran & Pasaporte EUDR</span>
+            <span>x Terra Radar (Satélites & EUDR)</span>
           </button>
 
-          {/* 4. Hardware KioT */}
+          {/* 4. x AgroAlerta / Nodos */}
           <button onClick={() => handleNavClick('hardware')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
             <Activity className="w-4 h-4 text-amber-400" />
-            <span>Kits KioT Hardware (Suelo & Clima)</span>
+            <span>x AgroAlerta Nodos (K-IoT Hardware)</span>
           </button>
 
-          {/* 5. Living Lab & Rewild */}
+          {/* 5. x Rewild Mapper (X Living Lab) */}
           <button onClick={() => handleNavClick('rewild-hub')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
             <Trees className="w-4 h-4 text-emerald-400" />
-            <span>Living Lab & Rewild Suite</span>
+            <span>x Rewild Mapper (X Living Lab)</span>
           </button>
 
           {/* 6. Tienda */}

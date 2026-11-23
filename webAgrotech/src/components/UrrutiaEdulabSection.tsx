@@ -45,7 +45,7 @@ export const UrrutiaEdulabSection: React.FC<UrrutiaEdulabSectionProps> = ({ onNa
           <div className="space-y-3 max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100 border border-amber-300 text-amber-950 text-xs font-sans font-bold">
               <Gamepad2 className="w-4 h-4 text-amber-700" />
-              <span>Ecosistema Edulab Infantil • 9 Espacios Didácticos</span>
+              <span>X Living Lab Didáctico • 9 Espacios & Juegos Territoriales</span>
             </div>
 
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B2519]">

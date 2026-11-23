@@ -57,6 +57,8 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
   // Selected note in Obsidian Vault Viewer (Default: Especificación Técnica de Ingesta & Arquitectura)
   const [selectedNoteId, setSelectedNoteId] = useState<string>('vault-02_arquitectura_software_hardware_arquitectura_ingesta_datos_agritwin_md');
   const [vaultCategoryFilter, setVaultCategoryFilter] = useState<'all' | 'arch' | 'theory' | 'governance'>('all');
+  const [vaultSearchQuery, setVaultSearchQuery] = useState<string>('');
+  const [copiedMarkdown, setCopiedMarkdown] = useState<boolean>(false);
 
   // Server health state
   const [serversStatus, setServersStatus] = useState({
@@ -144,22 +146,279 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
     return ALL_DOC_NOTES.find(n => n.id === selectedNoteId) || ALL_DOC_NOTES[0];
   }, [selectedNoteId]);
 
-  // Filtered Vault Notes by Category
+  // Filtered Vault Notes by Category and Search
   const filteredVaultNotes = useMemo(() => {
     return ALL_DOC_NOTES.filter(note => {
       const p = (note as any).relPath || note.vaultPath || '';
+      let matchesCategory = true;
       if (vaultCategoryFilter === 'arch') {
-        return p.includes('02_Arquitectura');
+        matchesCategory = p.includes('02_Arquitectura');
+      } else if (vaultCategoryFilter === 'theory') {
+        matchesCategory = p.includes('01_Marco');
+      } else if (vaultCategoryFilter === 'governance') {
+        matchesCategory = p.includes('00_INDICE') || p.includes('03_Expediente') || p.includes('04_Recursos') || p.includes('05_GOBERNANZA');
       }
-      if (vaultCategoryFilter === 'theory') {
-        return p.includes('01_Marco');
-      }
-      if (vaultCategoryFilter === 'governance') {
-        return p.includes('00_INDICE') || p.includes('03_Expediente') || p.includes('04_Recursos') || p.includes('05_GOBERNANZA');
-      }
-      return true;
+
+      const q = vaultSearchQuery.toLowerCase().trim();
+      const matchesSearch = q === '' ||
+        note.title.toLowerCase().includes(q) ||
+        note.summary.toLowerCase().includes(q) ||
+        (note.tags && note.tags.some((t: string) => t.toLowerCase().includes(q))) ||
+        (note.contentMarkdown && note.contentMarkdown.toLowerCase().includes(q));
+
+      return matchesCategory && matchesSearch;
     });
-  }, [vaultCategoryFilter]);
+  }, [vaultCategoryFilter, vaultSearchQuery]);
+
+  // Handler to select a note via Wikilink
+  const handleSelectWikilink = (targetTitleOrFile: string) => {
+    const cleanTarget = targetTitleOrFile.trim().toLowerCase();
+    const target = ALL_DOC_NOTES.find((n: any) =>
+      n.title?.toLowerCase() === cleanTarget ||
+      n.fileName?.replace(/\.md$/, '').toLowerCase() === cleanTarget ||
+      (n.aliases && n.aliases.some((a: string) => a.toLowerCase() === cleanTarget)) ||
+      n.id.toLowerCase().includes(cleanTarget.replace(/\s+/g, '_'))
+    );
+    if (target) {
+      setSelectedNoteId(target.id);
+    }
+  };
+
+  // Handler to copy note markdown
+  const handleCopyNoteMarkdown = () => {
+    if (!currentNote?.contentMarkdown) return;
+    navigator.clipboard.writeText(currentNote.contentMarkdown);
+    setCopiedMarkdown(true);
+    setTimeout(() => setCopiedMarkdown(false), 2000);
+  };
+
+  // Helper to render formatted markdown into rich typography and tables
+  const renderFormattedMarkdown = (markdown: string, onSelectWikilink: (target: string) => void) => {
+    if (!markdown) return null;
+
+    const lines = markdown.split('\n');
+    const elements: React.ReactNode[] = [];
+    let i = 0;
+
+    const parseInline = (text: string): React.ReactNode => {
+      const parts: React.ReactNode[] = [];
+      const regex = /(\[\[(.*?)\]\])|(\*\*(.*?)\*\*)|(`(.*?)`)/g;
+      let lastIndex = 0;
+      let match;
+      let keyIdx = 0;
+
+      while ((match = regex.exec(text)) !== null) {
+        if (match.index > lastIndex) {
+          parts.push(text.substring(lastIndex, match.index));
+        }
+
+        if (match[1]) {
+          const target = match[2];
+          const pipeIdx = target.indexOf('|');
+          const linkName = pipeIdx >= 0 ? target.substring(0, pipeIdx) : target;
+          const displayText = pipeIdx >= 0 ? target.substring(pipeIdx + 1) : target;
+
+          parts.push(
+            <button
+              key={`wl-${keyIdx++}`}
+              onClick={(e) => {
+                e.preventDefault();
+                onSelectWikilink(linkName);
+              }}
+              className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-purple-100 text-purple-900 font-mono text-[11px] font-bold border border-purple-200 hover:bg-purple-200 transition-colors mx-0.5 cursor-pointer"
+              title={`Navegar a nota: ${linkName}`}
+            >
+              <span>[[{displayText}]]</span>
+            </button>
+          );
+        } else if (match[3]) {
+          parts.push(
+            <strong key={`b-${keyIdx++}`} className="font-extrabold text-slate-950">
+              {match[4]}
+            </strong>
+          );
+        } else if (match[5]) {
+          parts.push(
+            <code key={`c-${keyIdx++}`} className="font-mono text-xs px-1.5 py-0.5 rounded bg-slate-200 text-purple-900 border border-slate-300">
+              {match[6]}
+            </code>
+          );
+        }
+
+        lastIndex = regex.lastIndex;
+      }
+
+      if (lastIndex < text.length) {
+        parts.push(text.substring(lastIndex));
+      }
+
+      return parts.length > 0 ? parts : text;
+    };
+
+    while (i < lines.length) {
+      const line = lines[i];
+
+      // Code blocks
+      if (line.trim().startsWith('```')) {
+        const codeLang = line.trim().replace(/^```/, '');
+        const codeLines: string[] = [];
+        i++;
+        while (i < lines.length && !lines[i].trim().startsWith('```')) {
+          codeLines.push(lines[i]);
+          i++;
+        }
+        i++;
+        elements.push(
+          <div key={`code-${i}`} className="my-3 rounded-xl overflow-hidden border border-slate-800 shadow-md">
+            {codeLang && (
+              <div className="bg-slate-950 px-3 py-1 text-[10px] font-mono text-slate-400 uppercase tracking-wider border-b border-slate-800">
+                {codeLang}
+              </div>
+            )}
+            <pre className="p-4 bg-slate-900 text-emerald-300 font-mono text-xs leading-relaxed overflow-x-auto">
+              <code>{codeLines.join('\n')}</code>
+            </pre>
+          </div>
+        );
+        continue;
+      }
+
+      // Tables
+      if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+        const tableLines: string[] = [];
+        while (i < lines.length && lines[i].trim().startsWith('|') && lines[i].trim().endsWith('|')) {
+          tableLines.push(lines[i].trim());
+          i++;
+        }
+        if (tableLines.length >= 2) {
+          const headerRow = tableLines[0].split('|').slice(1, -1).map(c => c.trim());
+          const bodyRows = tableLines.slice(2).map(r => r.split('|').slice(1, -1).map(c => c.trim()));
+
+          elements.push(
+            <div key={`table-${i}`} className="my-4 overflow-x-auto rounded-xl border border-slate-200 shadow-xs">
+              <table className="w-full text-left text-xs font-sans">
+                <thead className="bg-purple-50 border-b border-purple-200 text-purple-950 font-bold uppercase tracking-wider text-[10px]">
+                  <tr>
+                    {headerRow.map((h, hIdx) => (
+                      <th key={hIdx} className="p-2.5 font-mono">{parseInline(h)}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 bg-white">
+                  {bodyRows.map((row, rIdx) => (
+                    <tr key={rIdx} className="odd:bg-white even:bg-slate-50/60 hover:bg-purple-50/30 transition-colors">
+                      {row.map((cell, cIdx) => (
+                        <td key={cIdx} className="p-2.5 text-slate-700 font-serif leading-relaxed">
+                          {parseInline(cell)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        }
+        continue;
+      }
+
+      // Headings
+      if (line.startsWith('# ')) {
+        elements.push(
+          <h1 key={`h1-${i}`} className="text-xl sm:text-2xl font-black text-slate-950 border-b border-purple-200 pb-2 mt-6 mb-3 font-serif">
+            {parseInline(line.replace(/^#\s+/, ''))}
+          </h1>
+        );
+        i++;
+        continue;
+      }
+      if (line.startsWith('## ')) {
+        elements.push(
+          <h2 key={`h2-${i}`} className="text-lg sm:text-xl font-extrabold text-slate-900 border-l-4 border-purple-600 pl-3 mt-6 mb-3">
+            {parseInline(line.replace(/^##\s+/, ''))}
+          </h2>
+        );
+        i++;
+        continue;
+      }
+      if (line.startsWith('### ')) {
+        elements.push(
+          <h3 key={`h3-${i}`} className="text-sm sm:text-base font-bold text-slate-900 mt-4 mb-2 font-mono flex items-center gap-1.5">
+            <span className="text-purple-600">▪</span>
+            <span>{parseInline(line.replace(/^###\s+/, ''))}</span>
+          </h3>
+        );
+        i++;
+        continue;
+      }
+      if (line.startsWith('#### ')) {
+        elements.push(
+          <h4 key={`h4-${i}`} className="text-xs sm:text-sm font-bold text-slate-800 mt-3 mb-1 font-sans">
+            {parseInline(line.replace(/^####\s+/, ''))}
+          </h4>
+        );
+        i++;
+        continue;
+      }
+
+      // Blockquotes
+      if (line.startsWith('> ')) {
+        const quoteLines: string[] = [];
+        while (i < lines.length && lines[i].startsWith('>')) {
+          quoteLines.push(lines[i].replace(/^>\s?/, ''));
+          i++;
+        }
+        elements.push(
+          <div key={`quote-${i}`} className="p-3.5 my-3 rounded-xl bg-purple-50/70 border-l-4 border-purple-500 text-purple-950 font-serif text-xs sm:text-sm leading-relaxed shadow-2xs">
+            {quoteLines.map((ql, qIdx) => (
+              <p key={qIdx} className={qIdx > 0 ? 'mt-1.5' : ''}>{parseInline(ql)}</p>
+            ))}
+          </div>
+        );
+        continue;
+      }
+
+      // Horizontal rule
+      if (line.trim() === '---' || line.trim() === '***') {
+        elements.push(<hr key={`hr-${i}`} className="my-5 border-slate-200" />);
+        i++;
+        continue;
+      }
+
+      // Bullet lists
+      if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
+        const listItems: string[] = [];
+        while (i < lines.length && (lines[i].trim().startsWith('- ') || lines[i].trim().startsWith('* '))) {
+          listItems.push(lines[i].trim().replace(/^[-*]\s+/, ''));
+          i++;
+        }
+        elements.push(
+          <ul key={`ul-${i}`} className="my-2 space-y-1.5 pl-1">
+            {listItems.map((li, liIdx) => (
+              <li key={liIdx} className="flex items-start gap-2 text-xs sm:text-sm text-slate-700 font-serif leading-relaxed">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-2 shrink-0" />
+                <div className="flex-1">{parseInline(li)}</div>
+              </li>
+            ))}
+          </ul>
+        );
+        continue;
+      }
+
+      // Regular paragraphs
+      if (line.trim() !== '') {
+        elements.push(
+          <p key={`p-${i}`} className="text-xs sm:text-sm text-slate-700 font-serif leading-relaxed my-2">
+            {parseInline(line)}
+          </p>
+        );
+      }
+
+      i++;
+    }
+
+    return elements;
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 lg:px-8 py-8 space-y-8 animate-fadeIn text-slate-900 pb-28">
@@ -1620,19 +1879,36 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
               </div>
             </div>
 
-            {/* Note Filter Tabs & Search Grid */}
-            <div className="space-y-3">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <span className="text-xs font-mono font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-                  <Database className="w-3.5 h-3.5 text-purple-600" />
-                  <span>Catálogo de Especificaciones & Notas Vivas ({filteredVaultNotes.length})</span>
-                </span>
-                
-                {/* Category Filter Pills */}
-                <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl text-xs font-sans">
+            {/* WORKSPACE DE 2 COLUMNAS: DIRECTORIO INTUITIVO & LECTOR FORMATEADO */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-2">
+              
+              {/* COLUMNA 1: DIRECTORIO DE ESPECIFICACIONES (4 COLS) */}
+              <div className="lg:col-span-4 space-y-3">
+                {/* Search Bar */}
+                <div className="relative">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                  <input
+                    type="text"
+                    value={vaultSearchQuery}
+                    onChange={(e) => setVaultSearchQuery(e.target.value)}
+                    placeholder="Buscar en especificaciones..."
+                    className="w-full pl-9 pr-8 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-sans text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:bg-white transition-all shadow-inner"
+                  />
+                  {vaultSearchQuery && (
+                    <button
+                      onClick={() => setVaultSearchQuery('')}
+                      className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 text-xs"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+
+                {/* Filter Pills */}
+                <div className="flex flex-wrap gap-1 bg-slate-100 p-1 rounded-xl text-[11px] font-sans">
                   <button
                     onClick={() => setVaultCategoryFilter('all')}
-                    className={`px-2.5 py-1 rounded-lg font-bold transition-all ${
+                    className={`flex-1 py-1 px-2 rounded-lg font-bold text-center transition-all ${
                       vaultCategoryFilter === 'all'
                         ? 'bg-white text-slate-900 shadow-xs'
                         : 'text-slate-600 hover:text-slate-900'
@@ -1642,136 +1918,210 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                   </button>
                   <button
                     onClick={() => setVaultCategoryFilter('arch')}
-                    className={`px-2.5 py-1 rounded-lg font-bold transition-all flex items-center gap-1 ${
+                    className={`py-1 px-2 rounded-lg font-bold transition-all ${
                       vaultCategoryFilter === 'arch'
                         ? 'bg-purple-900 text-white shadow-xs'
                         : 'text-slate-600 hover:text-purple-900'
                     }`}
+                    title="Arquitectura & Software"
                   >
-                    <span>📐 Arquitectura & Software</span>
+                    📐 Arq
                   </button>
                   <button
                     onClick={() => setVaultCategoryFilter('theory')}
-                    className={`px-2.5 py-1 rounded-lg font-bold transition-all flex items-center gap-1 ${
+                    className={`py-1 px-2 rounded-lg font-bold transition-all ${
                       vaultCategoryFilter === 'theory'
                         ? 'bg-emerald-900 text-white shadow-xs'
                         : 'text-slate-600 hover:text-emerald-900'
                     }`}
+                    title="Biofísica & Modelos"
                   >
-                    <span>🔬 Biofísica & Modelos</span>
+                    🔬 Bio
                   </button>
                   <button
                     onClick={() => setVaultCategoryFilter('governance')}
-                    className={`px-2.5 py-1 rounded-lg font-bold transition-all flex items-center gap-1 ${
+                    className={`py-1 px-2 rounded-lg font-bold transition-all ${
                       vaultCategoryFilter === 'governance'
                         ? 'bg-amber-800 text-white shadow-xs'
                         : 'text-slate-600 hover:text-amber-900'
                     }`}
+                    title="Gobernanza & Dossiers"
                   >
-                    <span>🤝 Gobernanza & Dossiers</span>
+                    🤝 Gob
                   </button>
                 </div>
+
+                {/* Lista de Notas con Scroll Intuitivo */}
+                <div className="space-y-2 max-h-[700px] overflow-y-auto pr-1">
+                  {filteredVaultNotes.length === 0 ? (
+                    <div className="p-8 text-center text-slate-400 font-serif text-xs bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                      No se encontraron notas con el filtro actual.
+                    </div>
+                  ) : (
+                    filteredVaultNotes.map((note) => {
+                      const isSelected = currentNote?.id === note.id;
+                      const rel = (note as any).relPath || note.vaultPath || '';
+                      const isArch = rel.includes('02_Arquitectura');
+                      const isBio = rel.includes('01_Marco');
+                      const isReport = note.category === 'informe-generado' || rel.includes('Informes Generados');
+
+                      return (
+                        <div
+                          key={note.id}
+                          onClick={() => setSelectedNoteId(note.id)}
+                          className={`p-3 rounded-2xl border transition-all cursor-pointer text-left space-y-1.5 ${
+                            isSelected
+                              ? 'bg-gradient-to-r from-purple-950 to-slate-900 text-white border-purple-500 shadow-md ring-1 ring-purple-400/30'
+                              : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-800 shadow-2xs'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between gap-1 text-[10px] font-mono">
+                            <span className={`px-2 py-0.5 rounded-full font-bold ${
+                              isSelected
+                                ? 'bg-purple-800 text-purple-200'
+                                : isArch
+                                ? 'bg-purple-50 text-purple-800 border border-purple-200'
+                                : isBio
+                                ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                                : isReport
+                                ? 'bg-amber-50 text-amber-800 border border-amber-200'
+                                : 'bg-slate-100 text-slate-600'
+                            }`}>
+                              {isArch ? '📐 Arquitectura' : isBio ? '🔬 Biofísica' : isReport ? '📋 Informe' : '🤝 Gobernanza'}
+                            </span>
+                            {note.tags && note.tags.length > 0 && (
+                              <span className={`truncate max-w-[120px] ${isSelected ? 'text-purple-300' : 'text-slate-400'}`}>
+                                #{note.tags[0].replace(/^#/, '')}
+                              </span>
+                            )}
+                          </div>
+
+                          <h5 className={`font-bold text-xs leading-snug line-clamp-2 ${isSelected ? 'text-white' : 'text-slate-950'}`}>
+                            {note.title}
+                          </h5>
+
+                          <p className={`text-[11px] font-serif line-clamp-2 leading-relaxed ${isSelected ? 'text-slate-300' : 'text-slate-500'}`}>
+                            {note.summary || 'Especificación técnica canónica de AgroTech.'}
+                          </p>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 max-h-56 overflow-y-auto p-2 bg-slate-50 rounded-2xl border border-slate-200">
-                {filteredVaultNotes.map(note => {
-                  const isSelected = selectedNoteId === note.id || currentNote?.id === note.id;
-                  const isReport = note.category === 'informe-generado' || note.vaultPath?.includes('Informes Generados');
-                  const isTemplate = note.category === 'plantilla' || note.vaultPath?.includes('Plantillas Informes');
+              {/* COLUMNA 2: LECTOR FORMATEADO DE ESPECIFICACIÓN (8 COLS) */}
+              <div className="lg:col-span-8 space-y-4">
+                {currentNote ? (
+                  <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-5">
+                    
+                    {/* Header de la Nota */}
+                    <div className="border-b border-slate-100 pb-5 space-y-3">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div className="flex items-center gap-2 flex-wrap text-[11px] font-mono">
+                          <span className="px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-900 font-bold border border-purple-200">
+                            {currentNote.vaultPath ? currentNote.vaultPath.split('/')[0] : 'Bóveda Técnica'}
+                          </span>
+                          {currentNote.vaultPath && (
+                            <span className="text-slate-400 truncate max-w-sm">
+                              {currentNote.vaultPath}
+                            </span>
+                          )}
+                        </div>
 
-                  return (
-                    <button
-                      key={note.id}
-                      onClick={() => setSelectedNoteId(note.id)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-sans font-bold transition-all flex items-center gap-1.5 ${
-                        isSelected
-                          ? 'bg-purple-900 text-white shadow-md scale-105'
-                          : isReport
-                          ? 'bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-100'
-                          : isTemplate
-                          ? 'bg-blue-50 text-blue-900 border border-blue-200 hover:bg-blue-100'
-                          : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
-                      }`}
-                    >
-                      {isReport && <FileText className="w-3 h-3 text-amber-600" />}
-                      {isTemplate && <FileText className="w-3 h-3 text-blue-600" />}
-                      <span>{note.title}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+                        {/* Actions Toolbar */}
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={handleCopyNoteMarkdown}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-bold transition-all"
+                            title="Copiar texto markdown completo"
+                          >
+                            {copiedMarkdown ? (
+                              <>
+                                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                <span className="text-emerald-700">¡Copiado!</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3.5 h-3.5" />
+                                <span>Copiar</span>
+                              </>
+                            )}
+                          </button>
 
-            {/* Current Note Header Details */}
-            {currentNote && (
-              <div className="space-y-4 pt-4 border-t border-slate-100">
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="font-extrabold text-2xl text-slate-900">{currentNote.title}</h4>
-                      {currentNote.vaultPath && (
-                        <span className="text-[11px] font-mono px-2.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-300">
-                          {currentNote.vaultPath}
-                        </span>
+                          {currentNote.vaultPath && (
+                            <a
+                              href={`obsidian://open?vault=Agro%20Tech&file=${encodeURIComponent(currentNote.vaultPath.replace(/^Agro Tech\//, '').replace(/\.md$/, ''))}`}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-900 border border-purple-200 font-mono text-xs font-bold transition-all shadow-2xs"
+                              title="Abrir en Obsidian Desktop"
+                            >
+                              <ExternalLink className="w-3.5 h-3.5 text-purple-700" />
+                              <span>Obsidian</span>
+                            </a>
+                          )}
+                        </div>
+                      </div>
+
+                      <h3 className="text-xl sm:text-2xl font-black text-slate-950 font-serif leading-tight">
+                        {currentNote.title}
+                      </h3>
+
+                      {currentNote.summary && (
+                        <p className="text-xs sm:text-sm text-slate-600 font-serif leading-relaxed italic bg-slate-50 p-3 rounded-xl border border-slate-100">
+                          {currentNote.summary}
+                        </p>
+                      )}
+
+                      {/* Tags */}
+                      {currentNote.tags && currentNote.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {currentNote.tags.map((tag: string, i: number) => (
+                            <span
+                              key={i}
+                              className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 font-medium"
+                            >
+                              #{tag.replace(/^#/, '')}
+                            </span>
+                          ))}
+                        </div>
                       )}
                     </div>
-                    <p className="text-sm text-slate-600 font-serif leading-relaxed">{currentNote.summary}</p>
-                  </div>
-                  
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-1.5 shrink-0 max-w-xs">
-                    {(currentNote.tags || []).map((tag: string, i: number) => (
-                      <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-50 text-purple-800 border border-purple-200 font-bold">
-                        #{tag.replace(/^#/, '')}
-                      </span>
-                    ))}
-                  </div>
-                </div>
 
-                {/* Markdown Rendered Content */}
-                <div className="p-6 sm:p-8 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 font-serif text-sm leading-relaxed whitespace-pre-wrap max-h-[600px] overflow-y-auto shadow-inner">
-                  {currentNote.contentMarkdown}
-                </div>
-
-                {/* Interactive Wikilinks Badges */}
-                {currentNote.wikilinks && currentNote.wikilinks.length > 0 && (
-                  <div className="pt-4 border-t border-slate-100 space-y-2">
-                    <span className="text-[11px] font-mono text-slate-500 block font-bold uppercase tracking-wider">
-                      🔗 ENLACES WIKI CONECTADOS (GRAPH VIEW INTERACTIVO)
-                    </span>
-                    <div className="flex flex-wrap gap-2">
-                      {currentNote.wikilinks.map((wl: string, i: number) => {
-                        const targetNote = ALL_DOC_NOTES.find((n: any) => 
-                          n.title?.toLowerCase() === wl.toLowerCase() || 
-                          n.fileName?.replace(/\.md$/, '').toLowerCase() === wl.toLowerCase() ||
-                          (n.aliases && n.aliases.some((a: string) => a.toLowerCase() === wl.toLowerCase()))
-                        );
-
-                        return (
-                          <button
-                            key={i}
-                            onClick={() => {
-                              if (targetNote) {
-                                setSelectedNoteId(targetNote.id);
-                              }
-                            }}
-                            className={`text-xs font-mono px-3 py-1.5 rounded-xl border transition-all flex items-center gap-1.5 ${
-                              targetNote
-                                ? 'bg-emerald-50 text-emerald-900 border-emerald-300 hover:bg-emerald-100 hover:scale-105 cursor-pointer font-bold shadow-xs'
-                                : 'bg-slate-100 text-slate-500 border-slate-300 opacity-70 cursor-default'
-                            }`}
-                            title={targetNote ? `Ir a nota: ${targetNote.title}` : 'Nota no encontrada en vault'}
-                          >
-                            <span>[[{wl}]]</span>
-                            {targetNote && <ChevronRight className="w-3 h-3 text-emerald-700" />}
-                          </button>
-                        );
-                      })}
+                    {/* Contenido Renderizado Científico & Formateado */}
+                    <div className="prose prose-slate max-w-none text-slate-800 text-sm max-h-[640px] overflow-y-auto pr-3 font-serif leading-relaxed">
+                      {renderFormattedMarkdown(currentNote.contentMarkdown, handleSelectWikilink)}
                     </div>
+
+                    {/* Wikilinks Conectados (Graph View) */}
+                    {currentNote.wikilinks && currentNote.wikilinks.length > 0 && (
+                      <div className="pt-4 border-t border-slate-100 space-y-2">
+                        <span className="text-[11px] font-mono text-slate-500 block font-bold uppercase tracking-wider">
+                          🔗 ENLACES WIKI CONECTADOS (GRAPH VIEW INTERACTIVO)
+                        </span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {currentNote.wikilinks.map((wl: string, i: number) => (
+                            <button
+                              key={i}
+                              onClick={() => handleSelectWikilink(wl)}
+                              className="text-xs font-mono px-3 py-1 rounded-xl bg-purple-50 text-purple-900 border border-purple-200 hover:bg-purple-100 hover:border-purple-300 transition-all font-semibold shadow-2xs flex items-center gap-1 cursor-pointer"
+                            >
+                              <span>[[{wl}]]</span>
+                              <ChevronRight className="w-3 h-3 text-purple-600" />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                  </div>
+                ) : (
+                  <div className="p-12 text-center text-slate-400 bg-white rounded-3xl border border-slate-200 font-serif">
+                    Selecciona una nota técnica del catálogo a la izquierda para visualizar su especificación completa.
                   </div>
                 )}
               </div>
-            )}
+
+            </div>
 
           </div>
         </div>
