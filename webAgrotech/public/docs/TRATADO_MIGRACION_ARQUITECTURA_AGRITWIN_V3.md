@@ -197,19 +197,15 @@ En contraste radical, la arquitectura de AgriTwin responde a una **ingeniería f
 
 ```mermaid
 flowchart TD
-    subgraph PILARES ["Los 5 Pilares de la Doctrina Destination Earth en AgriTwin"]
-        P1["1. De Vectores Inertes a Operadores en EDPs"]
-        P2["2. Motores Headless e Isomórficos (Cero DOM)"]
-        P3["3. Desarme de Gravedad de Datos (DEDL / Polytope O(1))"]
-        P4["4. Asimilación Continua de Datos y Nudging (Kalman)"]
-        P5["5. Ingeniería Frugal: Metamodelos Subrogados (<1ms)"]
+    subgraph PILARES ["Los 5 Pilares de Destination Earth y su Aterrizaje en AgriTwin"]
+        direction TB
+        P1["1. De Vectores Inertes a Operadores en EDPs<br/>➔ MONICA (Richards 1D + Feddes)"]
+        P2["2. Motores Headless e Isomórficos (Cero DOM)<br/>➔ soil-water-engine.js + Contratos Tipados"]
+        P3["3. Desarme de Gravedad de Datos (Polytope O(1))<br/>➔ Malla Uber H3 (ridvanzengin) + STAC/COG"]
+        P4["4. Asimilación Continua de Datos y Nudging<br/>➔ FedAgriTwin + Filtro de Kalman EKF en ESP32"]
+        P5["5. Ingeniería Frugal Situada (< 1 ms a 60 FPS)<br/>➔ AgriTwin-RL (Metamodelo Subrogado XGBoost)"]
+        P1 --> P2 --> P3 --> P4 --> P5
     end
-
-    P1 -->|"Física de Transporte"| M["MONICA (Richards 1D + Feddes)"]
-    P2 -->|"Portabilidad Total"| H["soil-water-engine.js + Contratos"]
-    P3 -->|"Corte Tensorial Rápido"| H3["Malla Uber H3 (ridvanzengin)"]
-    P4 -->|"Sombra Digital Viva"| K["FedAgriTwin + EKF en ESP32"]
-    P5 -->|"Respuesta a 60 FPS"| S["AgriTwin-RL (Surrogate XGBoost)"]
 ```
 
 <div class="mermaid-legend">
@@ -339,7 +335,7 @@ La llanura de Konya concentra más de 3 millones de hectáreas agrícolas bajo u
 En lugar de almacenar geometrías de parcelas con fronteras irregulares que hacen colapsar los índices espaciales R-Tree en bases de datos relacionales, el proyecto adopta la **Malla Hexagonal Discreta Uber H3**.
 
 ```mermaid
-flowchart LR
+flowchart TD
     GPS["Coordenadas GPS (Latitud, Longitud)"] --> PROJ["Proyección a Icosaedro Geodésico"]
     PROJ --> H6["H3 Nivel 6 (~36 km²)<br>Datos Climáticos y ERA5"]
     H6 --> H9["H3 Nivel 9 (~0.1 km²)<br>Parcela, Suelo y Topografía"]
@@ -572,25 +568,18 @@ Bajo la doctrina DestinE de sustituir aproximaciones estáticas por operadores b
 ### 6.3. ¿En qué difiere el cálculo y qué mejora exactamente?
 
 ```mermaid
-flowchart LR
-    subgraph ANTES ["Motor Previo (soil-water-engine.js)"]
-        A1["1 Sola Cubeta Homogénea (0 a 60 cm)"]
-        A2["Drenaje Instantáneo (Pérdida Binaria)"]
-        A3["Estrés Lineal Simple (Ks)"]
-        A4["Solo Volumen de Agua (mm)"]
+flowchart TD
+    subgraph ANTES ["A. Motor Previo (soil-water-engine.js · Cubeta Única FAO-56)"]
+        direction TB
+        A1["1. Una Sola Cubeta Homogénea (0 a 60 cm)"] --> A2["2. Drenaje Instantáneo (Pérdida Binaria > θ_FC)"] --> A3["3. Estrés Lineal Simple (Ks · Solo Sequía)"] --> A4["4. Solo Volumen de Agua (mm · Sin Nutrientes)"]
     end
 
-    subgraph AHORA ["Motor Avanzado (monica-agritwin / DestinE)"]
-        B1["Perfil Discretizado en Capas (cada 10 cm)"]
-        B2["Ecuación de Richards 1D + Campbell K(θ)"]
-        B3["Función No Lineal de Feddes (4 Umbrales con Anoxia)"]
-        B4["Ciclo de Nitrógeno + Materia Orgánica (SOM)"]
+    subgraph AHORA ["B. Motor Avanzado (monica-agritwin / DestinE · 5 Estratos)"]
+        direction TB
+        B1["1. Perfil Discretizado en 5 Capas (0–10 a 75–100 cm)"] --> B2["2. Ecuación de Richards 1D + Campbell K(θ) + Ascenso Capilar"] --> B3["3. Trapecio de Feddes (4 Umbrales + Protección por Anoxia)"] --> B4["4. Ciclo de Carbono (AOM/SMB/SOM) + Nitrógeno (Michaelis-Menten)"]
     end
 
-    A1 -->|"Evolución por Discretización"| B1
-    A2 -->|"Física de Transporte Real"| B2
-    A3 -->|"Protección contra Asfixia Radical"| B3
-    A4 -->|"Bioquímica del Suelo"| B4
+    ANTES ==>|"Salto Evolutivo por Discretización y Física Continua"| AHORA
 ```
 
 <div class="mermaid-legend">
@@ -682,61 +671,93 @@ Nacido del linaje científico de modelos clásicos de transporte de nutrientes y
 4. La dinámica fenológica del cultivo y la asimilación neta de biomasa bajo estrés múltiple simultáneo (hídrico, térmico, de nitrógeno y por anoxia).
 
 #### B. Estructura Interna: Los Cuatro Motores Acoplados y el Bucle Diario
-La operación de MONICA se estructura en cuatro módulos desacoplados pero matemáticamente acoplados dentro de un bucle de integración temporal a paso diario ($\Delta t = 1\text{ día}$):
+La operación de MONICA se estructura en cuatro módulos desacoplados pero matemáticamente acoplados dentro de un bucle de integración temporal a paso diario ($\Delta t = 1\text{ día}$), apilados verticalmente desde la atmósfera hasta el crecimiento de la planta:
+
+<figure class="atlas-fig" style="margin:20px 0;padding:16px;border:2px solid #0284c7;border-radius:12px;background:#f8fafc;page-break-inside:avoid;">
+<div style="font-family:JetBrains Mono,monospace;font-size:9.5pt;font-weight:800;color:#0369a1;margin-bottom:10px;text-transform:uppercase;">🖼️ FIGURA MONICA-7.1B (Esquema Vertical de Alta Legibilidad) — Los 4 Motores Acoplados de MONICA en Cada Paso Diario (Δt = 1 Día)</div>
+<svg viewBox="0 0 800 540" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;font-family:Inter,system-ui,sans-serif;">
+<rect x="12" y="8" width="776" height="96" rx="10" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+<rect x="24" y="18" width="290" height="22" rx="5" fill="#0284c7"/><text x="34" y="33" font-size="10.5" font-weight="800" fill="#ffffff" font-family="monospace">MOTOR 1 · FORZAMIENTO AGROCLIMÁTICO DIARIO</text>
+<text x="328" y="33" font-size="9.5" font-weight="700" fill="#0369a1">Entrada atmosférica de la celda H3 (/api/weather/full-168h)</text>
+<rect x="24" y="48" width="365" height="44" rx="6" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="36" y="66" font-size="10" font-weight="800" fill="#0f172a">1A. Variables Meteorológicas Horarias / Diarias</text>
+<text x="36" y="82" font-size="9" fill="#334155">Radiación Neta (Rn) · Tmin / Tmax · Viento (u2) · VPD · Lluvia / Riego</text>
+<path d="M395 70 L415 70" stroke="#0284c7" stroke-width="2.5"/>
+<rect x="420" y="48" width="354" height="44" rx="6" fill="#ffffff" stroke="#0284c7" stroke-width="1.8"/>
+<text x="432" y="66" font-size="10" font-weight="800" fill="#0369a1">1B. Evapotranspiración Potencial (Penman-Monteith Dual)</text>
+<text x="432" y="82" font-size="9" fill="#334155">Separa Evaporación de Suelo (Es) y Demanda del Dosel (Tp)</text>
+<path d="M400 104 L400 124" stroke="#0f172a" stroke-width="2.5"/><text x="412" y="118" font-size="8.8" font-weight="800" fill="#0f172a" font-family="monospace">↓ Infiltración superficial + Radiación térmica</text>
+<rect x="12" y="126" width="776" height="122" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+<rect x="24" y="136" width="290" height="22" rx="5" fill="#d97706"/><text x="34" y="151" font-size="10.5" font-weight="800" fill="#ffffff" font-family="monospace">MOTOR 2 · HIDROLOGÍA Y TÉRMICA DE SUELO 1D</text>
+<text x="328" y="151" font-size="9.5" font-weight="700" fill="#92400e">Resuelto en los 5 estratos oficiales (0–10, 10–25, 25–50, 50–75, 75–100 cm)</text>
+<rect x="24" y="166" width="242" height="70" rx="6" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="34" y="184" font-size="9.8" font-weight="800" fill="#78350f">2A. Difusión Térmica (Fourier 1D)</text>
+<text x="34" y="200" font-size="8.8" fill="#334155">Calcula T_suelo(z,t) por estrato</text>
+<text x="34" y="214" font-size="8.5" font-weight="700" fill="#b45309">• Amortiguada por Mulch / Rastrojo</text>
+<text x="34" y="228" font-size="8.5" fill="#475569">• Regula enzimas f(T) y Grados-Día</text>
+<rect x="278" y="166" width="244" height="70" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.8"/>
+<text x="288" y="184" font-size="9.8" font-weight="800" fill="#78350f">2B. Ecuación de Richards 1D</text>
+<text x="288" y="200" font-size="8.8" fill="#334155">Humedad θ(z,t) y Flujo Vertical q</text>
+<text x="288" y="214" font-size="8.5" font-weight="700" fill="#0369a1">• Curvas Campbell: ψ(θ) y K(θ)</text>
+<text x="288" y="228" font-size="8.5" fill="#475569">• Resta extracción radicular -S(z,t)</text>
+<rect x="534" y="166" width="240" height="70" rx="6" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="544" y="184" font-size="9.8" font-weight="800" fill="#78350f">2C. Macroporos y Borde Freático</text>
+<text x="544" y="200" font-size="8.8" fill="#334155">Grietas + Condición a z = 100 cm</text>
+<text x="544" y="214" font-size="8.5" font-weight="700" fill="#047857">• Ascenso Capilar Real desde napa</text>
+<text x="544" y="228" font-size="8.5" fill="#be123c">• Drenaje profundo q &gt; 0 (lavado)</text>
+<path d="M400 248 L400 268" stroke="#0f172a" stroke-width="2.5"/><text x="412" y="262" font-size="8.8" font-weight="800" fill="#0f172a" font-family="monospace">↓ Acoples: T_suelo → f(T) · Humedad θ → f(θ) · Drenaje q → Lixiviación</text>
+<rect x="12" y="270" width="776" height="122" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+<rect x="24" y="280" width="330" height="22" rx="5" fill="#059669"/><text x="34" y="295" font-size="10.5" font-weight="800" fill="#ffffff" font-family="monospace">MOTOR 3 · CARBONO ORGÁNICO Y NITRÓGENO (HERMES/DAISY)</text>
+<text x="366" y="295" font-size="9.5" font-weight="700" fill="#065f46">Transformación biológica en 3 compartimentos y transporte de solutos</text>
+<rect x="24" y="310" width="242" height="70" rx="6" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+<text x="34" y="328" font-size="9.8" font-weight="800" fill="#065f46">3A. Los 3 Pools de Carbono</text>
+<text x="34" y="344" font-size="8.6" fill="#334155">1. AOM (Rastrojo Fresco: semanas)</text>
+<text x="34" y="358" font-size="8.6" font-weight="700" fill="#047857">2. SMB (Biomasa Microbiana: motor)</text>
+<text x="34" y="372" font-size="8.6" fill="#334155">3. SOM (Humus Pasivo: esponja)</text>
+<rect x="278" y="310" width="244" height="70" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1.8"/>
+<text x="288" y="328" font-size="9.8" font-weight="800" fill="#065f46">3B. Mineralización y Nitrificación</text>
+<text x="288" y="344" font-size="8.6" fill="#334155">• SMB digiere AOM → Amonio NH4+ (+)</text>
+<text x="288" y="358" font-size="8.6" font-weight="700" fill="#0369a1">• Michaelis-Menten: NH4+ → NO3- (-)</text>
+<text x="288" y="372" font-size="8.5" fill="#be123c">• Si WFPS &gt; 80%: Desnitrificación N2O</text>
+<rect x="534" y="310" width="240" height="70" rx="6" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+<text x="544" y="328" font-size="9.8" font-weight="800" fill="#065f46">3C. Advección y Lixiviación (Js)</text>
+<text x="544" y="344" font-size="8.6" fill="#334155">Js = -θ·D·∂C/∂z + q·C_NO3</text>
+<text x="544" y="358" font-size="8.6" font-weight="700" fill="#be123c">• NO3- (-) repelido por arcillas (-)</text>
+<text x="544" y="372" font-size="8.5" fill="#475569">• Si q &gt; 0 bajo raíces → lava a napa</text>
+<path d="M400 392 L400 412" stroke="#0f172a" stroke-width="2.5"/><text x="412" y="406" font-size="8.8" font-weight="800" fill="#0f172a" font-family="monospace">↓ Acoples: Succión ψ → Feddes f_agua · Nitrato NO3- → f_nitrógeno</text>
+<rect x="12" y="414" width="776" height="118" rx="10" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+<rect x="24" y="424" width="330" height="22" rx="5" fill="#7e22ce"/><text x="34" y="439" font-size="10.5" font-weight="800" fill="#ffffff" font-family="monospace">MOTOR 4 · FISIOLOGÍA Y FENOLOGÍA DEL CULTIVO</text>
+<text x="366" y="439" font-size="9.5" font-weight="700" fill="#6b21a8">Crecimiento diario de raíces y biomasa regulado por estrés múltiple</text>
+<rect x="24" y="454" width="242" height="68" rx="6" fill="#ffffff" stroke="#a855f7" stroke-width="1.5"/>
+<text x="34" y="472" font-size="9.8" font-weight="800" fill="#581c87">4A. Fenología (GDD) y Raíces β(z)</text>
+<text x="34" y="488" font-size="8.6" fill="#334155">• Reloj biológico por Grados-Día</text>
+<text x="34" y="502" font-size="8.6" fill="#047857">• Perfiles radiculares paralelos (PRV)</text>
+<text x="34" y="515" font-size="8.4" fill="#475569">• Colonización vertical por estrato</text>
+<rect x="278" y="454" width="244" height="68" rx="6" fill="#ffffff" stroke="#7e22ce" stroke-width="1.8"/>
+<text x="288" y="472" font-size="9.8" font-weight="800" fill="#581c87">4B. Sumidero Radicular de Feddes</text>
+<text x="288" y="488" font-size="8.6" fill="#334155">S(z,t) = α(ψ) · β(z) · T_potencial</text>
+<text x="288" y="502" font-size="8.6" font-weight="700" fill="#be123c">• Frena por Sequía (ψ &lt; ψ3)</text>
+<text x="288" y="515" font-size="8.6" font-weight="700" fill="#0369a1">• Frena por Anoxia / Asfixia (ψ &gt; ψ1)</text>
+<rect x="534" y="454" width="240" height="68" rx="6" fill="#ffffff" stroke="#a855f7" stroke-width="1.5"/>
+<text x="544" y="472" font-size="9.8" font-weight="800" fill="#581c87">4C. Fotosíntesis y von Liebig</text>
+<text x="544" y="488" font-size="8.6" fill="#334155">• Luz interceptada: Beer-Lambert (LAI)</text>
+<text x="544" y="502" font-size="8.6" font-weight="700" fill="#6b21a8">• Barril: min(f_agua, f_N, f_térmico)</text>
+<text x="544" y="515" font-size="8.4" fill="#475569">• Partición: Raíz, Tallo, Hoja, Fruto</text>
+</svg>
+</figure>
 
 ```mermaid
 flowchart TD
-    subgraph ATMOSFERA ["1. Forzamiento Agroclimático Diario"]
-        CLIM["Radiación Solar Neta (Rn), Tmin, Tmax, Viento (u2), Humedad Relativa, Lluvia / Riego"]
-        PET["Evapotranspiración Potencial de Doble Fuente (Penman-Monteith Dual)"]
-        CLIM --> PET
-    end
+    M1["1. Motor Agroclimático Diario<br/>(Rn, Tmin/Tmax, Viento u2, VPD ➔ Penman-Monteith PET)"]
+    M2["2. Motor Hidrológico y Térmico 1D<br/>(Fourier T_suelo + Richards 1D en 5 Capas + Campbell K(θ) + Ascenso Capilar)"]
+    M3["3. Motor Biogeoquímico C y N (Hermes/DAISY)<br/>(Pools AOM ➔ SMB ➔ SOM · Nitrificación Michaelis-Menten · Lixiviación Js)"]
+    M4["4. Motor Fisiológico del Cultivo<br/>(Grados-Día GDD · Raíces β(z) · Trapecio Feddes · Fotosíntesis Beer-Lambert + von Liebig)"]
 
-    subgraph MOTOR_SUELO ["2. Motor Hidrológico y Térmico 1D"]
-        TEMP["Conducción Térmica No Estacionaria (Fourier 1D)"]
-        RICH["Transporte No Saturado (Richards 1D Discretizado en N Capas)"]
-        CAMP["Edafotransferencia de Campbell / Van Genuchten (θs, ψe, Ks, b)"]
-        MACRO["Flujo Preferencial en Macroporos y Drenaje Gravitacional"]
-        FREA["Condición de Borde Inferior: Ascenso Capilar Freático o Drenaje Libre"]
-        
-        TEMP --> RICH
-        RICH <--> CAMP
-        RICH --> MACRO
-        RICH <--> FREA
-    end
-
-    subgraph MOTOR_SOM ["3. Motor de Materia Orgánica y Nitrógeno (Hermes/DAISY)"]
-        POOLS["Pools de Carbono: AOM1 (Rápido), AOM2 (Lento), SMB (Microbiano), SOM (Humus Pasivo)"]
-        MIN_IMM["Mineralización e Inmovilización con Estequiometría C:N Fija"]
-        NITRIF["Nitrificación de Michaelis-Menten: NH4+ a NO3- (f(T), f(θ), f(pH))"]
-        DENIT["Desnitrificación Anaeróbica por WFPS > 70-80%"]
-        LEACH["Transporte Soluto Advectivo-Dispersivo y Lixiviación"]
-        
-        POOLS --> MIN_IMM
-        MIN_IMM --> NITRIF
-        NITRIF --> DENIT
-        NITRIF --> LEACH
-        RICH -.->|"Flujo Convectivo q"| LEACH
-    end
-
-    subgraph MOTOR_PLANTA ["4. Motor Fisiológico y Fenológico del Cultivo"]
-        PHEN["Fenología por Grados-Día Acumulados (GDD) corregida por Fotoperíodo"]
-        ROOT_GROWTH["Elongación Radicular Geotrópica y Densidad β(z)"]
-        FEDDES_SINK["Extracción Radicular Feddes con Penalización por Déficit y Asfixia (Anoxia)"]
-        BEER_PHOTO["Fotosíntesis Neta (Beer-Lambert) con Ley del Mínimo de von Liebig"]
-        PARTITION["Partición Alométrica Alostérica (Raíz, Tallo, Hojas, Fruto)"]
-        
-        PHEN --> ROOT_GROWTH
-        ROOT_GROWTH --> FEDDES_SINK
-        FEDDES_SINK --> BEER_PHOTO
-        BEER_PHOTO --> PARTITION
-    end
-
-    PET --> FEDDES_SINK
-    FEDDES_SINK -.->|"Tasa de Extracción S(z,t)"| RICH
-    NITRIF -.->|"Disponibilidad N"| BEER_PHOTO
-    TEMP -.->|"Regulación Enzimática f(T)"| MIN_IMM
-    TEMP -.->|"GDD"| PHEN
+    M1 ==>|"Lluvia / Riego + Demanda Evaporativa PET"| M2
+    M2 ==>|"Temperatura f(T), Humedad f(θ) y Flujo Convectivo q"| M3
+    M2 ==>|"Potencial Mátrico ψ(z) por Estrato"| M4
+    M3 ==>|"Disponibilidad de Nitrato NO3- Disuelto"| M4
+    M4 -.->|"Retroalimentación: Extracción Radicular -S(z,t) y Residuos AOM"| M2
 ```
 
 <div class="mermaid-legend">
@@ -927,6 +948,77 @@ $$J_s = - \theta D \frac{\partial C_{NO_3}}{\partial z} + q \cdot C_{NO_3}$$
   </ul>
 </div>
 
+#### D. Esquema Integrado del Ciclo Biogeoquímico C-N y Transporte de Nitratos
+
+<figure class="atlas-fig" style="margin:20px 0;padding:16px;border:2px solid #059669;border-radius:12px;background:#f8fafc;page-break-inside:avoid;">
+<div style="font-family:JetBrains Mono,monospace;font-size:9.5pt;font-weight:800;color:#047857;margin-bottom:10px;text-transform:uppercase;">🖼️ FIGURA MONICA-7.3 — Dinámica de Carbono en 3 Pools, Mineralización de Nitrógeno y Lixiviación Vertical</div>
+<svg viewBox="0 0 800 430" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;font-family:Inter,system-ui,sans-serif;">
+<rect x="12" y="8" width="776" height="126" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+<rect x="24" y="18" width="310" height="22" rx="5" fill="#059669"/><text x="34" y="33" font-size="10.5" font-weight="800" fill="#ffffff" font-family="monospace">PILARES DE CARBONO · CADENA EN 3 COMPARTIMENTOS</text>
+<text x="348" y="33" font-size="9.5" font-weight="700" fill="#065f46">Cinética de 1er orden dC/dt = -k·f(T)·f(θ)·C con Arrhenius Q10=2.08</text>
+<rect x="24" y="48" width="232" height="74" rx="6" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+<text x="34" y="66" font-size="9.8" font-weight="800" fill="#065f46">1. AOM (Rastrojo Fresco)</text>
+<text x="34" y="82" font-size="8.8" fill="#334155">• Hojas, poda, mulch y raíces</text>
+<text x="34" y="96" font-size="8.6" fill="#047857">• Vida media: semanas / meses</text>
+<text x="34" y="110" font-size="8.5" fill="#64748b">• k_AOM alta (comida cruda)</text>
+<path d="M258 85 L286 85" stroke="#059669" stroke-width="2.5"/><polygon points="286,81 294,85 286,89" fill="#059669"/>
+<rect x="296" y="48" width="232" height="74" rx="6" fill="#ffffff" stroke="#059669" stroke-width="2"/>
+<text x="306" y="66" font-size="9.8" font-weight="800" fill="#065f46">2. SMB (Biomasa Microbiana)</text>
+<text x="306" y="82" font-size="8.8" fill="#334155">• Bacterias, hongos y actinomicetos</text>
+<text x="306" y="96" font-size="8.6" font-weight="700" fill="#047857">• "Estómago digestivo" del suelo</text>
+<text x="306" y="110" font-size="8.5" fill="#64748b">• Cicla en días · Emite CO2 resp.</text>
+<path d="M530 85 L558 85" stroke="#059669" stroke-width="2.5"/><polygon points="558,81 566,85 558,89" fill="#059669"/>
+<rect x="568" y="48" width="208" height="74" rx="6" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+<text x="578" y="66" font-size="9.8" font-weight="800" fill="#065f46">3. SOM (Humus Pasivo)</text>
+<text x="578" y="82" font-size="8.8" fill="#334155">• Fracción coloidal protegida</text>
+<text x="578" y="96" font-size="8.6" font-weight="700" fill="#047857">• Esponja física (retén de agua)</text>
+<text x="578" y="110" font-size="8.5" fill="#64748b">• k_SOM mínima (décadas / siglos)</text>
+
+<path d="M412 134 L412 152" stroke="#0f172a" stroke-width="2.5"/><polygon points="408,152 412,160 416,152" fill="#0f172a"/>
+<text x="424" y="148" font-size="8.8" font-weight="800" fill="#0f172a" font-family="monospace">↓ Digestión de biomasa microbiana libera nitrógeno orgánico soluble</text>
+
+<rect x="12" y="162" width="776" height="120" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<rect x="24" y="172" width="310" height="22" rx="5" fill="#2563eb"/><text x="34" y="187" font-size="10.5" font-weight="800" fill="#ffffff" font-family="monospace">CICLO DEL NITRÓGENO · MINERALIZACIÓN Y NITRIFICACIÓN</text>
+<text x="348" y="187" font-size="9.5" font-weight="700" fill="#1e40af">Conversión química mediada por bacterias quimioautótrofas</text>
+<rect x="24" y="202" width="350" height="68" rx="6" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="34" y="220" font-size="9.8" font-weight="800" fill="#1e40af">Mineralización: N-Orgánico → Amonio (NH4+)</text>
+<text x="34" y="236" font-size="8.8" fill="#334155">• Catión cargado positivamente (+)</text>
+<text x="34" y="250" font-size="8.6" font-weight="700" fill="#047857">• Electro-atraído por arcillas y humus (-) → No se lava</text>
+<text x="34" y="262" font-size="8.5" fill="#64748b">• Retenido fuertemente en la Capacidad de Intercambio Catiónico (CIC)</text>
+<path d="M376 236 L410 236" stroke="#2563eb" stroke-width="2.5"/><polygon points="410,232 418,236 410,240" fill="#2563eb"/>
+<text x="382" y="230" font-size="8" font-weight="800" fill="#2563eb" font-family="monospace">Nitrif.</text>
+<rect x="420" y="202" width="356" height="68" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="2"/>
+<text x="430" y="220" font-size="9.8" font-weight="800" fill="#1e40af">Nitrificación Michaelis-Menten → Nitrato (NO3-)</text>
+<text x="430" y="236" font-size="8.8" fill="#334155">• Enzimas Nitrosomonas / Nitrobacter con techo Vmax</text>
+<text x="430" y="250" font-size="8.6" font-weight="700" fill="#be123c">• Anión cargado negativamente (-) → Repelido por el suelo</text>
+<text x="430" y="262" font-size="8.5" fill="#64748b">• Queda 100% disuelto y móvil en el agua de los poros</text>
+
+<path d="M598 282 L598 300" stroke="#0f172a" stroke-width="2.5"/><polygon points="594,300 598,308 602,300" fill="#0f172a"/>
+<text x="430" y="296" font-size="8.8" font-weight="800" fill="#0f172a" font-family="monospace">↓ El agua en movimiento decide el destino del Nitrato (NO3-)</text>
+
+<rect x="12" y="310" width="776" height="108" rx="10" fill="#fff1f2" stroke="#e11d48" stroke-width="2"/>
+<rect x="24" y="320" width="330" height="22" rx="5" fill="#e11d48"/><text x="34" y="335" font-size="10.5" font-weight="800" fill="#ffffff" font-family="monospace">DESTINO DEL NITRATO · ABSORCIÓN VS LIXIVIACIÓN (Js)</text>
+<text x="368" y="335" font-size="9.5" font-weight="700" fill="#9f1239">Ecuación advectivo-dispersiva: Js = -θ·D·∂C/∂z + q·C_NO3</text>
+<rect x="24" y="350" width="365" height="56" rx="6" fill="#ffffff" stroke="#10b981" stroke-width="1.8"/>
+<text x="34" y="368" font-size="9.8" font-weight="800" fill="#047857">Camino Productivo: Absorción Radicular (Z ≤ Zr)</text>
+<text x="34" y="384" font-size="8.8" fill="#334155">• Las raíces activas absorben el NO3- disuelto junto a la transpiración</text>
+<text x="34" y="398" font-size="8.6" font-weight="700" fill="#059669">• Alimenta la síntesis de biomasa foliar y proteína vegetal</text>
+<rect x="408" y="350" width="368" height="56" rx="6" fill="#ffffff" stroke="#e11d48" stroke-width="2"/>
+<text x="418" y="368" font-size="9.8" font-weight="800" fill="#be123c">Camino Contaminante: Lixiviación a Napa (Z &gt; Zr)</text>
+<text x="418" y="384" font-size="8.8" fill="#334155">• Si hay sobrerriego o lluvias intensas, el flujo de Richards q &gt; 0 baja</text>
+<text x="418" y="398" font-size="8.6" font-weight="700" fill="#be123c">• Lava el nitrato bajo el bulbo radicular hacia acuíferos freáticos</text>
+</svg>
+</figure>
+
+<div class="mermaid-legend">
+<div class="mermaid-legend-title">🧭 LEYENDA DEL DIAGRAMA — Dinámica C-N y Mecanismo Físico de Lixiviación</div>
+  <ul>
+    <li><strong>Nivel 1 (Cadena de Carbono C):</strong> El mulch o estiércol (<code>AOM</code>) es degradado por los microorganismos (<code>SMB</code>); la fracción recalcitrante resultante forma el humus esponjoso (<code>SOM</code>), que estabiliza la capacidad de retención hídrica a largo plazo.</li>
+    <li><strong>Nivel 2 (Bifurcación Iónica N):</strong> El nitrógeno mineralizado nace como amonio ($\text{NH}_4^+$), con carga positiva retenida por el suelo. Al oxidarse por nitrificación enzimática (Michaelis-Menten), pasa a nitrato ($\text{NO}_3^-$) con carga negativa, quedando libre en la solución del suelo.</li>
+    <li><strong>Nivel 3 (Fuga o Absorción):</strong> Si el agua de percolación de Richards ($q$) sobrepasa la zona de raíces ($Z_r$), el nitrato es arrastrado advectivamente ($q \cdot C_{\text{NO}_3}$), provocando pérdida económica de fertilizante y contaminación freática.</li>
+  </ul>
+</div>
+
 ---
 
 ### 7.4. Perspectiva Fisiológica: Crecimiento y Asimilación de Biomasa
@@ -1050,7 +1142,7 @@ Entrenar un agente de RL requiere millones de pasos de interacción. Ejecutar el
 `AgriTwin-RL` soluciona esto entrenando un **modelo subrogado (*surrogate model*)** mediante XGBoost (`MultiOutputRegressor`), que comprime la física del cultivo en una inferencia de matriz que tarda **0.1 milisegundos**.
 
 ```mermaid
-flowchart LR
+flowchart TD
     SIM["Simulador Físico (MONICA)<br><i>2.5 segundos / episodio</i>"] -->|50,000 simulaciones| DATA["Dataset de Telemetría Sintética"]
     DATA --> XGB["XGBoost MultiOutputRegressor<br><i>0.0001 segundos / paso</i>"]
     XGB --> GYM["Entorno Gymnasium (AgriTwinEnv)"]
@@ -1198,6 +1290,75 @@ La ausencia inicial de sensores físicos no detiene el gemelo: se usa un **senso
 5. **Conexión con lo que el productor ya tenga:** pasarelas por webhook y MQTT para sensores WiFi tipo Tuya, redes LoRaWAN (The Things Network o ChirpStack) y bombas con Modbus RS-485.
 6. **Kit frugal de referencia (costos orientativos, a cotizar):** microcontrolador ESP32 con *deep-sleep* (unos 4 a 6 USD), dos sondas capacitivas de humedad con sellado epóxico a 15 y 45 cm (unos 6 USD) o una sonda industrial RS-485 (unos 25 USD), panel solar de 5 V con celda 18650 y cargador (unos 8 a 10 USD) y caja estanca IP67 (unos 5 USD). Total orientativo: entre 20 y 45 USD por nodo.
 
+<figure class="atlas-fig" style="margin:20px 0;padding:16px;border:2px solid #0284c7;border-radius:12px;background:#f8fafc;page-break-inside:avoid;">
+<div style="font-family:JetBrains Mono,monospace;font-size:9.5pt;font-weight:800;color:#0369a1;margin-bottom:10px;text-transform:uppercase;">🖼️ FIGURA 10.5 — Ciclo de Vida del Sensor Virtual, Asimilación Kalman (EKF) y Despliegue Frugal</div>
+<svg viewBox="0 0 800 340" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;font-family:Inter,system-ui,sans-serif;">
+<rect x="12" y="8" width="240" height="240" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+<rect x="22" y="18" width="220" height="24" rx="5" fill="#475569"/><text x="32" y="34" font-size="10" font-weight="800" fill="#ffffff" font-family="monospace">1. ESTIMACIÓN PURA (0 USD)</text>
+<rect x="22" y="50" width="220" height="42" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="1.2"/>
+<text x="30" y="66" font-size="9.5" font-weight="800" fill="#0f172a">Física + Datos Abiertos</text>
+<text x="30" y="82" font-size="8.6" fill="#475569">SoilGrids 250m + Open-Meteo + Richards</text>
+<rect x="22" y="100" width="220" height="66" rx="6" fill="#fef2f2" stroke="#f87171" stroke-width="1.5"/>
+<text x="30" y="118" font-size="9.5" font-weight="800" fill="#991b1b">Incertidumbre Alta (±1.96σ)</text>
+<text x="30" y="134" font-size="8.6" fill="#7f1d1d">• θ_virtual = 24.2% ± 4.5%</text>
+<text x="30" y="148" font-size="8.6" font-weight="700" fill="#b91c1c">• is_virtual: true (Honestidad L10)</text>
+<text x="30" y="160" font-size="8.2" fill="#991b1b">• Dispersión ensamble meteorológico</text>
+<rect x="22" y="174" width="220" height="64" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+<text x="30" y="192" font-size="9" font-weight="700" fill="#334155">Estado en Pantalla:</text>
+<text x="30" y="208" font-size="8.5" fill="#475569">• Semáforo amarillo / visual con rango</text>
+<text x="30" y="222" font-size="8.5" fill="#475569">• Recomendación con margen de guardia</text>
+
+<path d="M256 128 L276 128" stroke="#0284c7" stroke-width="2.5"/><polygon points="276,124 284,128 276,132" fill="#0284c7"/>
+
+<rect x="288" y="8" width="240" height="240" rx="10" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+<rect x="298" y="18" width="220" height="24" rx="5" fill="#0284c7"/><text x="308" y="34" font-size="10" font-weight="800" fill="#ffffff" font-family="monospace">2. HARDWARE FRUGAL (20-45$)</text>
+<rect x="298" y="50" width="220" height="42" rx="6" fill="#ffffff" stroke="#38bdf8" stroke-width="1.2"/>
+<text x="306" y="66" font-size="9.5" font-weight="800" fill="#0369a1">Nodo ESP32 + Deep-Sleep</text>
+<text x="306" y="82" font-size="8.6" fill="#334155">Batería 18650 + Panel Solar 5V (10 USD)</text>
+<rect x="298" y="100" width="220" height="66" rx="6" fill="#ffffff" stroke="#0284c7" stroke-width="1.5"/>
+<text x="306" y="118" font-size="9.5" font-weight="800" fill="#0f172a">Sensores e Inmunidad Rural</text>
+<text x="306" y="134" font-size="8.6" fill="#334155">• 2 Sondas capacitivas (15 y 45 cm)</text>
+<text x="306" y="148" font-size="8.6" font-weight="700" fill="#0369a1">• Buffer WAL SPIFFS (10.000 lecturas)</text>
+<text x="306" y="160" font-size="8.2" fill="#64748b">• Telemetría MQTT / LoRaWAN en ráfaga</text>
+<rect x="298" y="174" width="220" height="64" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+<text x="306" y="192" font-size="9" font-weight="700" fill="#334155">Tolerancia a Cortes:</text>
+<text x="306" y="208" font-size="8.5" fill="#475569">• Si se corta el 4G, guarda en memoria</text>
+<text x="306" y="222" font-size="8.5" fill="#475569">• Upsert idempotente sin duplicados</text>
+
+<path d="M532 128 L552 128" stroke="#059669" stroke-width="2.5"/><polygon points="552,124 560,128 552,132" fill="#059669"/>
+
+<rect x="564" y="8" width="224" height="240" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+<rect x="574" y="18" width="204" height="24" rx="5" fill="#059669"/><text x="584" y="34" font-size="10" font-weight="800" fill="#ffffff" font-family="monospace">3. ASIMILACIÓN Y NUDGING</text>
+<rect x="574" y="50" width="204" height="42" rx="6" fill="#ffffff" stroke="#34d399" stroke-width="1.2"/>
+<text x="582" y="66" font-size="9.5" font-weight="800" fill="#065f46">Filtro Kalman Extendido (EKF)</text>
+<text x="582" y="82" font-size="8.6" fill="#334155">Innovación = θ_obs - θ_hat</text>
+<rect x="574" y="100" width="204" height="66" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1.5"/>
+<text x="582" y="118" font-size="9.5" font-weight="800" fill="#047857">Colapso de Incertidumbre</text>
+<text x="582" y="134" font-size="8.6" fill="#065f46">• θ_real = 26.1% ± 0.8%</text>
+<text x="582" y="148" font-size="8.6" font-weight="700" fill="#047857">• is_virtual: false (Sonda Real)</text>
+<text x="582" y="160" font-size="8.2" fill="#059669">• Autocalibra Ks y SOM del modelo</text>
+<rect x="574" y="174" width="204" height="64" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+<text x="582" y="192" font-size="9" font-weight="700" fill="#334155">Aprendizaje Continuo:</text>
+<text x="582" y="208" font-size="8.5" fill="#475569">• El gemelo ajusta la física del predio</text>
+<text x="582" y="222" font-size="8.5" fill="#475569">• Certeza para riego y seguro agrícola</text>
+
+<rect x="12" y="260" width="776" height="68" rx="8" fill="#1e293b"/>
+<text x="28" y="284" font-size="10" font-weight="800" fill="#38bdf8" font-family="monospace">CONTRATO DE DATOS ÚNICO (API INMUTABLE FRONTEND &amp; MOTORES)</text>
+<text x="28" y="302" font-size="8.8" fill="#cbd5e1">Payload JSON idéntico: { sensor_id, depth_strata_cm, volumetric_water_content, is_virtual, uncertainty_sigma, source_engine }</text>
+<text x="28" y="318" font-size="8.5" fill="#94a3b8">El visor 3D Three.js y el Hub C2 consumen la misma interfaz sin importar si el dato proviene del simulador SoilGrids o de una sonda Campbell de 1.000 USD.</text>
+</svg>
+</figure>
+
+<div class="mermaid-legend">
+<div class="mermaid-legend-title">🧭 LEYENDA DEL DIAGRAMA — Evolución Progresiva de la Sombra Digital al Gemelo Asimilado</div>
+  <ul>
+    <li><strong>Etapa 1 (Sensor Virtual a Costo Cero):</strong> Permite arrancar la simulación hidrológica en cualquier punto geográfico desde el día 1, declarando honestamente la banda de incertidumbre ($\pm 1.96\sigma$).</li>
+    <li><strong>Etapa 2 (Hardware Frugal Resiliente):</strong> Nodos accesibles (20 a 45 USD) con buffer local para resistir la intermitencia de la conectividad celular rural chilena.</li>
+    <li><strong>Etapa 3 (Fusión EKF y Nudging):</strong> El dato real no reemplaza la física; «empuja suavemente» el modelo, reduce la incertidumbre y autocalibra los parámetros del suelo del cuartel.</li>
+    <li><strong>Capa Base (Contrato Único):</strong> Independencia total entre la UI y el origen del dato.</li>
+  </ul>
+</div>
+
 ---
 
 ## 11. Deep Dive 4: `TurkiMariem/FedAgriTwin` (IoT Industrial y Privacidad Federada)
@@ -1330,6 +1491,79 @@ export const HealthAlert = {
   </ul>
 </div>
 
+### 12.2. Esquema Arquitectónico del Blindaje Tipado contra Deriva de Esquema
+
+<figure class="atlas-fig" style="margin:20px 0;padding:16px;border:2px solid #7c3aed;border-radius:12px;background:#f8fafc;page-break-inside:avoid;">
+<div style="font-family:JetBrains Mono,monospace;font-size:9.5pt;font-weight:800;color:#6d28d9;margin-bottom:10px;text-transform:uppercase;">🖼️ FIGURA 12.1 — Pipeline Inmutable de Validación y Blindaje contra Schema Drift</div>
+<svg viewBox="0 0 800 330" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;font-family:Inter,system-ui,sans-serif;">
+<rect x="12" y="8" width="176" height="236" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.8"/>
+<rect x="20" y="16" width="160" height="22" rx="4" fill="#475569"/><text x="28" y="31" font-size="9.2" font-weight="800" fill="#ffffff" font-family="monospace">1. INGESTIÓN CRUDA</text>
+<rect x="20" y="46" width="160" height="52" rx="5" fill="#ffffff" stroke="#cbd5e1"/>
+<text x="26" y="62" font-size="8.8" font-weight="800" fill="#0f172a">Telemetría Heterogénea</text>
+<text x="26" y="76" font-size="8" fill="#64748b">• Sondas FDR KioT (MQTT)</text>
+<text x="26" y="88" font-size="8" fill="#64748b">• Compuertas Modbus RS485</text>
+<rect x="20" y="106" width="160" height="52" rx="5" fill="#fef2f2" stroke="#f87171"/>
+<text x="26" y="122" font-size="8.8" font-weight="800" fill="#991b1b">Riesgos Típicos</text>
+<text x="26" y="136" font-size="8" fill="#7f1d1d">• NaN, null, strings corruptos</text>
+<text x="26" y="148" font-size="8" fill="#7f1d1d">• Falta de unidades físicas</text>
+<rect x="20" y="166" width="160" height="66" rx="5" fill="#ffffff" stroke="#cbd5e1"/>
+<text x="26" y="182" font-size="8.5" font-weight="700" fill="#334155">Incertidumbre:</text>
+<text x="26" y="196" font-size="8" fill="#64748b">Lecturas sin metadatos de</text>
+<text x="26" y="208" font-size="8" fill="#64748b">origen o con relojes RTC</text>
+<text x="26" y="220" font-size="8" fill="#64748b">desfasados.</text>
+
+<path d="M192 126 L216 126" stroke="#7c3aed" stroke-width="2.5"/><polygon points="216,122 224,126 216,130" fill="#7c3aed"/>
+
+<rect x="228" y="8" width="280" height="236" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+<rect x="238" y="16" width="260" height="22" rx="4" fill="#7c3aed"/><text x="248" y="31" font-size="9.2" font-weight="800" fill="#ffffff" font-family="monospace">2. VALIDADOR DE CONTRATO (NemoClaw)</text>
+<rect x="238" y="46" width="260" height="52" rx="5" fill="#ffffff" stroke="#c4b5fd"/>
+<text x="246" y="62" font-size="8.8" font-weight="800" fill="#581c87">Inmutabilidad &amp; Esquema 1.0.0</text>
+<text x="246" y="76" font-size="8" fill="#334155">• Chequeo de tipos: UUID, DateTime UTC, Float</text>
+<text x="246" y="88" font-size="8" fill="#334155">• Enums cerrados: status in ['active', 'faulty']</text>
+<rect x="238" y="106" width="260" height="52" rx="5" fill="#ffffff" stroke="#7c3aed" stroke-width="1.5"/>
+<text x="246" y="122" font-size="8.8" font-weight="800" fill="#6d28d9">Filtro de Rangos Físicos de Suelo</text>
+<text x="246" y="136" font-size="8" fill="#334155">• θ in [0.03 (secado) .. 0.55 (saturación m³/m³)]</text>
+<text x="246" y="148" font-size="8" fill="#047857">• Si θ &lt; 0 o &gt; 0.60 → Flag 'out_of_bounds'</text>
+<rect x="238" y="166" width="260" height="66" rx="5" fill="#ffffff" stroke="#c4b5fd"/>
+<text x="246" y="182" font-size="8.5" font-weight="800" fill="#581c87">Metadatos de Confianza Obligatorios</text>
+<text x="246" y="196" font-size="8" fill="#334155">• confidenceScore in [0.0 .. 1.0] (Pondera EKF)</text>
+<text x="246" y="208" font-size="8" fill="#334155">• is_virtual: bool (Verdad en terreno L10)</text>
+<text x="246" y="220" font-size="8" fill="#334155">• recommendedAction para el operador humano</text>
+
+<path d="M512 126 L536 126" stroke="#059669" stroke-width="2.5"/><polygon points="536,122 544,126 536,130" fill="#059669"/>
+
+<rect x="548" y="8" width="240" height="236" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+<rect x="558" y="16" width="220" height="22" rx="4" fill="#059669"/><text x="568" y="31" font-size="9.2" font-weight="800" fill="#ffffff" font-family="monospace">3. DESTINO SEGURO (ZERO CRASH)</text>
+<rect x="558" y="46" width="220" height="52" rx="5" fill="#ffffff" stroke="#6ee7b7"/>
+<text x="566" y="62" font-size="8.8" font-weight="800" fill="#065f46">Tensor Biofísico 4D</text>
+<text x="566" y="76" font-size="8" fill="#334155">• Indexación continua por estrato z</text>
+<text x="566" y="88" font-size="8" fill="#047857">• Cero errores por NaN o propiedades faltantes</text>
+<rect x="558" y="106" width="220" height="52" rx="5" fill="#ffffff" stroke="#6ee7b7"/>
+<text x="566" y="122" font-size="8.8" font-weight="800" fill="#065f46">Lienzo 3D Three.js &amp; Hub C2</text>
+<text x="566" y="136" font-size="8" fill="#334155">• Renderizado a 60 FPS garantizado</text>
+<text x="566" y="148" font-size="8" fill="#047857">• Auditoría y trazabilidad completa</text>
+<rect x="558" y="166" width="220" height="66" rx="5" fill="#ffffff" stroke="#6ee7b7"/>
+<text x="566" y="182" font-size="8.5" font-weight="800" fill="#065f46">Buffer Idempotente (WAL)</text>
+<text x="566" y="196" font-size="8" fill="#334155">• Upsert por timestamp + deviceId</text>
+<text x="566" y="208" font-size="8" fill="#334155">• Reconciliación automática post-apagón</text>
+<text x="566" y="220" font-size="8" fill="#047857">• Cero duplicados en base de datos</text>
+
+<rect x="12" y="254" width="776" height="66" rx="8" fill="#0f172a"/>
+<text x="24" y="276" font-size="9.5" font-weight="800" fill="#a78bfa" font-family="monospace">PRINCIPIO DEFENSIVO: NINGÚN DATO ENTRA A LA FÍSICA SIN PASAPORTE DE CALIDAD</text>
+<text x="24" y="294" font-size="8.5" fill="#cbd5e1">Los esquemas inspirados en NemoClaw-dairy aseguran que si una sonda de campo falla por óxido o cable cortado,</text>
+<text x="24" y="308" font-size="8.5" fill="#94a3b8">el validador marca el estado 'faulty', asigna confidenceScore: 0.0 y conmuta fluidamente a estimación virtual sin tumbar la UI.</text>
+</svg>
+</figure>
+
+<div class="mermaid-legend">
+<div class="mermaid-legend-title">🧭 LEYENDA DEL DIAGRAMA — Blindaje de Contratos Tipados y Mitigación de Schema Drift</div>
+  <ul>
+    <li><strong>Caja Izquierda (Ingestión Cruda):</strong> Las lecturas de campo suelen presentar ruidos, campos nulos o fallos de conexión que romperían un código desprotegido.</li>
+    <li><strong>Caja Central (Validador Inmutable de Contrato):</strong> Verifica que cada objeto cumpla estrictamente con la versión del esquema, filtra rangos imposibles y fuerza el reporte de nivel de confianza y origen de la medición.</li>
+    <li><strong>Caja Derecha (Destino Inmune):</strong> Los motores biofísicos y el visualizador 3D solo procesan datos aprobados, garantizando 60 FPS estables y cero caídas en producción.</li>
+  </ul>
+</div>
+
 ---
 ---
 
@@ -1340,6 +1574,77 @@ Para que los procesos no colisionen, el sistema opera con pasos de tiempo estric
 * **Paso Micro ($\Delta t = 15\text{ min}$):** Telemetría de sensores de campo, detección de fugas en tuberías y alarmas críticas de helada nocturna.
 * **Paso Meso ($\Delta t = 1\text{ día}$):** Balance de suelo continuo, evapotranspiración Penman-Monteith, estrés de Feddes y dosificación de riego.
 * **Paso Macro ($\Delta t = 1\text{ mes}$):** Balance de cuenca, cota del embalse Bullileo, recarga freática del acuífero y márgenes económicos brutos.
+
+<figure class="atlas-fig" style="margin:20px 0;padding:16px;border:2px solid #0369a1;border-radius:12px;background:#f8fafc;page-break-inside:avoid;">
+<div style="font-family:JetBrains Mono,monospace;font-size:9.5pt;font-weight:800;color:#0284c7;margin-bottom:10px;text-transform:uppercase;">🖼️ FIGURA 13.1 — Jerarquía Multitemporal Desacoplada: Micro (15 min), Meso (1 día) y Macro (1 mes)</div>
+<svg viewBox="0 0 800 310" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;font-family:Inter,system-ui,sans-serif;">
+<rect x="12" y="8" width="244" height="226" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+<rect x="22" y="16" width="224" height="24" rx="4" fill="#16a34a"/><text x="32" y="32" font-size="9.5" font-weight="800" fill="#ffffff" font-family="monospace">PASO MICRO · Δt = 15 MIN</text>
+<text x="24" y="58" font-size="9.2" font-weight="800" fill="#166534">Dinámica Rápida e IoT en Vivo</text>
+<rect x="22" y="66" width="224" height="48" rx="5" fill="#ffffff" stroke="#86efac"/>
+<text x="30" y="82" font-size="8.8" font-weight="700" fill="#0f172a">1. Telemetría de Campo</text>
+<text x="30" y="96" font-size="8.2" fill="#334155">• Caudales, presión de red y sondas FDR</text>
+<text x="30" y="106" font-size="8" fill="#64748b">• Asimilación Kalman periódica</text>
+<rect x="22" y="120" width="224" height="48" rx="5" fill="#ffffff" stroke="#86efac"/>
+<text x="30" y="136" font-size="8.8" font-weight="700" fill="#0f172a">2. Detección de Fugas</text>
+<text x="30" y="150" font-size="8.2" fill="#be123c">• Caída súbita de presión en matrices</text>
+<text x="30" y="160" font-size="8" fill="#64748b">• Alerta instantánea al operador</text>
+<rect x="22" y="174" width="224" height="48" rx="5" fill="#ffffff" stroke="#86efac"/>
+<text x="30" y="190" font-size="8.8" font-weight="700" fill="#0f172a">3. Alerta de Heladas</text>
+<text x="30" y="204" font-size="8.2" fill="#0284c7">• Microclima nocturno T &lt; 0°C</text>
+<text x="30" y="214" font-size="8" fill="#64748b">• Activación preventiva de control</text>
+
+<path d="M260 120 L274 120" stroke="#0284c7" stroke-width="2.5"/><polygon points="274,116 282,120 274,124" fill="#0284c7"/>
+
+<rect x="286" y="8" width="244" height="226" rx="8" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+<rect x="296" y="16" width="224" height="24" rx="4" fill="#0284c7"/><text x="306" y="32" font-size="9.5" font-weight="800" fill="#ffffff" font-family="monospace">PASO MESO · Δt = 1 DÍA</text>
+<text x="298" y="58" font-size="9.2" font-weight="800" fill="#0369a1">Biofísica de Cultivo y Suelo</text>
+<rect x="296" y="66" width="224" height="48" rx="5" fill="#ffffff" stroke="#7dd3fc"/>
+<text x="304" y="82" font-size="8.8" font-weight="700" fill="#0f172a">1. Richards 1D &amp; Campbell</text>
+<text x="304" y="96" font-size="8.2" fill="#334155">• Redistribución de humedad en 5 capas</text>
+<text x="304" y="106" font-size="8" fill="#64748b">• Evaporación y drenaje profundo q</text>
+<rect x="296" y="120" width="224" height="48" rx="5" fill="#ffffff" stroke="#7dd3fc"/>
+<text x="304" y="136" font-size="8.8" font-weight="700" fill="#0f172a">2. Penman-Monteith &amp; Feddes</text>
+<text x="304" y="150" font-size="8.2" fill="#334155">• Transpiración potencial Tp y real Ta</text>
+<text x="304" y="160" font-size="8" fill="#64748b">• Estrés hídrico α(ψ) por cuartel</text>
+<rect x="296" y="174" width="224" height="48" rx="5" fill="#ffffff" stroke="#7dd3fc"/>
+<text x="304" y="190" font-size="8.8" font-weight="700" fill="#0f172a">3. Fenología y Prescripción</text>
+<text x="304" y="204" font-size="8.2" fill="#059669">• Grados-Día GDD y crecimiento raíz</text>
+<text x="304" y="214" font-size="8" fill="#64748b">• Horas y m³ de riego recomendados</text>
+
+<path d="M534 120 L548 120" stroke="#7c3aed" stroke-width="2.5"/><polygon points="548,116 556,120 548,124" fill="#7c3aed"/>
+
+<rect x="560" y="8" width="228" height="226" rx="8" fill="#faf5ff" stroke="#7c3aed" stroke-width="2"/>
+<rect x="570" y="16" width="208" height="24" rx="4" fill="#7c3aed"/><text x="580" y="32" font-size="9.5" font-weight="800" fill="#ffffff" font-family="monospace">PASO MACRO · Δt = 1 MES</text>
+<text x="572" y="58" font-size="9.2" font-weight="800" fill="#6d28d9">Gobernanza Territorial y Cuenca</text>
+<rect x="570" y="66" width="208" height="48" rx="5" fill="#ffffff" stroke="#d8b4fe"/>
+<text x="578" y="82" font-size="8.8" font-weight="700" fill="#0f172a">1. Balance de Cuenca</text>
+<text x="578" y="96" font-size="8.2" fill="#334155">• Caudales Longaví (Nash-Sutcliffe &gt; 0.82)</text>
+<text x="578" y="106" font-size="8" fill="#64748b">• Disponibilidad juntas de vigilancia</text>
+<rect x="570" y="120" width="208" height="48" rx="5" fill="#ffffff" stroke="#d8b4fe"/>
+<text x="578" y="136" font-size="8.8" font-weight="700" fill="#0f172a">2. Cota Embalse Bullileo</text>
+<text x="578" y="150" font-size="8.2" fill="#334155">• Seguridad de riego estacional</text>
+<text x="578" y="160" font-size="8" fill="#64748b">• Recarga freática regional</text>
+<rect x="570" y="174" width="208" height="48" rx="5" fill="#ffffff" stroke="#d8b4fe"/>
+<text x="578" y="190" font-size="8.8" font-weight="700" fill="#0f172a">3. Carbono y Economía</text>
+<text x="578" y="204" font-size="8.2" fill="#047857">• Secuestro SOM y balance PRV</text>
+<text x="578" y="214" font-size="8" fill="#64748b">• Margen bruto por hectárea</text>
+
+<rect x="12" y="244" width="776" height="54" rx="8" fill="#0f172a"/>
+<text x="24" y="266" font-size="9.5" font-weight="800" fill="#38bdf8" font-family="monospace">DESACOPLAMIENTO TEMPORAL: INDEPENDENCIA DE HILOS SIN BLOQUEO EN EL SERVIDOR</text>
+<text x="24" y="284" font-size="8.5" fill="#cbd5e1">El Paso Micro corre en eventos reactivos (MQTT/WebSockets), el Paso Meso se evalúa en cron nocturno diario,</text>
+<text x="24" y="295" font-size="8.5" fill="#94a3b8">y el Paso Macro ejecuta agregaciones estacionales sin degradar los 60 FPS del gemelo 3D ni saturar la base de datos.</text>
+</svg>
+</figure>
+
+<div class="mermaid-legend">
+<div class="mermaid-legend-title">🧭 LEYENDA DEL DIAGRAMA — Jerarquía de 3 Pasos Temporales y Desacoplamiento de Carga</div>
+  <ul>
+    <li><strong>Micro ($\Delta t = 15\text{ min}$):</strong> Gestiona eventos de tiempo real en campo para protección inmediata de infraestructura y cultivo.</li>
+    <li><strong>Meso ($\Delta t = 1\text{ día}$):</strong> Resuelve el balance mecanístico de agua, nutrientes y desarrollo biológico.</li>
+    <li><strong>Macro ($\Delta t = 1\text{ mes}$):</strong> Consolida la planificación estratégica de cuenca y la rentabilidad del predio.</li>
+  </ul>
+</div>
 
 ### 13.2. Policultivos, Permacultura y PRV vs. Monocultivo Clásico
 MONICA fue concebido originalmente en Europa para monocultivos industriales anuales (trigo, cebada, maíz). Fundo Meniel opera con avellanos europeos, viñedos patrimoniales de secano, praderas polifíticas de Pastoreo Racional Voisin (PRV) y bosque nativo esclerófilo. 
@@ -1572,7 +1877,7 @@ Cada fila indica lo que **ya existe en el repositorio** (verificado) y lo que ap
 Para garantizar una gobernanza de software transparente, la integración clasifica rigurosamente el destino de cada componente en tres categorías técnicas:
 
 ```mermaid
-flowchart LR
+flowchart TD
     subgraph CAT1 ["1. Vacíos Absolutos (Cero Previo)"]
         V1["Estándares OGC (EDR, WFS 3.0, STA, STAC)"]
         V2["Malla Hexagonal Uber H3 L7-L9"]
@@ -1596,6 +1901,8 @@ flowchart LR
         O4["Valores fijos cableados en HTML de Módulo 8"]
         O5["Napa freática estática al 44% sin recarga"]
     end
+
+    CAT1 --> CAT2 --> CAT3
 ```
 
 <div class="mermaid-legend">
@@ -1862,7 +2169,7 @@ La ET0 diaria **ya se pide** desde el servidor. Lo nuevo es la ET0 horaria, la r
 ### 17.4. Las cinco fases
 
 ```mermaid
-flowchart LR
+flowchart TD
     F0["Fase 0: Transición de proveedor"] --> F1["Fase 1: Contrato y sensor virtual"]
     F1 --> F2["Fase 2: Variables ampliadas"]
     F2 --> F3["Fase 3: What-If en el mapa"]
@@ -1918,7 +2225,7 @@ El **Vault** (Dossier Técnico / Memoria de Ingeniería visible en la pestaña *
 Se incorpora una nueva tarjeta/módulo formal en la interfaz del Vault dedicada exclusivamente a la interoperabilidad internacional bajo el protocolo consolidado en el puerto 7777:
 
 ```mermaid
-flowchart LR
+flowchart TD
     subgraph VAULT_MOD9 ["Módulo 9 del Vault (Dossier Técnico en UI)"]
         V1["1. Consola de Estado de Endpoints OGC (Live / Ping 7777)"]
         V2["2. Sandbox de Validación (CoverageJSON & GeoJSON)"]
@@ -1926,6 +2233,7 @@ flowchart LR
         V4["4. Guía de Conexión 1-Click para QGIS / ArcGIS (WFS 3.0)"]
         V5["5. Gobernanza de Privacidad: Common Core vs. Tenant Vault"]
     end
+    V1 --> V2 --> V3 --> V4 --> V5
 ```
 
 <div class="mermaid-legend">

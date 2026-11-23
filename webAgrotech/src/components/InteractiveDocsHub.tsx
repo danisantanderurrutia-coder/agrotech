@@ -1769,7 +1769,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                       Tratado de Migración & Arquitectura Unificada
                     </h5>
                     <p className="text-xs text-slate-300 font-serif leading-relaxed">
-                      Tratado canónico de 14 capítulos: contratos de datos GeoJSON/Arrow, soberanía edge sin fugas de propiedad intelectual, balance determinista Campbell-Richards y desacoplamiento de capas frontend.
+                      Tratado canónico de 20 capítulos (67 páginas ilustradas): arquitectura multiescala, biofísica MONICA-Richards 1D en 5 capas, doctrina DestinE, pila OGC, asimilación EKF y gobernanza visual.
                     </p>
                   </div>
                   <div className="flex items-center gap-2 pt-2">
