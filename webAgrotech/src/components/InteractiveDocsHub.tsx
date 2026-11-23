@@ -19,6 +19,7 @@ import {
   ProductCategory
 } from '../products';
 import { PermacultureSection } from './PermacultureSection';
+import { resolveAsset, handleImageFallback } from '../utils/assets';
 
 interface InteractiveDocsHubProps {
   onNavigate?: (viewId: string) => void;
@@ -650,10 +651,20 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                 {product.previewImageUrl ? (
                   <div className="relative h-44 bg-slate-900 overflow-hidden group/img">
                     <img
-                      src={product.previewImageUrl}
+                      src={resolveAsset(product.previewImageUrl)}
                       alt={product.name}
+                      onError={(e) => handleImageFallback(e, product.previewImageUrl)}
                       className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
                     />
+                    {/* Fallback visual elegante si no carga la imagen */}
+                    <div className="img-error-fallback hidden absolute inset-0 bg-gradient-to-br from-[#0B2519] via-[#071810] to-slate-950 p-6 flex-col justify-center items-center text-center space-y-2">
+                      <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                        <Layers className="w-6 h-6" />
+                      </div>
+                      <span className="text-xs font-bold text-slate-200">{product.name}</span>
+                      <span className="text-[10px] font-mono text-emerald-400/80">{product.architectureRole}</span>
+                    </div>
+
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
                     <span className="absolute bottom-2.5 left-3 text-[10px] font-mono font-bold text-white px-2 py-0.5 rounded bg-black/60 backdrop-blur-xs border border-white/20">
                       {product.architectureRole}
@@ -680,8 +691,16 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                 <div className="p-6 flex flex-col justify-between flex-1 space-y-4">
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-[#0B2519] border border-emerald-500/40 p-1.5 shrink-0 flex items-center justify-center overflow-hidden shadow-xs">
-                        <img src={product.logoUrl} alt={product.name} className="w-full h-full object-contain" />
+                      <div className="w-12 h-12 rounded-xl bg-[#0B2519] border border-emerald-500/40 p-1.5 shrink-0 flex items-center justify-center overflow-hidden shadow-xs relative">
+                        <img 
+                          src={resolveAsset(product.logoUrl)} 
+                          alt={product.name} 
+                          onError={(e) => handleImageFallback(e, product.logoUrl)}
+                          className="w-full h-full object-contain" 
+                        />
+                        <div className="img-error-fallback hidden absolute inset-0 items-center justify-center bg-emerald-950 text-emerald-400 text-xs font-black">
+                          {product.name.slice(0, 2).toUpperCase()}
+                        </div>
                       </div>
                       <div>
                         <h3 className="font-extrabold text-base text-slate-900">{product.name}</h3>
@@ -1421,7 +1440,15 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
                 </div>
                 <div className="flex items-center gap-3">
-                  <img src="./logo-agritwin.png" alt="AgriTwin" className="w-10 h-10 object-contain" />
+                  <div className="w-10 h-10 shrink-0 relative flex items-center justify-center">
+                    <img 
+                      src={resolveAsset('./logo-agritwin.png')} 
+                      alt="AgriTwin" 
+                      onError={(e) => handleImageFallback(e, './logo-agritwin.png')}
+                      className="w-10 h-10 object-contain" 
+                    />
+                    <div className="img-error-fallback hidden absolute inset-0 items-center justify-center bg-amber-500/20 text-amber-900 rounded-lg text-xs font-bold">AT</div>
+                  </div>
                   <div>
                     <h4 className="font-extrabold text-base text-slate-900">AgriTwin 3D</h4>
                     <p className="text-xs text-slate-500 font-serif">Gemelo Digital Biofísico</p>
@@ -1453,7 +1480,15 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                 </div>
                 <div className="flex items-center gap-3">
-                  <img src="./logo-rewild.png" alt="Rewild" className="w-10 h-10 object-contain" />
+                  <div className="w-10 h-10 shrink-0 relative flex items-center justify-center">
+                    <img 
+                      src={resolveAsset('./logo-rewild.png')} 
+                      alt="Rewild" 
+                      onError={(e) => handleImageFallback(e, './logo-rewild.png')}
+                      className="w-10 h-10 object-contain" 
+                    />
+                    <div className="img-error-fallback hidden absolute inset-0 items-center justify-center bg-emerald-500/20 text-emerald-900 rounded-lg text-xs font-bold">RW</div>
+                  </div>
                   <div>
                     <h4 className="font-extrabold text-base text-slate-900">Rewild Suite</h4>
                     <p className="text-xs text-slate-500 font-serif">Biomonitoreo Esclerófilo</p>
@@ -1488,7 +1523,15 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                 </div>
                 <div className="flex items-center gap-3">
-                  <img src="./logo-peumo-quantum.jpg" alt="AgroTech Core" className="w-10 h-10 object-contain rounded-lg" />
+                  <div className="w-10 h-10 shrink-0 relative flex items-center justify-center">
+                    <img 
+                      src={resolveAsset('./logo-peumo-quantum.jpg')} 
+                      alt="AgroTech Core" 
+                      onError={(e) => handleImageFallback(e, './logo-peumo-quantum.jpg')}
+                      className="w-10 h-10 object-contain rounded-lg" 
+                    />
+                    <div className="img-error-fallback hidden absolute inset-0 items-center justify-center bg-emerald-950 text-emerald-400 rounded-lg text-xs font-bold">AT</div>
+                  </div>
                   <div>
                     <h4 className="font-extrabold text-base text-slate-900">AgroTech Chile Core</h4>
                     <p className="text-xs text-slate-500 font-serif">Plataforma Madre & HoldCo</p>
@@ -1522,9 +1565,19 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {ALL_GRAPHIC_ASSETS.map((asset) => (
                 <div key={asset.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-center flex flex-col justify-between">
-                  <div className="w-16 h-16 rounded-xl bg-white border border-slate-200 p-2 mx-auto flex items-center justify-center shadow-sm">
+                  <div className="w-16 h-16 rounded-xl bg-white border border-slate-200 p-2 mx-auto flex items-center justify-center shadow-sm relative overflow-hidden">
                     {asset.previewUrl ? (
-                      <img src={asset.previewUrl} alt={asset.name} className="w-full h-full object-contain" />
+                      <>
+                        <img 
+                          src={resolveAsset(asset.previewUrl)} 
+                          alt={asset.name} 
+                          onError={(e) => handleImageFallback(e, asset.previewUrl)}
+                          className="w-full h-full object-contain" 
+                        />
+                        <div className="img-error-fallback hidden absolute inset-0 items-center justify-center bg-slate-100 text-emerald-700">
+                          <Globe className="w-6 h-6" />
+                        </div>
+                      </>
                     ) : (
                       <Globe className="w-6 h-6 text-emerald-700" />
                     )}

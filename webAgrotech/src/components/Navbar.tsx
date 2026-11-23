@@ -5,6 +5,7 @@ import {
   Users, Newspaper, Lock, BookOpen, Heart, Trees, QrCode, MonitorPlay, Database, MapPin,
   Smartphone, Zap, CheckCircle2, Compass
 } from 'lucide-react';
+import { resolveAsset, handleImageFallback } from '../utils/assets';
 
 interface NavbarProps {
   currentView: string;
@@ -57,8 +58,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
           onClick={() => handleNavClick('landing')} 
           className="flex items-center gap-3 group text-left focus:outline-none"
         >
-          <div className="w-10 h-10 rounded-xl bg-[#071810] border border-emerald-500/40 flex items-center justify-center p-1 group-hover:border-amber-400 transition-all shadow-sm">
-            <img src="./logo-peumo-quantum.jpg" alt="AgroTech Chile Peumo Quantum Logo" className="w-full h-full object-contain rounded-lg" />
+          <div className="w-10 h-10 rounded-xl bg-[#071810] border border-emerald-500/40 flex items-center justify-center p-1 group-hover:border-amber-400 transition-all shadow-sm relative overflow-hidden">
+            <img 
+              src={resolveAsset('./logo-peumo-quantum.jpg')} 
+              alt="AgroTech Chile Peumo Quantum Logo" 
+              onError={(e) => handleImageFallback(e, './logo-peumo-quantum.jpg')}
+              className="w-full h-full object-contain rounded-lg" 
+            />
+            <div className="img-error-fallback hidden absolute inset-0 items-center justify-center bg-emerald-950 text-emerald-400 text-xs font-bold">AT</div>
           </div>
           <div>
             <div className="flex items-center gap-2">
