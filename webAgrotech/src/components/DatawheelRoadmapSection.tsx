@@ -653,7 +653,7 @@ export const DatawheelRoadmapSection: React.FC = () => {
                 </div>
 
                 <p className="text-xs text-slate-600 dark:text-emerald-100/80 font-serif leading-relaxed">
-                  Consolidación del Centro Científico de San Clemente, investigación aplicada con universidades, fondos ANID/CORFO y flotas autónomas de drones.
+                  Consolidación del Living Lab ubicado donde Rudi (Parral), proyectos de resiliencia territorial de cuencas para municipios/APRs/JVRL, investigación aplicada con universidades y fondos de fomento.
                 </p>
 
                 <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-emerald-900/60">
@@ -661,19 +661,19 @@ export const DatawheelRoadmapSection: React.FC = () => {
                   <ul className="text-xs space-y-1.5 text-slate-700 dark:text-emerald-100/90 font-sans">
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-                      <span>Living Lab Demostrativo (20 ha agroecológicas en San Clemente)</span>
+                      <span>Living Lab Demostrativo (validación empírica en Parral, donde Rudi)</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-                      <span>Vuelos autónomos de dron para termografía de copa</span>
+                      <span>Modelado hidrológico y resiliencia de cuenca para municipios y APRs</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-                      <span>Cursos y Escuela de Campo para agricultores</span>
+                      <span>Transferencia técnica, biopreparados y microbiología de suelo</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-                      <span>Economías regenerativas y créditos de carbono/agua</span>
+                      <span>Economías regenerativas y créditos de biodiversidad/agua</span>
                     </li>
                   </ul>
                 </div>
@@ -887,7 +887,7 @@ export const DatawheelRoadmapSection: React.FC = () => {
                   <span>"¿Qué pasa con el Living Lab y la pata de permacultura/solarpunk?"</span>
                 </div>
                 <p className="text-xs text-slate-600 dark:text-emerald-100/80 font-serif pl-6 leading-relaxed">
-                  <strong>Respuesta:</strong> El Living Lab en San Clemente es nuestra catedral de I+D y nuestro campo de pruebas para levantar subsidios públicos (CORFO, ANID) y validar con universidades. No la eliminamos: la colocamos en la <strong>Fase 3</strong>, alimentada y solventada por el flujo de caja del Micro-SaaS de la Fase 1. Así el proyecto se sostiene por sus propios méritos comerciales y no por caridad.
+                  <strong>Respuesta:</strong> El Living Lab ubicado donde Rudi (Parral) es nuestro centro de validación empírica en terreno y nuestro campo de pruebas para levantar proyectos públicos (CORFO, FIA, CNR) y alianzas con universidades y comunidades de regantes. No se elimina: se ubica en la <strong>Fase 3</strong>, solventada por el flujo de caja del Micro-SaaS de la Fase 1 ($0 inventario propio). Así el proyecto se sostiene por sus propios méritos comerciales y no por caridad.
                 </p>
               </div>
 

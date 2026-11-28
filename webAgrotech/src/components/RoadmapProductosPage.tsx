@@ -17,71 +17,71 @@ export const RoadmapProductosPage: React.FC<RoadmapProductosPageProps> = ({ onNa
   const stackLevels = [
     {
       level: 1,
-      tag: 'NIVEL 01 • ACCESO INMEDIATO',
-      title: 'AgroAlerta de Bolsillo (WhatsApp)',
-      cost: 'Freemium / Micro-SaaS ($15 USD/mes)',
+      tag: 'NIVEL 01 • ACCESO INMEDIATO (60 SEGUNDOS)',
+      title: 'X AgroAlerta (WhatsApp & Móvil)',
+      cost: 'Gancho Gratuito + Add-ons Pagos 1-Clic',
       time: 'Activación en 60 segundos',
-      hw: 'Cero Hardware requerido',
-      desc: 'El agricultor no necesita descargar apps pesadas ni aprender interfaces complejas. Con solo enviar las coordenadas GPS y tipo de cultivo, el bot satelital monitorea su predio 24/7 y emite alertas preventivas antes de heladas críticas (-1.8 °C) y olas de calor.',
+      hw: 'Cero Hardware ($0 Inventario)',
+      desc: 'El agricultor no necesita descargar apps pesadas ni aprender interfaces complejas. Con solo enviar las coordenadas GPS o dibujar su polígono por WhatsApp, el sistema monitorea su predio 24/7 y emite alertas preventivas antes de heladas críticas (-1.8 °C), vientos Puelche y estrés hídrico.',
       features: [
-        'Alertas de helada radiativa con 4 horas de anticipación',
-        'Monitoreo satelital Sentinel-2 de vigor vegetal (NDVI)',
+        'Alertas de helada katabática (-1.8 °C) con 72h de anticipación',
+        'Monitoreo satelital Sentinel-2 de vigor vegetal (NDVI / NDRE)',
         'Avisos de estrés hídrico y ventanas seguras de pulverización',
-        'Detección perimetral de focos de incendio en 5 km a la redonda'
+        'Desbloqueo en 1 clic: Informe Predial Express (24h), Pasaporte Verde EUDR y Carpeta CNR'
       ],
       icon: Smartphone,
       color: 'emerald'
     },
     {
       level: 2,
-      tag: 'NIVEL 02 • INTELIGENCIA TERRITORIAL',
-      title: 'Informes Terran 24h & Pasaporte UE (EUDR)',
-      cost: 'Por evento / Certificación anual',
-      time: 'Entrega en 24 horas',
-      hw: 'Imágenes Satelitales & Catastro DGA',
-      desc: 'Diagnósticos geoespaciales rigurosos antes de comprar un campo o negociar derechos de agua. Incluye el Pasaporte Verde con trazabilidad QR para cumplir la normativa europea de cero deforestación (EUDR) y exportar fruta sin trabas arancelarias.',
+      tag: 'NIVEL 02 • MICRO-SAAS VERTICALES DE RIESGO',
+      title: 'X Agua, X Incendios & X Visión',
+      cost: 'Suscripción Micro-SaaS ($25k - $45k CLP/mes)',
+      time: 'Activación Inmediata en la Nube',
+      hw: '100% Software (Aprovecha cámaras/drones existentes)',
+      desc: 'Herramientas especializadas de operación y mitigación de riesgo. Balance hídrico FAO-56 para ahorro en tarifas eléctricas de riego, monitoreo piro-vórtice 30-30-30 con órdenes de humectación preventiva, y conexión de cámaras IP/4G o drones que el cliente ya posee.',
       features: [
-        'Diagnóstico hidrológico de cuenca y napas freáticas (DGA)',
-        'Mapeo centimétrico de drenaje catabático de heladas',
-        'Auditoría multitemporal de no-deforestación (2020-2026)',
-        'Código QR sellado con coordenadas para pallets de exportación'
+        'X Agua & Riego: balance hídrico diario FAO-56 y ahorro en franjas eléctricas valle (-32%)',
+        'X Incendios: simulación de frentes de fuego Rothermel, viento Puelche y cortafuegos preventivo',
+        'X Visión & Vuelo: analítica IA con cámaras IP/4G del fundo y ortomosaicos NDVI con drones propios',
+        'Integración por Webhook / API a sistemas de bombeo y PLCs existentes en el predio'
       ],
       icon: Globe,
       color: 'blue'
     },
     {
       level: 3,
-      tag: 'NIVEL 03 • TELEMETRÍA FÍSICA IN-SITU',
-      title: 'Kits KioT Hardware (Suelo & Clima)',
-      cost: 'Venta de equipo o arriendo operativo',
-      time: 'Instalación en 48 horas en Maule',
-      hw: 'Nodos IP65 + Sondas FDR Tri-Estrato',
-      desc: 'Cuando un cultivo de alto valor (cerezos, avellanos, viñedos) exige precisión milimétrica de riego, instalamos nodos mecatrónicos robustos con comunicación LoRaWAN/4G que miden humedad radicular en tres profundidades reales.',
+      tag: 'NIVEL 03 • SUITE MAESTRO & DISEÑO REGENERATIVO',
+      title: 'X AgriTwin Maestro & X Keyline',
+      cost: 'SaaS Pro / Enterprise ($85k - $160k CLP/mes)',
+      time: 'Modelado en 48 horas',
+      hw: 'Sensores Virtuales (Richards-MONICA 1D sin sondas)',
+      desc: 'El ápice tecnológico del software agropecuario. Calicata virtual profunda Richards-MONICA 1D para monitorear humedad radicular sin enterrar sondas físicas, visualización 3D en Three.js con drenaje katabático brote a brote, simulador What-If y diseño regenerativo permacultural Keyline desde cero.',
       features: [
-        'Sondas capacitivas FDR a 0-20 cm, 20-60 cm y 60-100 cm',
-        'Sensor de temperatura húmeda para alerta física de helada',
-        'Gabinete estanco IP65 resistente a agroquímicos y sol directo',
-        'Batería solar LiFePO4 con autonomía de 15 días sin luz solar'
-      ],
-      icon: Activity,
-      color: 'amber'
-    },
-    {
-      level: 4,
-      tag: 'NIVEL 04 • ORQUESTACIÓN BIOFÍSICA TOTAL',
-      title: 'AgriTwin 3D OS (Gemelo Digital Predial)',
-      cost: 'Suscripción Enterprise / Centro de I+D',
-      time: 'Modelado en 5 días',
-      hw: 'Integración Total (Satelital + IoT + DEM 3D)',
-      desc: 'El ápice tecnológico de AgroTech. Su predio completo modelado en Three.js con simulación biofísica continua bajo ecuación FAO-56 Penman-Monteith, balances de escorrentía Keyline y gemelo virtual interactivo navegable desde cualquier pantalla.',
-      features: [
-        'Simulador 3D interactivo con mallas topográficas de precisión',
-        'Balance hídrico radicular tridimensional estrato por estrato',
-        'Modelado de inversiones térmicas nocturnas y vientos Puelche',
-        'Consola técnica para administradores de campo y agrónomos'
+        'Sensores Virtuales: calicata 1D Richards-MONICA sin costo ni mantenimiento de sondas',
+        'Malla 3D AMR con simulación de drenaje de aire frío e inversión térmica brote a brote',
+        'Simulador de escenarios What-If: cambios de cultivo, dotación hídrica y frentes climáticos',
+        'X Keyline: diseño integral bajo Escala de Permanencia, cosecha de agua, CutSheetRX y pastoreo PRV'
       ],
       icon: Cpu,
       color: 'teal'
+    },
+    {
+      level: 4,
+      tag: 'NIVEL 04 • UPGRADE IOT & VALIDACIÓN DE CUENCA',
+      title: 'X Kits IoT & X Territorio (Living Lab Parral)',
+      cost: 'Hardware Just-In-Time & Contratos Territoriales B2G',
+      time: 'Instalación 48h / Convenios de Cuenca',
+      hw: 'Sondas FDR 3-Estratos + LiFePO4 + Estaciones LoRaWAN',
+      desc: 'Capa física y territorial desplegada exclusivamente sobre clientes que ya operan y confían en el software. Ensamblaje Just-In-Time de sondas FDR multinivel, controladores físicos LoRaWAN y alianzas de resiliencia hídrica de cuencas validadas en el Living Lab ubicado donde Rudi (Parral).',
+      features: [
+        'Sondas FDR tri-estrato (0-20, 20-60, 60-100 cm) con telemetría LoRaWAN/4G',
+        'Actuadores físicos para activación remota de bombas, aspersores y electroválvulas',
+        'Energía solar autónoma con baterías LiFePO4 de 15 días de autonomía sin sol',
+        'Validación agronómica en el Living Lab ubicado donde Rudi (Parral) y proyectos de cuenca B2G'
+      ],
+      icon: Activity,
+      color: 'amber'
     }
   ];
 
@@ -383,10 +383,10 @@ export const RoadmapProductosPage: React.FC<RoadmapProductosPageProps> = ({ onNa
                 Principio N.° 3 • Transparencia de Maduración
               </span>
               <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
-                Roadmap 2026 - 2028: En Qué Está AgroTech Hoy
+                Roadmap Oficial en 3 Fases: En Qué Está AgroTech Hoy
               </h2>
               <p className="text-sm sm:text-base text-slate-300 font-serif leading-relaxed">
-                Queremos que los agricultores, exportadoras e inversionistas entiendan exactamente qué soluciones están operativas de forma inmediata, cuáles se fabrican bajo pedido y hacia dónde se proyecta el ecosistema territorial.
+                Queremos que los agricultores, exportadoras e inversionistas entiendan con absoluta transparencia cómo evoluciona nuestra arquitectura: $0 inventario propio en Fase 1, upgrade físico IoT bajo demanda en Fase 2, y escala territorial y ecosistémica en Fase 3.
               </p>
             </div>
 
@@ -394,35 +394,70 @@ export const RoadmapProductosPage: React.FC<RoadmapProductosPageProps> = ({ onNa
             <div className="space-y-6">
 
               {/* FASE 1: ACTUAL */}
-              <div className="rounded-3xl bg-[#091724] border-2 border-emerald-500/60 p-6 sm:p-8 space-y-4 shadow-xl">
+              <div className="rounded-3xl bg-[#091724] border-2 border-emerald-500/60 p-6 sm:p-8 space-y-5 shadow-xl">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-emerald-900/60 pb-4">
                   <div className="flex items-center gap-3">
                     <span className="px-3 py-1 rounded-full bg-emerald-500 text-slate-950 font-mono font-black text-xs uppercase tracking-wide">
-                      OPERATIVO HOY • 2026
+                      OPERATIVO HOY • FASE 1
                     </span>
                     <h3 className="text-xl sm:text-2xl font-bold text-white">
-                      Fase 1: Software Micro-SaaS & Diagnóstico Inmediato
+                      Fase 1: Ecosistema 100% Software & Micro-SaaS ($0 Inventario)
                     </h3>
                   </div>
-                  <span className="text-xs font-mono text-emerald-400 font-bold">100% Funcional & Activo</span>
+                  <span className="text-xs font-mono text-emerald-400 font-bold">6 Productos Operativos</span>
                 </div>
 
                 <p className="text-sm text-slate-300 font-serif leading-relaxed">
-                  Nuestro foco prioritario para agricultores del Maule y Chile Central: alertas de helada en WhatsApp, informes de riesgo predial en 24h y vitrina B2B del gemelo digital. Sin listas de espera ni costos de instalación.
+                  Cero inventario propio ni compras forzadas a puerta fría. El agricultor entra gratis por WhatsApp en 60s con <strong>X AgroAlerta</strong>, desbloquea compras integradas en 1 clic (Informe Express, Pasaporte EUDR, Carpeta CNR), escala a micro-SaaS de riesgo y gestión predial avanzada con Sensores Virtuales (Richards-MONICA 1D), y diseña su campo desde cero con Keyline.
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 font-sans text-xs">
-                  <div className="p-3 rounded-xl bg-black/30 border border-emerald-500/20 space-y-1">
-                    <span className="font-bold text-white block">AgroAlerta (WhatsApp)</span>
-                    <span className="text-slate-400 text-[11px]">Alertas automáticas en 60s con geolocalización.</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-2 font-sans text-xs">
+                  <div className="p-3.5 rounded-xl bg-black/40 border border-emerald-500/30 space-y-1">
+                    <div className="flex items-center gap-1.5 font-bold text-white">
+                      <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-[10px] font-mono">1</span>
+                      <span>X AgroAlerta</span>
+                    </div>
+                    <span className="text-slate-400 text-[11px] block">Gancho gratuito WhatsApp (60s) + add-ons pagos en 1 clic (Informe Express, EUDR, CNR).</span>
                   </div>
-                  <div className="p-3 rounded-xl bg-black/30 border border-emerald-500/20 space-y-1">
-                    <span className="font-bold text-white block">Informes Terran 24h</span>
-                    <span className="text-slate-400 text-[11px]">Diagnósticos satelitales de riesgo hídrico y heladas.</span>
+
+                  <div className="p-3.5 rounded-xl bg-black/40 border border-emerald-500/30 space-y-1">
+                    <div className="flex items-center gap-1.5 font-bold text-white">
+                      <span className="w-5 h-5 rounded-full bg-blue-500/20 text-blue-300 flex items-center justify-center text-[10px] font-mono">2</span>
+                      <span>X Agua & Riego</span>
+                    </div>
+                    <span className="text-slate-400 text-[11px] block">Balance FAO-56 diario, reservas de tranque y ahorro de energía en tarifa eléctrica nocturna valle.</span>
                   </div>
-                  <div className="p-3 rounded-xl bg-black/30 border border-emerald-500/20 space-y-1">
-                    <span className="font-bold text-white block">Pasaporte Verde UE</span>
-                    <span className="text-slate-400 text-[11px]">Certificación EUDR no-deforestación con QR para exportadoras.</span>
+
+                  <div className="p-3.5 rounded-xl bg-black/40 border border-emerald-500/30 space-y-1">
+                    <div className="flex items-center gap-1.5 font-bold text-white">
+                      <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 flex items-center justify-center text-[10px] font-mono">3</span>
+                      <span>X Incendios</span>
+                    </div>
+                    <span className="text-slate-400 text-[11px] block">Monitoreo WUI, viento Puelche 30-30-30, simulación Rothermel y humectación preventiva por API.</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-black/40 border border-emerald-500/30 space-y-1">
+                    <div className="flex items-center gap-1.5 font-bold text-white">
+                      <span className="w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center text-[10px] font-mono">4</span>
+                      <span>X Visión & Vuelo</span>
+                    </div>
+                    <span className="text-slate-400 text-[11px] block">Conecta cámaras IP/4G y drones existentes del productor para vigilancia IA y ortomosaicos NDVI.</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-black/40 border border-emerald-500/30 space-y-1">
+                    <div className="flex items-center gap-1.5 font-bold text-white">
+                      <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-[10px] font-mono">5</span>
+                      <span>X AgriTwin Maestro</span>
+                    </div>
+                    <span className="text-slate-400 text-[11px] block">Administración predial con Sensores Virtuales (Richards-MONICA 1D sin sondas), 3D AMR y What-If.</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-black/40 border border-emerald-500/30 space-y-1">
+                    <div className="flex items-center gap-1.5 font-bold text-white">
+                      <span className="w-5 h-5 rounded-full bg-teal-500/20 text-teal-300 flex items-center justify-center text-[10px] font-mono">6</span>
+                      <span>X Keyline</span>
+                    </div>
+                    <span className="text-slate-400 text-[11px] block">Diseño regenerativo desde cero bajo Escala de Permanencia, líneas clave, tranques y CutSheetRX.</span>
                   </div>
                 </div>
               </div>
@@ -432,31 +467,31 @@ export const RoadmapProductosPage: React.FC<RoadmapProductosPageProps> = ({ onNa
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-900/60 pb-4">
                   <div className="flex items-center gap-3">
                     <span className="px-3 py-1 rounded-full bg-amber-400/20 border border-amber-400 text-amber-300 font-mono font-bold text-xs uppercase tracking-wide">
-                      DESPLIEGUE EN TERRENO • BAJO PEDIDO
+                      UPGRADE BAJO DEMANDA • FASE 2
                     </span>
                     <h3 className="text-xl sm:text-2xl font-bold text-white">
-                      Fase 2: Hardware IoT KioT & Calibración In-Situ
+                      Fase 2: X Kits IoT, Actuadores & Energía Off-Grid
                     </h3>
                   </div>
-                  <span className="text-xs font-mono text-amber-400 font-bold">Instalación 48h en Maule</span>
+                  <span className="text-xs font-mono text-amber-400 font-bold">Solo Clientes Validados de Fase 1</span>
                 </div>
 
                 <p className="text-sm text-slate-300 font-serif leading-relaxed">
-                  Para campos que requieren telemetría física profunda. Fabricamos y ensamblamos kits IP65 con calibración directa en el suelo del cliente. Cero stock ocioso en bodega, máxima robustez en terreno.
+                  Para predios que ya operan y confían en nuestro software. Se despliega telemetría física in-situ de alta precisión mediante fabricación Just-In-Time: sondas capacitivas FDR tri-estrato, controladores de bombas y aspersores LoRaWAN, y estaciones solares LiFePO4 de 15 días de autonomía.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 font-sans text-xs">
                   <div className="p-3 rounded-xl bg-black/30 border border-amber-500/20 space-y-1">
                     <span className="font-bold text-white block">Sondas FDR Tri-Estrato</span>
-                    <span className="text-slate-400 text-[11px]">Hidratación radicular a 0-20, 20-60 y 60-100 cm.</span>
+                    <span className="text-slate-400 text-[11px]">Medición física de humedad radicular a 0-20, 20-60 y 60-100 cm.</span>
                   </div>
                   <div className="p-3 rounded-xl bg-black/30 border border-amber-500/20 space-y-1">
-                    <span className="font-bold text-white block">Defensa Térmica Activa</span>
-                    <span className="text-slate-400 text-[11px]">Activación remota de aspersión y ventiladores antihelada.</span>
+                    <span className="font-bold text-white block">Controladores LoRaWAN</span>
+                    <span className="text-slate-400 text-[11px]">Encendido remoto de electroválvulas, bombas y aspersores antihelada.</span>
                   </div>
                   <div className="p-3 rounded-xl bg-black/30 border border-amber-500/20 space-y-1">
-                    <span className="font-bold text-white block">Red LoRaWAN Autónoma</span>
-                    <span className="text-slate-400 text-[11px]">Transmisión de datos sin depender de señal celular en los cuarteles.</span>
+                    <span className="font-bold text-white block">Energía Solar LiFePO4</span>
+                    <span className="text-slate-400 text-[11px]">Baterías de litio ferrofosfato con 15 días de autonomía sin sol directo.</span>
                   </div>
                 </div>
               </div>
@@ -466,31 +501,31 @@ export const RoadmapProductosPage: React.FC<RoadmapProductosPageProps> = ({ onNa
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-teal-900/60 pb-4">
                   <div className="flex items-center gap-3">
                     <span className="px-3 py-1 rounded-full bg-teal-500/20 border border-teal-400 text-teal-300 font-mono font-bold text-xs uppercase tracking-wide">
-                      VISIÓN MADURA • 2027 - 2028
+                      SERVICIOS TERRITORIALES • FASE 3
                     </span>
                     <h3 className="text-xl sm:text-2xl font-bold text-white">
-                      Fase 3: Living Lab, Drones & Restauración de Cuenca
+                      Fase 3: X Territorio, Cuencas & Living Lab
                     </h3>
                   </div>
-                  <span className="text-xs font-mono text-teal-400 font-bold">Horizonte Estratégico</span>
+                  <span className="text-xs font-mono text-teal-400 font-bold">B2G & Validación Empírica</span>
                 </div>
 
                 <p className="text-sm text-slate-300 font-serif leading-relaxed">
-                  Consolidación de nuestro centro demostrativo en San Clemente para investigación agroforestal sintrópica, vuelos de dron fotogramétrico y alianzas con comités de agua (APRs) y universidades.
+                  Proyectos de resiliencia hídrica de cuencas para municipios, Juntas de Vigilancia (JVRL), comités de agua potable rural (APRs) e INDAP. Centro de investigación agronómica y demostración empírica en el <strong>Living Lab ubicado donde Rudi (Parral)</strong>, con validación de biopreparados, salud microbiológica de suelo y transferencia comunitaria.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 font-sans text-xs">
                   <div className="p-3 rounded-xl bg-black/30 border border-teal-500/20 space-y-1">
-                    <span className="font-bold text-white block">Living Lab Demostrativo</span>
-                    <span className="text-slate-400 text-[11px]">Showroom y días de campo para validación agronómica en vivo.</span>
+                    <span className="font-bold text-white block">Living Lab en Parral (donde Rudi)</span>
+                    <span className="text-slate-400 text-[11px]">Validación empírica en campo de biopreparados, suelo y microclima.</span>
                   </div>
                   <div className="p-3 rounded-xl bg-black/30 border border-teal-500/20 space-y-1">
-                    <span className="font-bold text-white block">Drones DJI Dock 2</span>
-                    <span className="text-slate-400 text-[11px]">Termografía de copas y detección de plagas desde el aire.</span>
+                    <span className="font-bold text-white block">Resiliencia de Cuencas B2G</span>
+                    <span className="text-slate-400 text-[11px]">Monitoreo hidrológico para Juntas de Vigilancia de Ríos y Comités APR.</span>
                   </div>
                   <div className="p-3 rounded-xl bg-black/30 border border-teal-500/20 space-y-1">
-                    <span className="font-bold text-white block">Rewilding & Créditos Bio</span>
-                    <span className="text-slate-400 text-[11px]">Certificación de biodiversidad en quebradas y bosque nativo.</span>
+                    <span className="font-bold text-white block">Transferencia Técnica</span>
+                    <span className="text-slate-400 text-[11px]">Capacitación agroecológica comunitaria y fondos CNR Ley 18.450 / GORE.</span>
                   </div>
                 </div>
               </div>

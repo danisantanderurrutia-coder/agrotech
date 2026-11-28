@@ -136,7 +136,7 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
           </h2>
 
           <p className="text-slate-600 text-sm sm:text-base font-serif">
-            Hoja de ruta comercial ejecutiva para el equipo fundador (Daniel Santander, Francisco Ipinza, Wladimir Gutiérrez, Rüdiger Kaatz, Cristian Cantuarias). Catálogo de precios, simulador de ingresos en vivo, calculadora de ROI para clientes y embudo de terreno.
+            Hoja de ruta comercial ejecutiva para el equipo fundador (Daniel Santander, Francisco Ipinza, Wladimir Gutiérrez, Rüdiger Kaatz, Cristian Cantuarias). Catálogo oficial de 3 fases, recorrido Product-Led Growth, simulador de ingresos en vivo, calculadora de ROI para clientes y embudo de terreno.
           </p>
         </div>
 
@@ -151,6 +151,82 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
               <span>Ver Pitch Deck Comercial (10 Slides)</span>
             </button>
           )}
+        </div>
+      </div>
+
+      {/* Convención de Nombres Provisional ("X") */}
+      <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-3">
+        <div className="w-6 h-6 rounded-lg bg-amber-400 text-slate-950 font-black flex items-center justify-center shrink-0 font-mono text-xs">
+          X
+        </div>
+        <div className="space-y-0.5">
+          <h4 className="text-xs font-bold text-amber-950 uppercase tracking-wide font-sans">
+            Convención de Nombres Provisional • Marcador "X"
+          </h4>
+          <p className="text-xs text-amber-900/90 font-serif leading-relaxed">
+            Mientras consolidamos el <em>Naming</em> oficial de la marca madre, todos los productos y módulos de nuestro catálogo utilizan provisionalmente el prefijo <strong>"X"</strong> (p. ej. <em>X AgroAlerta</em>, <em>X AgriTwin Maestro</em>, <em>X Keyline</em>).
+          </p>
+        </div>
+      </div>
+
+      {/* Introducción Estratégica: Recorrido del Cliente sin Fricción (Product-Led Growth) */}
+      <div className="p-6 rounded-3xl bg-gradient-to-br from-[#0B2519] via-[#0D2E1F] to-[#071810] text-white border border-emerald-500/40 shadow-xl space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-800/60 pb-3">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-amber-400" />
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-300">
+              Estrategia Product-Led Growth (PLG) • Adopción sin Fricción
+            </span>
+          </div>
+          <span className="text-[11px] font-mono text-amber-300 bg-amber-400/20 px-2.5 py-0.5 rounded-full border border-amber-400/30 font-bold">
+            $0 Inventario en Fase 1
+          </span>
+        </div>
+
+        <p className="text-xs sm:text-sm text-emerald-100/90 font-serif leading-relaxed">
+          Nuestra arquitectura comercial rompe la barrera tradicional de ventas agrícolas. No forzamos al productor a comprar fierros costosos a puerta fría:
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs pt-1">
+          <div className="p-3.5 rounded-xl bg-black/40 border border-emerald-500/30 space-y-1.5">
+            <div className="flex items-center gap-1.5 text-emerald-400 font-bold font-mono">
+              <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-[11px]">1</span>
+              <span>Entrada Gratis (60s)</span>
+            </div>
+            <p className="text-[11px] text-slate-300 font-serif">
+              El agricultor entra gratis por WhatsApp o móvil con <strong>X AgroAlerta</strong>: dibuja su polígono y recibe alertas tempranas de helada y Puelche en 60 segundos.
+            </p>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-black/40 border border-emerald-500/30 space-y-1.5">
+            <div className="flex items-center gap-1.5 text-amber-300 font-bold font-mono">
+              <span className="w-5 h-5 rounded-full bg-amber-400/20 text-amber-300 flex items-center justify-center text-[11px]">2</span>
+              <span>Add-ons en 1 Clic</span>
+            </div>
+            <p className="text-[11px] text-slate-300 font-serif">
+              Dentro del chat desbloquea documentos pagos sin fricción: <strong>Informe Predial Express 24h</strong>, <strong>Pasaporte Verde EUDR</strong> y <strong>Carpeta Técnica CNR (Ley 18.450)</strong>.
+            </p>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-black/40 border border-emerald-500/30 space-y-1.5">
+            <div className="flex items-center gap-1.5 text-teal-300 font-bold font-mono">
+              <span className="w-5 h-5 rounded-full bg-teal-400/20 text-teal-300 flex items-center justify-center text-[11px]">3</span>
+              <span>Micro-SaaS & Maestro</span>
+            </div>
+            <p className="text-[11px] text-slate-300 font-serif">
+              Escala a verticales de riesgo (<strong>X Agua & Riego</strong>, <strong>X Incendios</strong>, <strong>X Visión & Vuelo</strong>), <strong>X AgriTwin Maestro</strong> con Sensores Virtuales, y permacultura con <strong>X Keyline</strong>.
+            </p>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-black/40 border border-emerald-500/30 space-y-1.5">
+            <div className="flex items-center gap-1.5 text-cyan-300 font-bold font-mono">
+              <span className="w-5 h-5 rounded-full bg-cyan-400/20 text-cyan-300 flex items-center justify-center text-[11px]">4</span>
+              <span>Fases 2 & 3 (IoT & Cuencas)</span>
+            </div>
+            <p className="text-[11px] text-slate-300 font-serif">
+              Solo cuando ya confía en el software se ofrece en <strong>Fase 2</strong> el upgrade físico IoT (sondas FDR / actuadores), y en <strong>Fase 3</strong> servicios territoriales en el <strong>Living Lab (Parral)</strong>.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -439,234 +515,319 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
         </div>
       )}
 
-      {/* TAB 2: PRICING & TIERS */}
+      {/* TAB 2: PRICING & TIERS (CATÁLOGO OFICIAL 3 FASES) */}
       {subTab === 'pricing' && (
-        <div className="space-y-10 animate-fadeIn">
+        <div className="space-y-12 animate-fadeIn">
           
-          {/* Section 0: Micro-SaaS de Bolsillo AgroAlerta (Fase 1 - Puerta de Entrada) */}
-          <div className="space-y-4 p-6 rounded-3xl bg-gradient-to-br from-emerald-950 via-[#0B2519] to-teal-950 text-white border border-emerald-500/30 shadow-xl">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-800/60 pb-3">
+          {/* ========================================================================= */}
+          {/* FASE 1: 100% SOFTWARE & MICRO-SAAS ($0 INVENTARIO PROPIO) */}
+          {/* ========================================================================= */}
+          <div className="space-y-6">
+            <div className="border-b border-emerald-900/30 pb-3 flex flex-wrap items-center justify-between gap-3">
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold bg-emerald-900/60 px-2.5 py-0.5 rounded border border-emerald-700">
-                  FASE 1 • EL CABALLO DE TROYA
+                <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-800 font-bold bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300">
+                  FASE 1 • $0 INVENTARIO PROPIO • 100% SOFTWARE & MICRO-SAAS
                 </span>
-                <h3 className="text-xl sm:text-2xl font-black text-white mt-1 flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-amber-400" />
-                  <span>0. Micro-SaaS AgroAlerta Pocket (WhatsApp 60s)</span>
+                <h3 className="text-2xl font-black text-[#0B2519] mt-2 flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-emerald-700" />
+                  <span>Suite de Software, Alertas & Administración Predial</span>
                 </h3>
               </div>
-              <span className="text-xs font-mono font-bold text-amber-300 bg-amber-400/20 px-3 py-1 rounded-full border border-amber-400/30">
-                CAC: $18 USD • Margen: 96%
+              <span className="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-xl border border-emerald-200">
+                Margen Bruto Software: 85% - 96%
               </span>
             </div>
 
-            <p className="text-xs text-emerald-100/80 font-serif leading-relaxed max-w-3xl">
-              La puerta de entrada masiva para todo agricultor de Maule y O'Higgins. Sin apps pesadas ni configuraciones. El usuario envía su GPS/Rol por WhatsApp y recibe alertas satelitales hiperlocales. Cada nuevo usuario densifica el Data Flywheel de la cuenca.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-              <div className="p-4 rounded-2xl bg-black/40 border border-emerald-500/20 space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold text-emerald-300 font-mono">AgroAlerta Free (Gancho)</span>
-                  <span className="text-xs font-mono text-emerald-400 font-black">$0 / mes</span>
-                </div>
-                <p className="text-[11px] text-slate-300 font-serif">
-                  Alertas meteorológicas comunitarias de cuenca. Captura el Rol, polígono y cultivo del productor sin costo para alimentar el Gemelo Digital regional.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 space-y-2 relative">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold text-white font-mono flex items-center gap-1.5">
-                    <span>AgroAlerta Pocket Pro</span>
-                    <span className="text-[9px] bg-amber-400 text-slate-950 px-1.5 py-0.2 rounded font-black">HERO</span>
-                  </span>
-                  <span className="text-sm font-mono text-amber-300 font-black">$14.990 CLP / mes</span>
-                </div>
-                <p className="text-[11px] text-emerald-100 font-serif">
-                  Alertas hiperlocales a nivel de cuartel: heladas radiativas con 72h de anticipación, ventanas de viento para pulverización y aviso de golpe de calor.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Section 1: AgriTwin SaaS Tiers */}
-          <div className="space-y-4">
-            <div className="space-y-1">
-              <h3 className="text-xl font-extrabold text-[#0B2519] flex items-center gap-2">
-                <Layers className="w-5 h-5 text-emerald-700" />
-                <span>1. Planes de Suscripción AgriTwin (SaaS Predial)</span>
-              </h3>
-              <p className="text-xs text-slate-500 font-serif">
-                Cobro recurrente mensual o anual con 15% de descuento por prepago.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
-              {/* Plan Básico */}
-              <div className="rounded-2xl border border-slate-200 p-6 space-y-4 hover:border-emerald-500 transition-all flex flex-col justify-between">
-                <div className="space-y-3">
-                  <div className="inline-flex px-3 py-1 rounded-full bg-slate-100 text-slate-700 font-sans text-xs font-bold">
-                    Predio Familiar
+            {/* 1. X AgroAlerta & Add-ons Pagos */}
+            <div className="rounded-3xl bg-gradient-to-br from-emerald-950 via-[#0B2519] to-teal-950 text-white p-6 sm:p-8 space-y-6 shadow-xl border border-emerald-500/40">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-emerald-800/60 pb-4">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-lg bg-emerald-500 text-slate-950 font-black text-xs flex items-center justify-center font-mono">1</span>
+                    <h4 className="text-xl sm:text-2xl font-black text-white">X AgroAlerta</h4>
+                    <span className="text-[10px] bg-amber-400 text-slate-950 px-2 py-0.5 rounded font-black font-mono">GANCHO GRATUITO (60s)</span>
                   </div>
-                  <h4 className="text-2xl font-extrabold text-slate-900">Plan Básico</h4>
-                  <div className="font-mono text-3xl font-extrabold text-emerald-800">
+                  <p className="text-xs text-emerald-200/80 font-serif mt-1">
+                    Alertas predictivas vía WhatsApp/móvil: heladas katabáticas (-1.8 °C), viento Puelche, estrés hídrico y ventana de pulverización. Cero fricción, enrolamiento en 60s dibujando el polígono.
+                  </p>
+                </div>
+                <div className="text-right">
+                  <span className="text-xs font-mono text-emerald-400 font-bold block">Acceso Inmediato</span>
+                  <span className="text-2xl font-black text-white font-mono">$0 / mes</span>
+                </div>
+              </div>
+
+              {/* Add-ons 1-Clic dentro de X AgroAlerta */}
+              <div className="space-y-3">
+                <span className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold block">
+                  Compras Integradas en 1 Clic ($0 Inventario • Entrega Automatizada):
+                </span>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="p-4 rounded-2xl bg-black/40 border border-emerald-500/30 space-y-2 flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-start">
+                        <span className="text-xs font-bold text-emerald-300 font-mono">Informe Predial Express (24h)</span>
+                        <span className="text-xs font-mono text-amber-300 font-bold">$133.000 CLP</span>
+                      </div>
+                      <p className="text-[11px] text-slate-300 font-serif mt-1">
+                        Diagnóstico satelital completo en 24 horas: aptitud de suelo, historial de heladas de 5 años, estrés hídrico y balance de cuenca.
+                      </p>
+                    </div>
+                    <span className="text-[10px] font-mono text-emerald-400 font-bold pt-2 border-t border-emerald-900/60 block">85% Margen SpA</span>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-black/40 border border-emerald-500/30 space-y-2 flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-start">
+                        <span className="text-xs font-bold text-emerald-300 font-mono">Pasaporte Verde EUDR</span>
+                        <span className="text-xs font-mono text-amber-300 font-bold">$1.130.000 CLP</span>
+                      </div>
+                      <p className="text-[11px] text-slate-300 font-serif mt-1">
+                        Certificación geoespacial de no-deforestación requerida por la UE con código QR sellado y polígonos auditados multitemporalmente.
+                      </p>
+                    </div>
+                    <span className="text-[10px] font-mono text-emerald-400 font-bold pt-2 border-t border-emerald-900/60 block">70% Margen SpA</span>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-black/40 border border-emerald-500/30 space-y-2 flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-start">
+                        <span className="text-xs font-bold text-emerald-300 font-mono">Carpeta Técnica CNR (Ley 18.450)</span>
+                        <span className="text-xs font-mono text-amber-300 font-bold">$350.000 CLP</span>
+                      </div>
+                      <p className="text-[11px] text-slate-300 font-serif mt-1">
+                        Expediente técnico hidrológico y topográfico para postulación a bonificación estatal de riego y tranques de la Comisión Nacional de Riego.
+                      </p>
+                    </div>
+                    <span className="text-[10px] font-mono text-emerald-400 font-bold pt-2 border-t border-emerald-900/60 block">80% Margen SpA</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Grid 2 a 6: Micro-SaaS Especializados & Maestro */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+              
+              {/* 2. X Agua & Riego */}
+              <div className="rounded-2xl border border-slate-200 p-6 space-y-4 hover:border-emerald-500 transition-all flex flex-col justify-between bg-white shadow-sm">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-blue-100 text-blue-900">
+                      2 • MICRO-SAAS HÍDRICO
+                    </span>
+                    <span className="text-xs font-mono text-slate-400 font-bold">100% Software</span>
+                  </div>
+                  <h4 className="text-xl font-extrabold text-[#0B2519]">X Agua & Riego</h4>
+                  <div className="font-mono text-2xl font-extrabold text-blue-800">
                     $45.000 <span className="text-xs font-normal text-slate-500">CLP / mes</span>
                   </div>
-                  <p className="text-xs text-slate-600">
-                    Ideal para parcelas y pequeños agricultores de hasta 10 hectáreas.
+                  <p className="text-xs text-slate-600 font-serif leading-relaxed">
+                    Historial y pronóstico de precipitaciones, balance FAO-56 diario en estratos radiculares, reservas en tranques y programación nocturna de riego (-32% en la cuenta eléctrica). Cruza el déficit hídrico como predictor de incendios.
                   </p>
-                  
-                  <ul className="space-y-2 text-xs text-slate-700 pt-2 border-t border-slate-100">
-                    <li className="flex items-center gap-2">
+                  <ul className="space-y-1.5 text-xs text-slate-700 pt-2 border-t border-slate-100">
+                    <li className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>Índices NDVI y NDWI Sentinel-2 cada 5 días</span>
+                      <span>Balance hídrico diario FAO-56 Penman-Monteith</span>
                     </li>
-                    <li className="flex items-center gap-2">
+                    <li className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>Alertas de heladas y temperatura por WhatsApp</span>
+                      <span>Optimización en franjas valle de electricidad</span>
                     </li>
-                    <li className="flex items-center gap-2">
+                    <li className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>1 usuario con acceso móvil</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>Setup georreferenciado: $120.000 CLP</span>
+                      <span>Monitoreo de tranques y caudales de canales DGA</span>
                     </li>
                   </ul>
                 </div>
-
-                <div className="pt-4 border-t border-slate-100 text-center">
-                  <span className="text-[11px] font-mono text-emerald-700 font-bold block">
-                    Anual: $459.000 CLP (15% off)
-                  </span>
+                <div className="pt-3 border-t border-slate-100 text-center font-mono text-[11px] text-blue-800 font-bold">
+                  Anual: $459.000 CLP (15% off)
                 </div>
               </div>
 
-              {/* Plan Pro Frutícola */}
+              {/* 3. X Incendios */}
+              <div className="rounded-2xl border border-slate-200 p-6 space-y-4 hover:border-amber-500 transition-all flex flex-col justify-between bg-white shadow-sm">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-amber-100 text-amber-900">
+                      3 • DEFENSA CONTRA INCENDIOS
+                    </span>
+                    <span className="text-xs font-mono text-slate-400 font-bold">100% Software</span>
+                  </div>
+                  <h4 className="text-xl font-extrabold text-[#0B2519]">X Incendios</h4>
+                  <div className="font-mono text-2xl font-extrabold text-amber-700">
+                    $39.000 <span className="text-xs font-normal text-slate-500">CLP / mes</span>
+                  </div>
+                  <p className="text-xs text-slate-600 font-serif leading-relaxed">
+                    Monitoreo Piro-Vórtice WUI y viento Puelche con condición 30-30-30. Simulación Rothermel de propagación, cálculo de cortafuegos y orden de humectación preventiva integrable vía API a bombas existentes del predio.
+                  </p>
+                  <ul className="space-y-1.5 text-xs text-slate-700 pt-2 border-t border-slate-100">
+                    <li className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                      <span>Anomalías térmicas MODIS/VIIRS a 25 km</span>
+                    </li>
+                    <li className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                      <span>Alerta de viento Puelche y piro-vórtice WUI</span>
+                    </li>
+                    <li className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                      <span>Integración API a bombas y PLCs existentes</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="pt-3 border-t border-slate-100 text-center font-mono text-[11px] text-amber-800 font-bold">
+                  Estacional: $199.000 CLP (6 meses verano)
+                </div>
+              </div>
+
+              {/* 4. X Visión & Vuelo */}
+              <div className="rounded-2xl border border-slate-200 p-6 space-y-4 hover:border-purple-500 transition-all flex flex-col justify-between bg-white shadow-sm">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-purple-100 text-purple-900">
+                      4 • VÍDEO & DRONES
+                    </span>
+                    <span className="text-xs font-mono text-slate-400 font-bold">100% Software</span>
+                  </div>
+                  <h4 className="text-xl font-extrabold text-[#0B2519]">X Visión & Vuelo</h4>
+                  <div className="font-mono text-2xl font-extrabold text-purple-800">
+                    $25.000 <span className="text-xs font-normal text-slate-500">CLP / mes</span>
+                  </div>
+                  <p className="text-xs text-slate-600 font-serif leading-relaxed">
+                    Conecta cámaras IP/4G y drones comerciales que el agricultor ya posee. Analítica de video con IA (intrusión, aforo de canales, fauna) y procesamiento de ortomosaicos aéreos para calcular NDVI, NDRE y humo.
+                  </p>
+                  <ul className="space-y-1.5 text-xs text-slate-700 pt-2 border-t border-slate-100">
+                    <li className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+                      <span>Streaming WebRTC de baja latencia rural</span>
+                    </li>
+                    <li className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+                      <span>Inferencia YOLOv11 en bordes perimetrales</span>
+                    </li>
+                    <li className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+                      <span>Generación de ortomosaicos NDVI desde drones propios</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="pt-3 border-t border-slate-100 text-center font-mono text-[11px] text-purple-800 font-bold">
+                  Por flujo o cámara activa adicional: $12.000 CLP/mes
+                </div>
+              </div>
+
+              {/* 5. X AgriTwin Maestro */}
               <div className="rounded-2xl border-2 border-emerald-600 p-6 space-y-4 shadow-md bg-emerald-50/20 flex flex-col justify-between relative">
-                <div className="absolute -top-3 right-6 px-3 py-0.5 rounded-full bg-emerald-600 text-white font-sans text-[10px] font-extrabold uppercase tracking-wide">
-                  Más Popular • Frutícola
+                <div className="absolute -top-3 right-6 px-3 py-0.5 rounded-full bg-emerald-700 text-white font-sans text-[10px] font-extrabold uppercase tracking-wide">
+                  Suite Insignia • 3D
                 </div>
-
                 <div className="space-y-3">
-                  <div className="inline-flex px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 font-sans text-xs font-bold">
-                    Cerezos, Viñas & Frutales
+                  <div className="flex justify-between items-center">
+                    <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900">
+                      5 • GEMELO DIGITAL & VIRTUAL SENSORS
+                    </span>
+                    <span className="text-xs font-mono text-emerald-700 font-bold">Pro / Enterprise</span>
                   </div>
-                  <h4 className="text-2xl font-extrabold text-[#0B2519]">Plan Pro</h4>
-                  <div className="font-mono text-3xl font-extrabold text-emerald-700">
-                    $85.000 <span className="text-xs font-normal text-slate-500">CLP / mes</span>
+                  <h4 className="text-xl font-extrabold text-[#0B2519]">X AgriTwin Maestro</h4>
+                  <div className="font-mono text-2xl font-extrabold text-emerald-700">
+                    $85.000 <span className="text-xs font-normal text-slate-500">CLP / mes (Pro)</span>
                   </div>
-                  <p className="text-xs text-slate-600">
-                    Para fundos medianos y fruticultores de alto valor (hasta 50 hectáreas).
+                  <p className="text-xs text-slate-600 font-serif leading-relaxed">
+                    Administración predial avanzada con <strong>Sensores Virtuales</strong> (calicata 1D Richards-MONICA sin enterrar sondas), malla topográfica AMR 2D/3D, drenaje katabático brote a brote y simulador de escenarios What-If.
                   </p>
-                  
-                  <ul className="space-y-2 text-xs text-slate-700 pt-2 border-t border-slate-200">
-                    <li className="flex items-center gap-2">
+                  <ul className="space-y-1.5 text-xs text-slate-700 pt-2 border-t border-slate-200">
+                    <li className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>Todo lo del plan Básico incluido</span>
+                      <span>Sensores Virtuales: calicata 1D Richards-MONICA</span>
                     </li>
-                    <li className="flex items-center gap-2">
+                    <li className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>Gemelo Digital 3D biofísico WebGL</span>
+                      <span>Malla 3D AMR con drenaje katabático de heladas</span>
                     </li>
-                    <li className="flex items-center gap-2">
+                    <li className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>Balance hídrico diario FAO-56 en 3 estratos</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>Predicción katabática de heladas con 72h</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>Setup e integración inicial: $180.000 CLP</span>
+                      <span>Simulaciones What-If de riego, variedades y clima</span>
                     </li>
                   </ul>
                 </div>
-
-                <div className="pt-4 border-t border-emerald-200 text-center">
-                  <span className="text-[11px] font-mono text-emerald-800 font-bold block">
-                    Anual: $867.000 CLP (15% off)
-                  </span>
+                <div className="pt-3 border-t border-emerald-200 text-center font-mono text-[11px] text-emerald-800 font-bold">
+                  Enterprise (multi-predio): $160.000 CLP / mes
                 </div>
               </div>
 
-              {/* Plan Enterprise */}
-              <div className="rounded-2xl border border-slate-200 p-6 space-y-4 hover:border-emerald-500 transition-all flex flex-col justify-between">
+              {/* 6. X Keyline */}
+              <div className="rounded-2xl border border-slate-200 p-6 space-y-4 hover:border-emerald-500 transition-all flex flex-col justify-between bg-white shadow-sm">
                 <div className="space-y-3">
-                  <div className="inline-flex px-3 py-1 rounded-full bg-slate-900 text-white font-sans text-xs font-bold">
-                    Exportadoras & Multi-Predio
+                  <div className="flex justify-between items-center">
+                    <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900">
+                      6 • DISEÑO PERMACULTURAL
+                    </span>
+                    <span className="text-xs font-mono text-slate-400 font-bold">Proyecto / SaaS</span>
                   </div>
-                  <h4 className="text-2xl font-extrabold text-slate-900">Plan Enterprise</h4>
-                  <div className="font-mono text-3xl font-extrabold text-slate-900">
-                    $160.000 <span className="text-xs font-normal text-slate-500">CLP / mes</span>
+                  <h4 className="text-xl font-extrabold text-[#0B2519]">X Keyline</h4>
+                  <div className="font-mono text-2xl font-extrabold text-emerald-900">
+                    $350.000 <span className="text-xs font-normal text-slate-500">CLP / proyecto</span>
                   </div>
-                  <p className="text-xs text-slate-600">
-                    Para exportadoras con más de 50 ha o carteras de múltiples predios.
+                  <p className="text-xs text-slate-600 font-serif leading-relaxed">
+                    Diseño predial integral desde cero bajo la Escala de Permanencia de Yeomans: siembra de agua, curvas a desnivel, tranques en cabecera, planos CutSheetRX para maquinaria, cercos móviles y pastoreo regenerativo PRV.
                   </p>
-                  
-                  <ul className="space-y-2 text-xs text-slate-700 pt-2 border-t border-slate-100">
-                    <li className="flex items-center gap-2">
+                  <ul className="space-y-1.5 text-xs text-slate-700 pt-2 border-t border-slate-100">
+                    <li className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>Superficie ilimitada y multi-campo</span>
+                      <span>Trazado de líneas clave (Keyline) y surcos a nivel</span>
                     </li>
-                    <li className="flex items-center gap-2">
+                    <li className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>Auditoría continua de no-deforestación EUDR</span>
+                      <span>Planos CutSheetRX para operador de retroexcavadora</span>
                     </li>
-                    <li className="flex items-center gap-2">
+                    <li className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>API LoRaWAN dedicada para telemetría</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>Vuelo trimestral de dron multiespectral</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                      <span>SLA de respuesta prioritaria en 2 horas</span>
+                      <span>Zonificación Zonas 0 a 5 y módulos PRV</span>
                     </li>
                   </ul>
                 </div>
-
-                <div className="pt-4 border-t border-slate-100 text-center">
-                  <span className="text-[11px] font-mono text-slate-800 font-bold block">
-                    Anual: $1.632.000 CLP (15% off)
-                  </span>
+                <div className="pt-3 border-t border-slate-100 text-center font-mono text-[11px] text-emerald-800 font-bold">
+                  Incluye soporte de diseño y exportación CAD/GIS
                 </div>
               </div>
 
             </div>
           </div>
 
-          {/* Section 2: Hardware Kits Pricing */}
-          <div className="space-y-4 pt-6 border-t border-slate-200">
-            <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-800 text-[11px] font-mono font-bold">
-                FASE 2 • UPGRADE DE PRECISIÓN PARA USUARIOS DE SOFTWARE
+          {/* ========================================================================= */}
+          {/* FASE 2: UPGRADE FÍSICO IOT (SOLO CLIENTES QUE YA USAN FASE 1) */}
+          {/* ========================================================================= */}
+          <div className="space-y-6 pt-6 border-t border-slate-200">
+            <div className="border-b border-amber-900/30 pb-3 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-amber-900 font-bold bg-amber-100 px-3 py-1 rounded-full border border-amber-300">
+                  FASE 2 • UPGRADE FÍSICO IOT • SOLO CLIENTES VALIDADOS EN FASE 1
+                </span>
+                <h3 className="text-2xl font-black text-[#0B2519] mt-2 flex items-center gap-2">
+                  <Wrench className="w-5 h-5 text-amber-600" />
+                  <span>X Kits IoT, Actuadores & Energía Off-Grid</span>
+                </h3>
               </div>
-              <h3 className="text-xl font-extrabold text-[#0B2519] flex items-center gap-2">
-                <Wrench className="w-5 h-5 text-amber-600" />
-                <span>2. Hardware KioT: Fabricación Just-In-Time</span>
-              </h3>
-              <p className="text-xs text-slate-500 font-serif">
-                Resolución Boletín 3: El hardware no se vende a puerta fría. Se ofrece bajo pedido exclusivamente a usuarios de software que requieren calibración física in-situ de suelo y microclima. Cero stock inmovilizado en bodega.
-              </p>
+              <span className="text-xs font-mono font-bold text-amber-900 bg-amber-50 px-3 py-1 rounded-xl border border-amber-200">
+                Fabricación Just-In-Time • $0 Inventario Ocioso
+              </span>
             </div>
+
+            <p className="text-xs text-slate-600 font-serif leading-relaxed max-w-3xl">
+              El hardware nunca se ofrece a puerta fría: se instala exclusivamente en campos que ya operan y confían en nuestro software, agregando telemetría física in-situ de suelo (sondas FDR 3-estratos), controladores de bomba LoRaWAN y nodos solares LiFePO4.
+            </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               
               <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold text-slate-700">Kit Base: Riego & Suelo</span>
+                  <span className="text-xs font-bold text-slate-700">Kit Base: Riego & FDR Suelo</span>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">58% Margen</span>
                 </div>
                 <div className="font-mono text-2xl font-bold text-slate-900">$185.000 CLP</div>
-                <p className="text-xs text-slate-600">
-                  Nodo IP65 + Sonda capacitiva V1.2 + Relé electroválvula 12V.
+                <p className="text-xs text-slate-600 font-serif">
+                  Nodo solar IP65 + Sonda FDR capacitiva + Relé electroválvula 12V con antena LoRaWAN.
                 </p>
                 <div className="text-[11px] text-slate-500 pt-2 border-t border-slate-200 space-y-1">
                   <div>• Costo BOM: $38.500 CLP</div>
@@ -681,8 +842,8 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-200 text-amber-900 font-bold">59% Margen</span>
                 </div>
                 <div className="font-mono text-2xl font-bold text-amber-900">$220.000 CLP</div>
-                <p className="text-xs text-slate-600">
-                  Nodo IP65 + Sonda DS18B20 (±0.5°C) + Barómetro + Sirena 110dB.
+                <p className="text-xs text-slate-600 font-serif">
+                  Nodo IP65 + Sonda DS18B20 (±0.5°C) + Barómetro + Sirena 110dB + Batería LiFePO4.
                 </p>
                 <div className="text-[11px] text-slate-500 pt-2 border-t border-amber-200 space-y-1">
                   <div>• Costo BOM: $44.200 CLP</div>
@@ -693,20 +854,79 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
 
               <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold text-slate-700">Modalidad HaaS (Arriendo)</span>
+                  <span className="text-xs font-bold text-slate-700">Modalidad HaaS (Arriendo Operativo)</span>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-bold">Cero Entrada</span>
                 </div>
                 <div className="font-mono text-2xl font-bold text-blue-900">$28.000 CLP / mes</div>
-                <p className="text-xs text-slate-600">
-                  Hardware instalado sin costo inicial con mantención y garantía total.
+                <p className="text-xs text-slate-600 font-serif">
+                  Hardware instalado sin costo inicial para clientes activos de software, con garantía y reposición.
                 </p>
                 <div className="text-[11px] text-slate-500 pt-2 border-t border-slate-200 space-y-1">
                   <div>• Contrato mínimo: 18 meses</div>
-                  <div>• Recambio express ante roturas</div>
-                  <div>• Incluye visita semestral de calibración</div>
+                  <div>• Recambio express ante fallas en 24h</div>
+                  <div>• Incluye visita de calibración semestral</div>
                 </div>
               </div>
 
+            </div>
+          </div>
+
+          {/* ========================================================================= */}
+          {/* FASE 3: SERVICIOS TERRITORIALES & ECOSISTEMA (B2G / IMPACTO) */}
+          {/* ========================================================================= */}
+          <div className="space-y-6 pt-6 border-t border-slate-200">
+            <div className="border-b border-teal-900/30 pb-3 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-teal-900 font-bold bg-teal-100 px-3 py-1 rounded-full border border-teal-300">
+                  FASE 3 • SERVICIOS TERRITORIALES, B2G & ECOSISTEMA
+                </span>
+                <h3 className="text-2xl font-black text-[#0B2519] mt-2 flex items-center gap-2">
+                  <Building2 className="w-5 h-5 text-teal-700" />
+                  <span>X Territorio, Cuencas & Living Lab</span>
+                </h3>
+              </div>
+              <span className="text-xs font-mono font-bold text-teal-900 bg-teal-50 px-3 py-1 rounded-xl border border-teal-200">
+                Alianzas Institucionales & Validación Empírica
+              </span>
+            </div>
+
+            <div className="rounded-2xl border border-teal-200 bg-teal-50/30 p-6 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-teal-200 pb-3">
+                <div>
+                  <h4 className="font-extrabold text-base text-teal-950">
+                    Proyectos de Resiliencia Territorial & Living Lab (Parral)
+                  </h4>
+                  <p className="text-xs text-slate-600 font-serif mt-1">
+                    Convenios con municipios, Comités de Agua Potable Rural (APRs), Juntas de Vigilancia de Ríos (JVRL) e INDAP. Centro de investigación y validación empírica en el <strong>Living Lab ubicado donde Rudi (Parral)</strong>.
+                  </p>
+                </div>
+                <span className="text-xs font-mono font-bold text-teal-800 bg-teal-100 px-3 py-1.5 rounded-xl border border-teal-300 shrink-0">
+                  Proyectos a Medida • Fondos CNR / GORE
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1 text-xs">
+                <div className="p-4 rounded-xl bg-white border border-teal-200 space-y-1.5">
+                  <span className="font-bold text-slate-900 block">Monitoreo Hidrológico de Cuenca</span>
+                  <p className="text-[11px] text-slate-600 font-serif">
+                    Malla territorial de 122.070 ha para balance de recarga y gestión de derechos de aprovechamiento.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white border border-teal-200 space-y-1.5">
+                  <span className="font-bold text-slate-900 block">Living Lab en Parral (donde Rudi)</span>
+                  <p className="text-[11px] text-slate-600 font-serif">
+                    Demostración en vivo de biopreparados, salud microbiológica de suelo, agroforestería y microclima.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white border border-teal-200 space-y-1.5">
+                  <span className="font-bold text-slate-900 block">Transferencia Técnica & Capacitación</span>
+                  <p className="text-[11px] text-slate-600 font-serif">
+                    Acompañamiento a comunidades agrícolas en transición agroecológica y postulación a subsidios de riego.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 

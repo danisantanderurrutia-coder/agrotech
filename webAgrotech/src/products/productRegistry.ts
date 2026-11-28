@@ -1,50 +1,327 @@
 import { ProductDefinition } from './types';
 import { PREDIO_MENIELS, PREDIO_EL_BOLDO, PREDIO_QUEBRADA_BOLDOS } from './prediosData';
 
+export const PROVISIONAL_NAMING_DISCLAIMER = {
+  notice: 'Convención de Nombres Provisional ("X")',
+  description: 'Mientras consolidamos el Naming definitivo de la marca madre, todos los productos y soluciones de AgroTech utilizan provisionalmente el prefijo "X" como marcador temporal de identidad.'
+};
+
 export const PRODUCTS_REGISTRY: ProductDefinition[] = [
-  // 1. x AGRITWIN 3D
+  // =========================================================================
+  // FASE 1 — Ecosistema 100% Software & Micro-SaaS ($0 inventario propio)
+  // =========================================================================
+
+  // 1. X AgroAlerta
   {
-    id: 'agritwin',
-    name: 'x Agritwin',
-    tagline: 'Gemelo Digital Biofísico & Simulación 3D de Predios',
-    version: '2.4.0',
+    id: 'agroalerta',
+    name: 'X AgroAlerta',
+    tagline: 'Gancho Gratuito WhatsApp/Móvil + Add-ons Pagos (60s)',
+    version: '2.1.0',
     status: 'operational',
-    category: 'digital-twin',
-    logoUrl: './logo-agritwin.png',
+    category: 'micro-saas-alert',
+    phase: 1,
+    phaseLabel: 'Fase 1 • Micro-SaaS 100% Software ($0 Inventario)',
+    pricingModel: 'Freemium (Gancho Gratis + Add-ons 1-clic)',
+    logoUrl: './logo-peumo-quantum.jpg',
     previewImageUrl: './img-agri-hub-farm.jpg',
-    architectureRole: 'Suite Predial 3D',
-    techStack: ['Three.js', 'CesiumJS', 'WebGL 2.0', 'WebSockets', 'FAO-56 Penman-Monteith', 'Node.js'],
-    description: 'Motor 3D desacoplado de alto rendimiento que replica la topografía, exposición solar, hileras de cultivo y telemetría microclimática brote a brote, permitiendo predicción de heladas katabáticas y optimización hídrica.',
+    architectureRole: 'Puerta de Entrada Móvil & Alertas Críticas',
+    techStack: ['WhatsApp Cloud API', 'Node.js', 'GeoJSON', 'Sentinel-2', 'Agromet DGA', 'Stripe/Webpay'],
+    description: 'Gancho de entrada gratuito y de cero fricción para agricultores: activa su monitoreo en 60 segundos dibujando su polígono predial por WhatsApp o móvil. Emite alertas tempranas de heladas katabáticas (-1.8 °C), vientos Puelche, estrés hídrico y ventana de pulverización. Desde la misma interfaz móvil desbloquea compras integradas en 1 clic: Informe Predial Express (24h), Pasaporte Verde EUDR y Carpeta Técnica CNR (Ley 18.450).',
     highlights: [
-      'Visualización topográfica con curvas de nivel e iluminación solar horaria',
-      'Predicción de drenaje de aire frío (heladas katabáticas) con 72h de anticipación',
-      'Balance de humedad en 3 estratos de suelo (0-20cm, 20-60cm, 60-100cm) vía FAO-56',
-      'Conexión WebSocket sub-50ms con nodos KioT de campo',
-      'Generador de Informes de Riesgo (Incendios FWI e Inundaciones), Captura de Carbono (tCO2e/ha) y Certificación Ecológica',
-      'Simulador de Transición Permacultural por fases para predio familiar con optimización solar, eólica y eléctrica (-66% kWh)',
-      'AgroTwin Regional multiescala (Parral & Retiro) con clasificación satelital LULC (bosques vs monocultivo vs agrícola vs agua)'
+      'Alta en 60 segundos por WhatsApp o móvil dibujando el polígono predial',
+      'Alertas predictivas de heladas katabáticas (-1.8 °C) y vientos Puelche',
+      'Monitoreo de estrés hídrico y ventanas seguras de pulverización',
+      'Add-on 1-clic: Informe Predial Express (diagnóstico satelital en 24h)',
+      'Add-on 1-clic: Pasaporte Verde EUDR (cero deforestación con trazabilidad QR)',
+      'Add-on 1-clic: Carpeta Técnica CNR (Ley 18.450 de Fomento al Riego)'
     ],
     dataSources: [
       {
-        id: 'ds-agritwin-fdr',
-        name: 'Telemetría Sondas FDR Multinivel',
-        type: 'sensor-iot',
-        provider: 'KioT ESP32 S3 LoRaWAN',
-        frequency: 'Cada 60 segundos',
+        id: 'ds-agroalerta-weather',
+        name: 'Red Agrometeorológica DMC / Agromet',
+        type: 'weather-api',
+        provider: 'Agromet INIA / Dirección Meteorológica de Chile',
+        frequency: 'Cada 15 minutos',
         format: 'JSON',
-        description: 'Medición de humedad volumétrica de suelo (VWC %) y temperatura en 4 profundidades.',
-        endpoint: '/ws/sensors/fdr',
+        description: 'Temperaturas mínimas, humedad relativa y velocidad de ráfagas para detección de heladas y eventos Puelche.'
+      },
+      {
+        id: 'ds-agroalerta-sentinel',
+        name: 'Vigor Vegetal Sentinel-2 (NDVI / NDRE)',
+        type: 'satellite',
+        provider: 'Copernicus Sentinel-2 L2A',
+        frequency: 'Cada 5 días',
+        format: 'GeoJSON',
+        description: 'Vigor vegetal y estrés hídrico de canopia a 10m de resolución espacial.'
+      }
+    ],
+    scripts: [
+      {
+        id: 'scr-agroalerta-bot',
+        name: 'Bot WhatsApp AgroAlerta',
+        language: 'node',
+        purpose: 'Servicio de mensajería automatizada que recibe coordenadas GPS y despacha alertas preventivas.',
+        command: 'node services/agroalerta-bot.js --port=3005'
+      },
+      {
+        id: 'scr-generate-express-report',
+        name: 'Generador de Informe Predial Express (24h)',
+        language: 'python',
+        purpose: 'Compilar en PDF el diagnóstico de suelo, NDVI, historial hídrico y riesgo de helada.',
+        command: 'python scripts/generate_express_report.py --rol=123-45'
+      }
+    ],
+    rawDatasets: [],
+    graphicAssets: [
+      {
+        id: 'ga-agroalerta-demo',
+        name: 'Flujo Móvil AgroAlerta WhatsApp',
+        type: 'ui-mockup',
+        url: 'https://wa.me/56976696142?text=Hola%20AgroTech,%20quiero%20activar%20X%20AgroAlerta',
+        description: 'Interacción directa por chat para enrolar campos y recibir alertas en 60 segundos.'
+      }
+    ],
+    documentationNotes: []
+  },
+
+  // 2. X Agua & Riego
+  {
+    id: 'agua-riego',
+    name: 'X Agua & Riego',
+    tagline: 'Balance Hídrico FAO-56, Reservas de Tranque & Ahorro Eléctrico',
+    version: '1.8.0',
+    status: 'operational',
+    category: 'water-irrigation',
+    phase: 1,
+    phaseLabel: 'Fase 1 • Micro-SaaS 100% Software ($0 Inventario)',
+    pricingModel: 'SaaS Mensual / Anual',
+    logoUrl: './logo-agritwin.png',
+    previewImageUrl: './img-agri-hub-farm.jpg',
+    architectureRole: 'Optimización Hídrica & Energética',
+    techStack: ['FAO-56 Penman-Monteith', 'Python', 'DGA API', 'ERA5-Land', 'Open-Meteo', 'Leaflet'],
+    description: 'Motor de balance hídrico y gestión de riego predial. Calcula historial y pronóstico de precipitaciones, balance FAO-56 diario en estratos radiculares, reservas en tranques y microcuenca. Programa turnos de riego aprovechando tarifas eléctricas nocturnas de valle (-32% en la cuenta eléctrica) y cruza el déficit hídrico de biomasa como predictor temprano de riesgo de ignición de incendios.',
+    highlights: [
+      'Balance hídrico continuo multiestrato bajo formulación FAO-56 Penman-Monteith',
+      'Historial pluviométrico multianual y pronóstico de precipitaciones a 14 días',
+      'Monitoreo de volumen de acumulación en tranques y caudales de canales DGA',
+      'Programación inteligente de riego nocturno para optimizar tarifas eléctricas (horas valle)',
+      'Cruce de déficit hídrico de canopia con índice de sequedad de combustible para incendios'
+    ],
+    dataSources: [
+      {
+        id: 'ds-agua-fao56',
+        name: 'Evapotranspiración de Referencia (ETo) FAO-56',
+        type: 'weather-api',
+        provider: 'Motor AgroTech / ERA5 Reanalysis',
+        frequency: 'Diaria (06:00 AM)',
+        format: 'JSON',
+        description: 'Cálculo de ETo Penman-Monteith a partir de radiación neta, temperatura, viento y humedad relativa.'
+      },
+      {
+        id: 'ds-agua-dga',
+        name: 'Aforos y Caudales de Canales DGA',
+        type: 'gis-vector',
+        provider: 'Dirección General de Aguas (DGA)',
+        frequency: 'Cada 1 hora',
+        format: 'JSON',
+        description: 'Niveles hidrométricos de ríos y bocatomas en la cuenca del Río Perquilauquén y Loncomilla.'
+      }
+    ],
+    scripts: [
+      {
+        id: 'scr-water-schedule',
+        name: 'Optimizador de Riego Nocturno',
+        language: 'python',
+        purpose: 'Calcular lámina de reposición y generar calendario de encendido en franja valle eléctrica.',
+        command: 'python scripts/optimize_irrigation_schedule.py --predio=meniels'
+      }
+    ],
+    rawDatasets: [],
+    graphicAssets: [
+      {
+        id: 'ga-agua-dashboard',
+        name: 'Visor de Balance Hídrico & Reservas',
+        type: 'live-app',
+        url: '/#predio?view=water',
+        description: 'Curvas de recarga de tranque, evapotranspiración real y déficit milimétrico por cuartel.'
+      }
+    ],
+    documentationNotes: []
+  },
+
+  // 3. X Incendios
+  {
+    id: 'incendios',
+    name: 'X Incendios',
+    tagline: 'Monitoreo Piro-Vórtice WUI, Viento Puelche & Humectación Preventiva',
+    version: '1.5.0',
+    status: 'operational',
+    category: 'wildfire-defense',
+    phase: 1,
+    phaseLabel: 'Fase 1 • Micro-SaaS 100% Software ($0 Inventario)',
+    pricingModel: 'SaaS Estacional / Anual',
+    logoUrl: './logo-peumo-quantum.jpg',
+    previewImageUrl: './img-agri-hub-farm.jpg',
+    architectureRole: 'Defensa Contra Incendios WUI & Simulación',
+    techStack: ['Rothermel Wildfire Model', 'MODIS/VIIRS FIRMS', 'WRF Puelche Wind Model', 'Node.js', 'REST API'],
+    description: 'Sistema de monitoreo y defensa perimetral contra incendios forestales en la interfaz urbano-agrícola (WUI). Monitorea condiciones críticas 30-30-30 (viento Puelche >30 km/h, T° >30 °C, HR <30%), simula vectores de propagación y frentes de llama, y calcula órdenes de humectación preventiva y líneas de cortafuego. Se integra vía API con bombas y PLCs ya existentes del predio.',
+    highlights: [
+      'Monitoreo en tiempo real de anomalías térmicas MODIS/VIIRS en un radio de 5 a 25 km',
+      'Alerta meteorológica de vientos Puelche descendentes y condición extrema 30-30-30',
+      'Simulador de avance de frente de llama y piro-vórtice según pendiente y combustible vegetal',
+      'Cálculo de volumen hídrico para cortafuegos húmedos y orden de humectación perimetral',
+      'Conexión API/Webhook con sistemas de bombeo y PLCs existentes del productor'
+    ],
+    dataSources: [
+      {
+        id: 'ds-incendios-firms',
+        name: 'Anomalías Térmicas NASA FIRMS (VIIRS/MODIS)',
+        type: 'satellite',
+        provider: 'NASA LANCE / FIRMS',
+        frequency: 'Cada 3 horas (satélite en órbita)',
+        format: 'GeoJSON',
+        description: 'Detección satelital de focos activos de calor y potencia radiativa de fuego (FRP) en el Maule.'
+      },
+      {
+        id: 'ds-incendios-puelche',
+        name: 'Vectores de Viento Puelche Cordillerano',
+        type: 'weather-api',
+        provider: 'Simulación WRF Mesoscale AgroTech',
+        frequency: 'Cada 1 hora',
+        format: 'JSON',
+        description: 'Pronóstico de ráfagas secas del este (>45 km/h) con efecto foehn que disparan el riesgo piro-vórtice.'
+      }
+    ],
+    scripts: [
+      {
+        id: 'scr-fire-spread',
+        name: 'Simulador de Propagación Rothermel',
+        language: 'python',
+        purpose: 'Estimar velocidad de avance de fuego y distancia de pavesas según carga de combustible.',
+        command: 'python scripts/sim_fire_spread.py --wind-puelche=35 --slope=15'
+      }
+    ],
+    rawDatasets: [],
+    graphicAssets: [
+      {
+        id: 'ga-incendios-map',
+        name: 'Mapa de Riesgo de Incendios WUI',
+        type: 'live-app',
+        url: '/#predio?view=fire',
+        description: 'Mapa de calor con frentes de llama simulados y zonas de cortafuegos preventivo.'
+      }
+    ],
+    documentationNotes: []
+  },
+
+  // 4. X Visión & Vuelo
+  {
+    id: 'vision-vuelo',
+    name: 'X Visión & Vuelo',
+    tagline: 'Cámaras IP/4G & Drones del Cliente — Analítica y Monitoreo',
+    version: '2.0.0',
+    status: 'operational',
+    category: 'vision-drones',
+    phase: 1,
+    phaseLabel: 'Fase 1 • Micro-SaaS 100% Software ($0 Inventario)',
+    pricingModel: 'SaaS por Flujo / Dispositivo Conectado',
+    logoUrl: './logo-agritwin.png',
+    previewImageUrl: './img-agri-hub-farm.jpg',
+    architectureRole: 'Software de Integración de Video & Teledetección',
+    techStack: ['WebRTC / WHEP', 'YOLOv11 Edge AI', 'WebODM', 'MediaMTX', 'FFmpeg', 'Docker'],
+    description: 'Plataforma de software que conecta cámaras IP/4G y drones comerciales que el agricultor ya posee. Procesa flujos de video con inteligencia artificial para vigilancia perimetral, monitoreo de compuertas de canal y condición de cultivo. Integra misiones de vuelo para procesar ortomosaicos multiespectrales con cálculo de índices NDVI, NDRE, térmicos y detección de columnas de humo.',
+    highlights: [
+      'Conexión plug-and-play con cámaras IP, solares 4G y enlaces Starlink vía WebRTC / RTSP',
+      'Analítica de video con IA: intrusión perimetral, aforo de canales y fauna silvestre',
+      'Pipeline de fotogrametría aérea: genera ortomosaicos 2D/3D a partir de fotos de drones del cliente',
+      'Cálculo centimétrico de índices espectrales NDVI, NDRE y mapas térmicos de copa',
+      'Detección automática de columnas de humo y anomalías de temperatura en linderos'
+    ],
+    dataSources: [
+      {
+        id: 'ds-vision-webrtc',
+        name: 'Streaming WebRTC WHEP de Baja Latencia',
+        type: 'sensor-iot',
+        provider: 'MediaMTX Gateway Rural',
+        frequency: 'Streaming On-Demand (<300ms)',
+        format: 'Modbus/MQTT',
+        description: 'Transmisión de video optimizada para redes celulares agrícolas 4G y Starlink.'
+      },
+      {
+        id: 'ds-drone-ortho',
+        name: 'Ortomosaico Multiespectral Aéreo',
+        type: 'satellite',
+        provider: 'Drones del Cliente + Pipeline WebODM',
+        frequency: 'Por campaña de vuelo',
+        format: 'GeoTIFF',
+        description: 'Capas RGB y NDVI de alta resolución espacial (GSD <3 cm/px) para análisis de canopia.'
+      }
+    ],
+    scripts: [
+      {
+        id: 'scr-vision-mediamtx',
+        name: 'Gateway MediaMTX WebRTC',
+        language: 'bash',
+        purpose: 'Iniciar el servidor de streaming de ultra baja latencia rural en Docker.',
+        command: 'docker run --rm -it -p 8554:8554 -p 8889:8889 bluenviron/mediamtx'
+      }
+    ],
+    rawDatasets: [],
+    graphicAssets: [
+      {
+        id: 'ga-vision-demo',
+        name: 'Consola de Visión & Flota de Drones',
+        type: 'live-app',
+        url: '/#predio?mode=vision',
+        description: 'Visor de cámaras en vivo y superposición de ortofotos con índices de vigor vegetal.'
+      }
+    ],
+    documentationNotes: []
+  },
+
+  // 5. X AgriTwin Maestro
+  {
+    id: 'agritwin',
+    name: 'X AgriTwin Maestro',
+    tagline: 'Administración Predial Avanzada con Sensores Virtuales & Malla 3D AMR',
+    version: '2.5.0',
+    status: 'operational',
+    category: 'digital-twin',
+    phase: 1,
+    phaseLabel: 'Fase 1 • Micro-SaaS 100% Software ($0 Inventario)',
+    pricingModel: 'SaaS Pro / Enterprise Anual',
+    logoUrl: './logo-agritwin.png',
+    previewImageUrl: './img-agri-hub-farm.jpg',
+    architectureRole: 'Núcleo Biofísico & Gemelo Digital 3D',
+    techStack: ['Three.js', 'WebGL 2.0', 'Richards-MONICA 1D', 'CesiumJS', 'AMR Mesh', 'WebSockets'],
+    description: 'Suite completa de administración predial y simulación física tridimensional. Incorpora Sensores Virtuales con formulación 1D Richards-MONICA que calculan la dinámica de humedad, nitrógeno y raíces sin necesidad de enterrar sondas físicas. Malla topográfica adaptativa AMR 2D/3D, drenaje de aire frío katabático brote a brote y simulador de escenarios What-If para toma de decisiones agroeconómicas.',
+    highlights: [
+      'Sensores Virtuales de suelo: calicata 1D Richards-MONICA sin costo ni mantenimiento de sondas',
+      'Visualización topográfica 3D a resolución métrica con malla adaptativa AMR y sombras dinámicas',
+      'Predicción de inversiones térmicas y heladas katabáticas con 72h de anticipación',
+      'Simulador de escenarios What-If: cambios en dotación de agua, variedades y eventos climáticos',
+      'Consola técnica para agrónomos, administradores de fundo y exportadoras',
+      'Datasets reales integrados de Predio Meniels (Parral), Fundo El Boldo y Quebrada de Boldos'
+    ],
+    dataSources: [
+      {
+        id: 'ds-agritwin-virtual-sensor',
+        name: 'Sensor Virtual Richards-MONICA 1D',
+        type: 'soil-db',
+        provider: 'Motor Físico Biofísico AgroTech',
+        frequency: 'Horario',
+        format: 'JSON',
+        description: 'Simulación numérica de contenido de agua volumétrico (VWC%) a 20, 40, 60 y 100 cm sin hardware enterrado.',
+        endpoint: '/api/virtual-sensors/calicata-1d.json',
         samplePayload: {
-          sensorId: 'IOT-SN-01',
-          vwc_20cm: 38.5,
-          vwc_40cm: 41.2,
-          vwc_60cm: 44.8,
-          vwc_100cm: 48.0,
-          soilTemp_c: 19.4,
-          ambientTemp_c: 23.8,
-          humidity_pct: 56.0,
-          battery_pct: 96.0,
-          timestamp: '2026-09-25T15:30:00Z'
+          calicataId: 'VIRT-CAL-01',
+          depth_20cm_vwc: 32.4,
+          depth_40cm_vwc: 35.8,
+          depth_60cm_vwc: 38.2,
+          depth_100cm_vwc: 41.0,
+          root_zone_deficit_mm: 14.2,
+          matric_potential_kpa: -42.1,
+          mode: 'virtual-sensor-monica'
         }
       },
       {
@@ -78,14 +355,6 @@ export const PRODUCTS_REGISTRY: ProductDefinition[] = [
         cwd: 'agritwin/'
       },
       {
-        id: 'scr-agritwin-desktop',
-        name: 'Lanzador Desktop macOS AgriTwin',
-        language: 'bash',
-        purpose: 'Abrir AgriTwin 3D como aplicación de escritorio nativa macOS.',
-        command: 'open agritwin/AgriTwin\\ 3D.app || ./agritwin/launch-desktop.command',
-        cwd: 'agritwin/'
-      },
-      {
         id: 'scr-agritwin-frost-sim',
         name: 'Simulador Sintético de Helada Crítica',
         language: 'node',
@@ -96,7 +365,7 @@ export const PRODUCTS_REGISTRY: ProductDefinition[] = [
     rawDatasets: [
       {
         id: 'raw-parcels-geojson',
-        name: 'farm_parcels.geojson (Predio Meniels)',
+        name: 'farm_parcels.geojson (Predio Meniels, Parral)',
         format: 'GeoJSON',
         fileSize: '9.9 KB',
         associatedPredioId: 'predio-meniels',
@@ -118,219 +387,128 @@ export const PRODUCTS_REGISTRY: ProductDefinition[] = [
         id: 'ga-agritwin-live',
         name: 'AgriTwin 3D WebGL Canvas Vivo',
         type: 'live-app',
-        url: '/#predio',
+        url: '/#predio?mode=3d',
         embeddable: true,
-        description: 'Visor dinámico 3D con Three.js en visor integrado.'
-      },
-      {
-        id: 'ga-agritwin-logo',
-        name: 'Logo Oficial AgriTwin 3D',
-        type: 'vector-logo',
-        url: './logo-agritwin.png',
-        previewUrl: './logo-agritwin.png',
-        description: 'Isotipo y logotipo original de AgriTwin.'
-      },
-      {
-        id: 'ga-agritwin-isotype',
-        name: 'Isotipo Hexagonal Quantum',
-        type: 'vector-logo',
-        url: './logo-agritwin-isotype.png',
-        previewUrl: './logo-agritwin-isotype.png',
-        description: 'Isotipo simplificado para interfaz gráfica y badges.'
+        description: 'Canvas interactivo 3D con topografía real, sombreado solar e hileras de cerezos.'
       }
     ],
-    documentationNotes: [
-      {
-        id: 'doc-agritwin-vault',
-        title: 'Agritwin.md (Obsidian Vault Note)',
-        tags: ['#Startup', '#DigitalTwin', '#Sensores', '#Permacultura'],
-        vaultPath: 'Agro Tech/Agritwin.md',
-        summary: 'Documento fundacional sobre la integración de datos satelitales, climáticos y de suelo en consola 3D.',
-        contentMarkdown: `El software integra [[datos satelitales]], [[datos climáticos]] y [[datos meteorológicos]], [[geología]] y [[data del suelo]] disponible en repositorios junto a [[data in situ]] provenientes de (o simplemente llamados) [[sensores]]. Genera una [[consola de monitoreo]], [[operaciones]], mapas de [[riesgo climático]] y a partir de ello [[recomendaciones]] en tiempo real basado en la [[Permacultura]] y [[agroecología]]. Junto a la información que proviene desde la App, servicios como la suscripción al Agritwin llevan un acompañamiento llevado por profesionales.
-
-La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación como producto al mercado Chileno e internacional.
-
-[[AgroTech]] y su producto [[AgriTwin]] se produce colaborativamente en equipo, en un espacio donde se reconoce la autoría intelectual, la repartición justa de los recursos y ganancias basado en la colaboratividad a la vez que métricas de producción. El tiempo y energía invertida de cada uno de esos miembros busca ser valorado y enfatizado.`,
-        wikilinks: ['datos satelitales', 'datos climáticos', 'sensores', 'consola de monitoreo', 'riesgo climático', 'Permacultura', 'AgroTech']
-      }
-    ]
+    documentationNotes: []
   },
 
-  // 2. x REWILD MAPPER
+  // 6. X Keyline
   {
-    id: 'rewild',
-    name: 'x Rewild Mapper',
-    tagline: 'Biomonitoreo Esclerófilo, PWA Offline & BioToken PBC',
-    version: '1.8.2',
+    id: 'keyline',
+    name: 'X Keyline',
+    tagline: 'Diseño Regenerativo Integral & Permacultura desde Cero',
+    version: '2.0.0',
     status: 'operational',
-    category: 'biomonitoring',
-    logoUrl: './logo-rewild.png',
-    previewImageUrl: './img-forest-rewild.jpg',
-    architectureRole: 'Suite PWA Campo',
-    techStack: ['Python 3 HTTP', 'Service Worker PWA', 'IndexedDB', 'Turf.js GIS', 'IPCC Tier 2 Protocols'],
-    description: 'Suite de campo 100% offline para guardaparques, agrónomos y técnicos de conservación. Permite auditar parcelas en quebradas sin cobertura celular, inventariar árboles nativos y emitir Certificados de Biodiversidad Vegetal (PBC).',
+    category: 'keyline-design',
+    phase: 1,
+    phaseLabel: 'Fase 1 • Micro-SaaS 100% Software ($0 Inventario)',
+    pricingModel: 'SaaS de Diseño Predial / Proyecto',
+    logoUrl: './logo-peumo-quantum.jpg',
+    previewImageUrl: './img-agri-hub-farm.jpg',
+    architectureRole: 'Diseño Hidrológico & Regenerativo',
+    techStack: ['Keyline Design Algorithms', 'QGIS / GDAL', 'CutSheetRX', 'GeoJSON', 'PRV Grazing Sim'],
+    description: 'Herramienta de diseño predial regenerativo basada en la Escala de Permanencia de P.A. Yeomans. Permite diseñar campos desde cero o transformar predios convencionales: cálculo de líneas clave (Keyline), curvas a desnivel para siembra de agua, ubicación óptima de tranques y caminos por cresta, generación de planos constructivos CutSheetRX, zonificación permacultural (Zonas 0 a 5) y rotación de pastoreo regenerativo PRV.',
     highlights: [
-      'Operación 100% offline en quebradas y cerros maulinos mediante Service Worker e IndexedDB',
-      'GoWild Survey: Formulario rápido de terreno georreferenciado con cámara y GPS móvil',
-      'Protocolos IPCC Tier-2 para cálculo de biomasa y captura de carbono en bosque nativo',
-      'RewildMapper SaaS: Emisión de certificados BioToken PBC auditables'
+      'Diseño bajo la Escala de Permanencia de Yeomans (Clima, Topografía, Agua, Caminos, Árboles)',
+      'Trazado de líneas clave (Keyline) y surcos a desnivel para infiltración pasiva de lluvias',
+      'Cálculo de volumen de tranques en cabecera y cotas de rebalse con vertederos de emergencia',
+      'Generación de planos de movimiento de tierra y zanjas de infiltración (CutSheetRX)',
+      'Planificador de cercos móviles y módulos de pastoreo regenerativo Voisin (PRV)',
+      'Matriz de zonificación permacultural de Zonas 0 a 5 con cálculo metabólico predial'
     ],
     dataSources: [
       {
-        id: 'ds-rewild-survey',
-        name: 'Auditorías de Terreno GoWild Survey',
-        type: 'field-audit',
-        provider: 'Técnicos & Guardaparques Locales',
-        frequency: 'Por campaña de muestreo',
-        format: 'JSON',
-        description: 'Registros florísticos con altura de dosel, diámetro a la altura del pecho (DAP) y vigor de rebrotes.',
-        endpoint: '/#rewildapi/surveys/active',
-        samplePayload: {
-          surveyId: 'GOWILD-2026-09',
-          polygonId: 'R301-BOLDO-MADURO',
-          speciesIdentified: ['Cryptocarya alba (Peumo)', 'Peumus boldus (Boldo)', 'Quillaja saponaria (Quillay)'],
-          canopyCoverPct: 84.5,
-          biomassTonsPerHa: 142.3,
-          offlineSyncStatus: 'synced_to_local_db',
-          recordedBy: 'Guardaparque Daniel S.'
-        }
-      },
-      {
-        id: 'ds-rewild-sentinel-defor',
-        name: 'Monitoreo de Cobertura Vegetal Sentinel-2',
-        type: 'satellite',
-        provider: 'ESA Copernicus L2A',
-        frequency: 'Cada 5 días',
-        format: 'GeoTIFF',
-        description: 'Detección temprana de talas ilegales, estrés hídrico en quebradas y avance de regeneración.'
+        id: 'ds-keyline-dem',
+        name: 'Curvas de Nivel Métricas de Alta Resolución',
+        type: 'gis-vector',
+        provider: 'DEM LIDAR / Fotogrametría Aérea',
+        frequency: 'Por proyecto de diseño',
+        format: 'GeoJSON',
+        description: 'Curvas de nivel maestras cada 0.5m para derivar puntos clave (Keypoints) y líneas de inflexión.'
       }
     ],
     scripts: [
       {
-        id: 'scr-rewild-server',
-        name: 'Servidor Python Local Rewild',
+        id: 'scr-keyline-cutsheet',
+        name: 'Generador de Planos CutSheetRX',
         language: 'python',
-        purpose: 'Servir la aplicación PWA y sincronizar datos en el visor correspondiente.',
-        command: 'python3 rewild/server.py',
-        cwd: 'rewild/'
-      },
-      {
-        id: 'scr-rewild-sync',
-        name: 'Sincronizador IndexedDB a PostgreSQL/GIS',
-        language: 'node',
-        purpose: 'Tomar encuestas guardadas localmente en móviles y cargarlas a la base territorial central.',
-        command: 'node scripts/sync-rewild-surveys.cjs --target=central-gis'
+        purpose: 'Exportar cotas de corte y relleno para retroexcavadora en construcción de tranques y zanjas.',
+        command: 'python scripts/generate_cutsheet_rx.py --project=boldo-keyline'
       }
     ],
     rawDatasets: [
       {
-        id: 'raw-species-catalog',
-        name: 'Especies Esclerófilas del Maule (Flora Nativa)',
+        id: 'raw-keyline-zones',
+        name: 'Zonificación Permacultural (Zonas 0 a 5)',
         format: 'JSON',
-        fileSize: '4.8 KB',
-        associatedPredioId: 'predio-quebrada-boldos',
-        description: 'Catálogo taxonómico con constantes alométricas de peumo, boldo, quillay, litre y maitén.',
+        fileSize: '14.2 KB',
+        associatedPredioId: 'predio-meniels',
+        description: 'Matriz de zonificación permacultural con radios de desplazamiento, intensidad energética e insumos.',
         data: {
-          region: "Maule Central & Cordillera de la Costa",
-          dominantSpecies: [
-            { scientificName: "Cryptocarya alba", commonName: "Peumo", carbonFactor: 0.52, waterResistance: "Alta" },
-            { scientificName: "Peumus boldus", commonName: "Boldo", carbonFactor: 0.49, waterResistance: "Muy Alta" },
-            { scientificName: "Quillaja saponaria", commonName: "Quillay", carbonFactor: 0.54, waterResistance: "Extrema" }
+          zones: [
+            { zone: 0, label: 'Zona 0: Núcleo Habitacional & Taller Bioclimático', radius_m: 25 },
+            { zone: 1, label: 'Zona 1: Huerta Intensiva, Espiral de Aromáticas y Lombricompost', radius_m: 50 },
+            { zone: 2, label: 'Zona 2: Huerto Frutal Mixto, Aves de Corral y Riego por Goteo', radius_m: 120 },
+            { zone: 3, label: 'Zona 3: Frutales Mayores, Cultivos Principales y Cortinas Cortaviento', radius_m: 300 },
+            { zone: 4, label: 'Zona 4: Silvopastoreo, Maderas Nobles y Pasturas Regenerativas PRV', radius_m: 600 },
+            { zone: 5, label: 'Zona 5: Reserva de Bosque Esclerófilo Nativo y Santuario de Quebrada', radius_m: 1200 }
           ]
         }
-      },
-      {
-        id: 'raw-pbc-tokens-ledger',
-        name: 'Libro de Unidades de Biodiversidad (PBC Ledger)',
-        format: 'JSON',
-        fileSize: '6.2 KB',
-        associatedPredioId: 'predio-quebrada-boldos',
-        description: 'Registro auditable de certificados de biodiversidad emitidos en Quebrada Los Boldos.',
-        data: PREDIO_QUEBRADA_BOLDOS.rawEntitiesJson
       }
     ],
     graphicAssets: [
       {
-        id: 'ga-rewild-live',
-        name: 'Rewilding Field Suite ',
-        type: 'live-app',
-        url: '/#rewildrewilding-field-suite.html',
-        embeddable: true,
-        description: 'Suite completa de auditoría de bosque esclerófilo con guardado de borradores.'
-      },
-      {
-        id: 'ga-gowild-survey',
-        name: 'GoWild Survey PWA Móvil',
-        type: 'live-app',
-        url: '/#rewildgowild-survey.html',
-        embeddable: true,
-        description: 'Formulario ultra-rápido de terreno para celular o tablet.'
-      },
-      {
-        id: 'ga-rewild-logo',
-        name: 'Logo Oficial Rewild Suite',
-        type: 'vector-logo',
-        url: './logo-rewild.png',
-        previewUrl: './logo-rewild.png',
-        description: 'Logotipo de la suite ecológica y biomonitoreo.'
+        id: 'ga-keyline-blueprint',
+        name: 'Plano Maestro Regenerativo & Keyline',
+        type: 'diagram',
+        url: '/#predio?view=keyline',
+        description: 'Plano con líneas clave, drenajes, tranques y zonificación permacultural.'
       }
     ],
-    documentationNotes: [
-      {
-        id: 'doc-rewild-methodology',
-        title: 'Metodología BioToken PBC & Protocolo IPCC',
-        tags: ['#Rewilding', '#Carbono', '#ESG', '#Biodiversidad'],
-        summary: 'Cómo se calculan las unidades de biodiversidad vegetal nativa y la biomasa de carbono en el Maule.',
-        contentMarkdown: `### Protocolo de Certificación RewildMapper (PBC)
-1. **Delimitación de Rodal**: Mediante GPS submétrico o Sentinel-2 B08/B04.
-2. **Parcelas de Muestreo de 500m²**: Cuantificación de estratos arbóreos, arbustivos y sotobosque.
-3. **Ecuaciones Alométricas Específicas**: Aplicadas a la flora esclerófila maulina sin usar modelos genéricos de pino o eucalipto.
-4. **Emisión de Certificados PBC**: Cada unidad equivale a 1.000 m² de bosque nativo con densidad biológica garantizada por 10 años.`
-      }
-    ]
+    documentationNotes: []
   },
 
-  // 3. x AGROALERTA & HARDWARE EDGE
+  // =========================================================================
+  // FASE 2 — Upgrade Físico IoT (Solo sobre clientes que ya usan Fase 1)
+  // =========================================================================
+
+  // 7. X Kits IoT, Actuadores & Energía Off-Grid
   {
-    id: 'kiot-hardware',
-    name: 'x AgroAlerta',
-    tagline: 'Hardware IoT, Nodos de Terreno & Alertas Críticas',
-    version: '3.1.0',
-    status: 'deployed',
+    id: 'iot-hardware',
+    name: 'X Kits IoT, Actuadores & Energía Off-Grid',
+    tagline: 'Upgrade Físico IoT Bajo Demanda (Solo Clientes Fase 1)',
+    version: '2.1.0',
+    status: 'operational',
     category: 'iot-hardware',
-    logoUrl: './kiot-hardware.png',
-    previewImageUrl: './kiot-hardware.png',
-    architectureRole: 'Módulo Edge IoT',
-    techStack: ['ESP32 Dual Core', 'LoRaWAN EU868/US915', 'Modbus RS-485', 'KiCAD', 'C++ / FreeRTOS', 'MQTT'],
-    description: 'Hardware mecatrónico diseñado y fabricado para resistir las condiciones extremas del Maule (polvo, lluvia torrencial, heladas de -5°C). Monitorea temperatura de brote, humedad de suelo y comanda electroválvulas de riego.',
+    phase: 2,
+    phaseLabel: 'Fase 2 • Upgrade Físico IoT (Clientes Validados)',
+    pricingModel: 'Venta Directa de Equipo / Arriendo Operativo (HaaS)',
+    logoUrl: './logo-peumo-quantum.jpg',
+    previewImageUrl: './img-agri-hub-farm.jpg',
+    architectureRole: 'Infraestructura de Telemetría & Actuación en Campo',
+    techStack: ['ESP32-S3', 'LoRaWAN', 'Modbus RS485', 'Sondas FDR 3-Estratos', 'LiFePO4 Solar', 'C++ FreeRTOS'],
+    description: 'Capa física de precisión que se despliega únicamente sobre predios que ya operan y confían en el software de Fase 1. Fabricación Just-In-Time ($0 inventario ocioso): estaciones agrometeorológicas solares LiFePO4, sondas FDR capacitivas de 3 profundidades reales (0-20, 20-60, 60-100 cm), controladores LoRaWAN para encendido de bombas y aspersores antihelada, y cámaras solares 4G montadas en terreno.',
     highlights: [
-      'Gabinete estanco IP65 resistente a radiación UV y lluvia torrencial maulina',
-      'Sonda de temperatura digital DS18B20 con precisión de ±0.5°C para detección instantánea de congelamiento',
-      'Sensor capacitivo V1.2 anticorrosión con lectura análoga calibrada',
-      'Batería LiFePO4 de 2600mAh con panel solar policristalino de 3W (autonomía 100% infinita)'
+      'Sondas FDR tri-estrato con medición simultánea de humedad volumétrica (VWC%) y conductividad',
+      'Alimentación solar fotovoltaica con batería de litio LiFePO4 de 15 días de autonomía sin sol',
+      'Controladores inalámbricos LoRaWAN para encendido automático de electroválvulas y bombas',
+      'Gabinete estanco IP65 resistente a radiación UV, agroquímicos y ambientes de alta humedad',
+      'Instalación y calibración directa en el suelo por técnicos cooperados locales en el Maule',
+      'Disponibilidad en venta directa o arriendo operativo (HaaS) con recambio express'
     ],
     dataSources: [
       {
         id: 'ds-kiot-raw-stream',
         name: 'Stream MQTT / LoRaWAN Nodos KioT',
         type: 'sensor-iot',
-        provider: 'KioT Gateway Maule',
+        provider: 'KioT Telemetry Gateway',
         frequency: 'Cada 60 segundos',
         format: 'JSON',
-        description: 'Trama binaria desempaquetada desde gateway LoRaWAN hacia backend central.',
-        endpoint: 'mqtt://broker.agrotech.cl:1883/maule/predios/meniels/sensors',
-        samplePayload: {
-          nodeId: 'KIOT-NODE-03',
-          batteryMv: 3950,
-          solarMv: 5120,
-          tempDS18B20: -0.2,
-          ambientSHT31Temp: 0.8,
-          ambientSHT31Hum: 89.2,
-          soilVWC_Pct: 34.1,
-          frostAlertActive: true,
-          rssi: -94,
-          snr: 8.5
-        }
+        description: 'Telemetría de campo transmitida desde el nodo ESP32 hacia el broker Mosquitto en la nube.',
+        endpoint: '/ws/kiot/telemetry'
       }
     ],
     scripts: [
@@ -338,15 +516,8 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
         id: 'scr-kiot-flash',
         name: 'Flasheo de Firmware ESP32 KioT',
         language: 'bash',
-        purpose: 'Cargar el firmware base de telemetría y bajo consumo energético (Deep Sleep) al ESP32.',
-        command: 'esptool.py --chip esp32 --port /dev/tty.usbserial-* write_flash 0x1000 firmware/kiot_v3.bin'
-      },
-      {
-        id: 'scr-kiot-sim-telemetry',
-        name: 'Simulador de Telemetría KioT en Terminal',
-        language: 'node',
-        purpose: 'Emitir lecturas de sensores simuladas para pruebas sin hardware físico conectado.',
-        command: 'node scripts/simulate_kiot_nodes.js --nodes=6 --interval=5s'
+        purpose: 'Compilar y cargar firmware FreeRTOS en microcontroladores ESP32-S3 con antena LoRaWAN.',
+        command: 'pio run --target upload --environment esp32s3_lora'
       }
     ],
     rawDatasets: [
@@ -354,18 +525,14 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
         id: 'raw-bom-matrix',
         name: 'BOM Matrix Hardware KioT (16 Componentes)',
         format: 'JSON',
-        fileSize: '8.4 KB',
-        description: 'Lista de materiales con especificaciones técnicas, precios en CLP y proveedores.',
+        fileSize: '4.8 KB',
+        associatedPredioId: 'predio-meniels',
+        description: 'Lista de materiales con costo de importación, margen bruto y tiempo de ensamble.',
         data: {
-          totalCostPerNodeClp: 38500,
-          currency: "CLP",
-          componentsCount: 16,
-          coreComponents: [
-            { component: "ESP32-WROOM-32", cost: 5500, role: "Procesamiento dual-core & WiFi/LoRa" },
-            { component: "Sonda DS18B20 IP68", cost: 3200, role: "Temperatura antiheladas de brote" },
-            { component: "Panel Solar 6V 3W + TP4056", cost: 7500, role: "Autonomía solar infinita" },
-            { component: "Gabinete Estanco IP65 PETG", cost: 4500, role: "Protección ambiental" }
-          ]
+          totalCostClp: 44200,
+          grossMargin: 0.59,
+          assemblyHours: 1.5,
+          batteryChemistry: 'LiFePO4 3.2V 6000mAh'
         }
       }
     ],
@@ -374,368 +541,81 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
         id: 'ga-kiot-photo',
         name: 'Fotografía del Hardware KioT en Terreno',
         type: 'ui-mockup',
-        url: './kiot-hardware.png',
-        previewUrl: './kiot-hardware.png',
-        description: 'Nodo físico KioT con sensor de suelo, panel solar y gabinete montado en estaca.'
+        url: './img-agri-hub-farm.jpg',
+        description: 'Estación KioT con mástil solar instalada en cuartel de cerezos en Parral.'
       }
     ],
-    documentationNotes: [
-      {
-        id: 'doc-kiot-pinout',
-        title: 'Esquemático de Conexión & Pines ESP32',
-        tags: ['#Hardware', '#ESP32', '#IoT', '#AntiHeladas'],
-        summary: 'Pinout oficial de conexión para sensores DS18B20, SHT31, relés de electroválvula y panel solar.',
-        contentMarkdown: `### Configuración de Pines ESP32 KioT Rev 3
-* **GPIO 4**: OneWire Data (DS18B20 Temp Sonda con resistencia pull-up 4.7kΩ)
-* **GPIO 21 (SDA) / GPIO 22 (SCL)**: Bus I2C para sensor digital SHT31 / BMP280
-* **GPIO 34 (ADC1_CH6)**: Entrada analógica para sensor de humedad capacitivo V1.2
-* **GPIO 18**: Salida digital Relé 1 (Apertura electroválvula de riego 12V)
-* **GPIO 19**: Salida digital Relé 2 (Buzzer de alarma local anti-heladas 110dB)
-* **GPIO 35**: Divisor resistivo 100k/100k para monitoreo del voltaje de batería Li-ion`
-      }
-    ]
+    documentationNotes: []
   },
 
-  // 4. x TERRA RADAR & SATELLITES
+  // =========================================================================
+  // FASE 3 — Servicios Territoriales & Ecosistema (B2G / Impacto)
+  // =========================================================================
+
+  // 8. X Territorio, Cuencas & Living Lab
   {
-    id: 'satellites',
-    name: 'x Terra Radar',
-    tagline: 'Copernicus Sentinel-2, Análisis Espectral & Certificación UE',
-    version: '2.0.1',
-    status: 'deployed',
-    category: 'earth-observation',
-    logoUrl: './logo-terra-radar.jpg',
-    previewImageUrl: './rewildmapper-gis.png',
-    architectureRole: 'Núcleo Satelital',
-    techStack: ['Sentinel-2 MSI', 'Landsat 9', 'Google Earth Engine API', 'Rasterio', 'QR Blockchain Pasaporte'],
-    description: 'Sistema centralizado de análisis multiespectral para predios agrícolas. Procesa reflectancia de bandas para calcular vigor vegetal (NDVI), contenido de agua en follaje (NDWI) y genera el Pasaporte Verde de exportación europea.',
-    highlights: [
-      'Resolución de 10 metros por píxel con revisión periódica cada 5 días',
-      'Pasaporte Verde QR impreso en pallets de fruta para supermercados de Alemania y Europa',
-      'Diagnóstico de riesgo agroclimático a 10 años para compradores de parcelas',
-      'Cálculo de estrés hídrico CWSI para calibración de turnos de riego'
-    ],
-    dataSources: [
-      {
-        id: 'ds-sentinel-bands',
-        name: 'Bandas Multiespectrales Sentinel-2 L2A',
-        type: 'satellite',
-        provider: 'Agencia Espacial Europea (ESA)',
-        frequency: 'Cada 5 días',
-        format: 'GeoTIFF',
-        description: 'Imágenes corregidas atmosféricamente a nivel de reflectancia de fondo (BOA).'
-      },
-      {
-        id: 'ds-agromet-dga',
-        name: 'Red Meteorológica Nacional Agromet / DGA',
-        type: 'weather-api',
-        provider: 'Dirección General de Aguas & INIA Chile',
-        frequency: 'Cada 15 minutos',
-        format: 'JSON',
-        description: 'Estaciones meteorológicas oficiales de referencia en Curicó, Talca, Linares y Parral.',
-        endpoint: 'https://api.agromet.cl/v1/stations/parral/latest'
-      }
-    ],
-    scripts: [
-      {
-        id: 'scr-fetch-sentinel',
-        name: 'Extractor de Mosaicos Sentinel-2 por Bounding Box',
-        language: 'python',
-        purpose: 'Descargar las bandas 4, 8 y 11 para un polígono predial específico y generar el mapa NDVI geotiff.',
-        command: 'python3 scripts/fetch_sentinel2_predio.py --predio=predio-meniels --cloud-max=10'
-      },
-      {
-        id: 'scr-generate-passport-qr',
-        name: 'Generador de Pasaporte Verde QR',
-        language: 'node',
-        purpose: 'Compilar métricas de huella hídrica y carbono para generar el código QR dinámico del pallet.',
-        command: 'node scripts/generate_green_passport.cjs --lot=PALLET-2026-CHERRY-01'
-      }
-    ],
-    rawDatasets: [
-      {
-        id: 'raw-spectral-indices',
-        name: 'Tabla de Índices Espectrales por Cuartel',
-        format: 'JSON',
-        fileSize: '5.2 KB',
-        associatedPredioId: 'predio-meniels',
-        description: 'NDVI, NDWI, EVI y CWSI calculados para los 8 cuarteles de Meniels en el último pase satelital.',
-        data: {
-          satellite: "Sentinel-2B",
-          passDate: "2026-09-22T14:42:10Z",
-          cloudCover: "0.2%",
-          cuarteles: [
-            { id: "A101", ndvi: 0.76, ndwi: 0.32, cwsi: 0.22, status: "Vigor Óptimo" },
-            { id: "A102", ndvi: 0.65, ndwi: 0.28, cwsi: 0.29, status: "Normal" },
-            { id: "A103", ndvi: 0.82, ndwi: 0.41, cwsi: 0.18, status: "Alto Vigor" },
-            { id: "A104", ndvi: 0.88, ndwi: 0.46, cwsi: 0.12, status: "Nativo Denso" }
-          ]
-        }
-      }
-    ],
-    graphicAssets: [
-      {
-        id: 'ga-satellites-visor',
-        name: 'Cartografía & Informes de Riesgo Satelital AgroTech',
-        type: 'map-layer',
-        url: '#gis-demo',
-        previewUrl: './rewildmapper-gis.png',
-        description: 'Capa interactiva de diagnóstico con paleta NDVI / Térmico / Heladas / Agua.'
-      },
-      {
-        id: 'ga-terra-logo',
-        name: 'Logo Terra Radar Satelital',
-        type: 'vector-logo',
-        url: './logo-terra-radar.jpg',
-        previewUrl: './logo-terra-radar.jpg',
-        description: 'Isotipo de la división de observación terrestre.'
-      }
-    ],
-    documentationNotes: [
-      {
-        id: 'doc-green-passport-spec',
-        title: 'Especificación Pasaporte Verde para Exportación UE',
-        tags: ['#Exportación', '#PasaporteVerde', '#EUDR', '#ESG'],
-        summary: 'Requisitos de la normativa europea de debida diligencia de sostenibilidad (EUDR) cumplidos por AgroTech.',
-        contentMarkdown: `### Pasaporte Verde de Exportación AgroTech
-* **Geolocalización Inalterable**: Polígono geográfico del predio vinculado al código de trazabilidad del lote exportado.
-* **Declaración Cero Deforestación (EUDR)**: Verificación histórica satelital demostrando que no hubo tala de bosque nativo post 31/12/2020.
-* **Huella Hídrica Auditada**: Medición cruzada entre sensores de caudalímetro KioT y evapotranspiración de cultivo.`
-      }
-    ]
-  },
-
-  // 5. x PERMACULTURA MAPPER & X LIVING LAB
-  {
-    id: 'permaculture-edulab',
-    name: 'x Permacultura Mapper',
-    tagline: 'Principios Regenerativos, Economía de los Hombros & X Living Lab',
-    version: '1.2.0',
-    status: 'operational',
-    category: 'permaculture-edulab',
-    logoUrl: './logo-peumo-quantum.jpg',
-    previewImageUrl: './arbol_alquimico_splash.jpg',
-    architectureRole: 'X Living Lab',
-    techStack: ['Diseño Keyline', 'Zonificación 0-5', 'Biomimética', 'Lúdica Educativa', 'Gobernanza Cooperativa'],
-    description: 'El corazón conceptual y ético de AgroTech Chile. Asesorado por Julio Pérez, traduce los principios de la permacultura y la agroecología en arquitectura de software, infraestructura de agua y el juego de cartas "Raíces y Chips".',
-    highlights: [
-      'Zonificación permacultural de los predios (Zonas 0 a 5) aplicada al despliegue de sensores',
-      'Diseño hidrológico en contorno (Keyline) y cosecha de aguas lluvias en tranques de infiltración',
-      'Economía de los Hombros: Sostenibilidad distribuida y reconocimiento de la autoría de cada miembro',
-      'Juego de mesa educativo "Raíces y Chips" para colegios y comunidades agrícolas'
-    ],
-    dataSources: [
-      {
-        id: 'ds-permaculture-metabolism',
-        name: 'Matriz Metabólica Predial de Meniels',
-        type: 'soil-db',
-        provider: 'X Living Lab & Permacultura Team',
-        frequency: 'Mensual',
-        format: 'JSON',
-        description: 'Balance integrado de kilocalorías, kilovatios-hora, biomasa de leña y metros cúbicos de agua.',
-        samplePayload: PREDIO_MENIELS.metabolism
-      }
-    ],
-    scripts: [
-      {
-        id: 'scr-rainwater-calc',
-        name: 'Calculadora de Cosecha de Aguas Lluvias',
-        language: 'python',
-        purpose: 'Calcular los litros anuales recolectables en techumbres y zanjas de infiltración según pluviometría maulina.',
-        command: 'python3 scripts/permaculture_water_balance.py --roof-m2=180 --annual-rain-mm=750'
-      }
-    ],
-    rawDatasets: [
-      {
-        id: 'raw-permaculture-zones',
-        name: 'Zonificación Permacultural Predial (Zonas 0 a 5)',
-        format: 'YAML',
-        fileSize: '3.1 KB',
-        associatedPredioId: 'predio-meniels',
-        description: 'Criterios de zonificación energética para la ubicación de sensores, huertos y bosque nativo.',
-        data: {
-          zona0: "Hogar, metabolismo familiar y control central",
-          zona1: "Huerto biointensivo, compost, germinadores y sensores de alta frecuencia",
-          zona2: "Frutales menores, aves de corral y riego por goteo",
-          zona3: "Cereales extensivos, viñedo patrimonial y pasturas",
-          zona4: "Silvopastoreo, cosecha forestal sustentable y tranque",
-          zona5: "Reserva silvestre intocada, quebradas y monitoreo con Rewild"
-        }
-      }
-    ],
-    graphicAssets: [
-      {
-        id: 'ga-peumo-quantum-logo',
-        name: 'Logo AgroTech Chile Peumo Quantum',
-        type: 'vector-logo',
-        url: './logo-peumo-quantum.jpg',
-        previewUrl: './logo-peumo-quantum.jpg',
-        description: 'Emblema cuántico de la hoja de peumo y la matriz mecatrónica.'
-      },
-      {
-        id: 'ga-cyber-pampa-logo',
-        name: 'Emblema Cyber Pampa',
-        type: 'vector-logo',
-        url: './logo-cyber-pampa.png',
-        previewUrl: './logo-cyber-pampa.png',
-        description: 'Arte conceptual de la integración de tecnología y campo.'
-      }
-    ],
-    documentationNotes: [
-      {
-        id: 'doc-agrotech-vault',
-        title: 'AGROTECH.md (Obsidian Vault Note)',
-        tags: ['#Startup', '#SpA', '#Cooperativa', '#Permacultura', '#ArbolPiramide', '#EconomiaDeLosHombros'],
-        vaultPath: 'Agro Tech/AGROTECH.md',
-        summary: 'Manifiesto institucional de AgroTech como startup SpA y Cooperativa de Trabajo con estructura de Árbol Pirámide.',
-        contentMarkdown: `# 🌿 [[AGROTECH]] • Ecosistema Tecnológico & Regenerativo Integral
-
-> **Tesis Central**: [[AGROTECH]] es una #Startup de base tecnológica y ecológica estructurada como **SpA (Sociedad por Acciones)** y **Cooperativa de Trabajo**. Se dedica a la [[integración de sistemas]] agrícolas, la [[optimización de procesos]] biológicos y la resiliencia climática mediante el cruce de **datos satelitales**, **telemetría microclimática in situ** y un análisis de [[ingeniería]] sistémica fundado en los principios de la [[Permacultura]] y la [[agroecología]].
-
-## 🏛️ Gobernanza Dual & Modelo del "Árbol Pirámide"
-* **Núcleo**: En lo **Económico** y en la **Naturaleza** (Bioeconomía regenerativa).
-* **3 Pilares (Áreas Asociadas a Productos)**:
-  1. **🌿 Pilar Social (Líder: Wladimir)**: Producto principal = [[Pasaporte verde]]. Establece economías locales, infraestructura para la venta justa, y conexión con la sociedad mediante cursos, seminarios, foros, congresos y comités de agua potable rural ([[APRs]]).
-  2. **💻 Pilar Digital (Líderes: Daniel con Cristian Cantuarias y Daniela Mendoza)**: Producto principal = [[Agritwin]] / [[DigitalTwin]] 3D. Modelación biofísica, telemetría, visor diegético y QA/QC cartográfico.
-  3. **⚙️ Pilar Técnico (Líderes: Rüdiger Kaatz y Luis González)**: Producto principal = **Implementación de Kits de Cultivo y Ganado**. Infraestructura off-grid, sensórica KioT, baterías recicladas, drones y redes LoRaWAN.
-* **Áreas Transversales**:
-  * **Finanzas & B2B**: Wladimir & Francisco Ipinza.
-  * **Comunicaciones & Terreno**: Daniel, Wladimir & Rüdiger Kaatz.
-
-## 👥 Socios y Liderazgo SpA (Sistema Mixto Capital + Sweat Equity)
-* **Daniel Santander**: Fundador • Dirección General & Arquitectura AgriTwin. Autoría moral protegida con usufructo comercial exclusivo licenciado a la SpA.
-* **Francisco Ipinza ("Pancho")**: Comercial B2B & Convenios Loteos Inmobiliarios.
-* **Wladimir Gutiérrez ("Nene")**: Finanzas & Social • Modelo económico, Pasaporte Verde y vinculación gremial/comunitaria.
-* **Rüdiger Kaatz ("Rudi")**: Ingeniero Informático, Conector Operativo & Off-Grid • Living Lab Parral, baterías recicladas y despliegue de kits en terreno.
-* **Cristian Cantuarias**: Lead Game Designer & Co-Diseño UI/UX Front-End 3D.
-* **Luis González ("Lápiz")**: Socio Técnico • Red Terreno Parral, cámaras 4G solares y drones.
-* **Daniela Mendoza**: Lead de Validación Geoespacial & Teledetección (Geógrafa Censat Colombia).
-
-## 🐝 Cooperativa de Trabajo (Red de Asociados)
-* **Luis González**: Empresa de Drones, Fotogrametría Aérea, Sensores Multiespectrales y Cámaras Térmicas.
-* **Dra. Camila Morales**: Edafología y Microbiología de Suelo Vivo.
-* **Matías Riquelme**: Asesoría Jurídica en Derecho Cooperativo y Aguas.
-* **Ignacia Valenzuela**: Alianzas Campesinas y Ferias INDAP.`,
-        wikilinks: ['AGROTECH', 'integración de sistemas', 'optimización de procesos', 'Permacultura', 'ordenamiento territorial', 'consultoría', 'IoE', 'Pasaporte verde', 'juegos', 'infraestructura social', 'ecológica', 'agroecología', 'Economía de los Hombros', 'desarrollo sostenido', 'DigitalTwin', 'Agritwin', 'predios agrícolas', 'Estructura Corporativa y Gobernanza SpA Cooperativa']
-      },
-      {
-        id: 'doc-gobernanza-spa-coop',
-        title: 'Estructura Corporativa y Gobernanza SpA y Cooperativa.md',
-        tags: ['#Gobernanza', '#SpA', '#Cooperativa', '#ArbolPiramide', '#SweatEquity', '#Vesting', '#PropiedadIntelectual'],
-        vaultPath: 'Agro Tech/Estructura Corporativa y Gobernanza SpA Cooperativa.md',
-        summary: 'Detalle de la estructura dual SpA + Cooperativa de Trabajo, pacto de socios, vesting de sweat equity y usufructo del AgriTwin.',
-        contentMarkdown: `# 🏛️ Estructura Corporativa & Gobernanza Dual: SpA y Cooperativa de Trabajo
-
-## 🌲 1. Modelo del "Árbol Pirámide"
-* **Raíz**: Leyes biofísicas de la Naturaleza y Permacultura.
-* **Tronco / Núcleo**: Bioeconomía Regenerativa y Flujo de Caja Ético.
-* **3 Pilares**: Social (Pasaporte Verde), Digital (AgriTwin 3D), Técnico (Implementación de Kits KioT).
-* **Transversales**: Finanzas y Comunicaciones.
-
-## 👥 2. Socios SpA y Modalidad Mixta
-1. **Daniel Santander**: Dirección General, autoría moral de AgriTwin.
-2. **Francisco Ipinza ("Pancho")**: Comercial B2B & Convenios Loteos.
-3. **Wladimir Gutiérrez ("Nene")**: Finanzas y Pilar Social (Estructuración y Alianzas).
-4. **Rüdiger Kaatz ("Rudi")**: Ingeniero Informático, Conector Operativo & Off-Grid (Living Lab Parral y Kits).
-5. **Cristian Cantuarias**: Lead Game Designer & Co-Diseño UI/UX Front-End 3D.
-6. **Luis González ("Lápiz")**: Socio Técnico (Red Terreno Parral & Drones).
-7. **Daniela Mendoza**: Lead de Validación Geoespacial & Teledetección (Censat Colombia).
-
-## 🐝 3. Cooperativa de Trabajo (Miembros Asociados)
-* **Luis González**: Titular de empresa de drones, fotogrametría aérea, cámaras térmicas y sensores multiespectrales.
-* Red abierta para que prestadores de servicios agrícolas participen de la arquitectura tecnológica y los excedentes cooperativos.
-
-## ⚖️ 4. Recomendaciones Jurídicas & Vesting
-* **Vesting de Sweat Equity**: 24-36 meses con Cliff de 6 meses para consolidar acciones en base a hitos de entregables.
-* **Propiedad Intelectual de AgriTwin**: Autoría moral inalienable de Daniel con Licencia Exclusiva de Explotación y Usufructo Comercial a favor de la SpA, sujeta a cláusula de reversión.`,
-        wikilinks: ['AGROTECH', 'Agritwin', 'Pasaporte verde', 'Permacultura', 'KioT Hardware']
-      },
-      {
-        id: 'doc-permacultura-vault',
-        title: 'Permacultura.md (Obsidian Vault Note)',
-        tags: ['#Permacultura', '#Asesoria', '#DisenoRegenerativo'],
-        vaultPath: 'Agro Tech/Permacultura.md',
-        summary: 'Participación de Julio Pérez en el diseño permacultural de la Start Up.',
-        contentMarkdown: `En la sección de Permacultura, se encuentra Julio Pérez quien presta asesoría para la implementación del diseño de la Start Up de tal manera que esta refleje los principios de la [[Permacultura]].`,
-        wikilinks: ['Permacultura']
-      }
-    ]
-  },
-
-  // 6. x VISION & DRONES
-  {
-    id: 'agritwin-vision',
-    name: 'x Vision',
-    tagline: 'Vigilancia Ciberfísica 3D, Edge AI & Drone-in-a-Box',
+    id: 'territorio-ecosistema',
+    name: 'X Territorio, Cuencas & Living Lab',
+    tagline: 'Servicios Territoriales, B2G, Cuencas & Validación en Parral',
     version: '1.0.0',
     status: 'operational',
-    category: 'digital-twin',
+    category: 'territorial-basin',
+    phase: 3,
+    phaseLabel: 'Fase 3 • Servicios Territoriales & Ecosistema (B2G)',
+    pricingModel: 'Contratos B2G / Alianzas de Cuenca / Fondos Públicos',
     logoUrl: './logo-agritwin.png',
-    previewImageUrl: './agritwin_regional_landing.jpg',
-    architectureRole: 'Módulo Edge IoT',
-    techStack: ['Three.js', 'WebRTC WHEP', 'MediaMTX', 'YOLOv11 Edge AI', 'MegaDetector v5a', 'DJI Cloud API', 'WebODM'],
-    description: 'Convergencia ciberfísica entre cámaras físicas solares PTZ 4G, cámaras trampa de biodiversidad y drones autónomos DJI Dock 2, integrados bidireccionalmente al gemelo digital 3D con Frustums volumétricos, streaming de video de baja latencia (<300ms) y actualización en caliente de ortomosaicos.',
+    previewImageUrl: './img-agri-hub-farm.jpg',
+    architectureRole: 'Inteligencia Territorial & Validación de Terreno',
+    techStack: ['QGIS Server', 'PostGIS', 'Sentinel Hub', 'Living Lab Metodology', 'DGA Data Pipelines'],
+    description: 'Capa de gobernanza territorial, resiliencia hídrica de cuencas y validación empírica en terreno. Proyectos integrales para municipios, Juntas de Vigilancia de Ríos (JVRL), comités de agua potable rural (APRs) e INDAP. Centro de investigación y demostración empírica en el Living Lab ubicado donde Rudi (Parral), con validación de biopreparados, microbiología de suelo, agroforestería y transferencia técnica.',
     highlights: [
-      'Visualización interactiva de conos de cobertura (Frustums 3D) proyectados sobre la topografía en Three.js',
-      'Streaming PiP de baja latencia rural con protocolo WebRTC / WHEP adaptable a enlaces 4G Cat-M1 y Starlink',
-      'Controles PTZ bidireccionales: manipular el joystick virtual en el visor rota la cámara física y su frustum en tiempo real',
-      'Alertas Edge AI con YOLOv11 en el nodo: intrusión perimetral, aforo de compuertas DGA, fauna nativa y condición corporal PRV',
-      'Integración Drone-in-a-Box (DJI Dock 2) con misiones de vuelo autónomas y actualización dinámica de ortomosaicos (NDVI/RGB) sin recargar la web'
+      'Modelado hidrológico de cuenca completa a escala territorial (Maule Sur, 122.070 ha)',
+      'Monitoreo de disponibilidad hídrica para Juntas de Vigilancia y Comités APR',
+      'Validación empírica agronómica en el Living Lab ubicado donde Rudi (Parral)',
+      'Acompañamiento en transición agroecológica, bioinsumos fermentados y salud de suelo',
+      'Programas de capacitación técnica y transferencia comunitaria para la agricultura familiar',
+      'Postulación a fondos de fomento regional (GORE, CORFO, FIA, CNR Ley 18.450)'
     ],
     dataSources: [
       {
-        id: 'ds-vision-webrtc',
-        name: 'Streaming WebRTC WHEP de Baja Latencia',
-        type: 'sensor-iot',
-        provider: 'MediaMTX Gateway Rural',
-        frequency: 'Streaming On-Demand (<300ms)',
-        format: 'Modbus/MQTT',
-        description: 'Transmisión de video optimizada para redes celulares agrícolas y Starlink.'
-      },
-      {
-        id: 'ds-vision-ai-events',
-        name: 'Eventos de Inferencia Edge AI (YOLO)',
-        type: 'sensor-iot',
-        provider: 'NPU Hailo-8 Embebida en Cámara',
-        frequency: 'Por evento (Push MQTT)',
-        format: 'JSON',
-        description: 'Metadata vectorial de detección: personas, motobombas en canales DGA, fauna protegida y cabezas de ganado.'
-      },
-      {
-        id: 'ds-drone-ortho',
-        name: 'Ortomosaico Multiespectral Aéreo',
-        type: 'satellite',
-        provider: 'DJI Dock 2 + WebODM Pipeline',
-        frequency: 'Por campaña de vuelo',
-        format: 'GeoTIFF',
-        description: 'Capas RGB y NDVI de alta resolución (GSD 1.8 cm/px) aplicadas en caliente sobre la malla del terreno.'
+        id: 'ds-territorio-cuenca',
+        name: 'Malla Geoespacial Cuenca Maule Sur (122.070 ha)',
+        type: 'gis-vector',
+        provider: 'AgroTech GIS Lab + DGA + IGM',
+        frequency: 'Mensual / Estacional',
+        format: 'GeoJSON',
+        description: 'Límites hidrográficos, subcuencas, canales matrices, napas freáticas y cobertura vegetal.'
       }
     ],
     scripts: [
       {
-        id: 'scr-vision-mediamtx',
-        name: 'Gateway MediaMTX WebRTC',
-        language: 'bash',
-        purpose: 'Iniciar el servidor de streaming de ultra baja latencia rural en Docker.',
-        command: 'docker run --rm -it -p 8554:8554 -p 8889:8889 bluenviron/mediamtx'
-      },
-      {
-        id: 'scr-drone-mission',
-        name: 'Simulador de Misión DJI Dock 2',
-        language: 'node',
-        purpose: 'Disparar vuelo de fotogrametría autónomo y aplicar textura NDVI al terreno 3D.',
-        command: 'window.droneMissionManager.startMission()'
+        id: 'scr-basin-hydrology',
+        name: 'Simulador Hidrológico de Cuenca Territorial',
+        language: 'python',
+        purpose: 'Modelar escorrentía superficial y balance de recarga de acuíferos ante escenarios climáticos.',
+        command: 'python scripts/basin_hydrology_model.py --basin=perquilauquen'
       }
     ],
-    rawDatasets: [],
+    rawDatasets: [
+      {
+        id: 'raw-species-catalog',
+        name: 'Especies Esclerófilas del Maule (Flora Nativa)',
+        format: 'JSON',
+        fileSize: '12.4 KB',
+        associatedPredioId: 'predio-meniels',
+        description: 'Catálogo de especies nativas del Maule para cortinas cortafuego y enriquecimiento de quebradas.',
+        data: {
+          species: ['Peumo (Cryptocarya alba)', 'Boldo (Peumus boldus)', 'Quillay (Quillaja saponaria)', 'Espino (Vachellia caven)']
+        }
+      }
+    ],
     graphicAssets: [
       {
-        id: 'ga-vision-demo',
-        name: 'Demo Visor 3D Vision & Drones',
-        type: 'live-app',
-        url: '/#predio?mode=3d',
-        embeddable: true,
-        description: 'Visor interactivo con cámaras solares PTZ y dron autónomo DJI.'
+        id: 'ga-territorio-map',
+        name: 'Cartografía Territorial Maule Sur',
+        type: 'map-layer',
+        url: '/#predio?mode=regional',
+        description: 'Visor cartográfico multiescala de la cuenca con capas de vegetación, canales y áreas de conservación.'
       }
     ],
     documentationNotes: []
@@ -778,4 +658,3 @@ export const VAULT_DOC_METADATA = {
   totalNotes: obsidianDocsData?.totalNotes || ALL_DOC_NOTES.length,
   categories: obsidianDocsData?.categories || {}
 };
-

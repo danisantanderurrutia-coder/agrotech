@@ -3,7 +3,15 @@ export type ProductCategory =
   | 'biomonitoring' 
   | 'iot-hardware' 
   | 'earth-observation' 
-  | 'permaculture-edulab';
+  | 'permaculture-edulab'
+  | 'micro-saas-alert'
+  | 'water-irrigation'
+  | 'wildfire-defense'
+  | 'vision-drones'
+  | 'keyline-design'
+  | 'territorial-basin';
+
+export type ProductPhase = 1 | 2 | 3;
 
 export interface DataSourceInfo {
   id: string;
@@ -67,9 +75,12 @@ export interface ProductDefinition {
   port?: number;
   status: 'operational' | 'in-development' | 'deployed';
   category: ProductCategory;
+  phase?: ProductPhase;
+  phaseLabel?: string;
+  pricingModel?: string;
   logoUrl: string;
   previewImageUrl?: string;
-  architectureRole: 'Plataforma Madre' | 'Suite Predial 3D' | 'Suite Territorial Regional' | 'Suite PWA Campo' | 'Hijo 1 (3D Engine)' | 'Hijo 2 (PWA Field)' | 'Módulo Edge IoT' | 'Núcleo Satelital' | 'División Edulab' | 'X Living Lab';
+  architectureRole: string;
   techStack: string[];
   description: string;
   highlights: string[];

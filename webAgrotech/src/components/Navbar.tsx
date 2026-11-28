@@ -103,7 +103,15 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             {productsDropdownOpen && (
               <div className="absolute top-full left-0 mt-2 w-96 bg-[#0B2519] rounded-2xl border border-emerald-500/40 p-3 space-y-2 shadow-2xl animate-fadeIn z-50">
                 
-                {/* 1. AgroAlerta Pocket (Hero) */}
+                {/* GRUPO: FASE 1 (100% Software & Micro-SaaS) */}
+                <div className="px-2 pt-1 pb-0.5 flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400">
+                    Fase 1 • Software & Micro-SaaS
+                  </span>
+                  <span className="text-[9px] font-mono text-emerald-300/70">$0 Inventario</span>
+                </div>
+
+                {/* 1. X AgroAlerta Pocket (Hero) */}
                 <div className="p-2.5 rounded-xl bg-gradient-to-r from-emerald-950/80 to-[#071810] border border-emerald-500/50 hover:border-emerald-400 transition-all space-y-1.5">
                   <button
                     onClick={() => handleNavClick('landing')}
@@ -114,9 +122,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                     </div>
                     <div className="flex-1">
                       <div>
-                        <span className="font-bold text-xs text-white">x AgroAlerta (Alertas WhatsApp)</span>
+                        <span className="font-bold text-xs text-white">X AgroAlerta (Gancho WhatsApp 60s)</span>
                       </div>
-                      <span className="text-[10px] text-emerald-200/80 font-sans block">Alertas de helada (-1.8 °C), estrés y fuego en 60s.</span>
+                      <span className="text-[10px] text-emerald-200/80 font-sans block">Alertas de helada (-1.8 °C) + Add-ons: Express, EUDR, CNR.</span>
                     </div>
                   </button>
                   <div className="pt-1.5 border-t border-emerald-900/60 flex items-center justify-between text-[10px] font-mono">
@@ -128,7 +136,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                       <ArrowRight className="w-3 h-3" />
                     </button>
                     <a
-                      href="https://wa.me/56976696142?text=Hola%20AgroTech,%20quiero%20activar%20AgroAlerta%20para%20mi%20predio"
+                      href="https://wa.me/56976696142?text=Hola%20AgroTech,%20quiero%20activar%20X%20AgroAlerta%20para%20mi%20predio"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-emerald-300 hover:text-white font-bold flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-500/20 border border-emerald-400/40"
@@ -139,7 +147,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                   </div>
                 </div>
 
-                {/* 2. x AgriTwin 3D Core */}
+                {/* 2. X AgriTwin Maestro */}
                 <div className={`p-2 rounded-xl transition-colors ${
                   currentView === 'agritwin' ? 'bg-[#071A11] border border-emerald-500/30' : 'hover:bg-[#071A11]'
                 }`}>
@@ -152,14 +160,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                     </div>
                     <div className="flex-1">
                       <div>
-                        <span className="font-bold text-xs text-white">x Agritwin (Gemelo Biofísico 3D)</span>
+                        <span className="font-bold text-xs text-white">X AgriTwin Maestro (3D & Sensores Virtuales)</span>
                       </div>
-                      <span className="text-[10px] text-emerald-200/70 font-sans block">Simulación biofísica, heladas catabáticas y FAO-56.</span>
+                      <span className="text-[10px] text-emerald-200/70 font-sans block">Richards-MONICA 1D sin sondas, drenaje katabático y What-If.</span>
                     </div>
                   </button>
                 </div>
 
-                {/* 3. x Terra Radar & Satélites */}
+                {/* 3. X Satélites, Agua & Riesgo */}
                 <div className={`p-2 rounded-xl transition-colors ${
                   ['satellites', 'satellites-pasaporte'].includes(currentView) ? 'bg-[#071A11] border border-emerald-500/30' : 'hover:bg-[#071A11]'
                 }`}>
@@ -172,16 +180,23 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                     </div>
                     <div className="flex-1">
                       <div>
-                        <span className="font-bold text-xs text-white">x Terra Radar (Satélites & EUDR)</span>
+                        <span className="font-bold text-xs text-white">X Agua & Incendios (Satélites & WUI)</span>
                       </div>
-                      <span className="text-[10px] text-emerald-200/70 font-sans block">Diagnóstico de cuenca y certificación de no-deforestación.</span>
+                      <span className="text-[10px] text-emerald-200/70 font-sans block">Balance FAO-56, vientos Puelche 30-30-30 y Pasaporte EUDR.</span>
                     </div>
                   </button>
                 </div>
 
                 <div className="my-1 border-t border-emerald-900/60" />
 
-                {/* 4. x AgroAlerta / Nodos Edge */}
+                {/* GRUPO: FASE 2 (Upgrade Físico IoT) */}
+                <div className="px-2 pt-0.5">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-400">
+                    Fase 2 • Upgrade Físico IoT (Bajo Pedido)
+                  </span>
+                </div>
+
+                {/* 4. X Kits IoT */}
                 <button
                   onClick={() => handleNavClick('hardware')}
                   className={`w-full flex items-start gap-2.5 p-2 rounded-xl text-left transition-colors ${
@@ -193,29 +208,36 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                   </div>
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <span className="font-bold text-xs text-white">x AgroAlerta Nodos (K-IoT Hardware)</span>
+                      <span className="font-bold text-xs text-white">X Kits IoT, Actuadores & Energía</span>
                     </div>
-                    <span className="text-[10px] text-emerald-200/70 font-sans block">Sondas FDR tri-estrato. Calibración física in-situ bajo pedido.</span>
+                    <span className="text-[10px] text-emerald-200/70 font-sans block">Sondas FDR tri-estrato, actuadores LoRaWAN y solar LiFePO4.</span>
                   </div>
                 </button>
 
                 <div className="my-1 border-t border-emerald-900/60" />
 
-                {/* 5. x Rewild Mapper & X Living Lab */}
+                {/* GRUPO: FASE 3 (Servicios Territoriales & Ecosistema) */}
+                <div className="px-2 pt-0.5">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-teal-400">
+                    Fase 3 • Servicios Territoriales & Ecosistema
+                  </span>
+                </div>
+
+                {/* 5. X Territorio & Living Lab (Parral) */}
                 <button
                   onClick={() => handleNavClick('rewild-hub')}
                   className={`w-full flex items-start gap-2.5 p-2 rounded-xl text-left transition-colors ${
-                    currentView === 'rewild-hub' ? 'bg-[#071A11] text-amber-400 border border-emerald-500/30' : 'hover:bg-[#071A11] text-white'
+                    currentView === 'rewild-hub' ? 'bg-[#071A11] text-teal-300 border border-teal-500/30' : 'hover:bg-[#071A11] text-white'
                   }`}
                 >
-                  <div className="w-6 h-6 rounded-lg bg-emerald-500/20 border border-emerald-400 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">
+                  <div className="w-6 h-6 rounded-lg bg-teal-500/20 border border-teal-400 flex items-center justify-center shrink-0 mt-0.5 text-teal-300">
                     <Trees className="w-3.5 h-3.5" />
                   </div>
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <span className="font-bold text-xs text-white">x Rewild Mapper (X Living Lab)</span>
+                      <span className="font-bold text-xs text-white">X Territorio & Living Lab (Parral)</span>
                     </div>
-                    <span className="text-[10px] text-emerald-200/70 font-sans block">Centro I+D San Clemente, drones y restauración de cuenca.</span>
+                    <span className="text-[10px] text-emerald-200/70 font-sans block">Centro I+D Parral (donde Rudi), cuencas B2G y agroecología.</span>
                   </div>
                 </button>
 
@@ -250,7 +272,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
                     }`}
                   >
                     <Compass className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Roadmap de Productos & Data Flywheel →</span>
+                    <span>Roadmap Oficial en 3 Fases</span>
+                    <ArrowRight className="w-3 h-3 text-amber-400" />
                   </button>
                 </div>
 
@@ -445,7 +468,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
           <div className="p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 space-y-2">
             <button onClick={() => handleNavClick('agritwin')} className="w-full flex items-center gap-2 text-left text-white font-bold">
               <Cpu className="w-4 h-4 text-amber-400" />
-              <span>x Agritwin (Gemelo Biofísico 3D)</span>
+              <span>X AgriTwin Maestro (Gemelo 3D & Virtual)</span>
             </button>
             <div className="flex items-center justify-between pt-1 border-t border-emerald-900/60 text-[10px] font-mono">
               <button onClick={() => handleNavClick('agritwin')} className="text-emerald-300 hover:text-white flex items-center gap-1">
@@ -464,22 +487,22 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
             </div>
           </div>
 
-          {/* 3. x Terra Radar & Satélites */}
+          {/* 3. X Agua & Incendios */}
           <button onClick={() => handleNavClick('satellites')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
             <FileText className="w-4 h-4 text-blue-400" />
-            <span>x Terra Radar (Satélites & EUDR)</span>
+            <span>X Agua & Incendios (Satélites & WUI)</span>
           </button>
 
-          {/* 4. x AgroAlerta / Nodos */}
+          {/* 4. X Kits IoT Hardware */}
           <button onClick={() => handleNavClick('hardware')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
             <Activity className="w-4 h-4 text-amber-400" />
-            <span>x AgroAlerta Nodos (K-IoT Hardware)</span>
+            <span>X Kits IoT, Actuadores & Energía</span>
           </button>
 
-          {/* 5. x Rewild Mapper (X Living Lab) */}
+          {/* 5. X Territorio & Living Lab (Parral) */}
           <button onClick={() => handleNavClick('rewild-hub')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-white hover:bg-emerald-900">
             <Trees className="w-4 h-4 text-emerald-400" />
-            <span>x Rewild Mapper (X Living Lab)</span>
+            <span>X Territorio & Living Lab (Parral)</span>
           </button>
 
           {/* 6. Tienda */}
@@ -491,7 +514,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, onOpenP
           {/* 7. Roadmap */}
           <button onClick={() => handleNavClick('roadmap')} className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-amber-300 font-bold bg-emerald-950/80 border border-emerald-500/40 hover:bg-emerald-900">
             <Compass className="w-4 h-4 text-amber-400" />
-            <span>Roadmap de Productos & Data Flywheel</span>
+            <span>Roadmap Oficial en 3 Fases</span>
           </button>
 
           {/* Comunidad (Red & Sé Parte) */}

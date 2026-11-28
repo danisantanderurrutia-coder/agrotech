@@ -540,7 +540,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
             }`}
           >
-            Todos (5)
+            Todos ({PRODUCTS_REGISTRY.length})
           </button>
           {PRODUCTS_REGISTRY.map(prod => (
             <button
@@ -552,7 +552,7 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                   : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
               }`}
             >
-              <span>{prod.name.split(' ')[0]}</span>
+              <span>{prod.name}</span>
             </button>
           ))}
         </div>
@@ -648,6 +648,22 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
       {/* ===================== TAB 1: PRODUCTOS & ARQUITECTURA ===================== */}
       {activeTab === 'products' && (
         <div className="space-y-6">
+          
+          {/* Naming Notice & 3-Phase Architecture Banner */}
+          <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-3">
+            <div className="w-6 h-6 rounded-lg bg-amber-400 text-slate-950 font-black flex items-center justify-center shrink-0 font-mono text-xs">
+              X
+            </div>
+            <div className="space-y-0.5">
+              <h4 className="text-xs font-bold text-amber-950 uppercase tracking-wide font-sans">
+                Convención de Nombres Provisional ("X") • Catálogo Oficial en 3 Fases
+              </h4>
+              <p className="text-xs text-amber-900/90 font-serif leading-relaxed">
+                Mientras consolidamos el <em>Naming</em> oficial de la marca madre, todos los productos del ecosistema utilizan el prefijo provisional <strong>"X"</strong>. La arquitectura se organiza en: <strong>Fase 1</strong> (100% Software & Micro-SaaS, $0 inventario), <strong>Fase 2</strong> (Upgrade Físico IoT bajo demanda) y <strong>Fase 3</strong> (Servicios Territoriales en Living Lab Parral).
+              </p>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.map((product) => (
               <div
@@ -710,6 +726,11 @@ export const InteractiveDocsHub: React.FC<InteractiveDocsHubProps> = ({
                         </div>
                       </div>
                       <div>
+                        {product.phaseLabel && (
+                          <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 uppercase tracking-wider block mb-1 w-fit">
+                            {product.phaseLabel}
+                          </span>
+                        )}
                         <h3 className="font-extrabold text-base text-slate-900">{product.name}</h3>
                         <p className="text-[11px] text-slate-500 font-sans">{product.tagline}</p>
                       </div>
