@@ -131,15 +131,15 @@ const SPA_PARTNERS: PartnerProfile[] = [
   {
     id: 'rudiger',
     name: 'Rüdiger Kaatz ("Rudi")',
-    relation: 'Socio Operativo SpA • Infraestructura Off-Grid & Conector de Terreno',
-    role: 'Socio Operativo SpA • Ingeniería Off-Grid, Baterías & Operación Living Lab',
+    relation: 'Socio Operativo SpA • Ingeniero Informático & Infraestructura Off-Grid',
+    role: 'Socio Operativo SpA • Ingeniero Informático, Baterías & Operación Living Lab',
     location: 'Parral (Precordillera), Región del Maule, Chile 🇨🇱 / Alemania 🇩🇪',
     flag: '🇨🇱',
     animalTotem: '🦅 Cóndor Andino / Halcón Peregrino',
     animalDescription: 'Visión estratégica de altura, autonomía radical y resiliencia en ecosistemas extremos.',
     pillars: ['tecnico', 'digital', 'finanzas'],
     modality: 'Mixto (Infraestructura de Campo + Living Lab + Aporte Técnico)',
-    description: 'Especialista en energía solar aislada, bancos de baterías LiFePO4 recicladas y sistemas de defensa perimetral anti-incendios. Conector de terreno y logística de kits mecatrónicos en el Maule Sur, además de liderar el Living Lab / Centro Demostrativo en Parral y el canal con inversionistas extranjeros.',
+    description: 'Ingeniero Informático, especialista en energía solar aislada, bancos de baterías LiFePO4 recicladas y sistemas de defensa perimetral anti-incendios. Conector de terreno y logística de kits mecatrónicos en el Maule Sur, además de liderar el Living Lab / Centro Demostrativo en Parral y el canal con inversionistas extranjeros.',
     responsibilities: [
       'Gestión y validación del Living Lab / Centro Demostrativo en Parral',
       'Ingeniería de almacenamiento energético off-grid con baterías recicladas',

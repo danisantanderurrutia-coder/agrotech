@@ -385,7 +385,7 @@ export const ExecutiveBulletinsSection: React.FC = () => {
                         Rüdiger Kaatz ("Rudi")
                       </h4>
                       <p className="text-xs text-amber-300">
-                        El Conector Operativo, Infraestructura Off-Grid & Living Lab Parral (Suple y asume rol operativo)
+                        Ingeniero Informático • El Conector Operativo, Infraestructura Off-Grid & Living Lab Parral
                       </p>
                     </div>
                   </div>

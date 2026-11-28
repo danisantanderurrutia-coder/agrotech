@@ -37,7 +37,8 @@ graph LR
 - **Competencias Clave**: Instalación de sistemas de videovigilancia solar 4G, tendidos eléctricos agrícolas, bombas de pozo profundo, canalizaciones y pilotaje de drones para inspección visual.
 - **Relación con AgroTech**: Proveedor y contratista técnico preferente. Retiene el 100% de la utilidad por instalación física y margen comercial de hardware, más el 10% de royalty mensual de los predios que sume al SaaS.
 
-### B. Rüdiger Kaatz ("Rudi")
+### B. Rüdiger Kaatz ("Rudi") — Ingeniero Informático
+- **Perfil Profesional**: Ingeniero Informático, especialista en energía solar aislada, bancos de baterías recicladas LiFePO4 y sistemas perimetrales.
 - **Base Territorial**: Sector precordillerano de Parral (zona de alta vulnerabilidad a incendios y desconexión de red).
 - **Competencias Clave**: 
   * Reacondicionamiento e ingeniería de módulos de baterías recicladas (alta densidad energética y bajo costo por kWh para sistemas 100% aislados).

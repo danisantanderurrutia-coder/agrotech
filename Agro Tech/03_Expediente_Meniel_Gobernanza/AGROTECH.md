@@ -237,7 +237,7 @@ Al inicio no existen sueldos de mercado; los socios ingresan con un **sistema mi
 | **Daniel Santander** | Digital • Dirección General • Producto | Fundador • IP Matriz + Mixto | Arquitectura de AgriTwin, titularidad de IP del motor biofísico, dirección científica y alianzas ESG Europa. |
 | **Francisco Ipinza ("Pancho")** | Finanzas • Comercial B2B | Mixto (*Sweat Equity* + Ventas) | Prospección comercial con loteos, venta de informes de riesgo a parcelas y alianzas con agroindustrias medianas. |
 | **Wladimir Gutiérrez ("Nene")** | Finanzas • Social | Mixto (*Sweat Equity* + Finanzas) | Estrategia financiera, expansión del Pasaporte Verde, convenios con APRs, organización de seminarios, foros y congresos. |
-| **Rüdiger Kaatz ("Rudi")** | Técnico • Terreno • Off-Grid | Socio Operativo • Living Lab | Baterías recicladas, conector operativo de kits mecatrónicos en terreno, Living Lab Parral y relación con inversionistas. |
+| **Rüdiger Kaatz ("Rudi")** | Técnico • Terreno • Off-Grid | Socio Operativo • Living Lab | Ingeniero Informático, baterías recicladas, conector operativo de kits mecatrónicos en terreno, Living Lab Parral y relación con inversionistas. |
 | **Cristian Cantuarias ("Cantuarias")** | Digital • UI/UX | Mixto (*Sweat Equity* + Front 3D) | Lead Game Designer, co-diseño de interfaz diegética 3D (Git Flow feature/ui) y cesión de IP de entregables visuales. |
 | **Luis González ("Lápiz")** | Técnico • Terreno | Socio Técnico Autónomo | Red de terreno en Parral, cámaras 4G solares, patrullaje con drones y montaje de infraestructura. |
 | **Daniela Mendoza** | Digital • Geoespacial | Validación Científica (Censat) | Control de calidad cartográfico (QA/QC), validación de cuencas y teledetección satelital. |

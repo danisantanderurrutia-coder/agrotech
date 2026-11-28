@@ -606,7 +606,7 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
 * **Daniel Santander**: Fundador • Dirección General & Arquitectura AgriTwin. Autoría moral protegida con usufructo comercial exclusivo licenciado a la SpA.
 * **Francisco Ipinza ("Pancho")**: Comercial B2B & Convenios Loteos Inmobiliarios.
 * **Wladimir Gutiérrez ("Nene")**: Finanzas & Social • Modelo económico, Pasaporte Verde y vinculación gremial/comunitaria.
-* **Rüdiger Kaatz ("Rudi")**: Conector Operativo & Off-Grid • Living Lab Parral, baterías recicladas y despliegue de kits en terreno.
+* **Rüdiger Kaatz ("Rudi")**: Ingeniero Informático, Conector Operativo & Off-Grid • Living Lab Parral, baterías recicladas y despliegue de kits en terreno.
 * **Cristian Cantuarias**: Lead Game Designer & Co-Diseño UI/UX Front-End 3D.
 * **Luis González ("Lápiz")**: Socio Técnico • Red Terreno Parral, cámaras 4G solares y drones.
 * **Daniela Mendoza**: Lead de Validación Geoespacial & Teledetección (Geógrafa Censat Colombia).
@@ -636,7 +636,7 @@ La StartUp se enfoca en el desarrollo de aquel [[Agritwin]] y su incorporación 
 1. **Daniel Santander**: Dirección General, autoría moral de AgriTwin.
 2. **Francisco Ipinza ("Pancho")**: Comercial B2B & Convenios Loteos.
 3. **Wladimir Gutiérrez ("Nene")**: Finanzas y Pilar Social (Estructuración y Alianzas).
-4. **Rüdiger Kaatz ("Rudi")**: Conector Operativo & Off-Grid (Living Lab Parral y Kits).
+4. **Rüdiger Kaatz ("Rudi")**: Ingeniero Informático, Conector Operativo & Off-Grid (Living Lab Parral y Kits).
 5. **Cristian Cantuarias**: Lead Game Designer & Co-Diseño UI/UX Front-End 3D.
 6. **Luis González ("Lápiz")**: Socio Técnico (Red Terreno Parral & Drones).
 7. **Daniela Mendoza**: Lead de Validación Geoespacial & Teledetección (Censat Colombia).

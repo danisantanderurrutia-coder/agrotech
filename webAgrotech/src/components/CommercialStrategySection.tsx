@@ -1023,7 +1023,7 @@ export const CommercialStrategySection: React.FC<CommercialStrategySectionProps>
                 </div>
                 <div>
                   <h4 className="font-extrabold text-sm text-slate-900">Rüdiger Kaatz ("Rudi")</h4>
-                  <span className="text-[10px] text-amber-700 font-bold block uppercase">Conector de Terreno & Living Lab</span>
+                  <span className="text-[10px] text-amber-700 font-bold block uppercase">Ing. Informático • Conector Terreno & Living Lab</span>
                 </div>
               </div>
               <ul className="text-xs text-slate-600 space-y-1.5 pt-2 border-t border-slate-200">
